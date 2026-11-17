@@ -15,10 +15,10 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
       - name: Unit tests
@@ -27,9 +27,16 @@ jobs:
           python -m pytest -q
 
   self-scan:
+    # A called job may not request a permission the caller does not grant; `actions: read` is
+    # required by the SARIF upload on private repositories. Keep this a superset of the called job.
     permissions:
       contents: read
       security-events: write
+      actions: read
     uses: ./.github/workflows/tripwire.yml
     with:
       tripwire-ref: ${{ github.sha }}
+      # The reusable workflow defaults to the upstream repo; a fork must run its own copy.
+      tripwire-repository: ${{ github.repository }}
+      fail-on: medium        # the repo is clean at medium; keep it that way
+      baseline: .tripwire-baseline.json   # one accepted finding: a fake test key in history (8cea2c3)

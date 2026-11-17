@@ -8,6 +8,10 @@ on:
         description: Full 40-character commit SHA of saaf-tripwire to run (use the SHA you pinned this workflow to).
         type: string
         required: true
+      tripwire-repository:
+        description: Repository that hosts the guard. Defaults to the upstream project; a fork or mirror passes its own repository.
+        type: string
+        default: SAAF-Project/saaf-tripwire
       fail-on:
         type: string
         default: high
@@ -28,11 +32,12 @@ jobs:
     name: SAAF Tripwire
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # Least privilege: read the code, write code-scanning alerts. Nothing else.
-    # (Private repos also need `actions: read` for the SARIF upload.)
+    # Least privilege: read the code and the workflow run, write code-scanning alerts. Nothing else.
+    # `actions: read` is required for the SARIF upload on private repositories (38 of the 51 SAAF repos).
     permissions:
       contents: read
       security-events: write
+      actions: read
     steps:
       - name: Refuse a mutable guard reference
         env:
@@ -43,16 +48,16 @@ jobs:
           fi
 
       - name: Check out the repository under test (full history for the secret scan)
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           path: target
           fetch-depth: 0
           persist-credentials: false
 
       - name: Check out SAAF Tripwire at the pinned SHA
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          repository: SAAF-Project/saaf-tripwire
+          repository: ${{ inputs.tripwire-repository }}
           ref: ${{ inputs.tripwire-ref }}
           path: .tripwire-src
           persist-credentials: false
