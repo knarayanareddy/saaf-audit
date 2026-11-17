@@ -1,0 +1,595 @@
+{
+  "phases": [
+    {
+      "key": "planning",
+      "label": "Planning",
+      "summary": "Understand the topic, agree the scope and prepare the work program."
+    },
+    {
+      "key": "gathering",
+      "label": "Gathering",
+      "summary": "Ask people, request documents, and match what arrives to the test it belongs to."
+    },
+    {
+      "key": "fieldwork",
+      "label": "Fieldwork",
+      "summary": "Test controls, gather evidence and record observations."
+    },
+    {
+      "key": "reporting",
+      "label": "Reporting",
+      "summary": "Turn observations into findings and the audit report."
+    },
+    {
+      "key": "quality",
+      "label": "Quality",
+      "cross_cutting": true,
+      "summary": "Cross-cutting checks you can run at any point."
+    }
+  ],
+  "statuses": [
+    {
+      "key": "to_be_scheduled",
+      "label": "To be scheduled"
+    },
+    {
+      "key": "in_planning",
+      "label": "Planning"
+    },
+    {
+      "key": "in_fieldwork",
+      "label": "Fieldwork"
+    },
+    {
+      "key": "in_reporting",
+      "label": "Reporting"
+    },
+    {
+      "key": "closed",
+      "label": "Closed"
+    }
+  ],
+  "nodes": [
+    {
+      "key": "topic_intelligence",
+      "label": "Topic Intelligence",
+      "agent": "4-lens scan",
+      "route": "topic-intelligence",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [],
+      "phase": "planning",
+      "ai": true,
+      "description": "Scans regulation, supervisory publications and public signals to explain the topic and propose key risk areas.",
+      "companion": false
+    },
+    {
+      "key": "frameworks",
+      "label": "Frameworks & Requirements",
+      "agent": "Regulatory mapper",
+      "route": "framework-requirements",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "topic_intelligence"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Maps the laws, regulations and internal frameworks that apply and extracts testable requirements.",
+      "companion": false
+    },
+    {
+      "key": "process_understanding",
+      "label": "Process Understanding",
+      "agent": "Process analyser",
+      "route": "process-understanding",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "topic_intelligence"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Drafts the process walkthrough and preliminary observations.",
+      "companion": false
+    },
+    {
+      "key": "scope",
+      "label": "Scope & Objectives",
+      "agent": "Scope drafter",
+      "route": "scope-objectives",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "frameworks"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Proposes in-scope and out-of-scope areas and the key audit questions.",
+      "companion": false
+    },
+    {
+      "key": "bra",
+      "label": "Background Risk Assessment",
+      "agent": "BRA drafter",
+      "route": "bra",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "scope"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Drafts the background risk assessment for the areas in scope.",
+      "companion": false
+    },
+    {
+      "key": "anl",
+      "label": "Audit Notification Letter",
+      "agent": "ANL drafter",
+      "route": "anl",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "scope"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Drafts the audit notification letter, with an AI review before sign-off.",
+      "companion": false
+    },
+    {
+      "key": "kickoff",
+      "label": "Kick-off",
+      "agent": "Kickoff drafter",
+      "route": "kickoff",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "scope"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Prepares the kick-off meeting agenda.",
+      "companion": false
+    },
+    {
+      "key": "resource_plan",
+      "label": "Resource Planning",
+      "agent": "Resource planner",
+      "route": "resource-plan",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "scope"
+      ],
+      "phase": "planning",
+      "ai": false,
+      "description": "Confirms dates, hours and the team for the engagement.",
+      "companion": false
+    },
+    {
+      "key": "interview_guide",
+      "label": "Interview Guide",
+      "agent": "Guide generator",
+      "route": "interview",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "scope"
+      ],
+      "phase": "gathering",
+      "ai": true,
+      "description": "Generates persona-based interview guides traceable to risks and requirements.",
+      "companion": false
+    },
+    {
+      "key": "work_program",
+      "label": "Work Program",
+      "agent": "Test generator",
+      "route": "work-program",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "scope"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Generates the test program from scope and risks. Your sign-off unlocks fieldwork.",
+      "companion": false
+    },
+    {
+      "key": "drl",
+      "label": "Document Request List",
+      "agent": "DRL generator",
+      "route": "drl",
+      "base": "planning",
+      "kind": "sequential",
+      "gates": [
+        "work_program"
+      ],
+      "phase": "gathering",
+      "ai": true,
+      "description": "Builds the document request list for the auditee.",
+      "companion": false
+    },
+    {
+      "key": "interview_companion",
+      "label": "Interview Companion",
+      "agent": "Live companion",
+      "route": "interview",
+      "base": "planning",
+      "kind": "always_available",
+      "gates": [],
+      "phase": "gathering",
+      "ai": true,
+      "description": "A live companion during interviews that turns answers into follow-ups, observations and minutes.",
+      "companion": false
+    },
+    {
+      "key": "quality_coverage",
+      "label": "Coverage check",
+      "agent": "Consistency sweep",
+      "route": "quality",
+      "base": "",
+      "kind": "cross_cutting",
+      "gates": [],
+      "phase": "quality",
+      "ai": false,
+      "description": "Checks that every in-scope area really has risks, controls and tests behind it \u2014 so nothing you promised to cover is left unexamined.",
+      "companion": false
+    },
+    {
+      "key": "quality_review",
+      "label": "AI QA review",
+      "agent": "QA reviewer",
+      "route": "quality",
+      "base": "",
+      "kind": "cross_cutting",
+      "gates": [],
+      "phase": "quality",
+      "ai": true,
+      "description": "Reviews each drafted artefact for quality before anyone relies on it, and flags what must be fixed against what is merely a suggestion.",
+      "companion": false
+    },
+    {
+      "key": "quality_peer_review",
+      "label": "AI peer review (GIAS)",
+      "agent": "Peer reviewer",
+      "route": "quality",
+      "base": "",
+      "kind": "cross_cutting",
+      "gates": [],
+      "phase": "quality",
+      "ai": true,
+      "description": "An independent second opinion on the whole engagement, scored criterion by criterion against the Global Internal Audit Standards. It rates only what the file actually evidences \u2014 anything not produced reads as 'not evidenced', never as a pass. It proposes the ratings; a human peer reviewer confirms them.",
+      "companion": false
+    },
+    {
+      "key": "racm_scoping",
+      "label": "RACM scoping",
+      "agent": "Scoping engine",
+      "route": "racm",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "scope",
+        "bra"
+      ],
+      "phase": "planning",
+      "ai": true,
+      "description": "Builds the objective \u2192 risk \u2192 control \u2192 test spine from scope and the risk assessment.",
+      "companion": false
+    },
+    {
+      "key": "racm_governance",
+      "label": "Governance assessment",
+      "agent": "Governance assessor",
+      "route": "fieldwork",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "frameworks",
+        "racm_scoping"
+      ],
+      "phase": "fieldwork",
+      "ai": true,
+      "description": "Assesses governance documents against the applicable frameworks and proposes gaps as risks.",
+      "companion": false
+    },
+    {
+      "key": "racm_data_analysis",
+      "label": "Data analysis",
+      "agent": "Data analysis",
+      "route": "fieldwork",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "racm_scoping"
+      ],
+      "phase": "fieldwork",
+      "ai": false,
+      "description": "Runs full-population checks on the data and proposes exceptions as tests.",
+      "companion": false
+    },
+    {
+      "key": "racm_evidence_chase",
+      "label": "Evidence chase",
+      "agent": "Evidence chaser",
+      "route": "fieldwork",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "drl"
+      ],
+      "phase": "gathering",
+      "ai": false,
+      "description": "Matches every document that arrives to the test it belongs to, and keeps a running list of the evidence still outstanding.",
+      "companion": false
+    },
+    {
+      "key": "fieldwork",
+      "label": "Fieldwork",
+      "agent": "Observations",
+      "route": "fieldwork",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "work_program:signed_off"
+      ],
+      "phase": "fieldwork",
+      "ai": false,
+      "description": "Record findings, recommendations, good practices and improvements.",
+      "companion": false
+    },
+    {
+      "key": "findings",
+      "label": "Findings (5C)",
+      "agent": "Finding drafter",
+      "route": "reporting",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "fieldwork"
+      ],
+      "phase": "reporting",
+      "ai": true,
+      "description": "Turns observations into 5C findings. A second agent challenges each rating.",
+      "companion": false
+    },
+    {
+      "key": "report_draft",
+      "label": "Audit report",
+      "agent": "Report drafter",
+      "route": "reporting",
+      "base": "",
+      "kind": "sequential",
+      "gates": [
+        "findings"
+      ],
+      "phase": "reporting",
+      "ai": true,
+      "description": "Assembles the audit report and overall opinion for your approval.",
+      "companion": false
+    },
+    {
+      "key": "supervisory_guidance",
+      "label": "Supervisory Guidance",
+      "agent": "Guidance scout",
+      "phase": "planning",
+      "route": "supervisory-guidance",
+      "base": "planning",
+      "gates": [],
+      "assists": "frameworks",
+      "ai": true,
+      "description": "Searches supervisory guidance relevant to the topic and jurisdictions.",
+      "kind": "companion",
+      "companion": true
+    },
+    {
+      "key": "rcsa_import",
+      "label": "RCSA import",
+      "agent": "RCSA import",
+      "phase": "planning",
+      "route": "rcsa",
+      "base": "planning",
+      "gates": [],
+      "assists": "bra",
+      "ai": true,
+      "description": "Reads the risk and control self-assessment the business made about itself. An agent proposes what each column of the export holds, you confirm it once, and the next import from the same template is one click.",
+      "kind": "companion",
+      "companion": true
+    },
+    {
+      "key": "pbc_assistant",
+      "label": "PBC assistant",
+      "agent": "Isabelle",
+      "phase": "gathering",
+      "route": "drl",
+      "base": "planning",
+      "gates": [
+        "drl"
+      ],
+      "ai": true,
+      "description": "PBC stands for Prepared By Client: the documents the auditee has to deliver. Tracks every request, drafts the distribution email and the reminders, and checks each document as it comes in.",
+      "kind": "companion",
+      "companion": true
+    },
+    {
+      "key": "privacy_guard",
+      "label": "Privacy Guard",
+      "agent": "PII masking",
+      "phase": "fieldwork",
+      "route": "fieldwork",
+      "base": "",
+      "gates": [],
+      "ai": false,
+      "description": "Detects personal data, classifies it per audit purpose and masks or pseudonymises it by role.",
+      "kind": "companion",
+      "companion": true
+    },
+    {
+      "key": "vendor_guard",
+      "label": "Vendor Guard",
+      "agent": "Third-party risk",
+      "phase": "fieldwork",
+      "route": "fieldwork",
+      "base": "",
+      "gates": [],
+      "ai": true,
+      "description": "Assesses a third party against 8 curated EU/NL frameworks and proposes critical gaps into the matrix.",
+      "kind": "companion",
+      "companion": true
+    }
+  ],
+  "edges": [
+    {
+      "from": "topic_intelligence",
+      "to": "frameworks",
+      "kind": "gate"
+    },
+    {
+      "from": "topic_intelligence",
+      "to": "process_understanding",
+      "kind": "gate"
+    },
+    {
+      "from": "frameworks",
+      "to": "scope",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "bra",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "anl",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "kickoff",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "resource_plan",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "interview_guide",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "work_program",
+      "kind": "gate"
+    },
+    {
+      "from": "work_program",
+      "to": "drl",
+      "kind": "gate"
+    },
+    {
+      "from": "scope",
+      "to": "racm_scoping",
+      "kind": "gate"
+    },
+    {
+      "from": "bra",
+      "to": "racm_scoping",
+      "kind": "gate"
+    },
+    {
+      "from": "frameworks",
+      "to": "racm_governance",
+      "kind": "gate"
+    },
+    {
+      "from": "racm_scoping",
+      "to": "racm_governance",
+      "kind": "gate"
+    },
+    {
+      "from": "racm_scoping",
+      "to": "racm_data_analysis",
+      "kind": "gate"
+    },
+    {
+      "from": "drl",
+      "to": "racm_evidence_chase",
+      "kind": "gate"
+    },
+    {
+      "from": "work_program",
+      "to": "fieldwork",
+      "kind": "hard_gate"
+    },
+    {
+      "from": "fieldwork",
+      "to": "findings",
+      "kind": "gate"
+    },
+    {
+      "from": "findings",
+      "to": "report_draft",
+      "kind": "gate"
+    },
+    {
+      "from": "supervisory_guidance",
+      "to": "frameworks",
+      "kind": "assist"
+    },
+    {
+      "from": "rcsa_import",
+      "to": "bra",
+      "kind": "assist"
+    },
+    {
+      "from": "drl",
+      "to": "pbc_assistant",
+      "kind": "gate"
+    }
+  ],
+  "human_gates": [
+    {
+      "key": "agree_memo",
+      "stage": "topic_intelligence",
+      "label": "Agree the Topic Intelligence memo"
+    },
+    {
+      "key": "accept_scope",
+      "stage": "scope",
+      "label": "Accept scope items and key audit questions"
+    },
+    {
+      "key": "accept_risks",
+      "stage": "bra",
+      "label": "Accept the background risks"
+    },
+    {
+      "key": "sign_off_work_program",
+      "stage": "work_program",
+      "unlocks": "fieldwork",
+      "label": "Sign off the Work Program \u2014 this unlocks Fieldwork"
+    },
+    {
+      "key": "accept_matrix",
+      "stage": "racm_scoping",
+      "label": "Accept or dismiss AI proposals in the matrix"
+    },
+    {
+      "key": "confirm_findings",
+      "stage": "findings",
+      "label": "Confirm each finding and its rating"
+    },
+    {
+      "key": "approve_report",
+      "stage": "report_draft",
+      "label": "Approve the audit report"
+    }
+  ]
+}

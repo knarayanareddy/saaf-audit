@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAAF Hackathon #3 — Facilitator Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+body { overflow: hidden; height: 100vh; }
+.topbar-stats { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.refresh-indicator { font-size: 11px; color: var(--muted); }
+
+/* Grid: 2 rows x 5 columns */
+.grid { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr 1fr; gap: 6px; padding: 6px; height: calc(100vh - 56px - 2px); }
+
+/* Table card */
+.table-card { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; overflow: hidden; position: relative; transition: border-color 0.3s, box-shadow 0.3s; }
+.table-card.track-0 { border-color: #FB923C; }
+.table-card.track-1 { border-color: #818CF8; }
+.table-card.track-2 { border-color: #4ADE80; }
+.table-card.track-3 { border-color: #C084FC; }
+.table-card.track-4 { border-color: #FBBF24; }
+.table-card.track-5 { border-color: #F87171; }
+.table-card.track-flex { border-color: var(--border); }
+.table-card.over-hard { border-color: #F87171 !important; border-width: 3px; box-shadow: 0 0 18px rgba(248,113,113,0.55); }
+
+.table-num { font-size: 28px; font-weight: 800; opacity: 0.12; position: absolute; top: 6px; right: 10px; }
+.table-track { font-size: 13px; font-weight: 700; margin-bottom: 1px; padding-right: 28px; }
+.table-focus { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+
+/* Overflow banner */
+.overflow-banner { display: flex; align-items: center; gap: 6px; background: rgba(248,113,113,0.18); border: 1px solid rgba(248,113,113,0.5); border-radius: 6px; padding: 4px 8px; margin-bottom: 6px; font-size: 11px; font-weight: 700; color: #FCA5A5; animation: pulse 1.4s infinite; }
+.overflow-banner .ob-icon { font-size: 13px; }
+
+/* People list */
+.people { flex: 1; overflow-y: auto; }
+.person { display: flex; align-items: center; gap: 6px; padding: 3px 0; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.person:last-child { border-bottom: none; }
+.person-role { font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: 700; min-width: 14px; text-align: center; }
+.role-a { background: rgba(129,140,248,0.2); color: var(--accent); }
+.role-v { background: rgba(192,132,252,0.2); color: var(--purple); }
+.role-n { background: rgba(74,222,128,0.15); color: var(--green); }
+.role-e { background: rgba(251,146,60,0.2); color: var(--orange); }
+.person-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.person-org { font-size: 10px; color: var(--muted); }
+
+/* Footer of card */
+.table-footer { margin-top: auto; padding-top: 6px; border-top: 1px solid var(--border); }
+.occupancy { height: 6px; border-radius: 3px; background: var(--border); margin-bottom: 5px; }
+.occupancy-fill { height: 100%; border-radius: 3px; background: var(--green); transition: width 0.3s; }
+.occupancy-fill.warn { background: var(--yellow); }
+.occupancy-fill.full { background: #F87171; box-shadow: 0 0 6px rgba(248,113,113,0.6); }
+.skills-bar { display: flex; gap: 6px; font-size: 10px; color: var(--muted); align-items: center; }
+.skills-bar span { display: flex; align-items: center; gap: 2px; }
+.count-pill { margin-left: auto; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 5px; background: rgba(255,255,255,0.06); }
+.count-pill.over { background: rgba(248,113,113,0.2); color: #FCA5A5; }
+.count-pill.warn { background: rgba(251,191,36,0.2); color: var(--yellow); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+.name-blurred .person-name { filter: blur(5px); user-select: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="./index.html" class="topbar-brand">
+    <img src="./saaf-logo-white.png" alt="SAAF" class="topbar-logo">
+    <div>
+      <div class="topbar-title">Hackathon #3</div>
+      <div class="topbar-stats" id="stats">Facilitator Dashboard</div>
+    </div>
+  </a>
+  <nav class="topbar-nav">
+    <a href="./index.html">Home</a>
+    <a href="./leaderboard.html">Leaderboard</a>
+    <a href="./facilitator.html" class="active">Facilitator</a>
+  </nav>
+  <div class="topbar-right">
+    <span style="font-size:11px;color:var(--muted)">
+      <span class="pill-A" style="display:inline-block;padding:1px 6px;border-radius:3px;font-weight:700;margin-right:2px">A</span>
+      <span class="pill-V" style="display:inline-block;padding:1px 6px;border-radius:3px;font-weight:700;margin:0 2px">V</span>
+      <span class="pill-N" style="display:inline-block;padding:1px 6px;border-radius:3px;font-weight:700;margin:0 2px">N</span>
+      <span class="pill-E" style="display:inline-block;padding:1px 6px;border-radius:3px;font-weight:700;margin:0 2px">E</span>
+    </span>
+    <button class="btn" style="padding:4px 10px;font-size:11px" onclick="toggleBlur()">Blur names</button>
+    <input type="password" id="token-input" placeholder="GitHub PAT" onkeydown="if(event.key==='Enter')startPolling()">
+    <button class="btn btn-primary" style="padding:6px 14px;font-size:12px" onclick="startPolling()">Connect</button>
+    <span class="refresh-indicator" id="refresh-status">Not connected</span>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const REPO = 'SAAF-Project/SAAF-Project';
+const API = 'https://api.github.com';
+const TABLE_CAPACITY = 6;
+const HARD_CAP = TABLE_CAPACITY + 2;
+let token = '';
+let pollInterval = null;
+let blurNames = false;
+
+function escapeHtml(t) { return t ? t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+// Table config: table number → track info
+const TABLES = [
+  { num: 1, track: 0, name: 'Track 0: Infrastructure', focus: 'Strapi, RAG KB, MCP, SDK', cssClass: 'track-0' },
+  { num: 2, track: 1, name: 'Track 1a: GIAS Pipeline', focus: 'UC1\u2013UC4 (intake + fraud)', cssClass: 'track-1' },
+  { num: 3, track: 1, name: 'Track 1b: GIAS Pipeline', focus: 'UC5\u2013UC9 (RCM + work program)', cssClass: 'track-1' },
+  { num: 4, track: 2, name: 'Track 2: Evidence', focus: 'PDF, CLI, access review, M365', cssClass: 'track-2' },
+  { num: 5, track: -1, name: 'Flex', focus: 'Overflow from largest track', cssClass: 'track-flex' },
+  { num: 6, track: 3, name: 'Track 3a: Compliance', focus: 'GDPR, EU AI Act', cssClass: 'track-3' },
+  { num: 7, track: 3, name: 'Track 3b: Compliance', focus: 'ICFCOP, vendor guard', cssClass: 'track-3' },
+  { num: 8, track: 4, name: 'Track 4: Reporting', focus: 'Reports, visuals, Power BI', cssClass: 'track-4' },
+  { num: 9, track: 5, name: 'Track 5: AI Quality', focus: 'OWASP, hallucination, explain.', cssClass: 'track-5' },
+  { num: 10, track: -1, name: 'Flex', focus: 'Overflow', cssClass: 'track-flex' },
+];
+
+function parseRegistration(issue) {
+  const body = issue.body || '';
+
+  // Handles both **Label:** value  AND  ### Label\n\nvalue (GH issue form)
+  const get = (...labels) => {
+    for (const label of labels) {
+      const esc = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      let m = body.match(new RegExp(`\\*\\*${esc}:\\*\\*\\s*(.+)`));
+      if (m) return m[1].trim();
+      m = body.match(new RegExp(`###\\s*${esc}[^\\n]*\\n+([^\\n#]+)`, 'i'));
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  const getSkill = (label) => {
+    const m = body.match(new RegExp(`${label}\\s*\\|\\s*(\\d)`));
+    return m ? parseInt(m[1]) : 3;
+  };
+
+  // Parse track from:
+  //   "Track 1A" / "Track 3b"        (website bold format)
+  //   "3 - Compliance ..."            (GH form with description)
+  //   "Track 3B"                      (GH form with Track prefix)
+  let subtrack = null;
+  const tm =
+    body.match(/\*\*Preferred Track:\*\*\s*(?:Track\s*)?(\d+[ab]?)/i) ||
+    body.match(/###\s*Preferred Track[^\n]*\n+\s*(?:Track\s*)?(\d+[ab]?)/i);
+  if (tm) subtrack = tm[1].toLowerCase();
+
+  // Clean role: strip stale "(role)" placeholder left by old form bug
+  const rawRole = get('Role').replace(/^\(role\)\s*/i, '').trim();
+
+  return {
+    name: get('Name') || issue.title.replace(/Register:\s*/, '').replace(/\s*—.*/, ''),
+    github: get('GitHub', 'GitHub username').replace('@', '') || issue.user?.login || '',
+    org: get('Organisation'),
+    role: rawRole,
+    subtrack,                        // e.g. "1a", "1b", "2", "3a", "3b", null
+    track: subtrack ? parseInt(subtrack) : -1,  // numeric track for fallback routing
+    skills: {
+      prompts: getSkill('Prompts'),
+      tools: getSkill('Tools'),
+      regulatory: getSkill('Regulatory'),
+      outputs: getSkill('Outputs'),
+    },
+    issueNum: issue.number,
+  };
+}
+
+// Map sub-track strings to specific table numbers
+const SUBTRACK_TABLE = { '0': 1, '1a': 2, '1b': 3, '2': 4, '3a': 6, '3b': 7, '4': 8, '5': 9 };
+
+// Manual overrides: name substring (case-insensitive) → table number
+const MANUAL_OVERRIDES = [
+  { match: 'volwerk',  table: 6 }, // René Volwerk → Track 3a (T6)
+  { match: 'akhyar',  table: 4 }, // Imane Akhyar → Track 2 (T4)
+  { match: 'weijden', table: 8 }, // Amber van der Weijden → Track 4 (T8)
+  { match: 'djairam', table: 4 }, // Rishi Djairam → Track 2 (T4)
+  { match: 'milaan',  table: 7 }, // Kjell van Milaan → Track 3b (T7)
+];
+
+function assignToTables(registrations) {
+  // Initialize table assignments (keyed by table num for easy lookup)
+  const assignments = TABLES.map(t => ({ ...t, people: [] }));
+  const byNum = Object.fromEntries(assignments.map(a => [a.num, a]));
+
+  // Sort: specific sub-track first, then plain track, then no preference.
+  // Use issueNum as tiebreaker so order is stable across polls.
+  const sorted = [...registrations].sort((a, b) => {
+    const aSpec = a.subtrack ? 2 : (a.track >= 0 ? 1 : 0);
+    const bSpec = b.subtrack ? 2 : (b.track >= 0 ? 1 : 0);
+    return (bSpec - aSpec) || (a.issueNum - b.issueNum);
+  });
+
+  for (const reg of sorted) {
+    // Apply manual overrides first
+    const override = MANUAL_OVERRIDES.find(o => reg.name.toLowerCase().includes(o.match));
+    if (override) { byNum[override.table].people.push(reg); continue; }
+
+    const overflow = () => {
+      const flex = assignments.filter(t => t.track === -1).sort((a, b) => a.people.length - b.people.length)[0];
+      if (flex) flex.people.push(reg);
+    };
+
+    if (!reg.subtrack) {
+      // No track preference — find any non-flex table with space
+      const best = assignments.filter(t => t.track >= 0).sort((a, b) => a.people.length - b.people.length)[0];
+      if (best && best.people.length < HARD_CAP) { best.people.push(reg); } else { overflow(); }
+      continue;
+    }
+
+    // Try direct sub-track routing first (e.g. "1a" → table 2)
+    const targetNum = SUBTRACK_TABLE[reg.subtrack];
+    if (targetNum) {
+      const tbl = byNum[targetNum];
+      if (tbl.people.length < HARD_CAP) { tbl.people.push(reg); } else { overflow(); }
+      continue;
+    }
+
+    // Plain track number without a/b (old registrations: "1", "3", etc.)
+    // Route to the least-full table for that numeric track
+    const trackTables = assignments.filter(t => t.track === reg.track);
+    if (trackTables.length > 0) {
+      const best = trackTables.sort((a, b) => a.people.length - b.people.length)[0];
+      if (best.people.length < HARD_CAP) { best.people.push(reg); } else { overflow(); }
+    } else {
+      overflow();
+    }
+  }
+
+  return assignments;
+}
+
+function roleCode(role) {
+  if (!role) return '?';
+  const r = role.toLowerCase();
+  if (r.includes('aud')) return 'A';
+  if (r.includes('vak')) return 'V';
+  if (r.includes('anal') || r.includes('data')) return 'N';
+  if (r.includes('eng') || r.includes('dev') || r.includes('tech')) return 'E';
+  if (r.includes('manag') || r.includes('prog')) return 'V'; // program manager → vaktechniek
+  return '?';
+}
+
+function roleCssClass(code) {
+  return { A: 'role-a', V: 'role-v', N: 'role-n', E: 'role-e' }[code] || '';
+}
+
+function renderDashboard(assignments) {
+  const totalPeople = assignments.reduce((s, t) => s + t.people.length, 0);
+  const overTables = assignments.filter(t => t.people.length > TABLE_CAPACITY);
+  const overCount = overTables.reduce((s, t) => s + (t.people.length - TABLE_CAPACITY), 0);
+  const overWarning = overCount > 0 ? ` · ⚠️ ${overCount} people need to move (${overTables.length} tables over capacity)` : '';
+  document.getElementById('stats').textContent =
+    `${totalPeople} registered · ${TABLES.length} tables · ${TABLE_CAPACITY} seats/table${overWarning}`;
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = assignments.map(table => {
+    const count = table.people.length;
+    const pct = Math.min(100, (count / TABLE_CAPACITY) * 100);
+    const fillClass = count > TABLE_CAPACITY ? 'full' : count >= TABLE_CAPACITY ? 'warn' : '';
+
+    const roleCounts = { A: 0, V: 0, N: 0, E: 0 };
+    table.people.forEach(p => { const c = roleCode(p.role); if (roleCounts[c] !== undefined) roleCounts[c]++; });
+
+    const peopleHtml = table.people.map(p => {
+      const code = roleCode(p.role);
+      return `<div class="person">
+        <span class="person-role ${roleCssClass(code)}">${code}</span>
+        <span class="person-name">${escapeHtml(p.name)}</span>
+        <span class="person-org">${escapeHtml(p.org)}</span>
+      </div>`;
+    }).join('');
+
+    const hardCap = HARD_CAP;
+    const isOver = count > hardCap;
+    const isWarn = !isOver && count > TABLE_CAPACITY;
+
+    const overflowBanner = isOver
+      ? `<div class="overflow-banner"><span class="ob-icon">⚠</span> OVERSUBSCRIBED — move ${count - hardCap} person${count - hardCap > 1 ? 's' : ''} to flex</div>`
+      : '';
+
+    const countClass = isOver ? 'over' : isWarn ? 'warn' : '';
+
+    return `<div class="table-card ${table.cssClass}${isOver ? ' over-hard' : ''}">
+      <div class="table-num">${table.num}</div>
+      <div class="table-track">${table.name}</div>
+      <div class="table-focus">${table.focus}</div>
+      ${overflowBanner}
+      <div class="people">${peopleHtml || '<div style="color:var(--muted);font-size:12px;padding:8px 0">No registrations yet</div>'}</div>
+      <div class="table-footer">
+        <div class="occupancy"><div class="occupancy-fill ${fillClass}" style="width:${pct}%"></div></div>
+        <div class="skills-bar">
+          <span class="role-a">A:${roleCounts.A}</span>
+          <span class="role-v">V:${roleCounts.V}</span>
+          <span class="role-n">N:${roleCounts.N}</span>
+          <span class="role-e">E:${roleCounts.E}</span>
+          <span class="count-pill ${countClass}">${count}/${TABLE_CAPACITY}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function fetchAndRender() {
+  try {
+    const res = await fetch(`${API}/repos/${REPO}/issues?labels=register&state=open&per_page=100`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      const msg = body.message || res.statusText;
+      const hint = res.status === 401 ? ' (bad token)' : res.status === 403 ? ' (PAT needs Issues read permission)' : '';
+      document.getElementById('refresh-status').textContent = `Error ${res.status}${hint}: ${msg}`;
+      return;
+    }
+    const issues = await res.json();
+    const registrations = issues.map(parseRegistration);
+    const assignments = assignToTables(registrations);
+    renderDashboard(assignments);
+    document.getElementById('refresh-status').textContent =
+      `Live \u00b7 ${registrations.length} registered \u00b7 ${new Date().toLocaleTimeString()}`;
+  } catch (e) {
+    document.getElementById('refresh-status').textContent = `Error: ${e.message}`;
+  }
+}
+
+function toggleBlur() {
+  blurNames = !blurNames;
+  document.getElementById('grid').classList.toggle('name-blurred', blurNames);
+}
+
+function startPolling() {
+  token = document.getElementById('token-input').value.trim();
+  if (!token) { alert('Enter a GitHub Personal Access Token'); return; }
+  sessionStorage.setItem('gh_pat', token);
+  if (pollInterval) clearInterval(pollInterval);
+  fetchAndRender();
+  pollInterval = setInterval(fetchAndRender, 10000);
+  document.getElementById('refresh-status').textContent = 'Connecting...';
+}
+
+// Restore token from session
+const savedToken = sessionStorage.getItem('gh_pat');
+if (savedToken) {
+  document.getElementById('token-input').value = savedToken;
+  token = savedToken;
+  startPolling();
+} else {
+  // Render empty state
+  renderDashboard(TABLES.map(t => ({ ...t, people: [] })));
+}
+</script>
+</body>
+</html>

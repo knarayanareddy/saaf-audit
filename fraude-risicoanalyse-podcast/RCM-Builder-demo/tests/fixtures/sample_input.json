@@ -1,0 +1,46 @@
+{
+  "use_cases": [
+    {
+      "id": "UC-01",
+      "process_id": "PRC-001",
+      "process_name": "Revenue Recognition",
+      "objective": "Ensure revenue is recognized accurately and in the correct period",
+      "risks": [
+        {
+          "cause": "Lack of controls over journal entry posting",
+          "event": "unauthorized or unsupported journal entries are recorded",
+          "impact": "financial statements are materially misstated",
+          "risk_category": "Financial Reporting"
+        }
+      ]
+    },
+    {
+      "id": "UC-02",
+      "process_id": "PRC-001",
+      "process_name": "Revenue Recognition",
+      "objective": "Ensure revenue is recognized accurately and in the correct period",
+      "risks": [
+        {
+          "cause": "Inadequate segregation of duties in the journal entry process",
+          "event": "unauthorized journal entries are posted without detection",
+          "impact": "revenue figures are overstated or understated in financial reports",
+          "risk_category": "Financial Reporting"
+        }
+      ]
+    },
+    {
+      "id": "UC-03",
+      "process_id": "PRC-002",
+      "process_name": "User Access Management",
+      "objective": "Ensure system access is provisioned only to authorized personnel",
+      "risks": [
+        {
+          "cause": "Absence of a formal access review process",
+          "event": "terminated or transferred employees retain active system access",
+          "impact": "unauthorized transactions are processed leading to data integrity failures",
+          "risk_category": "Operational"
+        }
+      ]
+    }
+  ]
+}

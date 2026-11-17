@@ -1,0 +1,23 @@
+name: Work Program
+repo: SAAF-Project/Audit-Work-Program-Agent-UC-8-
+island: planning
+maturity: building        # building | ready | tested | improving
+category: Compliance
+language: Python
+depends_on:
+  - SAAF-Project/RCM-Builder
+tags: [audit, work-program, anthropic]
+open_slots: 0
+description: Create audit work program based on the delivered risk-control matrix from UC 7.
+
+# Seed, drafted from the portal, not by the agent's owners. The mandate below is
+# the minimum that passes the build's checks, so this public seed carries no
+# more than what map.json publishes about it (has_mandate: true). The owners'
+# agent.yaml in the repo holds the real one; see agent.example.yaml for the shape.
+mandate:
+  forbidden_actions:
+    - action: change_own_config
+      rationale: Changes to this mandate go through a pull request.
+  trusted_inputs: [rcm_from_uc7]
+  human_approval_required_for: [publishing final work program]
+  evidence_policy: cite_only_given_context

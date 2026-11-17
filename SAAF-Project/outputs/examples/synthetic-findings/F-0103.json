@@ -1,0 +1,11 @@
+{
+  "id": "F-0103",
+  "title": "Third-party vendor lacks DORA Article 30 contractual provisions",
+  "risk_rating": "High",
+  "control_objective": "DORA Article 30 — Key contractual provisions for ICT third-party service providers",
+  "observation": "The organisation contracts CloudStore B.V. for critical cloud storage supporting payment processing. DORA Article 30(2) mandates that contracts with ICT third-party service providers include provisions on data location, sub-contracting chains, full auditability, and termination rights. Review of the CloudStore contract (signed March 2024) shows that sub-contracting notification rights and termination-for-cause procedures are absent. DORA Article 30(3) additionally requires a minimum 12-month notice period for termination of critical ICT services; the contract specifies only 30 days.",
+  "recommendation": "Renegotiate the CloudStore B.V. contract to include DORA Article 30(2) mandatory provisions and extend the termination notice period to at least 12 months per Article 30(3). Conduct a full contract review across all critical ICT vendors before the DORA enforcement deadline of 17 January 2025.",
+  "ai_assisted": true,
+  "source_track": "Vendor Risk Manager (Vendor_Guard)",
+  "status": "Open"
+}

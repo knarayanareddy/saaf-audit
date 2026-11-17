@@ -1,0 +1,11 @@
+{
+  "org": "fixture-org",
+  "repos": [
+    {"name": "refund-concierge", "private": true, "size": 40, "default_branch": "main"},
+    {"name": "policy-summarizer", "private": true, "size": 20, "default_branch": "main"},
+    {"name": "vendor-gate", "private": true, "size": 30, "default_branch": "main"},
+    {"name": "audit-monorepo", "private": true, "size": 25, "default_branch": "master"},
+    {"name": "empty-repo", "private": true, "size": 0, "default_branch": "main"},
+    {"name": "handbook-docs", "private": true, "size": 5, "default_branch": "main"}
+  ]
+}

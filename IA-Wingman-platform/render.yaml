@@ -1,0 +1,40 @@
+# Render blueprint — the whole deployment as one file, so the service can be
+# rebuilt from scratch without anyone remembering which boxes were ticked.
+#
+# Region is Frankfurt: this holds audit documents about European entities, and
+# where they are stored is a question an auditor is entitled to ask.
+
+services:
+  - type: web
+    name: ia-wingman
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: frankfurt
+    plan: free             # sleeps after 15 min idle and takes ~1 min to wake.
+                           # Open the URL a few minutes before a demo and it is
+                           # warm when your audience arrives.
+    autoDeploy: false      # a push should not redeploy the demo you are showing
+
+    # No disk: Render's persistent disks are a paid feature. The filesystem is
+    # therefore wiped on every restart — and that is survivable here, because
+    # startup seeds the whole demo again (annual plan, golden path, RACM, board).
+    # What a restart does lose is anything created while the app was running:
+    # uploaded documents, RCSA imports, accepted proposals.
+
+    envVars:
+      - key: IA_WINGMAN_DATA_DIR
+        value: /data       # writable, not persistent — see the note above
+      # FastAPI mounts /docs itself, outside the password gate — with it open,
+      # every route and schema is readable by anyone with the URL.
+      - key: EXPOSE_API_DOCS
+        value: "false"
+      - key: APP_USERNAME
+        value: iawingman
+      # sync: false means Render asks for the value and stores it as a secret;
+      # it is never written in this file and never reaches the repository.
+      - key: APP_PASSWORD
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: GDPR_PSEUDONYM_KEY
+        sync: false

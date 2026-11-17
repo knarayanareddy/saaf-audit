@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vendor_contracts",
+  "info": {
+    "singularName": "vendor-contract",
+    "pluralName": "vendor-contracts",
+    "displayName": "Vendor Contract"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "vendor_id": { "type": "string", "required": true, "unique": true },
+    "vendor_name": { "type": "string", "required": true },
+    "service": { "type": "string", "required": true },
+    "criticality": { "type": "enumeration", "enum": ["Critical", "High", "Medium", "Low"], "required": true },
+    "risk_rating": { "type": "enumeration", "enum": ["High", "Medium", "Low"], "required": true },
+    "sla_tier": { "type": "enumeration", "enum": ["Always On", "Business Hours", "Best Effort"], "required": true },
+    "last_audit_date": { "type": "date", "required": true },
+    "contract_end_date": { "type": "date", "required": true },
+    "tprm_status": { "type": "enumeration", "enum": ["In Review", "Approved", "Expired", "Remediation Required"], "required": true },
+    "data_processing": { "type": "boolean", "default": false },
+    "is_exception": { "type": "boolean", "default": false },
+    "exception_type": { "type": "string" }
+  }
+}

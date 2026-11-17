@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Jan Bakker",
+    "skills": ["Senior Auditor"],
+    "available_hours": 40
+  },
+  {
+    "name": "Sara Li",
+    "skills": ["Data Analyst", "Python", "SQL"],
+    "available_hours": 24
+  },
+  {
+    "name": "Fatima Ouali",
+    "skills": ["IT Specialist", "IT Audit"],
+    "available_hours": 32
+  }
+]

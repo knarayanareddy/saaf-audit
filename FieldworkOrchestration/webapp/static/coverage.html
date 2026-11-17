@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <h1>Traceability</h1>
+  <p class="project-line" id="run-sub"></p>
+  <p class="muted">Risk &rarr; internal control &rarr; planned audit work &rarr; execution status.</p>
+  <div id="content">Loading…</div>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader("coverage");
+  const runId = getRunId();
+
+  // Where a PBC item "currently is" — mirrors the same current-step logic
+  // an internal auditor would apply by eye: nothing delivered yet needs the
+  // auditee; something delivered but not yet decided needs the auditor
+  // (whether the AI approved, flagged it insufficient, or was uncertain —
+  // all of those still wait on the auditor); a rejected item goes back to
+  // the auditor for correction; an approved-but-not-final item waits on
+  // the final auditor.
+  function targetPageFor(row) {
+    if (!row) return "auditor";
+    if (row.validation_status === "pending" || row.validation_status === "overdue") return "auditee";
+    if (row.approval_status === "approved") return "senior";
+    return "auditor";
+  }
+
+  async function load() {
+    const el = document.getElementById("content");
+    if (!runId) { el.innerHTML = "<p class='muted'>No engagement selected.</p>"; return; }
+
+    try {
+      const run = await api(`/api/runs/${runId}`);
+      document.getElementById("run-sub").textContent = engagementContextText(run);
+    } catch (err) {
+      /* if this fails, the coverage fetch below will surface the same problem */
+    }
+
+    const data = await api(`/api/runs/${runId}/coverage`);
+    if (!data.available) {
+      el.innerHTML = `<p class="muted">No UC8 work program is linked to this engagement —
+        create an engagement via "from a UC8 work program" on the
+        <a href="index.html">Engagements</a> page to see this view.</p>`;
+      return;
+    }
+
+    // The coverage rows only carry each PBC item's AI/delivery status
+    // (control_coverage has no notion of a human approval decision) — the
+    // board has both, so it's the source of truth for "where does clicking
+    // this item take me".
+    const board = await api(`/api/runs/${runId}/board`);
+    const boardById = Object.fromEntries(board.map((r) => [r.pbc_id, r]));
+
+    el.innerHTML = data.rows
+      .map(
+        (row) => `<div class="card">
+          <div class="muted">${escapeHtml(row.risk_id)} — ${escapeHtml(row.risk)}</div>
+          <div style="margin-top:4px"><b>${escapeHtml(row.control_id)}</b> — ${escapeHtml(row.control)}</div>
+          ${row.control_objective ? `<div class="muted" style="margin-top:2px">${escapeHtml(row.control_objective)}</div>` : ""}
+          <div style="margin-top:8px">
+            ${row.planned_steps} planned test step(s) · ${row.planned_hours}h estimated
+          </div>
+          <div style="margin-top:6px">
+            PBC items: ${
+              row.pbc_items.length
+                ? row.pbc_items
+                    .map((p) => {
+                      const boardRow = boardById[p.pbc_id];
+                      const label = boardRow ? `${p.pbc_id}: ${boardRow.display_status}` : `${p.pbc_id}${p.status ? ": " + p.status : ""}`;
+                      const cls = boardRow ? boardRow.display_status_class : p.status || "none";
+                      const page = targetPageFor(boardRow);
+                      return `<a href="${page}.html?run=${encodeURIComponent(runId)}" class="pill pill-${cls}" style="text-decoration:none">${escapeHtml(label)}</a>`;
+                    })
+                    .join(" ")
+                : "<span class='muted'>none</span>"
+            }
+          </div>
+          <div class="muted" style="margin-top:6px">${escapeHtml(row.coverage_status)}</div>
+        </div>`
+      )
+      .join("");
+  }
+  load();
+</script>
+</body>
+</html>

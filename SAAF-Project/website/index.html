@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAAF Hackathon #3 — Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+/* Page navigation */
+.page { display: none; min-height: 100vh; padding-bottom: 48px; }
+.page.active { display: block; }
+
+/* Page header (below topbar) */
+.page-header { padding: 16px 0; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+.page-header p { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.step-indicator { display: flex; gap: 8px; margin-top: 10px; }
+.step { width: 80px; height: 4px; border-radius: 2px; background: var(--border); }
+.step.done { background: var(--green); }
+.step.current { background: linear-gradient(90deg, #818cf8, #c084fc); }
+
+.btn-block { display: block; width: 100%; text-align: center; }
+
+/* Forms */
+select, input, textarea { width: 100%; }
+label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+.form-group { margin-bottom: 20px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Track cards */
+.track-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 16px; transition: all 0.2s; }
+.track-section:hover { border-color: rgba(129,140,248,0.4); box-shadow: 0 4px 20px rgba(129,140,248,0.08); }
+.track-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.track-title { font-size: 18px; font-weight: 700; }
+.track-num { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0.5; }
+.track-mission { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.track-team { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.track-team span { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(129,140,248,0.1); color: var(--muted); font-weight: 500; }
+.track-tasks { margin-bottom: 16px; }
+.track-tasks h4 { font-size: 13px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.task-item { display: flex; gap: 10px; padding: 6px 0; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.task-item:last-child { border-bottom: none; }
+.task-time { color: var(--yellow); min-width: 50px; font-weight: 600; }
+.track-plans { margin-bottom: 16px; }
+.plan-chip { display: inline-block; font-size: 12px; padding: 4px 12px; border-radius: 20px; background: rgba(129,140,248,0.12); color: var(--accent); margin: 2px 4px 2px 0; text-decoration: none; font-weight: 500; transition: all 0.15s; }
+.plan-chip.yours { background: rgba(74,222,128,0.15); color: var(--green); font-weight: 600; }
+a.plan-chip:hover { background: rgba(129,140,248,0.22); text-decoration: none; }
+
+/* Rich plan cards */
+.plan-card { display: inline-block; background: rgba(129,140,248,0.07); border: 1px solid rgba(129,140,248,0.15); border-radius: 10px; padding: 8px 12px; margin: 3px; vertical-align: top; max-width: 260px; transition: all 0.15s; }
+.plan-card:hover { border-color: rgba(129,140,248,0.35); background: rgba(129,140,248,0.12); }
+.plan-card.yours { border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.07); }
+.plan-card-title { font-size: 12px; font-weight: 600; color: var(--accent); text-decoration: none; display: block; margin-bottom: 5px; line-height: 1.4; }
+.plan-card.yours .plan-card-title { color: var(--green); }
+.plan-card-title:hover { text-decoration: underline; }
+.plan-card-meta { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.chip-type { font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.chip-type-agent { background: rgba(129,140,248,0.2); color: var(--accent); }
+.chip-type-skill { background: rgba(74,222,128,0.15); color: var(--green); }
+.chip-type-workflow { background: rgba(251,146,60,0.2); color: var(--orange); }
+.chip-type-framework, .chip-type-reference { background: rgba(148,163,184,0.15); color: var(--muted); }
+.plan-card-score { font-size: 10px; color: var(--yellow); letter-spacing: -1px; }
+.pdca-dots { display: inline-flex; gap: 2px; align-items: center; }
+.pdca-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+.pdca-done { background: var(--green); }
+.pdca-wip { background: var(--yellow); }
+.pdca-todo { background: var(--border); }
+
+/* Onboarding steps */
+.onboard-step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+.onboard-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #818cf8, #c084fc); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; }
+.onboard-body { flex: 1; }
+.onboard-body h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.onboard-body p { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.onboard-body code, code { background: var(--surface2); padding: 2px 7px; border-radius: 5px; font-size: 12px; color: var(--text); font-family: 'SFMono-Regular', Consolas, monospace; }
+.flow-bar { display: flex; align-items: center; gap: 0; margin: 24px 0; overflow-x: auto; }
+.flow-step { flex: 1; text-align: center; padding: 10px 8px; background: var(--surface); border: 1px solid var(--border); font-size: 12px; font-weight: 600; }
+.flow-step:first-child { border-radius: 10px 0 0 10px; }
+.flow-step:last-child { border-radius: 0 10px 10px 0; }
+.flow-step .flow-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+.flow-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
+
+/* Role legend */
+.role-legend { display: flex; gap: 12px; flex-wrap: wrap; }
+.role-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
+.role-badge .pill { display: inline-block; width: 24px; text-align: center; font-size: 11px; font-weight: 700; padding: 2px 0; border-radius: 6px; }
+
+/* Skills slider */
+.skill-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.skill-label { width: 100px; font-size: 13px; color: var(--muted); }
+.skill-slider { flex: 1; -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--border); outline: none; }
+.skill-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--indigo-600); cursor: pointer; box-shadow: 0 2px 8px rgba(79,70,229,0.4); }
+.skill-value { width: 24px; text-align: center; font-weight: 600; font-size: 14px; }
+
+/* Issue preview */
+.issue-preview { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 13px; white-space: pre-wrap; line-height: 1.5; max-height: 300px; overflow-y: auto; margin-bottom: 16px; }
+
+/* Welcome */
+.welcome-center { text-align: center; padding: 80px 0 40px; }
+.welcome-center h2 { font-size: 32px; margin-bottom: 12px; font-weight: 800; }
+.welcome-center p { color: var(--muted); font-size: 16px; max-width: 600px; margin: 0 auto 32px; }
+
+.badge-yours { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: rgba(74,222,128,0.15); color: var(--green); margin-left: 6px; font-weight: 600; }
+
+.actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+</style>
+</head>
+<body>
+
+<!-- ==================== SHARED TOPBAR ==================== -->
+<div class="topbar">
+  <a href="./index.html" class="topbar-brand">
+    <img src="./saaf-logo-white.png" alt="SAAF" class="topbar-logo">
+    <div>
+      <div class="topbar-title">Hackathon #3</div>
+      <div class="topbar-subtitle">April 21, 2026 &middot; Wolters Kluwer</div>
+    </div>
+  </a>
+  <nav class="topbar-nav">
+    <a href="./index.html" class="active">Home</a>
+    <a href="./leaderboard.html">Leaderboard</a>
+    <a href="./facilitator.html">Facilitator</a>
+  </nav>
+  <div class="topbar-right">
+    <a href="https://github.com/SAAF-Project/SAAF-Project" target="_blank">GitHub ↗</a>
+  </div>
+</div>
+
+<!-- ==================== PAGE 1: WELCOME ==================== -->
+<div class="page active" id="page-welcome">
+  <div class="page-header">
+    <div class="container">
+      <div class="step-indicator"><div class="step current"></div><div class="step"></div><div class="step"></div></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="welcome-center">
+      <h2>Welcome to Hackathon #3</h2>
+      <p>Browse the 6 tracks, see what you'll be building, and register for your preferred track. Takes 5 minutes.</p>
+    </div>
+    <div class="form-group" style="max-width:400px;margin:0 auto">
+      <label>Have you submitted a plan before? Select your name:</label>
+      <select id="submitter-select">
+        <option value="">New participant (no previous plans)</option>
+      </select>
+    </div>
+    <div id="your-plans" style="max-width:400px;margin:16px auto;display:none">
+      <p style="font-size:13px;color:var(--muted)">Your plans will be highlighted in the track overview:</p>
+      <div id="your-plans-list"></div>
+    </div>
+    <div style="text-align:center;margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary btn-lg" onclick="goToPage('page-tracks')">Explore Tracks &rarr;</button>
+      <button class="btn btn-lg" onclick="goToPage('page-onboarding')">Getting Started Guide</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: TRACKS ==================== -->
+<div class="page" id="page-tracks">
+  <div class="page-header">
+    <div class="container">
+      <p>Choose a track &middot; 60 plans &middot; 6 tracks &middot; 10 tables</p>
+      <div class="step-indicator"><div class="step done"></div><div class="step current"></div><div class="step"></div></div>
+    </div>
+  </div>
+
+  <!-- PDCA + Way of Working -->
+  <div class="container" style="margin-bottom:0">
+
+    <div class="track-section" style="margin-bottom:16px">
+      <h3 style="font-size:17px;margin-bottom:8px;color:var(--accent)">PDCA Cycle — What happens when?</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">SAAF sessions follow a Plan-Do-Check-Act loop across hackathons. Today covers <strong style="color:var(--text)">Plan &amp; Do</strong>. The other phases happen at your organisation between sessions.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="padding:12px;background:rgba(63,185,80,0.07);border-radius:8px;border-left:3px solid var(--green)">
+          <div style="font-weight:700;font-size:13px;color:var(--green);margin-bottom:6px">Plan &amp; Do &mdash; hackathon day</div>
+          <ul style="font-size:12px;color:var(--muted);padding-left:16px;margin:0;line-height:1.8">
+            <li><strong style="color:var(--text)">Plan:</strong> design your agent, skill, or workflow</li>
+            <li><strong style="color:var(--text)">Do:</strong> build a working prototype in your track</li>
+          </ul>
+        </div>
+        <div style="padding:12px;background:rgba(110,118,129,0.07);border-radius:8px;border-left:3px solid var(--muted)">
+          <div style="font-weight:700;font-size:13px;color:var(--muted);margin-bottom:6px">Check &amp; Act &mdash; between sessions</div>
+          <ul style="font-size:12px;color:var(--muted);padding-left:16px;margin:0;line-height:1.8">
+            <li><strong style="color:var(--text)">Check:</strong> test at your organisation, collect findings</li>
+            <li><strong style="color:var(--text)">Act:</strong> share results &amp; improvements at next hackathon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-section" style="margin-bottom:16px">
+      <h3 style="font-size:17px;margin-bottom:8px">Way of Working</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Clone the repo, find your plan, fork &amp; branch, build in your track, open a PR. Plans link directly to GitHub — click any plan chip below to read it.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+        <button class="btn" onclick="goToPage('page-onboarding')">How to contribute →</button>
+        <a href="./leaderboard.html" target="_blank" class="btn" style="border-color:rgba(251,191,36,0.3);color:var(--yellow)">Leaderboard ↗</a>
+        <a href="https://github.com/SAAF-Project/SAAF-Project" target="_blank" class="btn">Repository ↗</a>
+        <a href="https://github.com/SAAF-Project/SAAF-Project/blob/main/plans/overview.md" target="_blank" class="btn">All 60 Plans ↗</a>
+      </div>
+      <div style="padding:10px 14px;background:var(--surface2);border-radius:6px;font-size:12px;color:var(--muted)">
+        <code style="color:var(--text)">git clone</code> the repo &rarr; branch <code style="color:var(--text)">your-name/feature</code> &rarr; build &rarr; open PR to <code style="color:var(--text)">main</code>
+      </div>
+      <div style="margin-top:14px">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">Role legend:</div>
+        <div class="role-legend">
+          <span class="role-badge"><span class="pill pill-A">A</span> Auditor</span>
+          <span class="role-badge"><span class="pill pill-V">V</span> Vaktechniek</span>
+          <span class="role-badge"><span class="pill pill-N">N</span> Analyst</span>
+          <span class="role-badge"><span class="pill pill-E">E</span> Engineer</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container" id="tracks-container"></div>
+  <div class="container" style="margin-top:24px;margin-bottom:16px">
+    <button class="btn" onclick="goToPage('page-welcome')">&larr; Back to Welcome</button>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: REGISTER ==================== -->
+<div class="page" id="page-register">
+  <div class="page-header">
+    <div class="container">
+      <p>Register for your track</p>
+      <div class="step-indicator"><div class="step done"></div><div class="step done"></div><div class="step current"></div></div>
+    </div>
+  </div>
+  <div class="container">
+    <h2 style="margin-bottom:24px">Registration</h2>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Name *</label>
+        <input type="text" id="reg-name" placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label>GitHub username</label>
+        <input type="text" id="reg-github" placeholder="@username (optional)">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Organisation *</label>
+        <input type="text" id="reg-org" placeholder="e.g. Mollie, Schuberg Philis">
+      </div>
+      <div class="form-group">
+        <label>Role *</label>
+        <select id="reg-role">
+          <option value="">Select your role...</option>
+          <option>Auditor</option>
+          <option>Vaktechniek</option>
+          <option>Analyst</option>
+          <option>Engineer</option>
+        </select>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px;font-size:15px">Skills Self-Assessment</h3>
+    <div class="skill-row">
+      <span class="skill-label">Prompts</span>
+      <input type="range" class="skill-slider" id="skill-prompts" min="1" max="5" value="3" oninput="updateSkillDisplay()">
+      <span class="skill-value" id="skill-prompts-val">3</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Tools</span>
+      <input type="range" class="skill-slider" id="skill-tools" min="1" max="5" value="3" oninput="updateSkillDisplay()">
+      <span class="skill-value" id="skill-tools-val">3</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Regulatory</span>
+      <input type="range" class="skill-slider" id="skill-regulatory" min="1" max="5" value="3" oninput="updateSkillDisplay()">
+      <span class="skill-value" id="skill-regulatory-val">3</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Outputs</span>
+      <input type="range" class="skill-slider" id="skill-outputs" min="1" max="5" value="3" oninput="updateSkillDisplay()">
+      <span class="skill-value" id="skill-outputs-val">3</span>
+    </div>
+
+    <div class="form-row" style="margin-top:24px">
+      <div class="form-group">
+        <label>Preferred Track *</label>
+        <select id="reg-track">
+          <option value="">Select a track...</option>
+          <option value="0">Track 0 — Infrastructure</option>
+          <option value="1a">Track 1a — GIAS Pipeline (UC1–UC4: intake, fraud)</option>
+          <option value="1b">Track 1b — GIAS Pipeline (UC5–UC9: RCM, work program)</option>
+          <option value="2">Track 2 — Evidence Extraction</option>
+          <option value="3a">Track 3a — Compliance (GDPR, EU AI Act)</option>
+          <option value="3b">Track 3b — Compliance (ICFCOP, vendor guard)</option>
+          <option value="4">Track 4 — Reporting</option>
+          <option value="5">Track 5 — AI Quality</option>
+          <option value="lounge">Not building — networking & helping at tables</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Second choice (recommended)</label>
+        <select id="reg-track2">
+          <option value="">No second choice</option>
+          <option value="0">Track 0 — Infrastructure</option>
+          <option value="1a">Track 1a — GIAS Pipeline (UC1–UC4: intake, fraud)</option>
+          <option value="1b">Track 1b — GIAS Pipeline (UC5–UC9: RCM, work program)</option>
+          <option value="2">Track 2 — Evidence Extraction</option>
+          <option value="3a">Track 3a — Compliance (GDPR, EU AI Act)</option>
+          <option value="3b">Track 3b — Compliance (ICFCOP, vendor guard)</option>
+          <option value="4">Track 4 — Reporting</option>
+          <option value="5">Track 5 — AI Quality</option>
+          <option value="lounge">Not building — networking & helping at tables</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:24px">
+      <label>What would you like to build, learn, or contribute? (optional)</label>
+      <textarea id="reg-notes" rows="3" placeholder="E.g., I want to build a GDPR compliance checker, I have experience with RAG pipelines, I'd like to pair with someone on vendor risk..." style="width:100%;resize:vertical"></textarea>
+    </div>
+
+    <div style="margin:20px 0;padding:12px;background:rgba(210,153,34,0.1);border-radius:8px;border-left:3px solid var(--yellow);font-size:13px;color:var(--muted)">
+      <strong style="color:var(--yellow)">Important:</strong> Your table assignment is final — no switching after registration. Each table has max 8 seats. If your track is oversubscribed, the facilitator may ask you to move to your second choice. Filling in a second choice helps us balance the tables faster.
+    </div>
+
+    <h3 style="margin: 24px 0 12px; font-size: 15px">Your Registration Issue</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
+      Copy the text below and paste it into a new GitHub Issue to complete your registration.
+    </p>
+    <div class="issue-preview" id="issue-preview"></div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-green" onclick="copyIssue()">Copy to Clipboard</button>
+      <a id="issue-link" class="btn btn-primary" target="_blank">Open GitHub &rarr; New Issue</a>
+      <button class="btn" onclick="goToPage('page-tracks')">&larr; Back to Tracks</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: ONBOARDING ==================== -->
+<div class="page" id="page-onboarding">
+  <div class="page-header">
+    <div class="container">
+      <h3 style="font-size:16px;font-weight:700">Getting Started</h3>
+      <p>How to contribute a plan to the SAAF repository</p>
+    </div>
+  </div>
+  <div class="container" style="max-width:720px;margin:0 auto;padding-bottom:48px">
+
+    <div class="track-section" style="margin-bottom:24px">
+      <h3 style="font-size:17px;margin-bottom:8px;color:var(--accent)">Do I need Git?</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:10px">
+        <strong style="color:var(--text)">Just browsing?</strong> You can read all plans on GitHub without any local setup — click any plan card on the Tracks page to open it directly.
+      </p>
+      <p style="font-size:13px;color:var(--muted)">
+        <strong style="color:var(--text)">Want to contribute a plan?</strong> Follow the six steps below. If you get stuck, ask Mathijs or Eduward — or open a GitHub Discussion.
+      </p>
+    </div>
+
+    <!-- Visual flow -->
+    <div class="flow-bar">
+      <div class="flow-step"><span class="flow-icon">🍴</span>Fork</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="flow-icon">🌿</span>Branch</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="flow-icon">✍️</span>Write</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="flow-icon">⬆️</span>Push</div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="flow-icon">🔀</span>PR</div>
+    </div>
+
+    <div class="onboard-step">
+      <div class="onboard-num">1</div>
+      <div class="onboard-body">
+        <h4>Fork &amp; clone the repository</h4>
+        <p>The easiest way is with the <code>gh</code> CLI (GitHub CLI). This creates your own copy and clones it locally in one step.</p>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;font-size:12px;color:var(--text);font-family:monospace;line-height:1.8">
+          gh repo fork SAAF-Project/SAAF-Project --clone<br>cd SAAF-Project
+        </div>
+        <p style="margin-top:8px">Don't have <code>gh</code>? <a href="https://cli.github.com" target="_blank">cli.github.com</a> — or use the Fork button on GitHub and clone manually.</p>
+      </div>
+    </div>
+
+    <div class="onboard-step">
+      <div class="onboard-num">2</div>
+      <div class="onboard-body">
+        <h4>Create a branch</h4>
+        <p>Use your name and a short description. Keep it lowercase with hyphens.</p>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;font-size:12px;color:var(--text);font-family:monospace">
+          git checkout -b your-name/plan-your-slug
+        </div>
+      </div>
+    </div>
+
+    <div class="onboard-step">
+      <div class="onboard-num">3</div>
+      <div class="onboard-body">
+        <h4>Write your plan</h4>
+        <p>Copy the template into the Hackathon #4 folder and fill it in. <strong style="color:var(--text)">Claude Code can help</strong> — open the repo in Claude Code and ask it to help fill in each section.</p>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;font-size:12px;color:var(--text);font-family:monospace;line-height:1.8">
+          cp docs/plans/plan-template.md \<br>&nbsp;&nbsp;plans/hackathon-4/firstname-lastname-slug.md
+        </div>
+        <p style="margin-top:8px">File naming: lowercase, hyphens, pseudonym allowed. Example: <code>jan-bakker-vendor-risk-agent.md</code></p>
+        <p style="margin-top:4px">Not sure what to write? Browse <a href="https://github.com/SAAF-Project/SAAF-Project/blob/main/plans/overview.md" target="_blank">plans/overview.md</a> for inspiration — or pick a gap from <a href="https://github.com/SAAF-Project/SAAF-Project/blob/main/plans/gap-analysis.md" target="_blank">gap-analysis.md</a>.</p>
+      </div>
+    </div>
+
+    <div class="onboard-step">
+      <div class="onboard-num">4</div>
+      <div class="onboard-body">
+        <h4>Reference &amp; claim other plans</h4>
+        <p>Link to related plans using relative paths in your markdown. This shows how your work builds on or extends the community portfolio.</p>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;font-size:12px;color:var(--text);font-family:monospace">
+          See also: [RAG KB](../hackathon-3/saaf-rag-knowledge-base.md)
+        </div>
+        <p style="margin-top:8px">To <strong style="color:var(--text)">claim a plan</strong> (signal "I'm building this at my org"), add your name to the <code>Claimed By</code> field in Section 1 of that plan's metadata. This prevents others from duplicating your effort.</p>
+      </div>
+    </div>
+
+    <div class="onboard-step">
+      <div class="onboard-num">5</div>
+      <div class="onboard-body">
+        <h4>Update the PDCA status</h4>
+        <p>Section 11 of the template has a PDCA table. Mark each phase as you go: <code>Not started</code> → <code>In progress</code> → <code>Complete</code>. This shows the community how far along your work is.</p>
+      </div>
+    </div>
+
+    <div class="onboard-step">
+      <div class="onboard-num">6</div>
+      <div class="onboard-body">
+        <h4>Commit, push &amp; open a Pull Request</h4>
+        <div style="background:var(--surface2);border-radius:8px;padding:12px;font-size:12px;color:var(--text);font-family:monospace;line-height:1.8">
+          git add plans/hackathon-4/firstname-lastname-slug.md<br>
+          git commit -m "plan: firstname-lastname-slug"<br>
+          git push origin your-name/plan-your-slug<br>
+          gh pr create --title "Plan: your slug" --base main
+        </div>
+        <p style="margin-top:8px">Once merged, your plan appears in the harness automatically after the data is regenerated.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn" onclick="goToPage('page-welcome')">&larr; Back to Welcome</button>
+      <button class="btn btn-primary" onclick="goToPage('page-tracks')">Explore Tracks &rarr;</button>
+      <a href="https://github.com/SAAF-Project/SAAF-Project/blob/main/docs/getting-started.md" target="_blank" class="btn">Full Guide on GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="copied-toast" id="toast">Copied to clipboard!</div>
+
+<script>
+const REPO = 'SAAF-Project/SAAF-Project';
+let plans = [], tracks = [], submitters = [], selectedSubmitter = null;
+
+function escapeHtml(t) { return t ? t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+// ============================================================
+// DATA
+// ============================================================
+async function loadData() {
+  const [p, t, s] = await Promise.all([
+    fetch('./data/plans.json').then(r => r.json()),
+    fetch('./data/tracks.json').then(r => r.json()),
+    fetch('./data/submitters.json').then(r => r.json()),
+  ]);
+  plans = p; tracks = t; submitters = s;
+}
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function goToPage(id, trackPreselect, skipPush) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (!skipPush) {
+    history.pushState({ page: id }, '', '#' + id.replace('page-', ''));
+  }
+  if (id === 'page-register') {
+    if (trackPreselect !== undefined) {
+      document.getElementById('reg-track').value = trackPreselect;
+    }
+    if (selectedSubmitter) {
+      document.getElementById('reg-name').value = selectedSubmitter;
+    }
+    updateIssuePreview();
+  }
+}
+
+window.addEventListener('popstate', e => {
+  const page = e.state?.page || 'page-welcome';
+  goToPage(page, undefined, true);
+});
+
+// ============================================================
+// PAGE 1: WELCOME
+// ============================================================
+function renderWelcome() {
+  const sel = document.getElementById('submitter-select');
+  submitters.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.name;
+    opt.textContent = `${s.name} (${s.plans.length} plan${s.plans.length > 1 ? 's' : ''})`;
+    sel.appendChild(opt);
+  });
+
+  sel.addEventListener('change', () => {
+    selectedSubmitter = sel.value || null;
+    renderTracks();
+    const box = document.getElementById('your-plans');
+    const list = document.getElementById('your-plans-list');
+    if (selectedSubmitter) {
+      const sub = submitters.find(s => s.name === selectedSubmitter);
+      if (sub) {
+        list.innerHTML = sub.plans.map(slug => {
+          const p = plans.find(pp => pp.slug === slug);
+          const url = p ? p.github_url : `https://github.com/SAAF-Project/SAAF-Project/blob/main/plans`;
+          return `<a href="${url}" target="_blank" class="plan-chip yours">${p ? escapeHtml(p.title) : escapeHtml(slug)}</a>`;
+        }).join('');
+        box.style.display = 'block';
+      }
+    } else {
+      box.style.display = 'none';
+    }
+  });
+}
+
+// ============================================================
+// PAGE 2: TRACKS
+// ============================================================
+const TRACK_TASKS = {
+  0: [
+    {time: '45m', task: 'Deploy Strapi Docker + seed 5 content types'},
+    {time: '60m', task: 'Set up ChromaDB + ingest regulatory corpus into RAG KB'},
+    {time: '45m', task: 'Stand up Jira + Confluence MCP servers'},
+    {time: '60m', task: 'Implement Loop SDK core (Task, Loop, Agent)'},
+    {time: 'rest', task: 'Helpdesk: support other tracks integrating with infra'},
+  ],
+  1: [
+    {time: '45m', task: 'UC1: Ingest synthetic policy → extract Context Brief'},
+    {time: '45m', task: 'UC3: Query Jira incidents via MCP → classify for audit'},
+    {time: '45m', task: 'UC4: Generate fraud scenarios (procure-to-pay)'},
+    {time: '45m', task: 'UC2+UC5: RAG lookup for previous audits + regulatory criteria'},
+    {time: '90m', task: 'UC7: Build Risk Control Matrix from all inputs'},
+    {time: '45m', task: 'UC8: Generate work program from RCM'},
+    {time: '30m', task: 'UC9: Quality check entire pipeline output'},
+  ],
+  2: [
+    {time: '60m', task: 'OCR extraction: run on 3 synthetic PDFs (access, change, BCP)'},
+    {time: '45m', task: 'Access review: run on 200-record Strapi dataset'},
+    {time: '45m', task: 'CLI wrapper: test 3 allowlisted commands (AD, Splunk, patch)'},
+    {time: '45m', task: 'Fieldwork prep: generate pack from Jira + Confluence'},
+    {time: '45m', task: 'M365 Copilot: test 4 cheat sheet prompts (if licensed)'},
+    {time: '45m', task: 'Precision test: AI extraction vs. manual on 1 policy doc'},
+  ],
+  3: [
+    {time: '45m', task: 'EU AI Act: classify 3 synthetic AI systems per Annex III'},
+    {time: '60m', task: 'GDPR: run agent against synthetic DPIA document'},
+    {time: '60m', task: 'ICFCOP: test 1 mega-control across 3 frameworks'},
+    {time: '45m', task: 'Vendor Guard: assess 2 synthetic vendor contracts'},
+    {time: '45m', task: 'Policy extractor: run on synthetic ISO 27001 policy'},
+    {time: 'cont.', task: 'Curate regulatory corpus for RAG KB'},
+  ],
+  4: [
+    {time: '45m', task: 'Design audit report template (exec summary, findings, recs)'},
+    {time: '60m', task: '3-way match: run P2P matching on synthetic Strapi data'},
+    {time: '60m', task: 'Generate 3 HTML evidence visualizations from findings'},
+    {time: '60m', task: 'Generate draft audit report from Track 1 work program'},
+    {time: '45m', task: 'Push 10 findings to Power BI via MCP'},
+  ],
+  5: [
+    {time: '90m', task: 'Set up hallucination detection (claim extract → RAG verify)'},
+    {time: '60m', task: 'OWASP LLM audit: run 10-control scan on Track 1 agent'},
+    {time: '45m', task: 'Hallucination check: validate 5 findings from other tracks'},
+    {time: '45m', task: 'Generate explainability annex for 2 high-risk findings'},
+    {time: '45m', task: 'Multi-model: same prompt through Claude + local LLM'},
+  ],
+};
+
+const TABLE_MAPPING = {
+  0: [{table: 1, focus: 'Strapi, RAG KB, MCP, SDK'}],
+  1: [{table: 2, focus: 'UC1\u2013UC4 (intake + fraud)'}, {table: 3, focus: 'UC5\u2013UC9 (RCM + work program)'}],
+  2: [{table: 4, focus: 'PDF, CLI, access review, M365'}],
+  3: [{table: 6, focus: 'GDPR, EU AI Act'}, {table: 7, focus: 'ICFCOP, vendor guard'}],
+  4: [{table: 8, focus: 'Reports, visualizations, Power BI'}],
+  5: [{table: 9, focus: 'OWASP, hallucination, explainability'}],
+};
+
+function renderTracks() {
+  const container = document.getElementById('tracks-container');
+  const yourPlans = selectedSubmitter
+    ? (submitters.find(s => s.name === selectedSubmitter)?.plans || [])
+    : [];
+
+  container.innerHTML = tracks.map(t => {
+    const trackPlans = plans.filter(p => p.track === t.id);
+    const tasks = TRACK_TASKS[t.id] || [];
+    const tables = TABLE_MAPPING[t.id] || [];
+    const teamHtml = Object.entries(t.team || {}).map(([role, count]) =>
+      `<span>${count}\u00d7 ${role}</span>`).join('');
+    const tablesHtml = tables.map(tb =>
+      `<span style="font-size:12px;color:var(--muted)">Table ${tb.table}: ${tb.focus}</span>`).join(' &middot; ');
+
+    const planChips = trackPlans.map(p => {
+      const isYours = yourPlans.includes(p.slug);
+      const typeKey = (p.type || '').toLowerCase();
+      const typeBadge = typeKey ? `<span class="chip-type chip-type-${typeKey}">${p.type}</span>` : '';
+      const stars = p.quality_score ? '★'.repeat(p.quality_score) + '☆'.repeat(5 - p.quality_score) : '';
+      const scoreHtml = stars ? `<span class="plan-card-score" title="Quality: ${p.quality_score}/5">${stars}</span>` : '';
+      const pdcaDots = ['plan','do','check','act'].map(ph => {
+        const st = p.pdca?.[ph] || 'not_started';
+        const cls = st === 'complete' ? 'pdca-done' : st === 'in_progress' ? 'pdca-wip' : 'pdca-todo';
+        return `<span class="pdca-dot ${cls}" title="${ph}: ${st.replace('_',' ')}"></span>`;
+      }).join('');
+      const claimedBadge = p.claimed_by ? `<span title="Claimed by ${p.claimed_by}" style="font-size:11px">👤</span>` : '';
+      const tooltip = p.problem_summary ? ` title="${p.problem_summary.replace(/"/g,'&quot;')}"` : '';
+      const yoursBadge = isYours ? '<span class="badge-yours">your plan</span>' : '';
+      return `<div class="plan-card${isYours ? ' yours' : ''}"${tooltip}>
+        <a href="${p.github_url}" target="_blank" class="plan-card-title">${escapeHtml(p.title || p.slug)}</a>
+        <div class="plan-card-meta">${typeBadge}${scoreHtml}<span class="pdca-dots">${pdcaDots}</span>${claimedBadge}${yoursBadge}</div>
+      </div>`;
+    }).join('');
+
+    const taskRows = tasks.map(tk =>
+      `<div class="task-item"><span class="task-time">${tk.time}</span><span>${tk.task}</span></div>`
+    ).join('');
+
+    return `<div class="track-section">
+      <div class="track-header">
+        <div>
+          <div class="track-title">Track ${t.id}: ${t.short_name}</div>
+          <div class="track-mission">${t.mission}</div>
+        </div>
+        <div class="track-num">${t.id}</div>
+      </div>
+      <div class="track-team">${teamHtml}</div>
+      <div style="margin-bottom:12px;font-size:13px;color:var(--muted)">${tablesHtml}</div>
+      <div class="track-tasks">
+        <h4>Tasks (4\u20135 hours)</h4>
+        ${taskRows}
+      </div>
+      <div class="track-plans">
+        <h4 style="font-size:13px;color:var(--muted);margin-bottom:8px">${trackPlans.length} Plans</h4>
+        ${planChips}
+      </div>
+      <button class="btn btn-primary" onclick="goToPage('page-register', ${t.id})">
+        Register for Track ${t.id} &rarr;
+      </button>
+    </div>`;
+  }).join('');
+
+  // Flex table + unassigned plans info
+  const unassigned = plans.filter(p => p.track === null);
+  container.innerHTML += `
+    <div class="track-section" style="border-color:var(--border);opacity:0.7">
+      <div class="track-header">
+        <div>
+          <div class="track-title">Tables 5 &amp; 10: Flex / Overflow</div>
+          <div class="track-mission">Available for overflow from oversubscribed tracks.</div>
+        </div>
+        <div class="track-num">+</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted)">${unassigned.length} plans are reference/strategic documents not assigned to a build track (see <a href="https://github.com/${REPO}/blob/main/plans/hackathon-3-workstreams.md#5-plans-not-assigned-to-a-track">workstreams doc</a>).</p>
+    </div>
+    <div class="track-section" style="border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.04);margin-top:16px">
+      <div class="track-header">
+        <div>
+          <div class="track-title" style="color:var(--green)">Planning for Hackathon #4?</div>
+          <div class="track-mission">Plans carry forward across sessions — submit yours now and let the community build on it.</div>
+        </div>
+        <div class="track-num" style="color:var(--green);opacity:0.5">#4</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">The PDCA loop continues: what you prototype today becomes the foundation for the next session. If you have ideas for new agents, improvements, or cross-team integrations — write a plan and open a PR.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-green" onclick="goToPage('page-onboarding')">How to submit a plan →</button>
+        <a href="https://github.com/${REPO}/tree/main/plans/hackathon-4" target="_blank" class="btn">View H4 Plans on GitHub ↗</a>
+        <a href="https://github.com/${REPO}/blob/main/plans/gap-analysis.md" target="_blank" class="btn">Find a gap to fill ↗</a>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// PAGE 3: REGISTRATION
+// ============================================================
+function updateSkillDisplay() {
+  ['prompts', 'tools', 'regulatory', 'outputs'].forEach(s => {
+    document.getElementById(`skill-${s}-val`).textContent =
+      document.getElementById(`skill-${s}`).value;
+  });
+  updateIssuePreview();
+}
+
+function updateIssuePreview() {
+  const name = document.getElementById('reg-name').value || '(your name)';
+  const github = document.getElementById('reg-github').value;
+  const org = document.getElementById('reg-org').value || '(organisation)';
+  const role = document.getElementById('reg-role').value || '(role)';
+  const track = document.getElementById('reg-track').value;
+  const track2 = document.getElementById('reg-track2').value;
+  const sp = document.getElementById('skill-prompts').value;
+  const st = document.getElementById('skill-tools').value;
+  const sr = document.getElementById('skill-regulatory').value;
+  const so = document.getElementById('skill-outputs').value;
+
+  const notes = document.getElementById('reg-notes').value;
+  const fmtTrack = (v) => v === 'lounge' ? 'Lounge (networking & helping at tables)' : v ? `Track ${v.toUpperCase()}` : '';
+  const trackName = fmtTrack(track) || '(select a track)';
+  const track2Name = fmtTrack(track2);
+  const track2Line = track2Name ? `\n**Second choice:** ${track2Name}` : '';
+  const ghLine = github ? `\n**GitHub:** @${github.replace('@', '')}` : '';
+  const notesLine = notes ? `\n\n### Notes\n${notes}` : '';
+
+  const body = `## Hackathon #3 Registration
+
+**Name:** ${name}${ghLine}
+**Organisation:** ${org}
+**Role:** ${role}
+**Preferred Track:** ${trackName}${track2Line}
+
+### Skills (1-5)
+| Pillar | Level |
+|---|---|
+| Prompts | ${sp}/5 |
+| Tools | ${st}/5 |
+| Regulatory | ${sr}/5 |
+| Outputs | ${so}/5 |${notesLine}`;
+
+  document.getElementById('issue-preview').textContent = body;
+
+  // Update issue link
+  const title = encodeURIComponent(`Register: ${name} \u2014 ${trackName}`);
+  const encodedBody = encodeURIComponent(body);
+  document.getElementById('issue-link').href =
+    `https://github.com/${REPO}/issues/new?title=${title}&body=${encodedBody}&labels=register`;
+}
+
+function copyIssue() {
+  const text = document.getElementById('issue-preview').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 2000);
+  });
+}
+
+// Add live preview updates
+document.addEventListener('input', e => {
+  if (e.target.closest('#page-register')) updateIssuePreview();
+});
+document.addEventListener('change', e => {
+  if (e.target.closest('#page-register')) updateIssuePreview();
+});
+
+// ============================================================
+// INIT
+// ============================================================
+async function init() {
+  await loadData();
+  renderWelcome();
+  renderTracks();
+  updateIssuePreview();
+  const hash = location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    goToPage('page-' + hash, undefined, true);
+  }
+}
+
+init();
+</script>
+</body>
+</html>

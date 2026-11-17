@@ -1,0 +1,7 @@
+# Synthetic, intentionally detectable fake credentials used to test check SAAF-010. Not real secrets.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "SAAF scanner synthetic test fixtures"
+paths = ['''tests/fixtures/''']

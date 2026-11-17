@@ -1,0 +1,39 @@
+# SAAF Living Map manifest. Schema: SAAF-Project/saaf-living-map/agent.example.yaml
+name: Joiners-Movers-Leavers Access Audit
+repo: SAAF-Project/joiners-movers-leavers-agent
+island: collection     # foundation | planning | collection | reporting | monitoring | governance | quarry
+maturity: building     # building | ready | tested | improving
+category: Access Management
+language: Python
+depends_on:
+  - SAAF-Project/Track-2---IAM-final
+tags: [IAM, JML, access-review, jira, segregation-of-duties, ISO27001, SOC2, claude-code]
+open_slots: 2
+description: >-
+  Tests joiner, mover and leaver access against HR events and Jira access-request tickets
+  (12 deterministic controls plus the Track 2 baseline checks), then drafts findings with
+  Claude Code behind a validation step and an auditor sign-off. Spin-off of Track-2---IAM-final.
+confirmed: true
+
+# The approved mandate. Changing this requires a pull request.
+mandate:
+  purpose: Test JML access controls on exported HR, directory, entitlement and Jira data and draft findings for auditor review.
+  allowed_tools: [read_source_exports, run_deterministic_tests, claude_code_headless_without_tools, write_run_folder]
+  forbidden_actions:
+    - action: modify_source_data
+      rationale: Exports are evidence; the agent only reads them so the audit trail holds.
+    - action: change_access_rights
+      rationale: The agent audits access; remediation is management's responsibility.
+    - action: contact_auditees
+      rationale: Communication with auditees goes through the auditor.
+    - action: send_identities_to_model
+      rationale: Only pseudonymised records (USER-NNN) leave the deterministic engine.
+    - action: grant_model_tools
+      rationale: The model reads its input and nothing else; no files, commands or network.
+    - action: change_own_config
+      rationale: Changes to this mandate go through a pull request.
+  trusted_inputs: [hr_export, directory_accounts_export, entitlement_exports, jira_access_tickets_export, access_policy]
+  max_runtime_minutes: 10
+  human_approval_required_for: [finalising findings, issuing the report]
+  evidence_policy: cite_only_given_context
+  sharing: standard_is_shared_mandate_is_private

@@ -1,0 +1,17 @@
+{
+  "_comment": "Auditor sector tags used by the progress visual. Resolution order per plan: (1) the plan's own 'Sector' row in section 1, (2) 'assignments' below, (3) 'organisation_rules', (4) default 'General'. Seeded from plan text (DNB/AFM, PSD2/payments, BIO2/government, explicit entity examples) and needs review by the plan owners.",
+  "vocabulary": ["General", "Banking", "Insurance", "Payments/Fintech", "Public sector", "Healthcare", "Other"],
+  "default": "General",
+  "organisation_rules": {
+    "Mollie": ["Payments/Fintech"],
+    "Auditdienst Rijk": ["Public sector"]
+  },
+  "assignments": {
+    "yellowraptor-whats-the-news": ["Banking"],
+    "group-5-hackers-ai-audit-agents": ["Banking"],
+    "rohan-sobha-compliance-report-generator": ["Banking", "Insurance", "Payments/Fintech", "Public sector"],
+    "inge-garretsen-audit-work-program-agent": ["Payments/Fintech"],
+    "floris-stokkers-work-program-agent": ["Payments/Fintech"],
+    "themontechristo-threewaysecurity": ["Payments/Fintech"]
+  }
+}

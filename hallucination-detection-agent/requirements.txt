@@ -1,0 +1,8 @@
+# Track 5 — AI Governance & QA tools
+# Install with: pip install -r requirements.txt
+
+anthropic>=0.40.0        # Claude API SDK
+python-dotenv>=1.0.0     # Load .env files
+
+# Optional — RAG backend (code falls back to markdown-grep if absent)
+# chromadb>=0.5.0

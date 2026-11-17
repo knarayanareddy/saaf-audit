@@ -1,0 +1,11 @@
+{
+  "id": "F-0105",
+  "title": "NIS2 Article 21 incident reporting SLA not met for significant cyber incidents",
+  "risk_rating": "High",
+  "control_objective": "NIS2 Directive Article 21 — Cybersecurity risk management measures; Article 23 — Reporting obligations",
+  "observation": "NIS2 Directive Article 23(4) requires essential entities to submit an early warning to the competent authority within 24 hours of becoming aware of a significant incident, followed by a full notification within 72 hours. Log analysis of three incidents in Q1 2026 shows that the organisation's incident response team notified the NCSC on average 6 days after initial detection, far exceeding both thresholds. NIS2 Article 21(2)(b) further requires entities to have incident handling procedures — the organisation's procedure does not reference regulatory notification timelines. Penalties under NIS2 Article 34 can reach EUR 10 million or 2% of global annual turnover for essential entities.",
+  "recommendation": "Update the incident response procedure to embed NIS2 Article 23 notification timelines (24h early warning, 72h full notification). Assign a named regulatory liaison responsible for authority notifications. Conduct a tabletop exercise before Q3 2026 to verify the updated process is operational.",
+  "ai_assisted": true,
+  "source_track": "Continuous Monitoring Agent (Team-HighTable)",
+  "status": "Open"
+}

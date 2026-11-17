@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Agent Auditor · Dashboard</title>
+<style>
+  :root {
+    --ink: #1a2233; --muted: #5b6577; --line: #d8dde6; --line-strong: #b6bdcc;
+    --bg: #f5f6f9; --card: #ffffff; --accent: #1f3a8a;
+    --pass: #167a3b; --fail: #b3261e; --warn: #b7791f; --na: #6b6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
+  header.app {
+    background: var(--accent); color: #fff; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  header.app h1 { font-size: 18px; margin: 0; font-weight: 600; }
+  header.app .sub { font-size: 12px; opacity: 0.85; }
+  header.app .actions { display: flex; gap: 8px; align-items: center; }
+  header.app input, header.app button {
+    font: inherit; font-size: 12px;
+  }
+  header.app input[type=text] {
+    background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px; padding: 5px 8px; width: 240px;
+  }
+  header.app input::placeholder { color: rgba(255,255,255,0.6); }
+  header.app button {
+    background: #fff; color: var(--accent); border: 0; padding: 6px 12px; border-radius: 4px;
+    font-weight: 600; cursor: pointer;
+  }
+  header.app button.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+  main { max-width: 1200px; margin: 24px auto 80px; padding: 0 24px; }
+
+  .toolbar {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 18px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 14px; align-items: end;
+  }
+  .toolbar .field { display: flex; flex-direction: column; gap: 4px; }
+  .toolbar label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+  .toolbar input, .toolbar select {
+    font: inherit; padding: 7px 10px; border: 1px solid var(--line-strong); border-radius: 4px; background: #fff;
+  }
+  .toolbar button.primary {
+    background: var(--accent); color: #fff; border: 0; padding: 8px 16px; border-radius: 4px;
+    font-weight: 600; cursor: pointer;
+  }
+  .toolbar button.primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .filter-bar { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-bar button {
+    background: #fff; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 4px 12px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--ink);
+  }
+  .filter-bar button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .filter-bar .spacer { flex: 1; }
+
+  .org {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    margin-bottom: 18px;
+  }
+  .org-header {
+    padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 12px;
+  }
+  .org-header h2 {
+    margin: 0; font-size: 17px; color: var(--accent); font-weight: 600;
+  }
+  .org-header .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .org-header .org-actions { display: flex; gap: 6px; }
+  .org-header button {
+    font: inherit; font-size: 12px; padding: 6px 10px; border-radius: 4px; cursor: pointer;
+    background: #eef1f8; color: var(--accent); border: 0; font-weight: 600;
+  }
+  .org-header button.danger { background: transparent; color: var(--fail); border: 1px solid var(--fail); }
+
+  .repo-list { padding: 12px 18px; display: flex; flex-direction: column; gap: 8px; }
+  .repo {
+    border: 1px solid var(--line); border-radius: 5px; background: #fafbfd;
+    padding: 10px 14px; display: grid; gap: 8px;
+    grid-template-columns: minmax(0, 2.5fr) 1fr 1.5fr 1.5fr auto;
+    align-items: center;
+  }
+  .repo.is-agent { border-left: 4px solid var(--accent); background: #fff; }
+  .repo.is-not-agent { opacity: 0.7; }
+  .repo .name { font-weight: 700; font-size: 14px; color: var(--ink); }
+  .repo .desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .repo .tag-cell { display: flex; align-items: center; gap: 6px; }
+  .repo .tag-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--accent); color: #fff; padding: 3px 9px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .repo .tag-chip.not { background: var(--na); }
+  .repo .tag-chip.unclear { background: var(--warn); }
+  .repo .tag-chip .src { font-size: 9px; opacity: 0.7; margin-left: 2px; }
+  .repo .tag-edit {
+    background: transparent; border: 1px solid var(--line-strong); border-radius: 3px;
+    padding: 2px 6px; font-size: 10px; cursor: pointer; color: var(--muted);
+  }
+  .repo .tag-edit:hover { background: var(--line); }
+
+  .repo .metric { font-size: 11px; color: var(--muted); }
+  .repo .metric .label { text-transform: uppercase; font-weight: 600; letter-spacing: 0.4px; display: block; margin-bottom: 2px; }
+  .repo .metric .value { font-size: 13px; color: var(--ink); font-weight: 700; }
+
+  .repo .score {
+    display: inline-flex; align-items: baseline; gap: 4px;
+    font-size: 18px; font-weight: 700;
+  }
+  .repo .score.high { color: var(--pass); }
+  .repo .score.medium { color: var(--warn); }
+  .repo .score.low { color: var(--fail); }
+  .repo .score .max { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .repo .score-na { color: var(--muted); font-style: italic; font-size: 12px; }
+
+  .repo .actions { display: flex; gap: 6px; align-items: center; }
+  .repo .actions a, .repo .actions button {
+    font: inherit; font-size: 11px; padding: 5px 10px; border-radius: 4px; cursor: pointer;
+    text-decoration: none; font-weight: 600;
+  }
+  .repo .actions .open {
+    background: var(--accent); color: #fff; border: 0;
+  }
+  .repo .actions .run {
+    background: #eef1f8; color: var(--accent); border: 0;
+  }
+  .repo .actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .findings-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: #eef1f8; color: var(--accent); border-radius: 3px;
+    font-size: 10.5px; font-weight: 600; padding: 2px 7px;
+  }
+  .chip.fail { background: #fbeaea; color: var(--fail); }
+  .chip.warn { background: #fff3cd; color: var(--warn); }
+  .chip.pass { background: #d8e9dd; color: var(--pass); }
+  .chip.muted { background: var(--line); color: var(--muted); }
+
+  .status {
+    margin: 8px 0; padding: 10px 14px; border-radius: 4px; font-size: 13px;
+  }
+  .status.ok { background: #d8e9dd; color: var(--pass); }
+  .status.err { background: #fbeaea; color: var(--fail); }
+  .status.info { background: #eef1f8; color: var(--accent); }
+  .empty { text-align: center; padding: 40px 20px; color: var(--muted); font-style: italic; }
+  .spinner {
+    width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent;
+    border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block;
+    vertical-align: -2px; margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .modal-back {
+    position: fixed; inset: 0; background: rgba(20,28,46,0.4); z-index: 30;
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-back.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 6px; padding: 18px 22px;
+    max-width: 480px; width: calc(100% - 40px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+  .modal h3 { margin: 0 0 8px; color: var(--accent); font-size: 16px; }
+  .modal p { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+  .modal .row { display: flex; gap: 8px; }
+  .modal button {
+    font: inherit; padding: 7px 14px; border-radius: 4px; border: 0; cursor: pointer; font-weight: 600;
+  }
+  .modal button.primary { background: var(--accent); color: #fff; }
+  .modal button.ghost   { background: #eef1f8; color: var(--accent); }
+  .modal button.cancel  { background: transparent; color: var(--muted); border: 1px solid var(--line-strong); }
+
+  @media (max-width: 900px) {
+    .toolbar { grid-template-columns: 1fr; }
+    .repo { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div>
+    <h1>Agent Auditor · Dashboard</h1>
+    <div class="sub">Multi-organisatie compliance overzicht · <span id="versionLine">v?</span></div>
+  </div>
+  <div class="actions">
+    <input type="text" id="serverUrl" placeholder="http://127.0.0.1:8765"/>
+    <span id="lastRefresh" style="font-size:11px;opacity:0.7;align-self:center;">—</span>
+    <button class="ghost" onclick="loadAll(true)">↻ Refresh</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- Add org -->
+  <div class="toolbar">
+    <div class="field">
+      <label>Organisatie / account toevoegen</label>
+      <input type="text" id="newOwner" placeholder="bv. SAAF-Project of https://github.com/SAAF-Project/"/>
+    </div>
+    <div class="field">
+      <label>Model voor classifier</label>
+      <select id="classifyModel">
+        <option value="claude-sonnet-4-6">claude-sonnet-4-6</option>
+        <option value="claude-haiku-4-5">claude-haiku-4-5 (sneller)</option>
+        <option value="claude-opus-4-7">claude-opus-4-7</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Classify direct</label>
+      <select id="classifyToggle">
+        <option value="true">Ja — Claude beoordeelt elke README</option>
+        <option value="false">Nee — alleen lijst, tagging later</option>
+      </select>
+    </div>
+    <button class="primary" onclick="addOrg()">+ Toevoegen</button>
+  </div>
+
+  <div id="status"></div>
+
+  <!-- Filters + sort -->
+  <div class="filter-bar">
+    <button class="filter active" data-filter="all" onclick="setFilter('all')">Alle (<span id="cnt-all">0</span>)</button>
+    <button class="filter" data-filter="agent" onclick="setFilter('agent')">🤖 Agents (<span id="cnt-agent">0</span>)</button>
+    <button class="filter" data-filter="not_agent" onclick="setFilter('not_agent')">Niet-agents (<span id="cnt-not">0</span>)</button>
+    <button class="filter" data-filter="unclear" onclick="setFilter('unclear')">Onduidelijk (<span id="cnt-unclear">0</span>)</button>
+    <div class="spacer"></div>
+    <label style="font-size:11px;color:var(--muted);font-weight:600;align-self:center;text-transform:uppercase;letter-spacing:0.4px;margin-right:4px;">Sorteer</label>
+    <select id="sortMode" onchange="setSort(this.value)" style="font:inherit;font-size:12px;padding:4px 8px;border:1px solid var(--line-strong);border-radius:4px;background:#fff;cursor:pointer;">
+      <option value="agents-first">Agents bovenaan</option>
+      <option value="score-asc">Score laag → hoog (actiegericht)</option>
+      <option value="score-desc">Score hoog → laag</option>
+      <option value="name">Naam A-Z</option>
+      <option value="last-audit">Laatste audit eerst</option>
+    </select>
+    <button class="filter" data-filter="archived-off" onclick="toggleArchived()" id="archiveToggle">Verberg archived</button>
+  </div>
+
+  <div id="orgsHost"></div>
+
+  <p style="font-size:11px;color:var(--muted);margin-top:24px;">
+    Agent Auditor · Dashboard · klik op een repo om de A2-criteria-sheet te openen op die specifieke commit.
+  </p>
+</main>
+
+<!-- Tag-edit modal -->
+<div class="modal-back" id="tagModal">
+  <div class="modal">
+    <h3>Tag aanpassen — <span id="tagRepoName"></span></h3>
+    <p>Huidige tag: <strong id="tagCurrent"></strong> (<span id="tagSource"></span>)</p>
+    <div class="row" style="margin-bottom:10px;">
+      <button class="primary" onclick="setTag(true)">🤖 Wel agent</button>
+      <button class="ghost"   onclick="setTag(false)">Geen agent</button>
+      <button class="cancel"  onclick="setTag(null)">Onduidelijk</button>
+    </div>
+    <p style="font-size:12px;">Optionele toelichting (komt in het log):</p>
+    <input type="text" id="tagReasoning" style="width:100%;padding:7px 10px;border:1px solid var(--line-strong);border-radius:4px;font:inherit;" placeholder="bv. is een library, geen agent"/>
+    <div class="row" style="margin-top:10px;justify-content:flex-end;">
+      <button class="cancel" onclick="closeTagModal()">Sluiten</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===========================================================
+   Settings + state
+   =========================================================== */
+const SETTINGS_KEY = "agent-auditor-dashboard";
+let settings = { serverUrl: "http://127.0.0.1:8765", sortMode: "agents-first", activeFilter: "all", hideArchived: true };
+let state = { orgs: [], updated_at: null };
+let activeFilter = "all";
+let hideArchived = true;
+let sortMode = "agents-first";
+let tagCtx = null;
+
+function loadSettings() {
+  try { settings = { ...settings, ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}") }; } catch(e) {}
+  document.getElementById("serverUrl").value = settings.serverUrl;
+  sortMode = settings.sortMode || "agents-first";
+  activeFilter = settings.activeFilter || "all";
+  hideArchived = settings.hideArchived !== false;
+  const sortEl = document.getElementById("sortMode");
+  if (sortEl) sortEl.value = sortMode;
+  document.querySelectorAll(".filter-bar button.filter").forEach(b => b.classList.toggle("active", b.dataset.filter === activeFilter));
+  const at = document.getElementById("archiveToggle");
+  if (at) at.textContent = hideArchived ? "Verberg archived" : "Toon archived";
+}
+function saveSettings() {
+  settings.serverUrl = (document.getElementById("serverUrl").value.trim() || "http://127.0.0.1:8765").replace(/\/+$/, "");
+  settings.sortMode = sortMode;
+  settings.activeFilter = activeFilter;
+  settings.hideArchived = hideArchived;
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
+document.addEventListener("change", e => { if (e.target.id === "serverUrl") saveSettings(); });
+
+/* ===========================================================
+   API
+   =========================================================== */
+async function api(path, opts = {}) {
+  saveSettings();
+  const url = settings.serverUrl + path;
+  const fetchOpts = { method: opts.method || "GET", headers: {} };
+  if (opts.body !== undefined) {
+    fetchOpts.headers["content-type"] = "application/json";
+    fetchOpts.body = JSON.stringify(opts.body);
+  }
+  let res;
+  try { res = await fetch(url, fetchOpts); }
+  catch(e) { throw new Error(`Server niet bereikbaar op ${settings.serverUrl} (${e.message})`); }
+  const txt = await res.text();
+  if (!res.ok) throw new Error(`Server ${res.status}: ${txt.slice(0,300)}`);
+  try { return JSON.parse(txt); } catch(e) { return txt; }
+}
+
+/* ===========================================================
+   Rendering
+   =========================================================== */
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+
+function tagChip(repo) {
+  const tag = repo.is_agent === true ? "agent"
+             : repo.is_agent === false ? "not_agent"
+             : "unclear";
+  const src = repo.tag_source || "auto";
+  const label = tag === "agent" ? "🤖 Agent" : tag === "not_agent" ? "Niet agent" : "?";
+  return `<span class="tag-chip ${tag === "not_agent" ? "not" : tag === "unclear" ? "unclear" : ""}">${escapeHtml(label)}<span class="src">${escapeHtml(src)}</span></span>`;
+}
+
+function computeScore(repo) {
+  const m = repo.metrics;
+  if (!m) return null;
+  let score = 100;
+  score -= (m.inadequate || 0) * 10;
+  score -= (m.open_findings || 0) * 5;
+  score -= (m.orphan_needs_issue || 0) * 3;
+  score -= (m.secrets_high || 0) * 25;
+  score -= (m.secrets_medium || 0) * 5;
+  score += (m.adequate || 0) * 3;
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function scoreCell(repo) {
+  const m = repo.metrics;
+  // A2 AC-summary uit de criteria-sheet heeft voorrang op de heuristiek.
+  const ac = m?.ac_summary;
+  if (ac && ac.pct != null) {
+    const pct = ac.pct;
+    const cls = pct >= 75 ? "high" : pct >= 50 ? "medium" : "low";
+    const vColor = pct >= 75 ? "var(--pass)" : pct >= 50 ? "var(--warn)" : "var(--fail)";
+    return `
+      <div class="score ${cls}">${pct}<span class="max">% A2</span></div>
+      <div style="font-size:10.5px;color:var(--muted);margin-top:2px;">
+        ${ac.pass}/${ac.total} pass${ac.fail ? ` · ${ac.fail} fail` : ""}${ac.open ? ` · ${ac.open} open` : ""}
+      </div>
+      <div style="font-size:10px;color:${vColor};font-weight:600;margin-top:2px;line-height:1.3;">
+        ${escapeHtml(ac.verdict || "")}
+      </div>`;
+  }
+  // Fallback: heuristiek uit GitHub-issues + secrets + orphans
+  const s = computeScore(repo);
+  if (s === null) return `<div class="score-na">nog niet getoetst</div>`;
+  const cls = s >= 80 ? "high" : s >= 50 ? "medium" : "low";
+  return `<div class="score ${cls}">${s}<span class="max">/ 100</span></div>
+          <div style="font-size:10px;color:var(--muted);">heuristiek</div>`;
+}
+
+function findingsChips(repo) {
+  const m = repo.metrics;
+  if (!m) return `<span style="color:var(--muted);font-size:11px;">geen audit</span>`;
+  const chips = [];
+  // A2 AC-summary voorop wanneer aanwezig
+  const ac = m.ac_summary;
+  if (ac && ac.total) {
+    const cls = ac.fail > ac.pass ? "fail" : ac.pct >= 75 ? "pass" : "warn";
+    chips.push(`<span class="chip ${cls}">A2 ${ac.pass}/${ac.total} pass${ac.fail ? ` · ${ac.fail} fail` : ""}${ac.open ? ` · ${ac.open} open` : ""}</span>`);
+    if (ac.accepted_ai_count) {
+      chips.push(`<span class="chip">${ac.accepted_ai_count} AI-accepted</span>`);
+    }
+  }
+  // Audit-trail (per GitHub issue) bevindingen
+  if (m.adequate)   chips.push(`<span class="chip pass">✓ ${m.adequate} adequaat</span>`);
+  if (m.partial)    chips.push(`<span class="chip warn">~ ${m.partial} deels</span>`);
+  if (m.inadequate) chips.push(`<span class="chip fail">✗ ${m.inadequate} inadequaat</span>`);
+  if (m.open_findings) chips.push(`<span class="chip warn">! ${m.open_findings} open issues</span>`);
+  if (m.orphan_needs_issue) chips.push(`<span class="chip warn">${m.orphan_needs_issue} orphans</span>`);
+  if (m.secrets_high) chips.push(`<span class="chip fail">🔑 ${m.secrets_high} secrets</span>`);
+  else if (m.secrets_medium) chips.push(`<span class="chip warn">🔑 ${m.secrets_medium}</span>`);
+  if (!chips.length) chips.push(`<span class="chip muted">geen bevindingen</span>`);
+  return chips.join(" ");
+}
+
+function lastAuditCell(repo) {
+  const m = repo.metrics;
+  if (!m?.last_audit_at) return `<span style="color:var(--muted);font-size:11px;">nooit</span>`;
+  const ts = (m.last_audit_at || "").slice(0, 16).replace("T", " ");
+  return `<span style="font-size:11px;color:var(--muted);">${escapeHtml(ts)}</span>${m.commit ? `<br><code style="font-size:10px;">${escapeHtml(m.commit.slice(0,7))}</code>` : ""}`;
+}
+
+function repoCard(owner, repo) {
+  const drillUrl = `audit-criteria-sheet.html?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo.name)}`;
+  return `
+    <div class="repo ${repo.is_agent === true ? "is-agent" : repo.is_agent === false ? "is-not-agent" : ""}" data-tag="${repo.is_agent === true ? "agent" : repo.is_agent === false ? "not_agent" : "unclear"}" data-archived="${repo.archived ? "1" : "0"}">
+      <div>
+        <div class="name">${escapeHtml(repo.name)}${repo.archived ? ` <span style="font-size:10px;color:var(--muted);font-weight:400;">archived</span>` : ""}${repo.private ? ` 🔒` : ""}</div>
+        <div class="desc">${escapeHtml(repo.description || "")}</div>
+        ${repo.agent_classification?.reasoning ? `<div class="desc" style="margin-top:3px;font-style:italic;">"${escapeHtml(repo.agent_classification.reasoning)}"</div>` : ""}
+      </div>
+      <div class="tag-cell">
+        ${tagChip(repo)}
+        <button class="tag-edit" onclick="openTagModal('${escapeHtml(owner)}', '${escapeHtml(repo.name)}')">Edit</button>
+      </div>
+      <div class="metric">
+        <span class="label">Score</span>
+        ${scoreCell(repo)}
+      </div>
+      <div class="metric">
+        <span class="label">Bevindingen</span>
+        <div class="findings-chips">${findingsChips(repo)}</div>
+        ${lastAuditCell(repo)}
+      </div>
+      <div class="actions">
+        <a class="open" href="${drillUrl}" target="_blank">Open audit →</a>
+        <button class="run" onclick="runAudit('${escapeHtml(owner)}', '${escapeHtml(repo.name)}', this)">Run audit</button>
+      </div>
+    </div>`;
+}
+
+function orgCard(org) {
+  const all = org.repos || [];
+  const agents = all.filter(r => r.is_agent === true).length;
+  const filtered = all.filter(repoMatchesFilter).slice().sort(compareRepos);
+  return `
+    <div class="org">
+      <div class="org-header">
+        <div>
+          <h2>${escapeHtml(org.owner)}</h2>
+          <div class="meta">${all.length} repos · ${agents} agents · last scan ${escapeHtml((org.last_scan || "?").slice(0,16).replace("T"," "))}</div>
+        </div>
+        <div class="org-actions">
+          <button onclick="rescanOrg('${escapeHtml(org.owner)}')">↻ Rescan classifier</button>
+          <button class="danger" onclick="removeOrg('${escapeHtml(org.owner)}')">Verwijder</button>
+        </div>
+      </div>
+      <div class="repo-list">
+        ${filtered.length
+          ? filtered.map(r => repoCard(org.owner, r)).join("")
+          : `<div class="empty">Geen repos in dit filter.</div>`}
+      </div>
+    </div>`;
+}
+
+function repoScoreForSort(repo) {
+  // A2 % heeft voorrang, anders heuristiek, anders null (sorteer ze achteraan)
+  const m = repo.metrics;
+  if (m?.ac_summary?.pct != null) return m.ac_summary.pct;
+  const s = computeScore(repo);
+  return s;
+}
+
+function compareRepos(a, b) {
+  switch (sortMode) {
+    case "score-asc": {
+      // Slechtste score eerst; null/onbekend achteraan
+      const sa = repoScoreForSort(a), sb = repoScoreForSort(b);
+      if (sa == null && sb == null) return a.name.localeCompare(b.name);
+      if (sa == null) return 1;
+      if (sb == null) return -1;
+      return sa - sb || a.name.localeCompare(b.name);
+    }
+    case "score-desc": {
+      const sa = repoScoreForSort(a), sb = repoScoreForSort(b);
+      if (sa == null && sb == null) return a.name.localeCompare(b.name);
+      if (sa == null) return 1;
+      if (sb == null) return -1;
+      return sb - sa || a.name.localeCompare(b.name);
+    }
+    case "name":
+      return a.name.localeCompare(b.name);
+    case "last-audit": {
+      const ta = a.metrics?.last_audit_at || "";
+      const tb = b.metrics?.last_audit_at || "";
+      if (!ta && !tb) return a.name.localeCompare(b.name);
+      if (!ta) return 1;
+      if (!tb) return -1;
+      return tb.localeCompare(ta);  // meest recent eerst
+    }
+    case "agents-first":
+    default: {
+      // agent (1) → unclear (2) → not_agent (3), daarna naam
+      const rank = r => r.is_agent === true ? 1 : (r.is_agent === false ? 3 : 2);
+      return rank(a) - rank(b) || a.name.localeCompare(b.name);
+    }
+  }
+}
+
+function repoMatchesFilter(repo) {
+  if (hideArchived && repo.archived) return false;
+  if (activeFilter === "all") return true;
+  if (activeFilter === "agent") return repo.is_agent === true;
+  if (activeFilter === "not_agent") return repo.is_agent === false;
+  if (activeFilter === "unclear") return repo.is_agent === null || repo.is_agent === undefined;
+  return true;
+}
+
+function renderAll() {
+  const host = document.getElementById("orgsHost");
+  if (!state.orgs.length) {
+    host.innerHTML = `<div class="empty">Nog geen organisaties toegevoegd. Voeg er hierboven één toe (bv. <code>SAAF-Project</code>).</div>`;
+    document.getElementById("cnt-all").textContent = 0;
+    document.getElementById("cnt-agent").textContent = 0;
+    document.getElementById("cnt-not").textContent = 0;
+    document.getElementById("cnt-unclear").textContent = 0;
+    return;
+  }
+  let nAll = 0, nAgent = 0, nNot = 0, nUnclear = 0;
+  for (const org of state.orgs) {
+    for (const r of (org.repos || [])) {
+      if (hideArchived && r.archived) continue;
+      nAll++;
+      if (r.is_agent === true) nAgent++;
+      else if (r.is_agent === false) nNot++;
+      else nUnclear++;
+    }
+  }
+  document.getElementById("cnt-all").textContent = nAll;
+  document.getElementById("cnt-agent").textContent = nAgent;
+  document.getElementById("cnt-not").textContent = nNot;
+  document.getElementById("cnt-unclear").textContent = nUnclear;
+  host.innerHTML = state.orgs.map(orgCard).join("");
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll(".filter-bar button.filter").forEach(b => b.classList.toggle("active", b.dataset.filter === f));
+  saveSettings();
+  renderAll();
+}
+function toggleArchived() {
+  hideArchived = !hideArchived;
+  document.getElementById("archiveToggle").textContent = hideArchived ? "Verberg archived" : "Toon archived";
+  saveSettings();
+  renderAll();
+}
+function setSort(mode) {
+  sortMode = mode;
+  saveSettings();
+  renderAll();
+}
+
+function setStatus(html, kind) {
+  const el = document.getElementById("status");
+  el.className = "status " + (kind || "info");
+  el.innerHTML = html;
+}
+function clearStatus() { document.getElementById("status").innerHTML = ""; document.getElementById("status").className = ""; }
+
+/* ===========================================================
+   Actions
+   =========================================================== */
+async function loadAll(manual = false) {
+  let pingOk = false;
+  let pingData = null;
+  try {
+    pingData = await api("/ping");
+    pingOk = true;
+    document.getElementById("versionLine").textContent = `v${pingData.version || "?"} · build ${pingData.build || "?"}`;
+  } catch(e) { /* server might be down — handled below */ }
+  try {
+    state = await api("/orgs");
+    renderAll();
+    const ts = new Date().toLocaleTimeString("nl-NL").slice(0, 8);
+    document.getElementById("lastRefresh").textContent = `bijgewerkt ${ts}${manual ? "" : " · auto 30s"}`;
+  } catch(e) {
+    const msg = e.message || "";
+    if (!pingOk) {
+      setStatus(`<strong>Server niet bereikbaar op ${escapeHtml(settings.serverUrl)}.</strong><br>Start de server met <code>python server.py</code> in de <code>server/</code>-map. (${escapeHtml(msg)})`, "err");
+    } else if (/\b404\b/.test(msg) && /not found/i.test(msg)) {
+      const routes = pingData?.routes || [];
+      const hasOrgs = routes.includes("/orgs");
+      setStatus(
+        `<strong>Server draait, maar mist het <code>/orgs</code> endpoint.</strong><br>` +
+        `Actieve build: <code>${escapeHtml(pingData?.build || "?")}</code> · versie <code>${escapeHtml(pingData?.version || "?")}</code><br>` +
+        `Dit dashboard vereist een server met build <code>2026-06-16-dashboard</code> of nieuwer.<br>` +
+        `<strong>Fix:</strong> stop het uvicorn-proces (Ctrl+C in de terminal waar <code>python server.py</code> draait) en start het opnieuw. Daarna refresh deze pagina.`,
+        "err"
+      );
+    } else {
+      setStatus(`<strong>/orgs ophalen mislukt:</strong> ${escapeHtml(msg)}`, "err");
+    }
+  }
+}
+
+async function addOrg() {
+  const input = document.getElementById("newOwner").value.trim();
+  if (!input) { setStatus("Vul een owner of GitHub-URL in.", "err"); return; }
+  const owner = input.match(/github\.com[/:]([\w.-]+)/i)?.[1] || input.replace(/^@/, "").split("/")[0];
+  const classify = document.getElementById("classifyToggle").value === "true";
+  const model = document.getElementById("classifyModel").value;
+  setStatus(`<span class="spinner"></span> ${classify ? `Repos ophalen en classificeren voor ${escapeHtml(owner)}…` : `Repos ophalen voor ${escapeHtml(owner)}…`}`, "info");
+  try {
+    const res = await api("/orgs", { method: "POST", body: { owner, classify, model } });
+    setStatus(`✓ Organisatie ${escapeHtml(owner)} toegevoegd — ${res.org.repos.length} repos, ${res.n_classified || 0} geclassificeerd.`, "ok");
+    document.getElementById("newOwner").value = "";
+    await loadAll();
+  } catch(e) {
+    setStatus(`Toevoegen mislukt: ${escapeHtml(e.message)}`, "err");
+  }
+}
+
+async function rescanOrg(owner) {
+  if (!confirm(`Alle non-manual repos van ${owner} opnieuw classificeren?`)) return;
+  setStatus(`<span class="spinner"></span> Rescan voor ${escapeHtml(owner)}…`, "info");
+  try {
+    const model = document.getElementById("classifyModel").value;
+    const res = await api(`/orgs/${encodeURIComponent(owner)}/rescan?model=${encodeURIComponent(model)}`, { method: "POST" });
+    setStatus(`✓ ${res.rescanned} repos opnieuw geclassificeerd voor ${escapeHtml(owner)}.`, "ok");
+    await loadAll();
+  } catch(e) {
+    setStatus(`Rescan mislukt: ${escapeHtml(e.message)}`, "err");
+  }
+}
+
+async function removeOrg(owner) {
+  if (!confirm(`Organisatie ${owner} verwijderen uit het dashboard? (De repos op GitHub blijven.)`)) return;
+  try {
+    await api(`/orgs/${encodeURIComponent(owner)}`, { method: "DELETE" });
+    await loadAll();
+  } catch(e) {
+    setStatus(`Verwijderen mislukt: ${escapeHtml(e.message)}`, "err");
+  }
+}
+
+async function runAudit(owner, repo, btn) {
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Bezig…`;
+  setStatus(`<span class="spinner"></span> Audit voor ${escapeHtml(owner)}/${escapeHtml(repo)}…`, "info");
+  try {
+    // D-4: triggert configure-target + audit-trail; server updatet metrics
+    const res = await api(`/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/audit`, { method: "POST", body: {} });
+    setStatus(`✓ Audit klaar voor ${escapeHtml(owner)}/${escapeHtml(repo)}.`, "ok");
+    await loadAll();
+  } catch(e) {
+    setStatus(`Audit mislukt: ${escapeHtml(e.message)}`, "err");
+  } finally {
+    btn.disabled = false; btn.innerHTML = "Run audit";
+  }
+}
+
+/* ----- Tag-edit modal ----- */
+function openTagModal(owner, repo) {
+  tagCtx = { owner, repo };
+  const r = findRepo(owner, repo);
+  document.getElementById("tagRepoName").textContent = `${owner}/${repo}`;
+  const tag = r?.is_agent === true ? "Agent" : r?.is_agent === false ? "Niet agent" : "Onduidelijk";
+  document.getElementById("tagCurrent").textContent = tag;
+  document.getElementById("tagSource").textContent = r?.tag_source || "auto";
+  document.getElementById("tagReasoning").value = "";
+  document.getElementById("tagModal").classList.add("open");
+}
+function closeTagModal() {
+  document.getElementById("tagModal").classList.remove("open");
+  tagCtx = null;
+}
+function findRepo(owner, repo) {
+  const org = state.orgs.find(o => o.owner === owner);
+  return org?.repos.find(r => r.name === repo);
+}
+async function setTag(is_agent) {
+  if (!tagCtx) return;
+  const reasoning = document.getElementById("tagReasoning").value.trim() || null;
+  try {
+    await api(`/repos/${encodeURIComponent(tagCtx.owner)}/${encodeURIComponent(tagCtx.repo)}/tag`, {
+      method: "POST",
+      body: { is_agent, source: "manual", reasoning }
+    });
+    closeTagModal();
+    await loadAll();
+  } catch(e) {
+    alert("Tag aanpassen mislukt: " + e.message);
+  }
+}
+
+/* ===========================================================
+   Init
+   =========================================================== */
+loadSettings();
+loadAll();
+
+// Auto-refresh elke 30s zodat AC-summary pushes vanuit de criteria-sheet
+// vanzelf op het dashboard verschijnen zonder handmatig klikken.
+setInterval(() => loadAll(false), 30_000);
+// Pauzeer als de tab niet zichtbaar is — anders blijven we onnodig pollen.
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") loadAll(false);
+});
+</script>
+</body>
+</html>

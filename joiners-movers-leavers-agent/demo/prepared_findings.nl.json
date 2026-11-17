@@ -1,0 +1,184 @@
+{
+  "fingerprint": "2b0bf567269be470",
+  "language": "nl",
+  "model": "claude-sonnet-5-5",
+  "created_at": "20261102-114826",
+  "note": "Prepared fallback: a real live Claude Code result on the sample data.",
+  "draft": {
+    "summary": "Uit de deterministische tests over 2026-07-01 tot 2026-09-30 (data per 2026-10-15) komen 15 exceptions naar voren, gegroepeerd in vijf bevindingen. De belangrijkste zijn toegang zonder of buiten een goedgekeurd verzoek (waaronder bevoorrechte ERP-rollen), onvoldoende intrekking van toegang bij verhuizingen en vertrek (met een account dat nog actief is en na uitdiensttreding is gebruikt) en een functiescheidingsconflict in de betalingsketen. De uitkomsten zijn door AI voorbereid en moeten door de auditor worden beoordeeld; drie exceptions zijn bewust als 'Needs follow-up' gemarkeerd omdat de records een legitieme verklaring niet uitsluiten.",
+    "assessments": [
+      {
+        "exception_id": "EX-01",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-005 kreeg op 2026-07-20 drie rechten (AD_PROCUREMENT_SHARE, ERP_VENDOR_MASTER, ERP_PO_REQUESTER) zonder dat er een Jira-ticket bestaat (tickets: leeg). ERP_VENDOR_MASTER is bevoorrecht. Het besturingsmechanisme 'toegang alleen met goedgekeurd verzoek' heeft niet gewerkt."
+      },
+      {
+        "exception_id": "EX-02",
+        "conclusion": "Confirmed exception",
+        "rationale": "IAM-1101 vroeg om AD_IT_SUPPORT, maar USER-030 kreeg op 2026-07-06 AD_IT_ADMINS (domeinbeheerders, bevoorrecht). De verleende toegang komt niet overeen met het goedgekeurde verzoek (ad_group_memberships.csv:44, jira_access_requests.csv:2)."
+      },
+      {
+        "exception_id": "EX-03",
+        "conclusion": "Confirmed exception",
+        "rationale": "ERP_AP_CLERK is aan USER-006 verleend op 2026-08-03, terwijl IAM-1104 pas op 2026-08-12 is goedgekeurd (9 dagen later). Toegang is dus verleend vóór goedkeuring."
+      },
+      {
+        "exception_id": "EX-04",
+        "conclusion": "Confirmed exception",
+        "rationale": "IAM-1106 is aangemaakt en goedgekeurd door dezelfde persoon (USER-011) en betreft het bevoorrechte ERP_HR_PAYROLL voor USER-024. Er is geen onafhankelijke goedkeuring aangetoond."
+      },
+      {
+        "exception_id": "EX-05",
+        "conclusion": "Needs follow-up",
+        "rationale": "IAM-1108 noemt geen rol (requested_access is leeg) maar vraagt 'dezelfde ERP-toegang als USER-003'. ERP_PAYMENT_RELEASE (bevoorrecht) is op 2026-09-07 verleend. De goedkeuring door USER-012 (leidinggevende volgens HR) en de functie Treasury Officer kunnen de toegang verklaren, maar het ticket legt niet vast welke rollen zijn goedgekeurd.",
+        "follow_up": "Vraag na of USER-012 bewust ERP_PAYMENT_RELEASE heeft goedgekeurd, welke rollen USER-003 had op dat moment, en of de toegang past bij de functie van USER-022."
+      },
+      {
+        "exception_id": "EX-06",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-015 is per 2026-08-01 overgeplaatst van Procurement Officer naar Financial Controller, maar houdt op 2026-10-15 nog het bevoorrechte ERP_VENDOR_MASTER. De mover-SLA van 5 dagen is ruim overschreden en er is geen ticket."
+      },
+      {
+        "exception_id": "EX-07",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-019 is per 2026-07-15 overgeplaatst naar Treasury Officer, maar ERP_AP_CLERK uit de vorige functie is niet ingetrokken (mover-SLA 5 dagen). Er is geen ticket dat een tijdelijke overlap onderbouwt."
+      },
+      {
+        "exception_id": "EX-08",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-019 heeft op 2026-10-15 zowel ERP_AP_CLERK als ERP_PAYMENT_RELEASE (SOD-01, hoog risico). ERP_PAYMENT_RELEASE is op 2026-07-15 verleend zonder ticket. Het conflict is een direct gevolg van de niet-ingetrokken rol uit EX-07."
+      },
+      {
+        "exception_id": "EX-09",
+        "conclusion": "Confirmed exception",
+        "rationale": "Het directoryprofiel van USER-015 toont nog Procurement / Procurement Officer, terwijl HR Finance / Financial Controller toont sinds 2026-08-01. Het risico is laag, maar de bron van de inconsistentie is aangetoond."
+      },
+      {
+        "exception_id": "EX-10",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-029 is uit dienst per 2026-08-28, maar het account is op 2026-10-15 nog ingeschakeld (disabled_date leeg). Verwijderingsticket IAM-1117 staat nog op Open zonder resolved_at."
+      },
+      {
+        "exception_id": "EX-11",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-002 vertrok op 2026-07-31; account en groepen AD_ALL_STAFF en AD_HR_SHARE zijn pas op 2026-08-21 verwijderd (21 dagen, SLA 1 dag). IAM-1116 heeft status Done maar geen resolved_at, wat op onvolledige ticketregistratie wijst."
+      },
+      {
+        "exception_id": "EX-12",
+        "conclusion": "Confirmed exception",
+        "rationale": "Het account van USER-029 is op 2026-09-03 gebruikt (laatste login), 6 dagen na uitdiensttreding op 2026-08-28. Het account was toen nog ingeschakeld. Wie of wat de login uitvoerde, blijkt niet uit de records."
+      },
+      {
+        "exception_id": "EX-13",
+        "conclusion": "Confirmed exception",
+        "rationale": "Het directoryaccount van USER-016 is op 2026-09-11 uitgeschakeld, maar ERP_GL_ACCOUNTANT (bevoorrecht) en ERP_REPORTING zijn op 2026-10-15 nog toegewezen. IAM-1118 staat op Done, terwijl de ERP-rollen niet zijn verwijderd."
+      },
+      {
+        "exception_id": "EX-14",
+        "conclusion": "Needs follow-up",
+        "rationale": "Account USER-008 (Procurement / Procurement Officer) is ingeschakeld, laatst gebruikt op 2026-10-02, en heeft geen HR-record. Het kan een HR-registratiegat zijn of een niet-medewerker (bijvoorbeeld extern) betreffen; de records geven dat niet aan.",
+        "follow_up": "Vraag HR en de accounteigenaar wie USER-008 is, wie het account heeft aangevraagd en of er een geldige grondslag is. Onderzoek het recente gebruik en de toegekende rechten."
+      },
+      {
+        "exception_id": "EX-15",
+        "conclusion": "Needs follow-up",
+        "rationale": "USER-036 is actief in HR, maar de laatste login was 2026-05-20, ruim meer dan de drempel van 90 dagen (circa 148 dagen tot 2026-10-15). Langdurige afwezigheid of een accountdat zelden nodig is, kunnen dit verklaren.",
+        "follow_up": "Controleer met de leidinggevende (USER-035) of USER-036 afwezig is of de toegang nog nodig heeft, en schakel het account zo nodig uit."
+      }
+    ],
+    "findings": [
+      {
+        "id": "F-01",
+        "title": "Toegang verleend zonder, buiten of vóór een goedgekeurd verzoek",
+        "risk_rating": "High",
+        "control_objective": "Elke in de periode verleende toegang is gedekt door een goedgekeurd verzoek, past bij wat is aangevraagd en wordt pas na goedkeuring ingericht (ISO/IEC 27001:2022 A.5.18 en A.8.2; SOC 2 CC6.2).",
+        "observation": "Bij de joiner-tests zijn drie exceptions vastgesteld. USER-005 kreeg op 2026-07-20 drie rechten, waaronder het bevoorrechte ERP_VENDOR_MASTER, zonder ticket (EX-01). USER-030 kreeg AD_IT_ADMINS terwijl IAM-1101 AD_IT_SUPPORT vroeg (EX-02). USER-006 kreeg ERP_AP_CLERK op 2026-08-03, 9 dagen vóór goedkeuring van IAM-1104 op 2026-08-12 (EX-03).",
+        "root_cause": "Te bevestigen met management: mogelijk wordt provisioning niet technisch gekoppeld aan een goedgekeurd ticket en vindt er geen controle plaats tussen verzoek en uitgevoerde toewijzing.",
+        "impact": "Bevoorrechte rechten (domeinbeheer, leveranciersstamgegevens inclusief bankrekeningen) kunnen zonder autorisatie in omloop komen, wat het risico op misbruik en fraude vergroot.",
+        "recommendation": "Koppel provisioning aan een goedgekeurd ticket en leg een vergelijking vast tussen aangevraagde en verleende rechten. Laat bevoorrechte toewijzingen achteraf door een tweede persoon controleren. Laat de eigenaar de rechten van USER-005 en USER-030 beoordelen en zo nodig intrekken of alsnog formeel autoriseren.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-01",
+          "EX-02",
+          "EX-03",
+          "IAM-1101",
+          "IAM-1104"
+        ]
+      },
+      {
+        "id": "F-02",
+        "title": "Zwakke goedkeuring: eigen verzoek en ticket zonder benoemde rol",
+        "risk_rating": "High",
+        "control_objective": "Toegangsverzoeken worden door iemand anders dan de aanvrager goedgekeurd en benoemen de specifieke rollen of groepen (ISO/IEC 27001:2022 A.5.3 en A.5.18; SOC 2 CC6.2).",
+        "observation": "IAM-1106 voor het bevoorrechte ERP_HR_PAYROLL is door dezelfde persoon (USER-011) aangemaakt en goedgekeurd (EX-04). IAM-1108 benoemt geen rol maar verwijst naar de toegang van USER-003; daarop is het bevoorrechte ERP_PAYMENT_RELEASE verleend (EX-05). Voor EX-05 is nog niet vastgesteld of de goedkeuring inhoudelijk onjuist was.",
+        "root_cause": "Te bevestigen met management: mogelijk ontbreekt een werkstroomregel die zelfgoedkeuring blokkeert en een verplicht veld voor de aangevraagde rol.",
+        "impact": "Zonder onafhankelijke goedkeuring en een eenduidig verzoek is niet aantoonbaar welke toegang is geautoriseerd. Kopiëren van de rechten van een collega kan onnodige of conflicterende bevoorrechte rechten opleveren.",
+        "recommendation": "Blokkeer in Jira goedkeuring door de aanvrager en maak het veld voor de aangevraagde toegang verplicht. Verbied 'zelfde als collega'-verzoeken voor bevoorrechte rollen. Laat de goedkeurder van IAM-1108 bevestigen welke rollen bedoeld waren.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-04",
+          "EX-05",
+          "IAM-1106",
+          "IAM-1108"
+        ]
+      },
+      {
+        "id": "F-03",
+        "title": "Rechten niet ingetrokken na functiewijziging; functiescheidingsconflict",
+        "risk_rating": "High",
+        "control_objective": "Toegang van de vorige functie wordt binnen de mover-SLA van 5 dagen ingetrokken, de directory volgt HR en er zijn geen conflicterende rechten (ISO/IEC 27001:2022 A.5.3 en A.5.18; SOC 2 CC6.3).",
+        "observation": "USER-015 (overplaatsing per 2026-08-01) houdt het bevoorrechte ERP_VENDOR_MASTER (EX-06) en het directoryprofiel is niet bijgewerkt (EX-09). USER-019 (overplaatsing per 2026-07-15) houdt ERP_AP_CLERK en kreeg ERP_PAYMENT_RELEASE zonder ticket, wat SOD-01 schendt (EX-07, EX-08).",
+        "root_cause": "Te bevestigen met management: mogelijk start een HR-overplaatsing geen proces om bestaande rechten te herzien en worden alleen nieuwe rechten toegevoegd.",
+        "impact": "Opgebouwde rechten leiden tot een combinatie waarmee één persoon een leveranciersfactuur kan invoeren en de betaling kan vrijgeven. Dat is een hoog fraude- en foutrisico.",
+        "recommendation": "Neem een herziening van bestaande rechten op in het mover-proces, met een ticket per intrekking. Trek ERP_AP_CLERK van USER-019 en ERP_VENDOR_MASTER van USER-015 in, tenzij een gedocumenteerde uitzondering bestaat, en werk de directoryprofielen bij. Voer periodiek een SoD-controle uit.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-06",
+          "EX-07",
+          "EX-08",
+          "EX-09"
+        ]
+      },
+      {
+        "id": "F-04",
+        "title": "Leaver-toegang te laat of niet ingetrokken, met gebruik na vertrek",
+        "risk_rating": "High",
+        "control_objective": "Accounts van vertrekkers worden op de laatste werkdag uitgeschakeld en alle applicatierollen worden binnen de SLA van 1 dag verwijderd (ISO/IEC 27001:2022 A.5.18 en A.8.2; SOC 2 CC6.2).",
+        "observation": "Het account van USER-029 (uit dienst 2026-08-28) is op 2026-10-15 nog ingeschakeld en is op 2026-09-03 gebruikt (EX-10, EX-12); IAM-1117 staat nog Open. Bij USER-002 duurde de intrekking 21 dagen (EX-11). Bij USER-016 zijn ERP_GL_ACCOUNTANT en ERP_REPORTING niet verwijderd (EX-13). IAM-1116 en IAM-1118 staan op Done zonder resolved_at.",
+        "root_cause": "Te bevestigen met management: mogelijk wordt het uitdiensttredingsproces handmatig via tickets uitgevoerd, zonder controle op afronding en zonder dat applicatierollen buiten de directory worden meegenomen.",
+        "impact": "Voormalige medewerkers kunnen toegang tot systemen en gegevens houden. Het gebruik na vertrek bij USER-029 en het bevoorrechte ERP_GL_ACCOUNTANT bij USER-016 vergroten het risico op ongeautoriseerde toegang en boekingen.",
+        "recommendation": "Schakel accounts automatisch uit op basis van de HR-einddatum en verwijder applicatierollen mee. Sluit tickets pas na verificatie. Onderzoek de login van USER-029 op 2026-09-03 en verwijder de resterende rechten van USER-029 en USER-016 direct.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-10",
+          "EX-11",
+          "EX-12",
+          "EX-13",
+          "IAM-1116",
+          "IAM-1117",
+          "IAM-1118"
+        ]
+      },
+      {
+        "id": "F-05",
+        "title": "Accounts zonder HR-record of zonder recent gebruik",
+        "risk_rating": "Medium",
+        "control_objective": "Directoryaccounts komen overeen met HR en worden gebruikt; ongebruikte of onbekende accounts worden beoordeeld (ISO/IEC 27001:2022 A.5.18; SOC 2 CC6.2).",
+        "observation": "Account USER-008 is ingeschakeld en op 2026-10-02 gebruikt, maar heeft geen HR-record (EX-14). Account USER-036 is niet gebruikt sinds 2026-05-20, boven de drempel van 90 dagen (EX-15). Beide zijn nog niet inhoudelijk verklaard.",
+        "root_cause": "Te bevestigen met management: mogelijk ontbreekt een periodieke afstemming tussen HR en directory en een beoordeling van inactieve accounts.",
+        "impact": "Accounts zonder eigenaar of zonder gebruik vergroten het aanvalsoppervlak en maken toegangsbeheer minder betrouwbaar.",
+        "recommendation": "Stem de accountpopulatie periodiek af met HR, wijs voor elk account een eigenaar aan en schakel inactieve accounts na de drempel uit na bevestiging. Laat USER-008 en USER-036 door de accounteigenaar beoordelen.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-14",
+          "EX-15"
+        ]
+      }
+    ]
+  }
+}

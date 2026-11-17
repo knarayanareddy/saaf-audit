@@ -1,0 +1,65 @@
+[
+  {"part_id": "LNS-0001", "description": "EUV projection lens element", "category": "Optics", "unit_price": 185000.00, "unit": "stuk", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0002", "description": "DUV illumination mirror assembly", "category": "Optics", "unit_price": 142000.00, "unit": "stuk", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0003", "description": "Wafer stage alignment lens", "category": "Optics", "unit_price": 67500.00, "unit": "stuk", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0004", "description": "Pellicle frame optical window", "category": "Optics", "unit_price": 28000.00, "unit": "stuk", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0005", "description": "Reticle inspection objective", "category": "Optics", "unit_price": 95000.00, "unit": "stuk", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0006", "description": "Beam splitter cube assembly", "category": "Optics", "unit_price": 34000.00, "unit": "set", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0007", "description": "Focus sensor prism array", "category": "Optics", "unit_price": 19500.00, "unit": "set", "preferred_supplier_id": "SUP-001"},
+  {"part_id": "LNS-0008", "description": "Collector mirror substrate", "category": "Optics", "unit_price": 156000.00, "unit": "stuk", "preferred_supplier_id": "SUP-001"},
+
+  {"part_id": "LSR-0001", "description": "CO2 drive laser module", "category": "Laser", "unit_price": 450000.00, "unit": "stuk", "preferred_supplier_id": "SUP-002"},
+  {"part_id": "LSR-0002", "description": "Pre-pulse laser unit", "category": "Laser", "unit_price": 320000.00, "unit": "stuk", "preferred_supplier_id": "SUP-002"},
+  {"part_id": "LSR-0003", "description": "Beam delivery optical fiber", "category": "Laser", "unit_price": 18500.00, "unit": "stuk", "preferred_supplier_id": "SUP-002"},
+  {"part_id": "LSR-0004", "description": "Laser pulse timing controller", "category": "Laser", "unit_price": 42000.00, "unit": "stuk", "preferred_supplier_id": "SUP-002"},
+  {"part_id": "LSR-0005", "description": "High-power laser diode array", "category": "Laser", "unit_price": 87000.00, "unit": "set", "preferred_supplier_id": "SUP-002"},
+  {"part_id": "LSR-0006", "description": "Laser cavity alignment tool", "category": "Laser", "unit_price": 12000.00, "unit": "kit", "preferred_supplier_id": "SUP-002"},
+  {"part_id": "LSR-0007", "description": "Seed laser oscillator", "category": "Laser", "unit_price": 195000.00, "unit": "stuk", "preferred_supplier_id": "SUP-002"},
+
+  {"part_id": "CHM-0001", "description": "Ultra-pure hydrogen peroxide", "category": "Chemicals", "unit_price": 850.00, "unit": "drum", "preferred_supplier_id": "SUP-003"},
+  {"part_id": "CHM-0002", "description": "EUV resist solvent blend", "category": "Chemicals", "unit_price": 2400.00, "unit": "drum", "preferred_supplier_id": "SUP-003"},
+  {"part_id": "CHM-0003", "description": "Tin target material pellets", "category": "Chemicals", "unit_price": 4800.00, "unit": "cylinder", "preferred_supplier_id": "SUP-003"},
+  {"part_id": "CHM-0004", "description": "Cleanroom-grade isopropanol", "category": "Chemicals", "unit_price": 320.00, "unit": "drum", "preferred_supplier_id": "SUP-003"},
+  {"part_id": "CHM-0005", "description": "Nitrogen purge gas (6N purity)", "category": "Chemicals", "unit_price": 1200.00, "unit": "cylinder", "preferred_supplier_id": "SUP-003"},
+  {"part_id": "CHM-0006", "description": "Argon buffer gas supply", "category": "Chemicals", "unit_price": 680.00, "unit": "cylinder", "preferred_supplier_id": "SUP-003"},
+
+  {"part_id": "CMP-0001", "description": "CMP slurry oxide formulation", "category": "CMP", "unit_price": 3200.00, "unit": "drum", "preferred_supplier_id": "SUP-004"},
+  {"part_id": "CMP-0002", "description": "Polishing pad IC1010 stack", "category": "CMP", "unit_price": 8500.00, "unit": "set", "preferred_supplier_id": "SUP-004"},
+  {"part_id": "CMP-0003", "description": "Diamond conditioning disc", "category": "CMP", "unit_price": 4200.00, "unit": "stuk", "preferred_supplier_id": "SUP-004"},
+  {"part_id": "CMP-0004", "description": "Retaining ring assembly", "category": "CMP", "unit_price": 1800.00, "unit": "set", "preferred_supplier_id": "SUP-004"},
+  {"part_id": "CMP-0005", "description": "Endpoint detection sensor", "category": "CMP", "unit_price": 12500.00, "unit": "stuk", "preferred_supplier_id": "SUP-004"},
+
+  {"part_id": "SRC-0001", "description": "EUV tin droplet generator", "category": "Source", "unit_price": 780000.00, "unit": "stuk", "preferred_supplier_id": "SUP-005"},
+  {"part_id": "SRC-0002", "description": "Collector mirror module", "category": "Source", "unit_price": 520000.00, "unit": "stuk", "preferred_supplier_id": "SUP-005"},
+  {"part_id": "SRC-0003", "description": "Debris mitigation system", "category": "Source", "unit_price": 245000.00, "unit": "stuk", "preferred_supplier_id": "SUP-005"},
+  {"part_id": "SRC-0004", "description": "Vacuum vessel liner kit", "category": "Source", "unit_price": 68000.00, "unit": "kit", "preferred_supplier_id": "SUP-005"},
+  {"part_id": "SRC-0005", "description": "Plasma diagnostic probe", "category": "Source", "unit_price": 35000.00, "unit": "stuk", "preferred_supplier_id": "SUP-005"},
+
+  {"part_id": "MTL-0001", "description": "Silicon carbide substrate blank", "category": "Materials", "unit_price": 8500.00, "unit": "stuk", "preferred_supplier_id": "SUP-006"},
+  {"part_id": "MTL-0002", "description": "Zerodur glass ceramic block", "category": "Materials", "unit_price": 11200.00, "unit": "stuk", "preferred_supplier_id": "SUP-006"},
+  {"part_id": "MTL-0003", "description": "Invar 36 alloy plate", "category": "Materials", "unit_price": 2800.00, "unit": "stuk", "preferred_supplier_id": "SUP-006"},
+  {"part_id": "MTL-0004", "description": "Molybdenum-silicon multilayer", "category": "Materials", "unit_price": 6400.00, "unit": "set", "preferred_supplier_id": "SUP-006"},
+  {"part_id": "MTL-0005", "description": "Titanium vacuum chamber flange", "category": "Materials", "unit_price": 950.00, "unit": "stuk", "preferred_supplier_id": "SUP-006"},
+  {"part_id": "MTL-0006", "description": "Copper heat sink block", "category": "Materials", "unit_price": 540.00, "unit": "stuk", "preferred_supplier_id": "SUP-006"},
+
+  {"part_id": "SEN-0001", "description": "Wafer alignment interferometer", "category": "Sensors", "unit_price": 7200.00, "unit": "stuk", "preferred_supplier_id": "SUP-007"},
+  {"part_id": "SEN-0002", "description": "Level sensor photodiode array", "category": "Sensors", "unit_price": 3800.00, "unit": "set", "preferred_supplier_id": "SUP-007"},
+  {"part_id": "SEN-0003", "description": "Temperature probe PT1000 kit", "category": "Sensors", "unit_price": 1200.00, "unit": "kit", "preferred_supplier_id": "SUP-007"},
+  {"part_id": "SEN-0004", "description": "Vibration isolation accelerometer", "category": "Sensors", "unit_price": 5600.00, "unit": "stuk", "preferred_supplier_id": "SUP-007"},
+  {"part_id": "SEN-0005", "description": "Dose uniformity detector", "category": "Sensors", "unit_price": 4500.00, "unit": "stuk", "preferred_supplier_id": "SUP-007"},
+
+  {"part_id": "OPT-0001", "description": "Mo/Si multilayer coating service", "category": "Optical coatings", "unit_price": 38000.00, "unit": "stuk", "preferred_supplier_id": "SUP-008"},
+  {"part_id": "OPT-0002", "description": "Anti-reflective DUV coating", "category": "Optical coatings", "unit_price": 12500.00, "unit": "stuk", "preferred_supplier_id": "SUP-008"},
+  {"part_id": "OPT-0003", "description": "High-reflectivity mirror coating", "category": "Optical coatings", "unit_price": 24000.00, "unit": "stuk", "preferred_supplier_id": "SUP-008"},
+  {"part_id": "OPT-0004", "description": "Spectral purity filter coating", "category": "Optical coatings", "unit_price": 5800.00, "unit": "stuk", "preferred_supplier_id": "SUP-008"},
+
+  {"part_id": "PWR-0001", "description": "High-voltage pulse generator", "category": "Power systems", "unit_price": 55000.00, "unit": "stuk", "preferred_supplier_id": "SUP-009"},
+  {"part_id": "PWR-0002", "description": "UPS battery module rack", "category": "Power systems", "unit_price": 18000.00, "unit": "set", "preferred_supplier_id": "SUP-009"},
+  {"part_id": "PWR-0003", "description": "RF power amplifier unit", "category": "Power systems", "unit_price": 32000.00, "unit": "stuk", "preferred_supplier_id": "SUP-009"},
+  {"part_id": "PWR-0004", "description": "DC-DC converter board", "category": "Power systems", "unit_price": 7500.00, "unit": "stuk", "preferred_supplier_id": "SUP-009"},
+
+  {"part_id": "ROB-0001", "description": "Wafer handling robot arm", "category": "Robotics", "unit_price": 135000.00, "unit": "stuk", "preferred_supplier_id": "SUP-010"},
+  {"part_id": "ROB-0002", "description": "Reticle stage linear motor", "category": "Robotics", "unit_price": 82000.00, "unit": "stuk", "preferred_supplier_id": "SUP-010"},
+  {"part_id": "ROB-0003", "description": "Wafer stage planar motor", "category": "Robotics", "unit_price": 148000.00, "unit": "stuk", "preferred_supplier_id": "SUP-010"},
+  {"part_id": "ROB-0004", "description": "FOUP loader mechanism", "category": "Robotics", "unit_price": 45000.00, "unit": "stuk", "preferred_supplier_id": "SUP-010"}
+]

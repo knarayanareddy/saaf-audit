@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vendor Guard</title>
+<link rel="icon" href="/saaf-logo.png">
+<style>
+  /* SAAF Project brand (from SAAF-Project/website/styles.css) */
+  :root {
+    --bg: #020617; --surface: #0F172A; --surface2: #1E1B4B; --border: #1E293B;
+    --text: #E2E8F0; --muted: #94A3B8;
+    --accent: #818CF8; --accent-strong: #6366F1; --purple: #C084FC;
+    --green: #4ADE80; --yellow: #FBBF24; --red: #F87171; --orange: #FB923C;
+    --grad: linear-gradient(135deg, #818CF8, #C084FC);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0; min-height: 100vh; color: var(--text);
+    font: 15px/1.55 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(192,132,252,.16), transparent 60%),
+      radial-gradient(800px 500px at -10% 10%, rgba(99,102,241,.18), transparent 60%),
+      var(--bg);
+  }
+  .hidden { display: none !important; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; align-items: center; gap: 14px; padding: 10px 20px;
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 5;
+  }
+  .topbar img { height: 40px; width: auto; }
+  .brand-title { font-size: 19px; font-weight: 800; letter-spacing: -.01em;
+                 background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .brand-sub { font-size: 11px; color: var(--muted); }
+  .topbar .spacer { flex: 1; }
+  .clock { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted);
+           border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; background: rgba(255,255,255,.03); }
+  .clock b { color: var(--text); }
+
+  main { max-width: 1160px; margin: 0 auto; padding: 22px 16px 60px; display: grid; gap: 18px; }
+  .panel { background: rgba(15,23,42,.82); border: 1px solid var(--border); border-radius: var(--radius);
+           padding: 20px; backdrop-filter: blur(6px); }
+  .panel h2 { margin: 0 0 14px; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+  .step { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px;
+          background: var(--grad); color: #0b1020; font-weight: 800; font-size: 13px; }
+
+  /* ---------- Upload ---------- */
+  .drops { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 720px) { .drops { grid-template-columns: 1fr; } }
+  .drop { border: 1.5px dashed #334155; border-radius: 12px; padding: 18px; cursor: pointer; min-height: 130px;
+          background: rgba(255,255,255,.02); transition: border-color .2s, background .2s, transform .2s; }
+  .drop:hover, .drop.over { border-color: var(--accent); background: rgba(129,140,248,.08); transform: translateY(-2px); }
+  .drop strong { display: block; font-size: 15px; }
+  .drop small { color: var(--muted); }
+  .drop .ico { font-size: 22px; float: right; opacity: .8; }
+  .drop ul { list-style: none; margin: 12px 0 0; padding: 0; font-size: 13px; }
+  .drop li { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; border-top: 1px solid var(--border);
+             animation: slideIn .25s ease both; }
+  .drop li button { border: 0; background: none; color: var(--muted); cursor: pointer; font: inherit; }
+  .drop li button:hover { color: var(--red); }
+  .drop input { display: none; }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 16px; }
+  .controls label { color: var(--muted); font-size: 14px; }
+  select { font: inherit; border-radius: 10px; padding: 8px 12px; border: 1px solid var(--border);
+           background: var(--surface); color: var(--text); }
+  .btn { font: inherit; font-weight: 700; border: 0; border-radius: 10px; padding: 11px 26px; cursor: pointer;
+         color: #fff; background: var(--accent-strong); box-shadow: 0 4px 18px rgba(79,70,229,.45);
+         transition: transform .15s, box-shadow .15s, opacity .15s; }
+  .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,102,241,.6); }
+  .btn:disabled { opacity: .35; cursor: not-allowed; box-shadow: none; }
+  .btn.start { background: var(--grad); color: #0b1020; }
+  .link { border: 0; background: none; color: var(--accent); cursor: pointer; font: inherit; padding: 0; }
+  .link:hover { text-decoration: underline; }
+  .error { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: rgba(248,113,113,.12);
+           color: var(--red); border: 1px solid rgba(248,113,113,.35); }
+
+  /* ---------- XP bar ---------- */
+  .xp { display: grid; gap: 6px; margin-bottom: 18px; }
+  .xp-top { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .xp-top b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .xp-track { height: 12px; border-radius: 999px; background: #0b1224; border: 1px solid var(--border); overflow: hidden; }
+  .xp-fill { height: 100%; width: 0%; border-radius: 999px; background: var(--grad); position: relative;
+             transition: width .8s cubic-bezier(.2,.8,.2,1); box-shadow: 0 0 16px rgba(192,132,252,.55); }
+  .xp-fill::after { content: ""; position: absolute; inset: 0;
+                    background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.45) 50%, transparent 80%);
+                    background-size: 200% 100%; animation: shimmer 1.6s linear infinite; }
+
+  /* ---------- Quest map ---------- */
+  .map { display: grid; grid-template-columns: 1fr 1fr 2fr 1fr 1fr; gap: 34px; align-items: center; }
+  @media (max-width: 900px) { .map { grid-template-columns: 1fr; gap: 26px; } }
+  .col { display: grid; gap: 10px; position: relative; }
+  .link-line { position: absolute; top: 50%; right: -30px; width: 26px; height: 3px; border-radius: 3px;
+               background: #1f2a44; overflow: hidden; }
+  @media (max-width: 900px) { .link-line { top: auto; bottom: -22px; right: 50%; width: 3px; height: 18px; } }
+  .link-line.live { background: rgba(129,140,248,.25); }
+  .link-line.live::after { content: ""; position: absolute; inset: 0;
+                           background: repeating-linear-gradient(90deg, transparent 0 6px, var(--purple) 6px 10px);
+                           animation: flow .6s linear infinite; }
+  .link-line.done { background: var(--grad); }
+
+  .card { position: relative; border-radius: 12px; padding: 12px 12px 10px; background: var(--surface);
+          border: 1px solid var(--border); transition: transform .25s, border-color .25s, opacity .25s; isolation: isolate; }
+  .card .row { display: flex; align-items: center; gap: 10px; }
+  .card .ico { font-size: 20px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px;
+               background: rgba(255,255,255,.04); flex: none; }
+  .card .name { font-weight: 700; font-size: 14px; }
+  .card .sub { color: var(--muted); font-size: 12px; }
+  .card .meta { margin-top: 8px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-height: 18px; }
+  .card .badge { position: absolute; top: -9px; right: -9px; width: 24px; height: 24px; border-radius: 50%;
+                 display: grid; place-items: center; font-size: 13px; font-weight: 800; transform: scale(0);
+                 transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
+  /* running: rotating gradient ring + scan */
+  .card.running { border-color: transparent; transform: translateY(-3px); }
+  .card.running::before { content: ""; position: absolute; inset: -2px; border-radius: 14px; z-index: -1;
+                          background: conic-gradient(from var(--angle), #6366F1, #C084FC, #818CF8, #6366F1);
+                          animation: spin 2.2s linear infinite; }
+  .card.running::after { content: ""; position: absolute; inset: 0; border-radius: 12px; z-index: -1;
+                         background: linear-gradient(180deg, var(--surface), var(--surface)); }
+  .card.running .ico { animation: bob 1.2s ease-in-out infinite; background: rgba(129,140,248,.18); }
+  .card.running .meta { color: var(--accent); }
+  .card.done { border-color: rgba(74,222,128,.45); animation: pop .45s cubic-bezier(.3,1.6,.5,1); }
+  .card.done .badge { transform: scale(1); background: var(--green); color: #052e16; }
+  .card.done .ico { background: rgba(74,222,128,.12); }
+  .card.error { border-color: var(--red); background: rgba(248,113,113,.08); animation: shake .4s; }
+  .card.error .badge { transform: scale(1); background: var(--red); color: #450a0a; }
+  .card.skipped { opacity: .32; filter: grayscale(1); border-style: dashed; }
+  .float { position: absolute; right: 12px; top: 6px; font-weight: 800; font-size: 13px; color: var(--purple);
+           pointer-events: none; animation: rise 1.4s ease-out forwards; }
+
+  .status-line { margin-top: 18px; color: var(--muted); font-size: 14px; min-height: 22px; }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+  pre { background: #0b1224; border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 12px;
+        max-height: 240px; overflow: auto; white-space: pre-wrap; color: var(--muted); }
+
+  /* ---------- Toasts ---------- */
+  .toasts { position: fixed; right: 16px; bottom: 16px; display: grid; gap: 10px; z-index: 20; width: min(340px, calc(100vw - 32px)); }
+  .toast { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 12px;
+           background: linear-gradient(135deg, var(--surface), var(--surface2)); border: 1px solid rgba(129,140,248,.4);
+           box-shadow: 0 10px 30px rgba(2,6,23,.6); animation: toastIn .45s cubic-bezier(.3,1.4,.5,1) both; }
+  .toast.out { animation: toastOut .35s ease forwards; }
+  .toast .t-ico { font-size: 24px; }
+  .toast .t-kicker { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--purple); font-weight: 800; }
+  .toast .t-title { font-weight: 700; font-size: 14px; }
+
+  /* ---------- Results ---------- */
+  .verdict { display: flex; align-items: center; gap: 18px; padding: 16px; border-radius: 12px; margin-bottom: 16px;
+             background: rgba(255,255,255,.03); border: 1px solid var(--border); animation: rise-in .6s ease both; }
+  .shield { width: 74px; height: 84px; flex: none; display: grid; place-items: center; font-weight: 900; font-size: 13px;
+            clip-path: polygon(50% 0, 100% 14%, 100% 55%, 50% 100%, 0 55%, 0 14%); color: #0b1020;
+            animation: pop .6s cubic-bezier(.3,1.6,.5,1) both; }
+  .shield.Red { background: linear-gradient(160deg, #fca5a5, var(--red)); }
+  .shield.Amber { background: linear-gradient(160deg, #fde68a, var(--yellow)); }
+  .shield.Green { background: linear-gradient(160deg, #bbf7d0, var(--green)); }
+  .verdict .v-kicker { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .verdict .v-title { font-size: 22px; font-weight: 800; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; animation: rise-in .5s ease both; }
+  .stat .n { font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 12px; color: var(--muted); }
+  .notice { padding: 12px 14px; border-radius: 10px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.35);
+            border-left: 4px solid var(--yellow); font-size: 14px; margin-bottom: 16px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+  tbody tr { animation: slideIn .4s ease both; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .rag { display: inline-block; padding: 2px 11px; border-radius: 999px; font-weight: 800; font-size: 12px; }
+  .rag.Red { background: rgba(248,113,113,.15); color: var(--red); box-shadow: 0 0 12px rgba(248,113,113,.25); }
+  .rag.Amber { background: rgba(251,191,36,.15); color: var(--yellow); box-shadow: 0 0 12px rgba(251,191,36,.2); }
+  .rag.Green { background: rgba(74,222,128,.15); color: var(--green); box-shadow: 0 0 12px rgba(74,222,128,.2); }
+  .downloads { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .downloads a { border: 1px solid var(--border); border-radius: 10px; padding: 7px 13px; color: var(--accent);
+                 text-decoration: none; font-size: 13px; background: rgba(255,255,255,.02); transition: background .15s, transform .15s; }
+  .downloads a:hover { background: rgba(129,140,248,.12); transform: translateY(-1px); }
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 30; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding-bottom: 24px; }
+
+  /* ---------- Animations ---------- */
+  @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+  @keyframes spin { to { --angle: 360deg; } }
+  @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  @keyframes flow { from { background-position: 0 0; } to { background-position: 20px 0; } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes pop { 0% { transform: scale(.92); } 60% { transform: scale(1.04); } 100% { transform: scale(1); } }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  @keyframes rise { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-30px); } }
+  @keyframes rise-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(20px) scale(.95); } to { opacity: 1; transform: none; } }
+  @keyframes toastOut { to { opacity: 0; transform: translateX(30px); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <img src="/saaf-logo.png" alt="SAAF Project">
+  <div>
+    <div class="brand-title">Vendor Guard</div>
+    <div class="brand-sub">SAAF Project · Third-party risk audit agent</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="clock hidden" id="clock">Mission time <b id="clock-val">00:00</b></div>
+</header>
+
+<main>
+  <section class="panel" id="upload-panel">
+    <h2><span class="step">1</span> Load the vendor's dossier</h2>
+    <div class="drops">
+      <label class="drop" id="drop-q">
+        <span class="ico">📋</span>
+        <strong>Questionnaire</strong>
+        <small>One file: PDF, DOCX, XLSX or TXT</small>
+        <input type="file" id="file-q" accept=".pdf,.docx,.xlsx,.txt">
+        <ul id="list-q"></ul>
+      </label>
+      <label class="drop" id="drop-d">
+        <span class="ico">🗂️</span>
+        <strong>Supporting evidence</strong>
+        <small>SOC 2 reports, ISO certificates, DORA self-assessments… (optional)</small>
+        <input type="file" id="file-d" accept=".pdf,.docx,.xlsx,.txt" multiple>
+        <ul id="list-d"></ul>
+      </label>
+    </div>
+    <div class="controls">
+      <label for="backend">Reach Claude via</label>
+      <select id="backend">
+        <option value="claude-code">My Claude account (Claude Code)</option>
+        <option value="api">Anthropic API key</option>
+      </select>
+      <button class="btn start" id="start" disabled>▶ Start assessment</button>
+      <button class="link" id="samples" type="button">Use sample documents</button>
+    </div>
+    <div class="error hidden" id="upload-error"></div>
+  </section>
+
+  <section class="panel hidden" id="pipeline-panel">
+    <h2><span class="step">2</span> Assessment in progress</h2>
+    <div class="xp">
+      <div class="xp-top"><span id="xp-label">Preparing mission…</span><b id="xp-pct">0%</b></div>
+      <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
+    </div>
+    <div class="map">
+      <div class="col">
+        <div class="card" data-stage="documents"><span class="badge">✓</span><div class="row"><span class="ico">📄</span><div><div class="name">Documents</div><div class="sub">Parse &amp; label</div></div></div><div class="meta"></div></div>
+        <span class="link-line" data-after="documents"></span>
+      </div>
+      <div class="col">
+        <div class="card" data-stage="profile"><span class="badge">✓</span><div class="row"><span class="ico">🧭</span><div><div class="name">Vendor profile</div><div class="sub">Identify &amp; route</div></div></div><div class="meta"></div></div>
+        <span class="link-line" data-after="profile"></span>
+      </div>
+      <div class="col">
+        <div class="card" data-stage="security"><span class="badge">✓</span><div class="row"><span class="ico">🛡️</span><div><div class="name">Security</div><div class="sub">ISO 27001 · NIS2 · CBW</div></div></div><div class="meta"></div></div>
+        <div class="card" data-stage="resilience"><span class="badge">✓</span><div class="row"><span class="ico">🔁</span><div><div class="name">Resilience</div><div class="sub">DORA</div></div></div><div class="meta"></div></div>
+        <div class="card" data-stage="gov_baseline"><span class="badge">✓</span><div class="row"><span class="ico">🏛️</span><div><div class="name">Government baseline</div><div class="sub">BIO2</div></div></div><div class="meta"></div></div>
+        <div class="card" data-stage="ai_trust"><span class="badge">✓</span><div class="row"><span class="ico">🤖</span><div><div class="name">AI trust</div><div class="sub">EU AI Act · ALTAI · EC Ethics</div></div></div><div class="meta"></div></div>
+        <div class="card" data-stage="document_validity"><span class="badge">✓</span><div class="row"><span class="ico">📅</span><div><div class="name">Document validity</div><div class="sub">Certificates &amp; report currency</div></div></div><div class="meta"></div></div>
+        <span class="link-line" data-after="agents"></span>
+      </div>
+      <div class="col">
+        <div class="card" data-stage="scorecard"><span class="badge">✓</span><div class="row"><span class="ico">📊</span><div><div class="name">Scorecard</div><div class="sub">RAG per framework</div></div></div><div class="meta"></div></div>
+        <span class="link-line" data-after="scorecard"></span>
+      </div>
+      <div class="col">
+        <div class="card" data-stage="memo"><span class="badge">✓</span><div class="row"><span class="ico">✍️</span><div><div class="name">Audit memo</div><div class="sub">Draft narrative</div></div></div><div class="meta"></div></div>
+        <div class="card" data-stage="outputs"><span class="badge">✓</span><div class="row"><span class="ico">📦</span><div><div class="name">Outputs</div><div class="sub">XLSX · DOCX · CSV · HTML</div></div></div><div class="meta"></div></div>
+      </div>
+    </div>
+    <div class="status-line" id="status-line">Starting…</div>
+    <div class="error hidden" id="run-error"></div>
+    <details><summary>Mission log</summary><pre id="log"></pre></details>
+  </section>
+
+  <section class="panel hidden" id="results-panel">
+    <h2><span class="step">3</span> Mission report</h2>
+    <div class="verdict">
+      <div class="shield" id="shield">—</div>
+      <div>
+        <div class="v-kicker">Overall vendor risk</div>
+        <div class="v-title" id="verdict-title">—</div>
+        <div class="brand-sub" id="verdict-sub"></div>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="notice">AI-assisted draft. Findings, ratings and narrative were generated by a language model and must be reviewed by a qualified auditor before any reliance or distribution.</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Framework</th><th>Rating</th><th>Controls</th><th>Gaps</th><th>Critical</th><th>High</th><th>Partial</th></tr></thead>
+        <tbody id="score-body"></tbody>
+      </table>
+    </div>
+    <p id="result-summary" class="status-line"></p>
+    <div class="downloads" id="downloads"></div>
+    <div class="controls"><button class="btn" id="again" type="button">↺ New assessment</button></div>
+  </section>
+</main>
+<footer>Vendor Guard · SAAF Project · runs locally on this computer</footer>
+
+<div class="toasts" id="toasts"></div>
+<canvas id="confetti"></canvas>
+
+<script>
+(() => {
+  const TOKEN = "__VG_TOKEN__";
+  const $ = (id) => document.getElementById(id);
+  const AGENT_STAGES = ["security", "resilience", "gov_baseline", "ai_trust", "document_validity"];
+  const FIXED_STAGES = ["documents", "profile", "scorecard", "memo", "outputs"];
+  const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const state = { q: null, docs: [], runId: null, next: 0, timers: {}, poll: null,
+                  activeAgents: AGENT_STAGES.slice(), done: new Set(), running: new Set(),
+                  findings: 0, clockStart: 0, clockTimer: null, scorecard: null };
+  async function api(path, opts = {}) {
+    let res;
+    try {
+      res = await fetch(path, { ...opts, headers: { "X-VG-Token": TOKEN, ...(opts.headers || {}) } });
+    } catch (err) {
+      throw new Error("Can't reach the Vendor Guard server. Is `launch web` still running in your terminal? Start it again and reload this page.");
+    }
+    if (res.status === 403) {
+      throw new Error("This page belongs to an earlier Vendor Guard session (the server was restarted). Reload the page.");
+    }
+    return res;
+  }
+
+  // ---------- upload ----------
+  function renderList(listEl, files, onRemove) {
+    listEl.replaceChildren(...files.map((f, i) => {
+      const li = document.createElement("li");
+      const name = document.createElement("span");
+      name.textContent = `${f.name} (${Math.max(1, Math.round(f.size / 1024))} KB)`;
+      const rm = document.createElement("button");
+      rm.type = "button"; rm.textContent = "✕";
+      rm.title = "Remove";
+      rm.addEventListener("click", (e) => { e.preventDefault(); onRemove(i); });
+      li.append(name, rm);
+      return li;
+    }));
+  }
+  function refresh() {
+    renderList($("list-q"), state.q ? [state.q] : [], () => { state.q = null; refresh(); });
+    renderList($("list-d"), state.docs, (i) => { state.docs.splice(i, 1); refresh(); });
+    $("start").disabled = !state.q;
+  }
+  function wireDrop(dropId, inputId, onFiles) {
+    const drop = $(dropId), input = $(inputId);
+    input.addEventListener("change", () => { onFiles([...input.files]); input.value = ""; });
+    drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+    drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+    drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); onFiles([...e.dataTransfer.files]); });
+  }
+  wireDrop("drop-q", "file-q", (files) => { if (files[0]) { state.q = files[0]; refresh(); } });
+  wireDrop("drop-d", "file-d", (files) => { state.docs.push(...files); refresh(); });
+
+  function showError(id, msg) { const el = $(id); el.textContent = msg; el.classList.toggle("hidden", !msg); }
+
+  $("samples").addEventListener("click", async () => {
+    showError("upload-error", "");
+    try {
+      const res = await api("/api/samples");
+      if (!res.ok) throw new Error((await res.json()).error);
+      const samples = await res.json();
+      const toFile = (s) => new File([s.text], s.name, { type: "text/plain" });
+      state.q = toFile(samples.questionnaire);
+      state.docs = samples.docs.map(toFile);
+      refresh();
+    } catch (err) { showError("upload-error", `Could not load samples: ${err.message}`); }
+  });
+
+  api("/api/config").then((r) => r.json()).then((cfg) => {
+    const sel = $("backend");
+    if (!cfg.sdk_installed) sel.querySelector('[value="claude-code"]').textContent += " (SDK not installed)";
+    if (!cfg.api_key_set) sel.querySelector('[value="api"]').textContent += " (no key set)";
+    if (!cfg.sdk_installed && cfg.api_key_set) sel.value = "api";
+  }).catch(() => {});
+
+  $("start").addEventListener("click", async () => {
+    showError("upload-error", "");
+    const form = new FormData();
+    form.append("questionnaire", state.q, state.q.name);
+    state.docs.forEach((d) => form.append("docs", d, d.name));
+    form.append("backend", $("backend").value);
+    $("start").disabled = true;
+    try {
+      const res = await api("/api/runs", { method: "POST", body: form });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      beginRun(data.id);
+    } catch (err) { showError("upload-error", err.message); $("start").disabled = false; }
+  });
+
+  // ---------- mission clock & progress ----------
+  const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+  function startClock() {
+    state.clockStart = Date.now();
+    $("clock").classList.remove("hidden");
+    clearInterval(state.clockTimer);
+    state.clockTimer = setInterval(() => { $("clock-val").textContent = fmt((Date.now() - state.clockStart) / 1000); }, 500);
+  }
+  function stopClock() { clearInterval(state.clockTimer); }
+
+  function updateProgress() {
+    const stages = [...FIXED_STAGES, ...state.activeAgents];
+    const done = stages.filter((s) => state.done.has(s)).length;
+    const running = stages.filter((s) => state.running.has(s)).length;
+    const pct = Math.min(100, Math.round(((done + running * 0.35) / stages.length) * 100));
+    $("xp-fill").style.width = `${pct}%`;
+    $("xp-pct").textContent = `${pct}%`;
+    $("xp-label").textContent = `${done} of ${stages.length} stages complete · ${state.findings} findings so far`;
+  }
+
+  // ---------- quest map ----------
+  const card = (stage) => document.querySelector(`.card[data-stage="${stage}"]`);
+  function setCard(stage, status, meta) {
+    const el = card(stage);
+    if (!el) return;
+    el.classList.remove("running", "done", "error", "skipped");
+    void el.offsetWidth; // restart animations
+    if (status) el.classList.add(status);
+    if (status === "error") el.querySelector(".badge").textContent = "!";
+    if (meta !== undefined) el.querySelector(".meta").textContent = meta;
+  }
+  function floatText(stage, text) {
+    const el = card(stage);
+    if (!el || REDUCED) return;
+    const f = document.createElement("span");
+    f.className = "float"; f.textContent = text;
+    el.append(f);
+    setTimeout(() => f.remove(), 1500);
+  }
+  function setLink(after, mode) {
+    const el = document.querySelector(`.link-line[data-after="${after}"]`);
+    if (!el) return;
+    el.classList.remove("live", "done");
+    if (mode) el.classList.add(mode);
+  }
+  function updateLinks() {
+    const agentsDone = state.activeAgents.every((s) => state.done.has(s));
+    const agentsRunning = state.activeAgents.some((s) => state.running.has(s));
+    setLink("documents", state.done.has("profile") ? "done" : state.done.has("documents") ? "live" : null);
+    setLink("profile", agentsDone ? "done" : (state.done.has("profile") || agentsRunning) ? "live" : null);
+    setLink("agents", state.done.has("scorecard") ? "done" : agentsDone ? "live" : null);
+    setLink("scorecard", state.done.has("memo") ? "done" : state.done.has("scorecard") ? "live" : null);
+  }
+  function startTimer(stage) {
+    const t0 = Date.now();
+    clearInterval(state.timers[stage]);
+    setCard(stage, "running", "working…");
+    state.timers[stage] = setInterval(() => {
+      const el = card(stage);
+      if (el) el.querySelector(".meta").textContent = `working… ${Math.round((Date.now() - t0) / 1000)}s`;
+    }, 1000);
+  }
+  function stopTimer(stage) { clearInterval(state.timers[stage]); delete state.timers[stage]; }
+  function stopAllTimers() { Object.keys(state.timers).forEach(stopTimer); }
+
+  // ---------- toasts ----------
+  function toast(icon, kicker, title) {
+    const t = document.createElement("div");
+    t.className = "toast";
+    const i = document.createElement("span"); i.className = "t-ico"; i.textContent = icon;
+    const body = document.createElement("div");
+    const k = document.createElement("div"); k.className = "t-kicker"; k.textContent = kicker;
+    const h = document.createElement("div"); h.className = "t-title"; h.textContent = title;
+    body.append(k, h); t.append(i, body);
+    $("toasts").append(t);
+    setTimeout(() => { t.classList.add("out"); setTimeout(() => t.remove(), 400); }, 3800);
+  }
+
+  // ---------- run lifecycle ----------
+  function resetPipeline() {
+    document.querySelectorAll(".card").forEach((el) => {
+      el.className = "card"; el.querySelector(".meta").textContent = ""; el.querySelector(".badge").textContent = "✓";
+    });
+    document.querySelectorAll(".link-line").forEach((el) => { el.className = "link-line"; });
+    Object.assign(state, { activeAgents: AGENT_STAGES.slice(), done: new Set(), running: new Set(), findings: 0, scorecard: null });
+    $("log").textContent = "";
+    showError("run-error", "");
+    $("status-line").textContent = "Starting…";
+    updateProgress();
+  }
+
+  function beginRun(id) {
+    state.runId = id; state.next = 0;
+    resetPipeline();
+    $("upload-panel").classList.add("hidden");
+    $("results-panel").classList.add("hidden");
+    $("pipeline-panel").classList.remove("hidden");
+    startClock();
+    toast("🚀", "Mission started", "Assessment underway");
+    clearInterval(state.poll);
+    state.poll = setInterval(poll, 1000);
+    poll();
+  }
+
+  async function poll() {
+    try {
+      const res = await api(`/api/runs/${state.runId}?since=${state.next}`);
+      const data = await res.json();
+      data.events.forEach(handle);
+      state.next = data.next;
+      if (data.status !== "running") clearInterval(state.poll);
+    } catch (err) { $("status-line").textContent = `⚠ ${err.message}`; }
+  }
+
+  function log(ev) {
+    const detail = Object.keys(ev.data || {}).length ? " " + JSON.stringify(ev.data) : "";
+    $("log").textContent += `[${ev.t.toFixed(1)}s] ${ev.stage} ${ev.status}${detail}\n`;
+  }
+
+  function handle(ev) {
+    log(ev);
+    const d = ev.data || {};
+    const { stage, status } = ev;
+
+    if (stage === "run") {
+      if (status === "running") $("status-line").textContent = `Backend: ${d.backend === "claude-code" ? "your Claude account" : "Anthropic API"}`;
+      if (status === "done") finish(ev);
+      if (status === "error") fail(d.error);
+      return;
+    }
+    if (stage === "log") { $("status-line").textContent = `⚠ ${d.message}`; return; }
+    if (stage === "routing") {
+      const skipped = d.skipped || [];
+      state.activeAgents = AGENT_STAGES.filter((s) => !skipped.includes(s));
+      skipped.forEach((s) => setCard(s, "skipped", "not applicable"));
+      toast("🧭", "Route plotted", `${state.activeAgents.length} specialist agents deployed`);
+      updateProgress(); updateLinks();
+      return;
+    }
+
+    if (status === "running") {
+      state.running.add(stage);
+      startTimer(stage);
+      updateProgress(); updateLinks();
+      return;
+    }
+
+    stopTimer(stage);
+    state.running.delete(stage);
+    if (status === "error") { setCard(stage, "error", d.error || "failed"); updateProgress(); return; }
+
+    state.done.add(stage);
+    let meta = `done · ${ev.t.toFixed(0)}s`;
+    if (stage === "documents") meta = `${d.count} file${d.count === 1 ? "" : "s"} loaded`;
+    if (stage === "profile") {
+      meta = `${d.vendor} · ${d.sector}`;
+      toast("🎯", "Vendor identified", d.vendor || "Profile extracted");
+    }
+    if (AGENT_STAGES.includes(stage)) {
+      meta = `${d.findings} findings · ${d.gaps} gaps · ${ev.t.toFixed(0)}s`;
+      state.findings += d.findings || 0;
+      floatText(stage, `+${d.findings}`);
+      if (state.activeAgents.every((s) => state.done.has(s))) toast("🛡️", "Achievement unlocked", "All agents reported");
+    }
+    if (stage === "scorecard") {
+      meta = `${d.findings} findings scored`;
+      state.scorecard = d;
+      toast("📊", "Achievement unlocked", "Scorecard forged");
+    }
+    if (stage === "memo") toast("✍️", "Achievement unlocked", "Audit memo drafted");
+    setCard(stage, "done", meta);
+    updateProgress(); updateLinks();
+  }
+
+  function finish(ev) {
+    stopAllTimers(); stopClock();
+    $("xp-fill").style.width = "100%"; $("xp-pct").textContent = "100%";
+    $("xp-label").textContent = `Mission complete in ${fmt(ev.t)}`;
+    $("status-line").textContent = "All stages complete.";
+    toast("🏆", "Mission complete", `Report ready in ${fmt(ev.t)}`);
+    showResults(ev);
+    confetti();
+  }
+
+  function fail(message) {
+    stopAllTimers(); stopClock();
+    document.querySelectorAll(".card.running").forEach((el) => setCard(el.dataset.stage, "error", "stopped"));
+    showError("run-error", message);
+    $("status-line").textContent = "The run stopped. No report was produced.";
+    toast("⚠️", "Mission aborted", "See the error below");
+    const back = document.createElement("button");
+    back.className = "btn"; back.type = "button"; back.textContent = "Back to upload";
+    back.style.marginTop = "10px";
+    back.addEventListener("click", resetToUpload);
+    $("run-error").append(document.createElement("br"), back);
+  }
+
+  // ---------- results ----------
+  function showResults(ev) {
+    const d = state.scorecard || { scorecard: {}, findings: 0, review_flags: 0 };
+    const rows = Object.entries(d.scorecard || {});
+    const rank = { Red: 3, Amber: 2, Green: 1 };
+    const worst = rows.reduce((w, [, s]) => (rank[s.rag] || 0) > (rank[w] || 0) ? s.rag : w, "Green");
+    const verdicts = { Red: "High risk: significant gaps", Amber: "Medium risk: gaps to address", Green: "Low risk: no gaps found" };
+    $("shield").className = `shield ${worst}`;
+    $("shield").textContent = worst.toUpperCase();
+    $("verdict-title").textContent = verdicts[worst];
+    $("verdict-sub").textContent = `${rows.length} framework${rows.length === 1 ? "" : "s"} assessed in ${fmt(ev.t)}`;
+
+    const totals = rows.reduce((a, [, s]) => ({ gaps: a.gaps + (s.gaps || 0), critical: a.critical + (s.critical || 0),
+                                                high: a.high + (s.high || 0) }), { gaps: 0, critical: 0, high: 0 });
+    const stats = [[d.findings, "findings"], [totals.gaps, "gaps"], [totals.critical, "critical"], [d.review_flags || 0, "need human review"]];
+    $("stats").replaceChildren(...stats.map(([n, label], i) => {
+      const box = document.createElement("div"); box.className = "stat"; box.style.animationDelay = `${i * 80}ms`;
+      const num = document.createElement("div"); num.className = "n"; num.textContent = "0";
+      const l = document.createElement("div"); l.className = "l"; l.textContent = label;
+      box.append(num, l);
+      countUp(num, n || 0);
+      return box;
+    }));
+
+    $("score-body").replaceChildren(...rows.map(([fw, s], i) => {
+      const tr = document.createElement("tr");
+      tr.style.animationDelay = `${i * 90}ms`;
+      [fw, null, s.total, s.gaps, s.critical, s.high, s.partial].forEach((value, col) => {
+        const td = document.createElement("td");
+        if (col === 1) {
+          const chip = document.createElement("span");
+          chip.className = `rag ${rank[s.rag] ? s.rag : ""}`;
+          chip.textContent = s.rag;
+          td.append(chip);
+        } else {
+          td.textContent = value ?? 0;
+          if (col > 1) td.className = "num";
+        }
+        tr.append(td);
+      });
+      return tr;
+    }));
+    $("result-summary").textContent = d.review_flags
+      ? `${d.review_flags} finding(s) are marked [HUMAN REVIEW REQUIRED]: filter the gap register on that text first.`
+      : "No findings needed fail-safe normalisation.";
+
+    const files = ["gap_register.xlsx", "scorecard.xlsx", "audit_memo.docx", "audit_memo.html", "gap_register.csv", "scorecard.csv"];
+    $("downloads").replaceChildren(...files.map((name) => {
+      const a = document.createElement("a");
+      a.href = `/api/runs/${encodeURIComponent(state.runId)}/files/${name}?token=${encodeURIComponent(TOKEN)}`;
+      a.textContent = `⬇ ${name}`;
+      return a;
+    }));
+    $("results-panel").classList.remove("hidden");
+    $("results-panel").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+  }
+
+  function countUp(el, target) {
+    if (REDUCED || target === 0) { el.textContent = target; return; }
+    const t0 = performance.now(), dur = 900;
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  function confetti() {
+    if (REDUCED) return;
+    const canvas = $("confetti"), ctx = canvas.getContext("2d");
+    canvas.width = innerWidth; canvas.height = innerHeight;
+    const colors = ["#818CF8", "#C084FC", "#6366F1", "#4ADE80", "#FBBF24", "#E2E8F0"];
+    const bits = Array.from({ length: 160 }, () => ({
+      x: canvas.width / 2 + (Math.random() - 0.5) * 200, y: canvas.height * 0.35,
+      vx: (Math.random() - 0.5) * 14, vy: -Math.random() * 14 - 4,
+      r: Math.random() * 6 + 3, rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3,
+      c: colors[Math.floor(Math.random() * colors.length)],
+    }));
+    const t0 = performance.now();
+    const frame = (now) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      bits.forEach((b) => {
+        b.vy += 0.35; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.rot += b.vr;
+        ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.rot); ctx.fillStyle = b.c;
+        ctx.fillRect(-b.r / 2, -b.r / 2, b.r, b.r * 0.6); ctx.restore();
+      });
+      if (now - t0 < 3200) requestAnimationFrame(frame);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+    requestAnimationFrame(frame);
+  }
+
+  function resetToUpload() {
+    stopClock();
+    $("clock").classList.add("hidden");
+    $("pipeline-panel").classList.add("hidden");
+    $("results-panel").classList.add("hidden");
+    $("upload-panel").classList.remove("hidden");
+    refresh();
+  }
+  $("again").addEventListener("click", () => { state.q = null; state.docs = []; resetToUpload(); });
+  refresh();
+})();
+</script>
+</body>
+</html>

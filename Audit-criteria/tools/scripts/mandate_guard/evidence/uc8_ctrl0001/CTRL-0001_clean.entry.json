@@ -1,0 +1,119 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "This control prevents unauthorized or unsupported high-risk journal entries and close adjustments, including those affecting revenue accuracy and period cut-off, from being posted to the general ledger without supervisory approval.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Interview the Financial Reporting Manager and do a walkthrough of one month-end close cycle (Jan-Dec 2025). Get the written control description, the defined criteria for a 'high-risk' journal entry or close activity, the approval matrix and authority limits, and the workflow approval configuration. Trace one high-risk revenue-related journal entry from preparation through workflow approval to posting. Assess whether the control as designed addresses the risk. Check five points: (1) high-risk criteria are defined and cover revenue and cut-off entries; (2) approval is enforced by the system before posting; (3) the preparer cannot approve their own entry; (4) the approver reviews supporting documentation; (5) manual or top-side entries outside the workflow are also captured.",
+    "methodology": "Inquiry, Inspection, Observation (walkthrough)",
+    "evidence": "Control narrative or procedure document; documented high-risk JE criteria; approval matrix and delegation of authority; screenshots or export of the workflow configuration; walkthrough documentation of one end-to-end JE with supporting documents and approval log",
+    "pass_criteria": "All five conditions are met: high-risk criteria are documented and include revenue and period-end cut-off entries; the system enforces approval before posting with no bypass path; segregation of duties between preparer and approver is enforced; the approver's review covers supporting documentation; the walkthrough confirms the control operates as described. Management's self-assessed 'Strong' design rating is not relied upon without this independent verification.",
+    "estimated_hours": 4,
+    "skill_required": "Senior Auditor, Financial Audit",
+    "assigned_to": "Priya Nair"
+  },
+  "tests_of_effectiveness": [
+    {
+      "population": "Workflow approval configuration and posting rules in the JE or GL system (system name not provided in RCM; to be confirmed) in effect from 1 Jan to 31 Dec 2025, including all configuration change logs for the period",
+      "sampling_approach": {
+        "method": "Full population",
+        "sample_size": null,
+        "rationale": "This is an automated, configuration-based control. Testing the configuration once, together with a review of all configuration changes during the period, covers the full year, provided ITGCs (change management) are effective."
+      },
+      "step": "Inspect the workflow configuration to confirm four things: posting is blocked without approval; high-risk thresholds and criteria are configured as documented; self-approval is technically prevented; no bypass or override role exists, or any that exists is restricted and monitored. Review change logs for any changes to the workflow or thresholds during 2025. Confirm each change was authorized and tested. Do a test-of-one in a non-production or controlled environment if available: attempt to post a high-risk entry without approval and attempt self-approval.",
+      "methodology": "Inspection, Re-performance",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "System configuration export or screenshots dated within the period; workflow and threshold change log for Jan-Dec 2025 with change tickets; test-of-one results with screenshots",
+      "pass_criteria": "The configuration enforces approval before posting and blocks self-approval. Configured thresholds match the documented high-risk criteria. Every configuration change in 2025 is authorized and tested. The test-of-one confirms that unapproved and self-approved postings are rejected.",
+      "estimated_hours": 8,
+      "skill_required": "Senior Auditor, IT Audit",
+      "assigned_to": "Jan Bakker",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "All user accounts holding JE preparer, JE approver, or workflow administration or override roles in the JE or GL system during Jan-Dec 2025, plus the user access change log for the period",
+      "sampling_approach": {
+        "method": "Full population",
+        "sample_size": null,
+        "rationale": "The population of privileged and approver users is expected to be small. Full coverage is needed to place reliance on the 'Reliable' IT dependency rating and to confirm segregation of duties."
+      },
+      "step": "Get the user-role listing and access change log. Compare holders of the approver role to the approval matrix and HR records. Check four things: approvers hold an appropriate supervisory position; no user holds conflicting roles (preparer plus approver for the same entries, or approver plus workflow administrator) without a compensating control; terminated or transferred users were removed promptly; override or administrator access is restricted and its use is logged and reviewed. Get the 2025 ITGC test results (access, change management) that support the 'Reliable' rating.",
+      "methodology": "Inspection, Re-performance",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "User-role extract from the system; approval matrix; HR leaver and mover list for 2025; access provisioning and deprovisioning tickets; override activity log; 2025 ITGC testing results",
+      "pass_criteria": "All approver-role holders are authorized under the approval matrix. No unmitigated segregation-of-duties conflicts exist. Leavers' access was removed in a timely manner. Override access is restricted and monitored. Relevant ITGCs were assessed as effective for the full period.",
+      "estimated_hours": 6,
+      "skill_required": "Senior Auditor, IT Audit",
+      "assigned_to": "Lars Jensen",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "All journal entries posted to the general ledger for fiscal periods Jan-Dec 2025, including year-end close entries posted after 31 Dec 2025 for period 12, with workflow approval metadata, from the JE or GL system (system name to be confirmed)",
+      "sampling_approach": {
+        "method": "Full population",
+        "sample_size": null,
+        "rationale": "Data analytics allow every entry to be tested for approval, segregation of duties, and timing, rather than relying on a sample. The output gives a risk-based basis for the targeted sample in the next test."
+      },
+      "step": "Extract the complete JE population and the workflow approval log. Reconcile record counts and totals to the trial balance. Apply the documented high-risk criteria to identify high-risk entries. For each high-risk entry, test six attributes: (1) an approval record exists; (2) the approver is not the preparer; (3) the approver is an authorized approver per the approval matrix; (4) the approval timestamp is before the posting timestamp; (5) entries are not posted through bypass or override routes; (6) revenue-account entries posted near period-end or as backdated entries are approved. Also flag general red flags: weekend or after-hours postings, round amounts, unusual users, and entries to revenue just before or after month-end that reverse in the next period.",
+      "methodology": "Analytical procedure, Re-performance",
+      "caat_tool": "Python / SQL",
+      "caat_pseudocode": "1. Load JE header and lines (je_id, preparer_id, post_date, entry_date, period, account, amount, source, manual_flag) and workflow log (je_id, approver_id, approval_ts, status).\n2. Completeness: reconcile the sum of debits and credits per account per period to the trial balance; record counts to a system-generated total.\n3. Tag high_risk = apply documented criteria (e.g. manual_flag, amount >= threshold, revenue accounts, period-end window, top-side or consolidation entries). Exact criteria must be obtained from the client.\n4. LEFT JOIN JE to workflow log on je_id.\n5. Exceptions for high_risk entries: approver_id IS NULL; approver_id = preparer_id; approver_id NOT IN authorized_approvers(amount, entity); approval_ts > post_ts; status != 'Approved'; posting source = override or bypass.\n6. Revenue cut-off: revenue entries with post_date within +/-5 business days of period-end, or entry_date in a closed period (backdated). Check approval, and check for reversal in the following period.\n7. Red flags: weekend or holiday posts, round amounts, rarely used accounts, postings by non-finance users.\n8. Output an exception register with je_id and exception type, plus summary counts by month, for follow-up and sample selection.",
+      "evidence": "System-generated JE extract with record count and control totals; workflow approval log extract; reconciliation to the trial balance; Python or SQL scripts and output exception register (retained in working papers)",
+      "pass_criteria": "The data reconciles completely to the trial balance. All high-risk entries have a valid approval by an authorized approver who is not the preparer, obtained before posting. Zero unexplained exceptions remain after follow-up.",
+      "estimated_hours": 12,
+      "skill_required": "Data Analyst, Python, SQL",
+      "assigned_to": "Sara Li",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "Monthly close cycles for Jan-Dec 2025 (12 instances of the control) and the high-risk journal entries within the selected months",
+      "sampling_approach": {
+        "method": "Judgmental",
+        "sample_size": 5,
+        "rationale": "The control runs monthly and is rated High significance, so the upper end of the 2-5 instance range applies. Selection must include December (year-end), at least one quarter-end, and any months with elevated exceptions or volume per the CAAT output."
+      },
+      "step": "For each of the 5 selected months, get the close checklist or close package and the workflow approval evidence for high-risk close activities. Verify that the Financial Reporting Manager or designated supervisor signed off on the high-risk close activities. Check that the sign-off is dated before the period is closed and the books are locked. Check that review comments or queries were resolved before approval.",
+      "methodology": "Inspection",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "Monthly close checklists or close packages; workflow approval logs; period-close and lock timestamps from the system; reviewer comments and resolution trail",
+      "pass_criteria": "In all 5 selected months, high-risk close activities show documented supervisory approval by an authorized individual before period close, with review points resolved. Zero exceptions tolerated.",
+      "estimated_hours": 10,
+      "skill_required": "Junior Auditor",
+      "assigned_to": "Mehmet Yilmaz",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "High-risk journal entries identified by the CAAT for Jan-Dec 2025, with emphasis on revenue-account and period-end cut-off entries, plus all CAAT exceptions",
+      "sampling_approach": {
+        "method": "Stratified",
+        "sample_size": 25,
+        "rationale": "The sample is stratified by risk: (a) all CAAT exceptions are followed up in full; (b) 25 high-risk entries without exceptions are selected across strata (revenue cut-off entries, manual or top-side entries, large-value entries, year-end entries), weighted toward revenue and December. This tests the quality of the approval, which data analytics cannot assess."
+      },
+      "step": "For each selected entry, inspect the supporting documentation (contracts, invoices, delivery or performance evidence, calculations). Re-perform the assessment of whether the entry is valid, accurately calculated, and recorded in the correct period, in particular revenue recognition timing. Evaluate whether the approver's review was substantive, meaning the support was attached or referenced at approval and the approver would reasonably have detected an error. For each CAAT exception, get management's explanation and corroborating evidence. Determine whether each is a control deviation.",
+      "methodology": "Inspection, Re-performance, Inquiry",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "JE vouchers with attached support; revenue contracts and performance or delivery evidence; workflow approval record showing attachments at the time of approval; management responses to CAAT exceptions with corroborating documentation",
+      "pass_criteria": "All 25 sampled entries are supported, accurate, recorded in the correct period, and approved with evidence of substantive review. All CAAT exceptions are explained by valid, corroborated reasons. Zero control deviations; any deviation is escalated for deficiency evaluation.",
+      "estimated_hours": 10,
+      "skill_required": "Senior Auditor, Financial Audit",
+      "assigned_to": "Priya Nair",
+      "observed_exceptions": [],
+      "conclusion": null
+    }
+  ],
+  "sufficiency_flags": [],
+  "overall_conclusion": null
+}

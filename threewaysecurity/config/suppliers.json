@@ -1,0 +1,102 @@
+[
+  {
+    "supplier_id": "SUP-001",
+    "name": "Zeiss Optics GmbH",
+    "country": "DE",
+    "iban": "DE89370400440532013000",
+    "kvk": "HRB12345",
+    "city": "Oberkochen",
+    "payment_terms": "Net-30",
+    "vat_number": "DE123456789"
+  },
+  {
+    "supplier_id": "SUP-002",
+    "name": "TRUMPF Laser Systems GmbH",
+    "country": "DE",
+    "iban": "DE27100777770209299700",
+    "kvk": "HRB23456",
+    "city": "Ditzingen",
+    "payment_terms": "Net-45",
+    "vat_number": "DE234567890"
+  },
+  {
+    "supplier_id": "SUP-003",
+    "name": "Entegris Netherlands BV",
+    "country": "NL",
+    "iban": "NL91ABNA0417164300",
+    "kvk": "12345678",
+    "city": "Bilthoven",
+    "payment_terms": "Net-30",
+    "vat_number": "NL123456789B01"
+  },
+  {
+    "supplier_id": "SUP-004",
+    "name": "Applied Materials BV",
+    "country": "NL",
+    "iban": "NL20INGB0001234567",
+    "kvk": "23456789",
+    "city": "Eindhoven",
+    "payment_terms": "Net-60",
+    "vat_number": "NL234567890B02"
+  },
+  {
+    "supplier_id": "SUP-005",
+    "name": "Cymer Europe BV",
+    "country": "NL",
+    "iban": "NL39RABO0300065264",
+    "kvk": "34567890",
+    "city": "Veldhoven",
+    "payment_terms": "Net-45",
+    "vat_number": "NL345678901B03"
+  },
+  {
+    "supplier_id": "SUP-006",
+    "name": "Heraeus Holding GmbH",
+    "country": "DE",
+    "iban": "DE75512108001245126199",
+    "kvk": "HRB34567",
+    "city": "Hanau",
+    "payment_terms": "Net-30",
+    "vat_number": "DE345678901"
+  },
+  {
+    "supplier_id": "SUP-007",
+    "name": "MKS Instruments BV",
+    "country": "NL",
+    "iban": "NL18RABO0123459876",
+    "kvk": "45678901",
+    "city": "Nijmegen",
+    "payment_terms": "Net-30",
+    "vat_number": "NL456789012B04"
+  },
+  {
+    "supplier_id": "SUP-008",
+    "name": "Viavi Solutions NL",
+    "country": "NL",
+    "iban": "NL42INGB0007654321",
+    "kvk": "56789012",
+    "city": "Eindhoven",
+    "payment_terms": "Net-45",
+    "vat_number": "NL567890123B05"
+  },
+  {
+    "supplier_id": "SUP-009",
+    "name": "Coherent Corp Europe",
+    "country": "DE",
+    "iban": "DE68210501700012345678",
+    "kvk": "HRB45678",
+    "city": "Hamburg",
+    "payment_terms": "Net-60",
+    "vat_number": "DE456789012"
+  },
+  {
+    "supplier_id": "SUP-010",
+    "name": "Precision Robotics NL BV",
+    "country": "NL",
+    "iban": "NL56ABNA0987654321",
+    "kvk": "67890123",
+    "city": "Delft",
+    "payment_terms": "Net-30",
+    "vat_number": "NL678901234B06"
+  }
+]

@@ -1,0 +1,771 @@
+{
+ "run_at": "2026-10-23T08:39:09.143548+00:00",
+ "sections": {
+  "retrieval": {
+   "reach": 1.0,
+   "rank": 0.96,
+   "cases": 12,
+   "reached_by_depth": {
+    "early": "1/1",
+    "late": "6/6",
+    "mid": "5/5"
+   },
+   "old_clip_would_have_found": "1/12",
+   "scores": [
+    {
+     "name": "cdd-ubo-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 49% of 16,011 chars read",
+     "value": null
+    },
+    {
+     "name": "cdd-ubo-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "cdd-ubo-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 23.4 vs best decoy 21.3",
+     "value": null
+    },
+    {
+     "name": "cdd-edd-trigger-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 85% of 9,099 chars read",
+     "value": null
+    },
+    {
+     "name": "cdd-edd-trigger-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "cdd-edd-trigger-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 34.0 vs best decoy 25.6",
+     "value": null
+    },
+    {
+     "name": "cdd-rescreen-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 47% of 15,908 chars read",
+     "value": null
+    },
+    {
+     "name": "cdd-rescreen-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "cdd-rescreen-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 10.3 vs best decoy 9.2",
+     "value": null
+    },
+    {
+     "name": "dora-exit-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 48% of 16,013 chars read",
+     "value": null
+    },
+    {
+     "name": "dora-exit-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "dora-exit-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 25.6 vs best decoy 18.5",
+     "value": null
+    },
+    {
+     "name": "dora-incident-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 83% of 9,080 chars read",
+     "value": null
+    },
+    {
+     "name": "dora-incident-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 2 of 13",
+     "value": 2.0
+    },
+    {
+     "name": "dora-incident-mid: beats its near-misses",
+     "passed": false,
+     "detail": "needle 9.5 vs best decoy 10.1",
+     "value": null
+    },
+    {
+     "name": "esg-scenario-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 47% of 15,942 chars read",
+     "value": null
+    },
+    {
+     "name": "esg-scenario-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "esg-scenario-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 33.7 vs best decoy 15.3",
+     "value": null
+    },
+    {
+     "name": "esg-appetite-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 85% of 9,021 chars read",
+     "value": null
+    },
+    {
+     "name": "esg-appetite-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "esg-appetite-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 46.7 vs best decoy 17.1",
+     "value": null
+    },
+    {
+     "name": "model-validation-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 50% of 15,985 chars read",
+     "value": null
+    },
+    {
+     "name": "model-validation-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "model-validation-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 24.4 vs best decoy 15.3",
+     "value": null
+    },
+    {
+     "name": "itsec-access-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 85% of 9,004 chars read",
+     "value": null
+    },
+    {
+     "name": "itsec-access-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "itsec-access-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 23.5 vs best decoy 12.8",
+     "value": null
+    },
+    {
+     "name": "itsec-segregation-early: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=early, 100% of 5,497 chars read",
+     "value": null
+    },
+    {
+     "name": "itsec-segregation-early: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 8",
+     "value": 1.0
+    },
+    {
+     "name": "itsec-segregation-early: beats its near-misses",
+     "passed": true,
+     "detail": "needle 19.5 vs best decoy 15.6",
+     "value": null
+    },
+    {
+     "name": "cass-reconciliation-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 47% of 15,917 chars read",
+     "value": null
+    },
+    {
+     "name": "cass-reconciliation-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "cass-reconciliation-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 16.2 vs best decoy 15.5",
+     "value": null
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 60% of 13,207 chars read",
+     "value": null
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 25.9 vs best decoy 12.3",
+     "value": null
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: picks the right file",
+     "passed": true,
+     "detail": "57% of the budget went to the document holding the answer",
+     "value": 0.5652394223460856
+    }
+   ]
+  },
+  "retrieval_adversarial": {
+   "stuffing": 4,
+   "reached": "12/12",
+   "outranked_decoy": "8/12",
+   "gating": false
+  },
+  "agents": {
+   "by_agent": {
+    "topic_intelligence": {
+     "runs": 12,
+     "passed": 53,
+     "total": 54,
+     "ratio": 0.9814814814814815,
+     "refusals": 0,
+     "cost_usd": 0.1872,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    }
+   },
+   "runs": [
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-ict-dora",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-ict-dora: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: mentions DORA / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: names its sources",
+       "passed": true,
+       "detail": "7 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01877,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-aml-cdd",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-aml-cdd: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions AMLD / Anti-Money Laundering Directive / AMLR / Anti-Money Laundering Regulation",
+       "passed": false,
+       "detail": "absent from the summary",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: names its sources",
+       "passed": true,
+       "detail": "8 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02067,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-aml-cdd",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-aml-cdd: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions AMLD / Anti-Money Laundering Directive / AMLR / Anti-Money Laundering Regulation",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: names its sources",
+       "passed": true,
+       "detail": "7 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02153,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-aml-cdd",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-aml-cdd: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions AMLD / Anti-Money Laundering Directive / AMLR / Anti-Money Laundering Regulation",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: names its sources",
+       "passed": true,
+       "detail": "7 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02195,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-ict-dora",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-ict-dora: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: mentions DORA / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: names its sources",
+       "passed": true,
+       "detail": "1 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00775,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-ict-dora",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-ict-dora: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: mentions DORA / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: names its sources",
+       "passed": true,
+       "detail": "6 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01387,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens2-ict-supervisor",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens2-ict-supervisor: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: mentions DNB / De Nederlandsche Bank",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00995,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens2-ict-supervisor",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens2-ict-supervisor: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: mentions DNB / De Nederlandsche Bank",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01701,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens2-ict-supervisor",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens2-ict-supervisor: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: mentions DNB / De Nederlandsche Bank",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01397,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens3-sustainable-finance",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens3-sustainable-finance: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions greenwashing / green-washing / greenwash",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions SFDR / ESMA / AFM",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01253,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens3-sustainable-finance",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens3-sustainable-finance: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions greenwashing / green-washing / greenwash",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions SFDR / ESMA / AFM",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.0166,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens3-sustainable-finance",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens3-sustainable-finance: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions greenwashing / green-washing / greenwash",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions SFDR / ESMA / AFM",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.0126,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    }
+   ],
+   "spent_usd": 0.1872,
+   "cap_usd": 1.0,
+   "not_started": 0
+  }
+ }
+}

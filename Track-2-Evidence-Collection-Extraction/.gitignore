@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+
+# Secrets — NEVER commit
+.env
+.env.*
+*.env
+*.key
+*.pem
+secrets*
+credentials*
+**/anthropic*key*
+**/api-key*
+
+# Runtime artefacts
+uploads/
+audit-log.jsonl
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/

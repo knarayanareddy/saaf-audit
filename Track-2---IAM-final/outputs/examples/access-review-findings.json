@@ -1,0 +1,50 @@
+[
+  {
+    "id": "F-001",
+    "title": "Role or department mismatch between HR and access system",
+    "risk_rating": "Medium",
+    "category": "role_mismatch",
+    "affected_user_ref": "USER-001",
+    "control_refs": [
+      "ISO/IEC 27001:2022 A.5.18",
+      "SOC 2 CC6.3"
+    ],
+    "observation": "Account 'USER-001' has a discrepancy between HR and access records: role (HR: 'IT Support' vs access: 'IT Admin'). This may indicate the access system was not updated when the employee changed roles or departments, creating excessive or inappropriate privileges.",
+    "recommendation": "Review the current role and department assignment for this user. Update the access system to reflect the current HR record. Revoke any access rights that are no longer appropriate for the current role.",
+    "detected_at": "2026-05-19T14:36:24.401534Z",
+    "source": "access_review_agent"
+  },
+  {
+    "id": "F-002",
+    "title": "Orphaned account — no matching HR record",
+    "risk_rating": "High",
+    "category": "orphaned",
+    "affected_user_ref": "USER-002",
+    "control_refs": [
+      "ISO/IEC 27001:2022 A.5.18",
+      "SOC 2 CC6.2",
+      "SOC 2 CC6.3",
+      "ISAE 3402 user access review control objective"
+    ],
+    "observation": "Account 'USER-002' exists in the access system but has no corresponding record in the HR export. This may indicate a former employee, contractor, or generic account that was not properly deprovisioned.",
+    "recommendation": "Immediately review and disable this account. Investigate whether the account belongs to a terminated user or is an unmanaged generic/service account. Deprovision if no legitimate business owner can be identified.",
+    "detected_at": "2026-05-19T14:36:24.401534Z",
+    "source": "access_review_agent"
+  },
+  {
+    "id": "F-003",
+    "title": "Active access for departed employee",
+    "risk_rating": "High",
+    "category": "departed",
+    "affected_user_ref": "USER-003",
+    "control_refs": [
+      "ISO/IEC 27001:2022 A.5.18",
+      "SOC 2 CC6.2",
+      "ISAE 3402 user access review control objective"
+    ],
+    "observation": "Account 'USER-003' has an active enabled status in the access system, but the HR record shows status 'Terminated' (termination date: 2026-03-15). This represents a segregation-of-duties risk and potential unauthorized access.",
+    "recommendation": "Immediately disable and revoke all access for this account. Confirm with HR the effective termination date. Review system logs for any access activity after the termination date. Document the remediation.",
+    "detected_at": "2026-05-19T14:36:24.401534Z",
+    "source": "access_review_agent"
+  }
+]

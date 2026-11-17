@@ -1,0 +1,12 @@
+[project]
+name = "policy-to-controls-extractor"
+version = "0.1.0"
+description = "Extraheert toetsbare controls uit beleidsdocumenten"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.52.0",
+    "pdfplumber>=0.11.0",
+    "python-docx>=1.1.0",
+    "openpyxl>=3.1.0",
+    "pydantic>=2.0.0",
+]

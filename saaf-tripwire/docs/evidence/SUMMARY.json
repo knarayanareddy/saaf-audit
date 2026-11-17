@@ -1,0 +1,479 @@
+{
+  "repos_scanned": 50,
+  "seconds": 130.8,
+  "slow_repos": [
+    "SAAF-Project",
+    "fraude-risicoanalyse-podcast"
+  ],
+  "confirmed_total": 44,
+  "confirmed_in_scope": 29,
+  "caught_in_scope": 27,
+  "caught_any": [
+    "SA-01",
+    "SA-02",
+    "SA-03",
+    "SA-04",
+    "SA-05",
+    "SA-07",
+    "SA-08",
+    "SA-11",
+    "SA-12",
+    "SA-13",
+    "SA-14",
+    "SA-15",
+    "SA-20",
+    "SA-22",
+    "SA-23",
+    "SA-24",
+    "SA-25",
+    "SA-29",
+    "SA-30",
+    "SA-31",
+    "SA-33",
+    "SA-34",
+    "SA-35",
+    "SA-37",
+    "SA-38",
+    "SA-39",
+    "SA-41"
+  ],
+  "rules": [
+    {
+      "rule": "TW-CI1",
+      "title": "Third-party GitHub Action not pinned to a full commit SHA",
+      "severity": "low",
+      "hits": 47,
+      "repos_hit": 9,
+      "in_scope": [
+        "SA-24",
+        "SA-41"
+      ],
+      "caught": [
+        "SA-24",
+        "SA-41"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Compliance-Report-Generator",
+        "OWASP-AI-Testing-Agent",
+        "SAAF-Project",
+        "Track-2---IAM-final",
+        "agent-rogue-risk-assessor",
+        "demo-repository",
+        "judging-found-controls",
+        "saaf-guard",
+        "saaf-living-map"
+      ]
+    },
+    {
+      "rule": "TW-CI2",
+      "title": "Workflow injection or over-broad token scope",
+      "severity": "high",
+      "hits": 2,
+      "repos_hit": 2,
+      "in_scope": [
+        "SA-24"
+      ],
+      "caught": [],
+      "recall": 0.0,
+      "hit_repos": [
+        "Compliance-Report-Generator",
+        "demo-repository"
+      ]
+    },
+    {
+      "rule": "TW-CI3",
+      "title": "CI guard can be replaced by a same-named module in the scanned repo",
+      "severity": "low",
+      "hits": 1,
+      "repos_hit": 1,
+      "in_scope": [
+        "SA-41"
+      ],
+      "caught": [
+        "SA-41"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "saaf-guard"
+      ]
+    },
+    {
+      "rule": "TW-DEP1",
+      "title": "Unpinned dependencies in a network-facing app or CI install",
+      "severity": "medium",
+      "hits": 12,
+      "repos_hit": 10,
+      "in_scope": [
+        "SA-03"
+      ],
+      "caught": [],
+      "recall": 0.0,
+      "hit_repos": [
+        "Agent-Auditor",
+        "Executive-Summary-Writer",
+        "FieldworkOrchestration",
+        "Finding-analysis",
+        "OWASP-AI-Testing-Agent",
+        "PBC-Assistant-Isabelle---IA-AI-Hackathon",
+        "Team-HighTable",
+        "Track-2---IAM-final",
+        "joiners-movers-leavers-agent",
+        "saaf-living-map"
+      ]
+    },
+    {
+      "rule": "TW-FS1",
+      "title": "Tree walk follows symlinks / upload filename path traversal",
+      "severity": "medium",
+      "hits": 22,
+      "repos_hit": 12,
+      "in_scope": [
+        "SA-37"
+      ],
+      "caught": [
+        "SA-37"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Audit-criteria",
+        "Compliance-Report-Generator",
+        "FieldworkOrchestration",
+        "OWASP-top-10-LLM-assessment",
+        "SAAF-Project",
+        "SAAF-circuit-breaker",
+        "Stress-test---standalone-criteria",
+        "agent-drift-rater",
+        "agent-rogue-risk-assessor",
+        "joiners-movers-leavers-agent",
+        "llm_owasp",
+        "saaf-guard"
+      ]
+    },
+    {
+      "rule": "TW-GATE1",
+      "title": "Fail-open gate: failure is only logged, or unknown input defaults to PASS",
+      "severity": "high",
+      "hits": 27,
+      "repos_hit": 14,
+      "in_scope": [
+        "SA-04",
+        "SA-05",
+        "SA-08",
+        "SA-14",
+        "SA-23"
+      ],
+      "caught": [
+        "SA-04",
+        "SA-05",
+        "SA-08",
+        "SA-14",
+        "SA-23"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Audit-criteria",
+        "CUEC_Crosscheck",
+        "ExecGRC",
+        "GDPR-AI-Audit-Agent",
+        "RCM-Builder",
+        "SAAF-Project",
+        "Stress-test---standalone-criteria",
+        "Track-2---IAM-final",
+        "agent-drift-rater",
+        "fraude-risicoanalyse-podcast",
+        "hallucination-detection-agent",
+        "saaf-guard",
+        "three-way-match-audit",
+        "threewaysecurity"
+      ]
+    },
+    {
+      "rule": "TW-KEY1",
+      "title": "Server secret reaches the browser",
+      "severity": "high",
+      "hits": 4,
+      "repos_hit": 4,
+      "in_scope": [
+        "SA-29"
+      ],
+      "caught": [
+        "SA-29"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "FieldworkOrchestration",
+        "Finding-analysis",
+        "SAAF-Project",
+        "Track-2---IAM-final"
+      ]
+    },
+    {
+      "rule": "TW-LLM1",
+      "title": "Untrusted content reaches an LLM prompt without a fence",
+      "severity": "high",
+      "hits": 97,
+      "repos_hit": 21,
+      "in_scope": [
+        "SA-20",
+        "SA-30",
+        "SA-38",
+        "SA-39"
+      ],
+      "caught": [
+        "SA-20",
+        "SA-30",
+        "SA-38",
+        "SA-39"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Agent-Auditor",
+        "Audit-criteria",
+        "CUEC_Crosscheck",
+        "Executive-Summary-Writer",
+        "OWASP-AI-Testing-Agent",
+        "OWASP-top-10-LLM-assessment",
+        "PBC-Assistant-Isabelle---IA-AI-Hackathon",
+        "Policy-to-Controls-Extractor",
+        "SAAF-Project",
+        "Stress-test---standalone-criteria",
+        "Team-HighTable",
+        "Track-2---IAM-final",
+        "Track-2-Evidence-Collection-Extraction",
+        "Track-4-Audit-Report-Generator",
+        "Vendor_Guard",
+        "agent-drift-rater",
+        "hallucination-detection-agent",
+        "joiners-movers-leavers-agent",
+        "judging-found-controls",
+        "llm_owasp",
+        "saaf-guard"
+      ]
+    },
+    {
+      "rule": "TW-LLM2",
+      "title": "LLM verdict accepted without validation or quote check",
+      "severity": "high",
+      "hits": 24,
+      "repos_hit": 12,
+      "in_scope": [
+        "SA-14",
+        "SA-20",
+        "SA-31"
+      ],
+      "caught": [
+        "SA-14",
+        "SA-20",
+        "SA-31"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Audit-criteria",
+        "Compliance-Report-Generator",
+        "OWASP-top-10-LLM-assessment",
+        "Policy-to-Controls-Extractor",
+        "SAAF-Project",
+        "Track-1---Planning-en-Orientatie",
+        "Track-2---IAM-final",
+        "Track-4-Audit-Report-Generator",
+        "Vendor_Guard",
+        "agent-drift-rater",
+        "hallucination-detection-agent",
+        "judging-found-controls"
+      ]
+    },
+    {
+      "rule": "TW-NET1",
+      "title": "Server listens on all interfaces with no authentication",
+      "severity": "medium",
+      "hits": 6,
+      "repos_hit": 5,
+      "in_scope": [
+        "SA-01",
+        "SA-02",
+        "SA-11",
+        "SA-12",
+        "SA-13"
+      ],
+      "caught": [
+        "SA-01",
+        "SA-02",
+        "SA-11",
+        "SA-13"
+      ],
+      "recall": 0.8,
+      "hit_repos": [
+        "OWASP-top-10-LLM-assessment",
+        "PBC-Assistant-Isabelle---IA-AI-Hackathon",
+        "SAAF-Project",
+        "Track-4-Audit-Report-Generator",
+        "saaf-guard"
+      ]
+    },
+    {
+      "rule": "TW-NET2",
+      "title": "CORS allows any origin",
+      "severity": "medium",
+      "hits": 4,
+      "repos_hit": 4,
+      "in_scope": [
+        "SA-07",
+        "SA-12",
+        "SA-34"
+      ],
+      "caught": [
+        "SA-07",
+        "SA-12",
+        "SA-34"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Agent-Auditor",
+        "PBC-Assistant-Isabelle---IA-AI-Hackathon",
+        "Team-HighTable",
+        "saaf-guard"
+      ]
+    },
+    {
+      "rule": "TW-NET4",
+      "title": "Unauthenticated route deletes data or spends the LLM key",
+      "severity": "medium",
+      "hits": 14,
+      "repos_hit": 9,
+      "in_scope": [
+        "SA-01",
+        "SA-02",
+        "SA-11",
+        "SA-12",
+        "SA-15"
+      ],
+      "caught": [
+        "SA-01",
+        "SA-02",
+        "SA-11",
+        "SA-12",
+        "SA-15"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "Agent-Auditor",
+        "FieldworkOrchestration",
+        "Finding-analysis",
+        "OWASP-top-10-LLM-assessment",
+        "PBC-Assistant-Isabelle---IA-AI-Hackathon",
+        "SAAF-Project",
+        "SAAF-circuit-breaker",
+        "Track-4-Audit-Report-Generator",
+        "saaf-guard"
+      ]
+    },
+    {
+      "rule": "TW-NET5",
+      "title": "Server fetches a caller-controlled URL or path",
+      "severity": "high",
+      "hits": 6,
+      "repos_hit": 3,
+      "in_scope": [
+        "SA-01",
+        "SA-02",
+        "SA-11",
+        "SA-13",
+        "SA-22"
+      ],
+      "caught": [
+        "SA-01",
+        "SA-02",
+        "SA-11",
+        "SA-13",
+        "SA-22"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "OWASP-top-10-LLM-assessment",
+        "SAAF-Project",
+        "saaf-portal"
+      ]
+    },
+    {
+      "rule": "TW-OUT1",
+      "title": "Data written into HTML without escaping",
+      "severity": "medium",
+      "hits": 31,
+      "repos_hit": 19,
+      "in_scope": [
+        "SA-16",
+        "SA-25",
+        "SA-32",
+        "SA-33",
+        "SA-35"
+      ],
+      "caught": [
+        "SA-25",
+        "SA-33",
+        "SA-35"
+      ],
+      "recall": 0.6,
+      "hit_repos": [
+        "Agent-Auditor",
+        "Audit-criteria",
+        "CUEC_Crosscheck",
+        "ExecGRC",
+        "FieldworkOrchestration",
+        "Finding-analysis",
+        "PBC-Assistant-Isabelle---IA-AI-Hackathon",
+        "SAAF-Project",
+        "SAAF-circuit-breaker",
+        "Stress-test---standalone-criteria",
+        "Track-1---Planning-en-Orientatie",
+        "Track-2---IAM-final",
+        "Vendor_Guard",
+        "agent-drift-rater",
+        "fraude-risicoanalyse-podcast",
+        "joiners-movers-leavers-agent",
+        "saaf-guard",
+        "saaf-living-map",
+        "website"
+      ]
+    },
+    {
+      "rule": "TW-OUT2",
+      "title": "CSV/Excel export without formula neutralisation",
+      "severity": "low",
+      "hits": 11,
+      "repos_hit": 7,
+      "in_scope": [
+        "SA-16"
+      ],
+      "caught": [],
+      "recall": 0.0,
+      "hit_repos": [
+        "Audit-Work-Program-Agent-UC-8-",
+        "CUEC_Crosscheck",
+        "SAAF-Project",
+        "Stress-test---standalone-criteria",
+        "Track-2---IAM-final",
+        "joiners-movers-leavers-agent",
+        "threewaysecurity"
+      ]
+    },
+    {
+      "rule": "TW-SEC1",
+      "title": "Credential committed to the repository (tree or git history)",
+      "severity": "critical",
+      "hits": 3,
+      "repos_hit": 2,
+      "in_scope": [
+        "SA-03"
+      ],
+      "caught": [
+        "SA-03"
+      ],
+      "recall": 1.0,
+      "hit_repos": [
+        "ExecGRC",
+        "Team-HighTable"
+      ]
+    }
+  ]
+}

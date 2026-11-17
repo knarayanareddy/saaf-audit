@@ -1,0 +1,98 @@
+{
+  "batch_id": "BATCH-2026-03-24",
+  "submission_date": "2026-03-24T09:00:00Z",
+  "claims": [
+    {
+      "claim_id": "CLM-99200",
+      "employee": {
+        "first_name": "Lucas",
+        "last_name": "Van der Berg",
+        "email": "lucas.vanderberg@company.nl",
+        "emp_id": "EMP-10293",
+        "department": "IT",
+        "bank_iban": "NL12INGB0001234567"
+      },
+      "expense": {
+        "type": "Taxi",
+        "amount": 45.00,
+        "currency": "EUR",
+        "date": "2026-03-21",
+        "vendor": "Uber Amsterdam"
+      },
+      "approvals": ["Manager", "Finance"],
+      "receipt": {
+        "receipt_id": "REC-8840A",
+        "raw_ocr_text": "UBER TRIP. DATE: 2026-03-21. AMOUNT: 45.00 EUR. PAID VIA CORPORATE ACCOUNT."
+      }
+    },
+    {
+      "claim_id": "CLM-99201",
+      "employee": {
+        "first_name": "Emma",
+        "last_name": "Kowalski",
+        "email": "emma.kowalski@company.nl",
+        "emp_id": "EMP-84729",
+        "department": "Sales",
+        "bank_iban": "NL91ABNA0123456789"
+      },
+      "expense": {
+        "type": "Meal",
+        "amount": 70.00,
+        "currency": "EUR",
+        "date": "2026-03-20",
+        "vendor": "Le Petit Bistro"
+      },
+      "approvals": ["Manager", "Finance"],
+      "receipt": {
+        "receipt_id": "REC-8843A",
+        "raw_ocr_text": "LE PETIT BISTRO. 123 Main St, Amsterdam, 1011AB. MEAL TOTAL: 70.00 EUR. PAID WITH: Visa 4432 1122 3344 5566."
+      }
+    },
+    {
+      "claim_id": "CLM-99202",
+      "employee": {
+        "first_name": "Lucas",
+        "last_name": "Van der Berg",
+        "email": "lucas.vanderberg@company.nl",
+        "emp_id": "EMP-10293",
+        "department": "IT",
+        "bank_iban": "NL12INGB0001234567"
+      },
+      "expense": {
+        "type": "Taxi",
+        "amount": 45.00,
+        "currency": "EUR",
+        "date": "2026-03-21",
+        "vendor": "Uber Amsterdam"
+      },
+      "approvals": ["Finance"],
+      "receipt": {
+        "receipt_id": "REC-8840B",
+        "raw_ocr_text": "UBER TRIP. DATE: 2026-03-21. AMOUNT: 45.00 EUR. PAID VIA CORPORATE ACCOUNT."
+      }
+    },
+    {
+      "claim_id": "CLM-99203",
+      "employee": {
+        "first_name": "Aisha",
+        "last_name": "Okafor",
+        "email": "aisha.okafor@company.nl",
+        "emp_id": "EMP-55312",
+        "department": "Marketing",
+        "bank_iban": "NL44RABO0987654321"
+      },
+      "expense": {
+        "type": "Accommodation",
+        "amount": 150.00,
+        "currency": "EUR",
+        "date": "2026-03-18",
+        "vendor": "Hotel Berlin"
+      },
+      "approvals": [],
+      "receipt": {
+        "receipt_id": "REC-8899C",
+        "raw_ocr_text": "HOTEL BERLIN. GUEST: Aisha Okafor. PASSPORT: AB1234567. 1 NIGHT. TOTAL: 150.00 EUR."
+      }
+    }
+  ]
+}

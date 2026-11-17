@@ -1,0 +1,4 @@
+# Local working state — never commit fetched private code, excerpts, or draft mandates.
+cache/
+runs/
+mandates/

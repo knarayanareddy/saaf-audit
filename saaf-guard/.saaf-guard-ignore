@@ -1,0 +1,2 @@
+# Bewust kwetsbaar voorbeeld voor demo en tests / intentionally vulnerable demo
+* demo/bad_agent   # demo van de foutpatronen, wordt nooit uitgevoerd

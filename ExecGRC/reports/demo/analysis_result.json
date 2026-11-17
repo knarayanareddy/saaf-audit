@@ -1,0 +1,522 @@
+{
+  "assumptions": [
+    "Residual risk scores are interpreted on the configured score scale.",
+    "Control-risk relationships are based on uploaded identifiers first and shared process or department second.",
+    "Reports remain draft until a human reviewer validates the conclusions."
+  ],
+  "data_quality": [
+    "No material data quality issues detected in the uploaded structure."
+  ],
+  "findings": [
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-001",
+        "C-004"
+      ],
+      "evidence": [
+        "Risk R-004 residual score: 21",
+        "Risk trend: Increasing",
+        "Related weak controls: C-001 (partially effective), C-004 (ineffective)"
+      ],
+      "finding_id": "F-001",
+      "recommendation": "Prioritize remediation and retesting for C-001, C-004; confirm owner, due date and residual risk acceptance for R-004.",
+      "risk_id": "R-004",
+      "severity": "Critical",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:9",
+        "data/synthetic/grc_sample.csv:2",
+        "data/synthetic/grc_sample.csv:8"
+      ],
+      "theme": "Identity and Access",
+      "title": "High residual risk linked to weak controls: Credential theft through phishing"
+    },
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-002"
+      ],
+      "evidence": [
+        "Risk R-002 residual score: 18",
+        "Risk trend: Increasing",
+        "Related weak controls: C-002 (ineffective)"
+      ],
+      "finding_id": "F-002",
+      "recommendation": "Prioritize remediation and retesting for C-002; confirm owner, due date and residual risk acceptance for R-002.",
+      "risk_id": "R-002",
+      "severity": "High",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:5",
+        "data/synthetic/grc_sample.csv:4"
+      ],
+      "theme": "Third Party Risk",
+      "title": "High residual risk linked to weak controls: Critical supplier outage"
+    },
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-001",
+        "C-004"
+      ],
+      "evidence": [
+        "Risk R-001 residual score: 16",
+        "Risk trend: Increasing",
+        "Related weak controls: C-001 (partially effective), C-004 (ineffective)"
+      ],
+      "finding_id": "F-003",
+      "recommendation": "Prioritize remediation and retesting for C-001, C-004; confirm owner, due date and residual risk acceptance for R-001.",
+      "risk_id": "R-001",
+      "severity": "High",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:3",
+        "data/synthetic/grc_sample.csv:2",
+        "data/synthetic/grc_sample.csv:8"
+      ],
+      "theme": "Identity and Access",
+      "title": "High residual risk linked to weak controls: Privileged access misuse"
+    },
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-005"
+      ],
+      "evidence": [
+        "Control C-005 status: partially effective",
+        "No linked high residual risk was detected above the configured threshold."
+      ],
+      "finding_id": "F-004",
+      "recommendation": "Validate remediation plan and retest control C-005; confirm whether risk mapping is complete.",
+      "risk_id": "R-005",
+      "severity": "Medium",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:10",
+        "data/synthetic/grc_sample.csv:11"
+      ],
+      "theme": "Policy Management",
+      "title": "Weak control requires remediation: Policy exception review"
+    }
+  ],
+  "metrics": {
+    "contextual_correlations": 0,
+    "controls_by_effectiveness": {
+      "effective": 1,
+      "ineffective": 2,
+      "partially effective": 2
+    },
+    "critical_risks": 1,
+    "direct_correlations": 3,
+    "high_risks": 3,
+    "increasing_risks": 3,
+    "process_effectiveness": [
+      {
+        "average_residual_score": 18.5,
+        "controls": 2,
+        "effective_controls": 0,
+        "effectiveness_ratio": 0.0,
+        "high_risks": 2,
+        "process": "Identity and Access",
+        "risks": 2,
+        "weak_controls": 2
+      },
+      {
+        "average_residual_score": 18.0,
+        "controls": 1,
+        "effective_controls": 0,
+        "effectiveness_ratio": 0.0,
+        "high_risks": 1,
+        "process": "Third Party Risk",
+        "risks": 1,
+        "weak_controls": 1
+      },
+      {
+        "average_residual_score": 11.0,
+        "controls": 1,
+        "effective_controls": 0,
+        "effectiveness_ratio": 0.0,
+        "high_risks": 0,
+        "process": "Policy Management",
+        "risks": 1,
+        "weak_controls": 1
+      },
+      {
+        "average_residual_score": 9.0,
+        "controls": 1,
+        "effective_controls": 1,
+        "effectiveness_ratio": 1.0,
+        "high_risks": 0,
+        "process": "Resilience",
+        "risks": 1,
+        "weak_controls": 0
+      }
+    ],
+    "risk_impact_by_process": [
+      {
+        "control_count": 2,
+        "exposure_index": 41.0,
+        "max_residual_score": 21.0,
+        "process": "Identity and Access",
+        "risk_count": 2,
+        "total_residual_score": 37.0,
+        "weak_controls": 2
+      },
+      {
+        "control_count": 1,
+        "exposure_index": 20.0,
+        "max_residual_score": 18.0,
+        "process": "Third Party Risk",
+        "risk_count": 1,
+        "total_residual_score": 18.0,
+        "weak_controls": 1
+      },
+      {
+        "control_count": 1,
+        "exposure_index": 13.0,
+        "max_residual_score": 11.0,
+        "process": "Policy Management",
+        "risk_count": 1,
+        "total_residual_score": 11.0,
+        "weak_controls": 1
+      },
+      {
+        "control_count": 1,
+        "exposure_index": 9.0,
+        "max_residual_score": 9.0,
+        "process": "Resilience",
+        "risk_count": 1,
+        "total_residual_score": 9.0,
+        "weak_controls": 0
+      }
+    ],
+    "risk_matrix": [
+      {
+        "count": 0,
+        "impact": 1,
+        "likelihood": 1,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 1,
+        "likelihood": 2,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 1,
+        "likelihood": 3,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 1,
+        "likelihood": 4,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 1,
+        "likelihood": 5,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 2,
+        "likelihood": 1,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 2,
+        "likelihood": 2,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 2,
+        "likelihood": 3,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 2,
+        "likelihood": 4,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 2,
+        "likelihood": 5,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 3,
+        "likelihood": 1,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 3,
+        "likelihood": 2,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 1,
+        "impact": 3,
+        "likelihood": 3,
+        "max_score": 9.0,
+        "risk_ids": [
+          "R-003"
+        ]
+      },
+      {
+        "count": 0,
+        "impact": 3,
+        "likelihood": 4,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 3,
+        "likelihood": 5,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 4,
+        "likelihood": 1,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 4,
+        "likelihood": 2,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 1,
+        "impact": 4,
+        "likelihood": 3,
+        "max_score": 11.0,
+        "risk_ids": [
+          "R-005"
+        ]
+      },
+      {
+        "count": 1,
+        "impact": 4,
+        "likelihood": 4,
+        "max_score": 16.0,
+        "risk_ids": [
+          "R-001"
+        ]
+      },
+      {
+        "count": 0,
+        "impact": 4,
+        "likelihood": 5,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 5,
+        "likelihood": 1,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 5,
+        "likelihood": 2,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 0,
+        "impact": 5,
+        "likelihood": 3,
+        "max_score": 0.0,
+        "risk_ids": []
+      },
+      {
+        "count": 1,
+        "impact": 5,
+        "likelihood": 4,
+        "max_score": 18.0,
+        "risk_ids": [
+          "R-002"
+        ]
+      },
+      {
+        "count": 1,
+        "impact": 5,
+        "likelihood": 5,
+        "max_score": 21.0,
+        "risk_ids": [
+          "R-004"
+        ]
+      }
+    ],
+    "risks_by_rating": {
+      "Critical": 1,
+      "High": 2,
+      "Medium": 2
+    },
+    "skipped_records": 0,
+    "source_files": [
+      {
+        "path": "data/synthetic/grc_sample.csv",
+        "records_loaded": 10,
+        "sha256": "7f9e0e367eb9a54b1d091ac349d4e8315d5a5d9ad251547594a47d87bf0c1031",
+        "size_bytes": 2639
+      }
+    ],
+    "total_controls": 5,
+    "total_risks": 5,
+    "trend_by_process": [
+      {
+        "decreasing": 0,
+        "high_risks": 2,
+        "increasing": 2,
+        "process": "Identity and Access",
+        "stable": 0,
+        "unknown": 0
+      },
+      {
+        "decreasing": 0,
+        "high_risks": 1,
+        "increasing": 1,
+        "process": "Third Party Risk",
+        "stable": 0,
+        "unknown": 0
+      },
+      {
+        "decreasing": 0,
+        "high_risks": 0,
+        "increasing": 0,
+        "process": "Resilience",
+        "stable": 1,
+        "unknown": 0
+      },
+      {
+        "decreasing": 0,
+        "high_risks": 0,
+        "increasing": 0,
+        "process": "Policy Management",
+        "stable": 1,
+        "unknown": 0
+      }
+    ],
+    "trend_counts": {
+      "Increasing": 3,
+      "Stable": 2
+    },
+    "weak_controls": 4
+  },
+  "posture": "Critical",
+  "themes": [
+    {
+      "controls": 2,
+      "high_risks": 2,
+      "max_score": 21.0,
+      "risks": 2,
+      "theme": "Identity and Access",
+      "weak_controls": 2
+    },
+    {
+      "controls": 1,
+      "high_risks": 1,
+      "max_score": 18.0,
+      "risks": 1,
+      "theme": "Third Party Risk",
+      "weak_controls": 1
+    },
+    {
+      "controls": 1,
+      "high_risks": 0,
+      "max_score": 11.0,
+      "risks": 1,
+      "theme": "Policy Management",
+      "weak_controls": 1
+    },
+    {
+      "controls": 1,
+      "high_risks": 0,
+      "max_score": 9.0,
+      "risks": 1,
+      "theme": "Resilience",
+      "weak_controls": 0
+    }
+  ],
+  "traceability": [
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-001",
+        "C-004"
+      ],
+      "finding_id": "F-001",
+      "risk_id": "R-004",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:9",
+        "data/synthetic/grc_sample.csv:2",
+        "data/synthetic/grc_sample.csv:8"
+      ]
+    },
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-002"
+      ],
+      "finding_id": "F-002",
+      "risk_id": "R-002",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:5",
+        "data/synthetic/grc_sample.csv:4"
+      ]
+    },
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-001",
+        "C-004"
+      ],
+      "finding_id": "F-003",
+      "risk_id": "R-001",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:3",
+        "data/synthetic/grc_sample.csv:2",
+        "data/synthetic/grc_sample.csv:8"
+      ]
+    },
+    {
+      "confidence": "High",
+      "control_ids": [
+        "C-005"
+      ],
+      "finding_id": "F-004",
+      "risk_id": "R-005",
+      "source_refs": [
+        "data/synthetic/grc_sample.csv:10",
+        "data/synthetic/grc_sample.csv:11"
+      ]
+    }
+  ]
+}

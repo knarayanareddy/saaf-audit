@@ -1,0 +1,31 @@
+# ── Secrets — never commit ──────────────────────────────────────────────
+backend/.env
+*.env.local
+
+# ── Uploaded audit documents — potentially confidential, never commit ───
+backend/uploads/
+
+# ── Python ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+backend/venv/
+.venv/
+
+# ── Node / frontend build ───────────────────────────────────────────────
+node_modules/
+frontend/dist/
+dist/
+
+# ── Dev database (seeded demo data, not source) ─────────────────────────
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# ── OS / editor / office temp ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+~$*
+*.log

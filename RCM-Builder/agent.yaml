@@ -1,0 +1,37 @@
+# SAAF Living Map manifest for RCM Builder (UC7).
+# Schema: https://github.com/SAAF-Project/saaf-living-map (agent.example.yaml)
+name: RCM Builder (UC7)
+repo: SAAF-Project/RCM-Builder
+island: planning
+# The owner can adjust this as the agent moves through the maturity stages.
+maturity: ready   # building | ready | tested | improving
+category: "Risk & Controls"
+language: Python
+depends_on: []            # consumes UC1-UC6 outputs as files, not as repos on the map
+tags: [RCM, GIAS, UC7, COSO, COBIT, ITGC]
+open_slots: 0
+description: "Builds a Risk and Control Matrix from UC1-UC5 risk inputs: normalise risks, design controls, validate IT dependencies."
+
+# The approved mandate. Changing this requires a pull request.
+mandate:
+  purpose: >-
+    Turn the use-case risk inputs and the IT dependency matrix into a traceable,
+    schema-valid Risk and Control Matrix that a human auditor approves before it
+    goes to the Audit Work Program agent (UC8).
+  allowed_tools: [read_use_case_inputs, read_it_matrix, validate_schema, write_rcm]
+  forbidden_actions:
+    - action: change_own_config
+      rationale: Changes to this mandate, the scoring factors or the schema go through a pull request.
+    - action: modify_source_data
+      rationale: The UC inputs and IT matrix are evidence; the RCM must trace back to them unchanged.
+    - action: create_untraced_risk
+      rationale: Every risk needs a source reference (or a documented UC6 IT-dependency trigger); no orphan risks.
+    - action: mark_rcm_approved
+      rationale: Only the auditor approves the RCM; UC8 must work from an approved matrix.
+    - action: send_email
+      rationale: Communication with process owners goes through the auditor, not the agent.
+  trusted_inputs: [use_case_inputs_uc1_uc5, it_dependency_matrix, rcm_schema, rcm_frameworks_reference]  # anything else is untrusted
+  max_runtime_minutes: 15
+  human_approval_required_for: [approving the RCM before hand-off to UC8, overriding risk appetite or scoring factors]
+  evidence_policy: cite_only_given_context   # every risk and control cites a trusted input
+  sharing: standard_is_shared_mandate_is_private

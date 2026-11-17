@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Review — SAAF</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-logo">
+      <span class="logo-mark">SAAF</span>
+      <span class="logo-sep">|</span>
+      <span class="logo-title">Access Review</span>
+    </div>
+    <div class="header-badges">
+      <span class="badge-pill">ISO 27001</span>
+      <span class="badge-pill">SOC 2</span>
+      <span class="badge-pill">ISAE 3402</span>
+      <span class="badge-pill local">&#x25cf; Local only</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  {% if error_msg %}
+  <div class="alert-error">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+    {{ error_msg }}
+  </div>
+  {% endif %}
+
+  {% if not results %}
+  <!-- ===== UPLOAD PAGE ===== -->
+  <div class="hero">
+    <h1>User Access Review Comparator</h1>
+    <p>Upload your HR export and user access export. The tool cross-references both files, detects exceptions, and produces anonymised SAAF audit findings — entirely on your machine.</p>
+  </div>
+
+  <form method="post" action="/run" enctype="multipart/form-data" id="upload-form">
+
+    <div class="upload-grid">
+
+      <div class="upload-zone" id="zone-hr" onclick="document.getElementById('hr_file').click()">
+        <div class="upload-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M3 16v1a3 3 0 003 3h12a3 3 0 003-3v-1"/></svg>
+        </div>
+        <div class="upload-label">HR Export</div>
+        <div class="upload-hint" id="hr-filename">CSV or XLSX · employees, status, departments</div>
+        <input type="file" id="hr_file" name="hr_file" accept=".csv,.xlsx,.xls" required hidden
+               onchange="showFilename(this,'hr-filename')" />
+      </div>
+
+      <div class="upload-zone" id="zone-access" onclick="document.getElementById('access_file').click()">
+        <div class="upload-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <div class="upload-label">User Access Export</div>
+        <div class="upload-hint" id="access-filename">CSV or XLSX · AD, Entra ID, IAM, application</div>
+        <input type="file" id="access_file" name="access_file" accept=".csv,.xlsx,.xls" required hidden
+               onchange="showFilename(this,'access-filename')" />
+      </div>
+
+    </div>
+
+    <!-- Advanced settings -->
+    <details class="advanced">
+      <summary>Advanced settings</summary>
+      <div class="advanced-grid">
+        <div class="field">
+          <label for="match_key">Match key</label>
+          <input type="text" id="match_key" name="match_key" value="username" placeholder="username" />
+          <span class="field-hint">Column used to join HR and access records</span>
+        </div>
+        <div class="field">
+          <label for="stale_days">Stale threshold (days)</label>
+          <input type="number" id="stale_days" name="stale_days" value="90" min="1" max="3650" />
+          <span class="field-hint">Accounts with no login beyond this are flagged stale</span>
+        </div>
+        <div class="field full">
+          <label for="exclusion_patterns">Exclusion patterns</label>
+          <textarea id="exclusion_patterns" name="exclusion_patterns" rows="3">{{ default_exclusions }}</textarea>
+          <span class="field-hint">One per line · glob syntax · matching accounts are counted but excluded from findings</span>
+        </div>
+      </div>
+    </details>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-run">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>
+        Run Comparison
+      </button>
+      <div class="example-links">
+        <span>Example files:</span>
+        <a href="/download-example/hr_export.csv">hr_export.csv</a>
+        <a href="/download-example/ad_export.csv">ad_export.csv</a>
+      </div>
+    </div>
+
+  </form>
+
+  {% else %}
+  <!-- ===== RESULTS PAGE ===== -->
+
+  <div class="results-header">
+    <div>
+      <h1>Review Complete</h1>
+      <p class="run-id">Run <code>{{ run_id }}</code></p>
+    </div>
+    <a href="/" class="btn-ghost">&#8592; New comparison</a>
+  </div>
+
+  <!-- Summary strip -->
+  <div class="summary-strip">
+    <div class="summary-item">
+      <div class="s-value">{{ results.summary.hr_records }}</div>
+      <div class="s-label">HR records</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-item">
+      <div class="s-value">{{ results.summary.access_records }}</div>
+      <div class="s-label">Access records</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-item">
+      <div class="s-value">{{ results.summary.excluded_accounts }}</div>
+      <div class="s-label">Excluded</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-item risk-high">
+      <div class="s-value">{{ results.summary.findings_by_risk.High }}</div>
+      <div class="s-label">High</div>
+    </div>
+    <div class="summary-item risk-medium">
+      <div class="s-value">{{ results.summary.findings_by_risk.Medium }}</div>
+      <div class="s-label">Medium</div>
+    </div>
+    <div class="summary-item risk-low">
+      <div class="s-value">{{ results.summary.findings_by_risk.Low }}</div>
+      <div class="s-label">Low</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-item total">
+      <div class="s-value">{{ results.summary.total_findings }}</div>
+      <div class="s-label">Total findings</div>
+    </div>
+  </div>
+
+  <!-- Findings -->
+  {% if results.findings %}
+  <div class="findings-list">
+    {% for f in results.findings %}
+    <div class="finding-card" data-risk="{{ f.risk_rating | lower }}">
+      <div class="finding-header" onclick="toggleCard(this)">
+        <div class="finding-left">
+          <span class="finding-id">{{ f.id }}</span>
+          <span class="risk-badge risk-{{ f.risk_rating | lower }}">{{ f.risk_rating }}</span>
+          <span class="finding-title">{{ f.title }}</span>
+        </div>
+        <div class="finding-right">
+          <code class="user-ref">{{ f.affected_user_ref }}</code>
+          <span class="chevron">&#8964;</span>
+        </div>
+      </div>
+      <div class="finding-body">
+        <div class="finding-detail">
+          <div class="detail-label">Observation</div>
+          <div class="detail-text">{{ f.observation }}</div>
+        </div>
+        <div class="finding-detail">
+          <div class="detail-label">Recommendation</div>
+          <div class="detail-text">{{ f.recommendation }}</div>
+        </div>
+        {% if f.control_refs %}
+        <div class="finding-detail">
+          <div class="detail-label">Control references</div>
+          <div class="control-refs">
+            {% for ref in f.control_refs %}
+            <span class="control-ref">{{ ref }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="no-findings">
+    <svg width="40" height="40" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+    <p>No exceptions found across {{ results.summary.access_records }} access records.</p>
+  </div>
+  {% endif %}
+
+  <!-- Downloads -->
+  <div class="downloads-section">
+    <div class="downloads-title">Download outputs</div>
+    <div class="downloads-grid">
+      <a class="dl-card" href="/download/{{ run_id }}/findings.json">
+        <div class="dl-icon">{ }</div>
+        <div class="dl-name">findings.json</div>
+        <div class="dl-desc">Anonymised findings</div>
+      </a>
+      <a class="dl-card" href="/download/{{ run_id }}/findings.csv">
+        <div class="dl-icon">&#9776;</div>
+        <div class="dl-name">findings.csv</div>
+        <div class="dl-desc">Spreadsheet format</div>
+      </a>
+      <a class="dl-card" href="/download/{{ run_id }}/summary.json">
+        <div class="dl-icon">&#9654;</div>
+        <div class="dl-name">summary.json</div>
+        <div class="dl-desc">Run statistics</div>
+      </a>
+      <a class="dl-card sensitive" href="/download/{{ run_id }}/user_mapping.csv">
+        <div class="dl-icon">&#9888;</div>
+        <div class="dl-name">user_mapping.csv</div>
+        <div class="dl-desc">USER-NNN &#8594; real identifiers · sensitive</div>
+      </a>
+    </div>
+  </div>
+
+  {% endif %}
+
+</main>
+
+<footer>
+  SAAF · Local User Access Review Comparator · No data leaves this machine
+</footer>
+
+<script>
+function showFilename(input, hintId) {
+  if (input.files && input.files[0]) {
+    document.getElementById(hintId).textContent = input.files[0].name;
+    input.closest('.upload-zone').classList.add('has-file');
+  }
+}
+
+function toggleCard(header) {
+  const card = header.closest('.finding-card');
+  card.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

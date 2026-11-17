@@ -1,0 +1,1052 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>Groepsapp Waterlinie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --paper:#FBFAF7;
+  --panel:#F4F1EC;
+  --chat:#EFEAE2;
+  --bub-in:#FFFFFF;
+  --bub-out:#D7E4D0;
+  --ink:#1E2428;
+  --ink-soft:#4A555E;
+  --muted:#79838C;
+  --line:#DCD6CC;
+  --line-soft:#E7E2D9;
+  --audit:#1F3A5F;
+  --audit-bg:#E8EEF5;
+  --amber:#9A6212;
+  --amber-bg:#F6ECD9;
+  --red:#8F2626;
+  --red-bg:#F6E2E0;
+  --ok:#39603F;
+  --ok-bg:#E3EDE2;
+  --shadow:0 1px 1px rgba(30,36,40,.10);
+  --c-1:#8A5A2B; --c-2:#1F3A5F; --c-3:#5B3A6E; --c-4:#0F5F5C;
+  --c-5:#8C2F53; --c-6:#3F5A1E; --c-7:#7A4A12; --c-8:#26506E;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12171A;
+    --panel:#181E22;
+    --chat:#0D1214;
+    --bub-in:#1F262B;
+    --bub-out:#1E3A2C;
+    --ink:#E7EAEC;
+    --ink-soft:#B6BFC6;
+    --muted:#8B959D;
+    --line:#2A333A;
+    --line-soft:#222A30;
+    --audit:#8FB4DC;
+    --audit-bg:#17222E;
+    --amber:#E2A85C;
+    --amber-bg:#2A2115;
+    --red:#E58B85;
+    --red-bg:#2C1918;
+    --ok:#8CC095;
+    --ok-bg:#16241A;
+    --shadow:0 1px 2px rgba(0,0,0,.35);
+    --c-1:#D5A26A; --c-2:#8FB4DC; --c-3:#C0A0D4; --c-4:#68C4BE;
+    --c-5:#E38FAC; --c-6:#A9C77A; --c-7:#DCAE6C; --c-8:#87B4D6;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12171A; --panel:#181E22; --chat:#0D1214; --bub-in:#1F262B; --bub-out:#1E3A2C;
+  --ink:#E7EAEC; --ink-soft:#B6BFC6; --muted:#8B959D; --line:#2A333A; --line-soft:#222A30;
+  --audit:#8FB4DC; --audit-bg:#17222E; --amber:#E2A85C; --amber-bg:#2A2115;
+  --red:#E58B85; --red-bg:#2C1918; --ok:#8CC095; --ok-bg:#16241A;
+  --shadow:0 1px 2px rgba(0,0,0,.35);
+  --c-1:#D5A26A; --c-2:#8FB4DC; --c-3:#C0A0D4; --c-4:#68C4BE;
+  --c-5:#E38FAC; --c-6:#A9C77A; --c-7:#DCAE6C; --c-8:#87B4D6;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1.55;
+  margin:0;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.4vw,46px);line-height:1.08;letter-spacing:-.01em}
+h2{font-size:26px;line-height:1.2;margin-bottom:6px}
+h3{font-size:18px;line-height:1.25}
+p{margin:0}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+a{color:var(--audit)}
+
+/* ---------- header ---------- */
+.band{
+  background:var(--red-bg);color:var(--red);
+  font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;
+  padding:9px 20px;border-bottom:1px solid var(--line);
+}
+.band span{opacity:.75;font-weight:400;letter-spacing:.04em;text-transform:none;font-size:12px}
+header.top{padding:44px 0 30px;border-bottom:1px solid var(--line)}
+.eyebrow{font:500 11px/1 "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.lede{max-width:64ch;color:var(--ink-soft);margin-top:14px;font-size:16px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:22px}
+.fact{display:flex;flex-direction:column;gap:1px}
+.fact b{font:600 19px/1.1 "IBM Plex Mono",monospace}
+.fact small{color:var(--muted);font-size:11.5px;letter-spacing:.03em}
+
+/* ---------- controls bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:20;background:var(--paper);
+  border-bottom:1px solid var(--line);padding:11px 0;margin-bottom:26px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.toggle{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;font-size:13.5px;font-weight:500}
+.toggle input{position:absolute;opacity:0;width:0;height:0}
+.track{width:38px;height:21px;border-radius:11px;background:var(--line);position:relative;transition:background .18s;flex:none}
+.track::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:var(--paper);box-shadow:var(--shadow);transition:transform .18s}
+.toggle input:checked + .track{background:var(--audit)}
+.toggle input:checked + .track::after{transform:translateX(17px)}
+.toggle input:focus-visible + .track{outline:2px solid var(--audit);outline-offset:2px}
+.bar .hint{color:var(--muted);font-size:12.5px}
+.skip{
+  font:500 12px/1 "IBM Plex Sans",sans-serif;color:var(--audit);background:var(--audit-bg);
+  border:1px solid var(--audit);border-radius:3px;padding:6px 11px;cursor:pointer;
+}
+.skip:hover{background:var(--audit);color:var(--paper)}
+.skip:focus-visible{outline:2px solid var(--audit);outline-offset:2px}
+.skip[hidden]{display:none}
+
+/* ---------- sections ---------- */
+section{padding-top:46px}
+.sechead{max-width:70ch;margin-bottom:22px}
+.sechead p{color:var(--ink-soft);margin-top:7px}
+
+/* ---------- participants ---------- */
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+.who-card{background:var(--paper);padding:15px 16px 16px;display:flex;flex-direction:column;gap:7px}
+.who-card .nm{display:flex;align-items:baseline;gap:8px}
+.av{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font:600 11px/1 "IBM Plex Sans",sans-serif;align-self:center}
+.who-card .top{display:flex;align-items:center;gap:9px}
+.who-card b{font-size:14.5px;font-weight:600}
+.who-card .role{color:var(--muted);font-size:12px}
+.who-card .scheme{font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--line-soft);padding-top:7px}
+.who-card .scheme em{font-style:normal;color:var(--muted);display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:2px}
+
+/* ---------- chat ---------- */
+.chatgrid{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:34px;align-items:start}
+@media (max-width:900px){.chatgrid{grid-template-columns:1fr}.side{position:static !important;order:-1}}
+.phone{background:var(--chat);border:1px solid var(--line);border-radius:4px;overflow:hidden;max-width:600px}
+.phone-hd{display:flex;align-items:center;gap:11px;padding:11px 14px;background:var(--panel);border-bottom:1px solid var(--line)}
+.phone-hd .gav{width:36px;height:36px;border-radius:50%;background:var(--audit);color:#fff;display:grid;place-items:center;font:600 13px/1 "IBM Plex Sans",sans-serif;flex:none}
+.phone-hd b{font-size:14.5px;display:block}
+.phone-hd small{color:var(--muted);font-size:11.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:42ch}
+.stream{padding:14px 12px 20px;display:flex;flex-direction:column;gap:9px}
+.day{align-self:center;background:var(--panel);border:1px solid var(--line-soft);color:var(--ink-soft);font:500 11px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;padding:5px 11px;border-radius:3px;margin:11px 0 3px}
+.msg{max-width:86%;display:flex;flex-direction:column;gap:0}
+.msg.out{align-self:flex-end;align-items:flex-end}
+.bubble{background:var(--bub-in);border-radius:8px;padding:7px 10px 6px;box-shadow:var(--shadow);position:relative}
+.msg.out .bubble{background:var(--bub-out)}
+.bubble .who{font:600 12.5px/1.3 "IBM Plex Sans",sans-serif;display:block;margin-bottom:2px}
+.bubble .txt{font-size:14.5px;line-height:1.42}
+.bubble .tm{font:400 10.5px/1 "IBM Plex Mono",monospace;color:var(--muted);float:right;margin:5px 0 0 10px}
+.bubble .tm .tick{color:var(--audit);letter-spacing:-2px;margin-left:3px}
+.quote{border-left:3px solid var(--audit);background:rgba(31,58,95,.06);border-radius:4px;padding:4px 8px;margin-bottom:5px;font-size:12.5px;color:var(--ink-soft)}
+.quote b{display:block;color:var(--audit);font-size:12px}
+:root[data-theme="dark"] .quote,:root:not([data-theme="light"]) .quote{}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .quote{background:rgba(143,180,220,.10)}}
+:root[data-theme="dark"] .quote{background:rgba(143,180,220,.10)}
+.deleted{font-style:italic;color:var(--muted);font-size:13.5px;display:flex;align-items:center;gap:6px}
+.attach{display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line-soft);border-radius:5px;padding:7px 9px;margin-bottom:5px}
+.attach .ic{width:26px;height:30px;flex:none;border:1px solid var(--line);border-radius:2px;background:var(--paper);display:grid;place-items:center;font:600 8.5px/1 "IBM Plex Mono",monospace;color:var(--muted)}
+.attach .fn{font-size:12.5px;font-weight:500;word-break:break-all}
+.attach .sz{font:400 10.5px/1 "IBM Plex Mono",monospace;color:var(--muted)}
+.voice{display:flex;align-items:center;gap:9px;min-width:190px}
+.voice .play{width:24px;height:24px;border-radius:50%;background:var(--audit);color:var(--paper);display:grid;place-items:center;font-size:9px;flex:none}
+.wave{display:flex;align-items:flex-end;gap:2px;height:19px;flex:1}
+.wave i{display:block;width:2px;background:var(--muted);opacity:.55;border-radius:1px}
+.voice .dur{font:400 10.5px/1 "IBM Plex Mono",monospace;color:var(--muted)}
+
+/* playback */
+.stream.playing{max-height:min(72vh,640px);overflow-y:auto;scroll-behavior:smooth}
+.stream.playing .msg:not(.shown),.stream.playing .day:not(.shown){display:none}
+@keyframes msgIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.stream.playing .msg.shown,.stream.playing .day.shown{animation:msgIn .26s cubic-bezier(.2,.7,.3,1) both}
+.typing .bubble{padding:9px 12px 8px}
+.dots{display:flex;gap:4px;align-items:center;height:9px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:.5;animation:blip 1.1s infinite}
+.dots i:nth-child(2){animation-delay:.18s}
+.dots i:nth-child(3){animation-delay:.36s}
+@keyframes blip{0%,60%,100%{opacity:.32;transform:translateY(0)}30%{opacity:.85;transform:translateY(-3px)}}
+@media (prefers-reduced-motion: reduce){
+  .stream.playing{max-height:none;overflow:visible;scroll-behavior:auto}
+  .stream.playing .msg.shown,.stream.playing .day.shown{animation:none}
+  .dots i{animation:none}
+}
+
+/* annotation */
+.ann{
+  display:none;margin:3px 2px 2px;padding:5px 8px;border-left:2px solid var(--audit);
+  background:var(--audit-bg);border-radius:0 4px 4px 0;
+  font:400 11.5px/1.45 "IBM Plex Sans",sans-serif;color:var(--ink-soft);
+}
+.msg.out .ann{border-left:0;border-right:2px solid var(--audit);border-radius:4px 0 0 4px;text-align:right}
+body.audit .ann{display:block}
+.ann code{font-size:11px;font-weight:600;color:var(--audit)}
+.pill{display:inline-block;font:600 9.5px/1.5 "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;padding:0 5px;border-radius:2px;vertical-align:1px}
+.p-u{background:var(--red-bg);color:var(--red)}
+.p-na{background:var(--red-bg);color:var(--red)}
+.p-p{background:var(--amber-bg);color:var(--amber)}
+.p-r{background:var(--ok-bg);color:var(--ok)}
+.sc{font:600 11px/1 "IBM Plex Mono",monospace}
+.s-h{color:var(--red)}.s-m{color:var(--amber)}.s-l{color:var(--ok)}
+
+/* sidebar */
+.side{position:sticky;top:66px;display:flex;flex-direction:column;gap:18px}
+.card{border:1px solid var(--line);background:var(--panel);padding:14px 15px}
+.card h3{font-size:14px;font-family:"IBM Plex Sans",sans-serif;font-weight:600;letter-spacing:.02em;margin-bottom:9px}
+.legend{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink-soft)}
+.legend div{display:flex;gap:8px;align-items:baseline}
+.legend .pill{flex:none;min-width:74px;text-align:center}
+.axis{font-size:12.5px;color:var(--ink-soft);display:flex;flex-direction:column;gap:9px}
+.axis b{color:var(--ink);font-size:12.5px}
+
+/* ---------- collusion ---------- */
+.axes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.axis-card{border:1px solid var(--line);padding:16px 17px;background:var(--panel);display:flex;flex-direction:column;gap:9px}
+.axis-card .pair{font-family:Newsreader,Georgia,serif;font-size:18px;line-height:1.25}
+.axis-card .pair span{color:var(--muted)}
+.axis-card p{font-size:13.5px;color:var(--ink-soft)}
+.axis-card .refs{font:500 11px/1 "IBM Plex Mono",monospace;color:var(--audit);letter-spacing:.03em}
+.hub{border:1px solid var(--audit);background:var(--audit-bg);padding:17px 18px;margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.hub .k{font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--audit)}
+.hub p{font-size:14px;color:var(--ink-soft);max-width:78ch}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+th{background:var(--panel);text-align:left;font:600 10.5px/1.3 "IBM Plex Mono",monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:9px 11px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td.m{font-family:"IBM Plex Mono",monospace;font-size:12px;white-space:nowrap}
+td.num{font-family:"IBM Plex Mono",monospace;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hi td{background:var(--red-bg)}
+
+/* ---------- tests ---------- */
+.tests{counter-reset:t;display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+.test{background:var(--paper);padding:14px 16px 15px;display:grid;grid-template-columns:34px 1fr;gap:14px}
+.test::before{counter-increment:t;content:counter(t,decimal-leading-zero);font:600 12px/1.6 "IBM Plex Mono",monospace;color:var(--audit)}
+.test b{display:block;font-size:14.5px;margin-bottom:3px}
+.test p{font-size:13.5px;color:var(--ink-soft)}
+.test .src{font:500 11px/1 "IBM Plex Mono",monospace;color:var(--muted);margin-top:6px;display:block}
+
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;max-width:78ch}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+
+<div class="band">Fictief — simulatie <span>· Stichting Zorggroep Waterlinie bestaat niet. Namen, gesprekken en incidenten zijn verzonnen voor een fraude-risicoanalyse.</span></div>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Fraude-risicoanalyse · Risk Control Matrix · boekjaar 2026</div>
+  <h1>Groepsapp Waterlinie</h1>
+  <p class="lede">Acht rollen uit de Risk Control Matrix van Zorggroep Waterlinie hebben elk uitgeschreven welke beheersingsmaatregel bij hen faalt en waarom. Hun antwoorden zijn op één tijdlijn gelegd en gepresenteerd als een groepsgesprek. Elk bericht verwijst naar een echte control uit de RCM. Zet de auditmodus aan om te zien welke.</p>
+  <div class="facts">
+    <div class="fact"><b>20</b><small>risico's in de RCM</small></div>
+    <div class="fact"><b>39</b><small>controls beoordeeld</small></div>
+    <div class="fact"><b>11</b><small>Unreliable</small></div>
+    <div class="fact"><b>5</b><small>Not Assessed</small></div>
+    <div class="fact"><b>21,25</b><small>hoogste restrisico</small></div>
+    <div class="fact"><b>3</b><small>wederkerige collusie-assen</small></div>
+  </div>
+</header>
+
+<div class="bar">
+  <label class="toggle"><input type="checkbox" id="auditToggle"><span class="track"></span>Auditmodus</label>
+  <button type="button" class="skip" id="skipBtn" hidden>Hele gesprek tonen</button>
+  <span class="hint">Het gesprek speelt zich af zoals het gevoerd is. Auditmodus toont het volledige gesprek ineens, met per bericht de omzeilde control, de kwaliteit van het bewijs (IPE) en het restrisico.</span>
+</div>
+
+<section id="cast">
+  <div class="sechead">
+    <h2>Wie er in de groep zit</h2>
+    <p>Elke deelnemer bestaat als rol in de dataset en heeft aantoonbaar gelegenheid: hij voert een control uit, keurt er een goed, of produceert het bewijs waarop een ander steunt. Vijf komen uit de fraude-risicoworkshop 2026; drie zijn toegevoegd omdat de RCM ze als noodzakelijke schakel aanwijst.</p>
+  </div>
+  <div class="cast">
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-1)">SK</span><div><b>Sander Kuijpers</b><div class="role">Crediteurenadministrateur · FinCore</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-01</em>Creation of False or Fictitious Vendors — muteert én keurt bankrekeningen goed</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-2)">BW</span><div><b>Bart Wieringa</b><div class="role">Controller · Financiën</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-02</em>Management Override — eigenaar van de vier controls die hemzelf moeten betrappen</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-3)">DE</span><div><b>Diederik van Emmerik</b><div class="role">Lid Raad van Bestuur</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-02</em>Management Override — plus WNT-herrubricering naar inhuurkosten</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-4)">MD</span><div><b>Marieke van Dongen</b><div class="role">Salarisadministrateur · LoonLink</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-03</em>Failure to Remove Terminated Employees from Payroll</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-5)">MV</span><div><b>Marloes Verkerk</b><div class="role">Teamleider thuiszorg · ZorgDossier</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-04</em>Home Healthcare Fraud — registreert en keurt haar eigen uren goed</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-6)">RV</span><div><b>Ronald Verheggen</b><div class="role">Inkoper facilitair</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-05</em>Payments for Services Not Received — het enige scenario dat in de basisrun slaagt</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-7)">EK</span><div><b>Ed Kloosterboer</b><div class="role">Directeur leverancier · extern</div></div></div>
+      <div class="scheme"><em>ACFE-schema · FS-05</em>Billing Schemes — levert de facade: KvK, facturen, tweede bv</div>
+    </div>
+    <div class="who-card">
+      <div class="top"><span class="av" style="background:var(--c-8)">MH</span><div><b>Marnix Verheul</b><div class="role">Applicatiebeheerder ECD/ERP</div></div></div>
+      <div class="scheme"><em>Toegevoegd · ITGC</em>Produceert het bewijs waarop tien andere controls steunen</div>
+    </div>
+  </div>
+</section>
+
+<section id="chat">
+  <div class="sechead">
+    <h2>Het gesprek</h2>
+    <p>Vier momenten uit boekjaar 2026: de salariscorrecties na het onderbetalingsincident, de februari-afsluiting, de facilitaire facturen na de reorganisatie, en de storing in april. Niemand in dit gesprek zegt iets dat op zichzelf alarmerend klinkt. Dat is precies het punt.</p>
+  </div>
+
+  <div class="chatgrid">
+    <div class="phone">
+      <div class="phone-hd">
+        <span class="gav">W</span>
+        <div>
+          <b>Waterlinie — even kort</b>
+          <small>Sander, Bart, Diederik, Marieke, Marloes, Ronald, Ed, Marnix</small>
+        </div>
+      </div>
+      <div class="stream">
+
+        <div class="day">maandag 26 januari 2026</div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-4)">Marieke van Dongen</span>
+            <span class="txt">Weer een correctie buiten het systeem om, gewoon zoals altijd tegenwoordig.</span>
+            <span class="tm">08:41</span>
+          </div>
+          <div class="ann"><code>CTRL-0007</code> <span class="pill p-na">Not Assessed</span> — geen matrixregel, dus geen enkele aansluiting tussen PlanWijs-uren en LoonLink. <code>RISK-0004</code> <span class="sc s-m">13,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-4)">Marieke van Dongen</span>
+            <span class="txt">Rooster klopt toch nooit met LoonLink, dus regel ik het zelf wel even.</span>
+            <span class="tm">08:42</span>
+          </div>
+          <div class="ann"><code>CTRL-0007</code> — de handmatige nabetalingsstroom die na INC-2026-019 ontstond, is zelf nergens beheerst. <code>RISK-0024</code> <span class="sc s-l">7,8 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-5)">Marloes Verkerk</span>
+            <div class="quote"><b>Marieke van Dongen</b>Rooster klopt toch nooit met LoonLink…</div>
+            <span class="txt">Ik lever hem gewoon aan zoals altijd, jij kijkt toch niet naar de einddatum.</span>
+            <span class="tm">09:07</span>
+          </div>
+          <div class="ann"><code>CTRL-0007</code> — geen functiescheiding tussen aanleveren en verwerken; niets toetst de correctie aan de uitdiensttredingsdatum. <code>RISK-0004</code> <span class="sc s-m">13,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-4)">Marieke van Dongen</span>
+            <span class="txt">Account laten staan hoeft niemand op te vallen, dat doet iedereen zo.</span>
+            <span class="tm">09:11</span>
+          </div>
+          <div class="ann"><code>CTRL-0026</code> <span class="pill p-r">Reliable</span> — maar het stamdatarapport wordt niet gekruist met de uitdienstdatum in IdentiteitsHub. <code>RISK-0002</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">Die 112 oude accounts ruim ik weer eens "volgende sprint" op, beloofd.</span>
+            <span class="tm">09:14<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0004</code> <span class="pill p-p">Partially Reliable</span> — bevinding F-2024-07 staat sinds 2024 open, geen periodieke accountreview. <code>RISK-0002</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-4)">Marieke van Dongen</span>
+            <span class="txt">Nabetaling loopt gewoon mee in de batch, daar kijkt toch niemand apart naar.</span>
+            <span class="tm">11:58</span>
+          </div>
+          <div class="ann"><code>CTRL-0027</code> <span class="pill p-p">Partially Reliable</span> — toetst alleen of de bank overeenkomt met het bestand. De onjuistheid zit al ín het bestand. <code>RISK-0014</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="day">donderdag 12 februari 2026</div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-2)">Bart Wieringa</span>
+            <span class="txt">Laten we de laatste boekingen dit kwartaal even sneller afronden, het bestuur wil strakke cijfers voor vrijdag.</span>
+            <span class="tm">07:52</span>
+          </div>
+          <div class="ann"><code>CTRL-0024</code> <span class="pill p-r">Reliable</span> in opzet — maar F-2024-03 laat zien dat 9 van 25 posten boven EUR 50.000 geen vastgelegde goedkeuring hebben. <code>RISK-0013</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-3)">Diederik van Emmerik</span>
+            <span class="txt">Laten we de jaarcijfers nog even netjes afronden voor de audit, dan hoeven we straks niets meer te herzien.</span>
+            <span class="tm">08:03<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0025</code> <span class="pill p-u">Unreliable</span> — het top-side rapport is een bewerkbare Excel-export (IPE Weak) en wordt beoordeeld door de opsteller zelf. <code>RISK-0013</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-2)">Bart Wieringa</span>
+            <div class="attach">
+              <span class="ic">XLS</span>
+              <div><div class="fn">Topside_Q1_definitief_v4.xlsx</div><div class="sz">412 kB</div></div>
+            </div>
+            <span class="txt">Het top-side overzicht neem ik zelf wel door, hoeft niet apart op de agenda.</span>
+            <span class="tm">08:19</span>
+          </div>
+          <div class="ann"><code>CTRL-0025</code> <span class="pill p-u">Unreliable</span> — self-review: de Controller is control owner van de detectie op zijn eigen posten. <code>RISK-0033</code> <span class="sc s-l">7,8 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-2)">Bart Wieringa</span>
+            <span class="txt">Die Excel met de journaalpost-uitzonderingen stuur ik zelf wel door, scheelt weer een rondje.</span>
+            <span class="tm">08:20</span>
+          </div>
+          <div class="ann"><code>CTRL-0002</code> <span class="pill p-u">Unreliable</span> — zelfde zwakte, zelfde eigenaar: twee ogenschijnlijk onafhankelijke detectielagen delen één bron. <code>RISK-0001</code> <span class="sc s-l">8,0 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-2)">Bart Wieringa</span>
+            <span class="txt">Een checklist voor de afsluiting hebben we toch niet, we doen het zoals altijd op gevoel.</span>
+            <span class="tm">08:24</span>
+          </div>
+          <div class="ann"><code>CTRL-0012</code> <span class="pill p-p">Partially Reliable</span> — zonder afsluitchecklist (F-2025-11) bepaalt de reviewer zelf welke rekening buiten de ronde blijft. <code>RISK-0006</code> <span class="sc s-l">6,4 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-5)">Marloes Verkerk</span>
+            <span class="txt">Kijk je dit kwartaal niet te scherp naar ons declaratielogje? We hebben nog een inhaalslag na de storing.</span>
+            <span class="tm">10:36</span>
+          </div>
+          <div class="ann"><code>CTRL-0021</code> <span class="pill p-p">Partially Reliable</span> — het verzoek is niet te weerleggen omdat het onderliggende overzicht handmatig is. <code>RISK-0011</code> <span class="sc s-m">13,0 Medium</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-2)">Bart Wieringa</span>
+            <span class="txt">Die afgekeurde declaraties van januari schuiven we gewoon mee, is toch maar tijdelijk.</span>
+            <span class="tm">10:44<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0020</code> <span class="pill p-u">Unreliable</span> — het declaratiebatch-log is een bewerkbare Excel, dus de periodetoewijzing is stuurbaar (INC-2026-023). <code>RISK-0011</code> <span class="sc s-m">13,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-5)">Marloes Verkerk</span>
+            <span class="txt">Zorgplan-toets komt dit jaar toch weer maar steekproefsgewijs? Dan zit het wel goed.</span>
+            <span class="tm">10:51</span>
+          </div>
+          <div class="ann"><code>CTRL-0013</code> <span class="pill p-p">Partially Reliable</span> — de enige control op F-2023-12 is detectief; er is geen preventieve toets aan indicatie en zorgplan. <code>RISK-0007</code> <span class="sc s-m">13,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-5)">Marloes Verkerk</span>
+            <span class="txt">Dat papieren spul van de storing verwerk ik zelf wel, hoeft niet allemaal digitaal getraceerd te worden toch?</span>
+            <span class="tm">10:53</span>
+          </div>
+          <div class="ann"><code>CTRL-0029</code> <span class="pill p-p">Partially Reliable</span> — na INC-2025-158 registreerden 1.900 medewerkers op papier; die invoer heeft geen device- of tijdstempelspoor. <code>RISK-0015</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-3)">Diederik van Emmerik</span>
+            <span class="txt">Zullen we het auditjaarplan compact houden dit kwartaal, gezien de certificering eraan komt?</span>
+            <span class="tm">16:12<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0035</code> <span class="pill p-na">Not Assessed</span> — interne audit is 3 fte en het bestuur bepaalt mee over de scope. De enige control op bestuurlijke bezoldiging heeft geen matrixregel. <code>RISK-0018</code> <span class="sc s-l">6,0 Low</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-3)">Diederik van Emmerik</span>
+            <span class="txt">De inhuurkosten van de bureaus goed labelen scheelt discussie bij de eerstvolgende WNT-toets.</span>
+            <span class="tm">16:15<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0034</code> <span class="pill p-r">Reliable</span> — maar toetst alleen wat als bezoldiging is aangemerkt, niet of die classificatie juist is. <code>RISK-0018</code> <span class="sc s-l">6,0 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-4)">Marieke van Dongen</span>
+            <span class="txt">Stamdata is prima in orde, dat rapport ziet dit soort dingen sowieso niet.</span>
+            <span class="tm">16:41</span>
+          </div>
+          <div class="ann"><code>CTRL-0026</code> <span class="pill p-r">Reliable</span> — het rapport toetst interne consistentie van records, niet losse handmatige correcties. <code>RISK-0002</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="day">woensdag 18 maart 2026</div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-6)">Ronald Verheggen</span>
+            <span class="txt">Kun je die schoonmaakfactuur in drie delen splitsen, elk net onder de drempel? Scheelt gedoe met goedkeuring.</span>
+            <span class="tm">11:02</span>
+          </div>
+          <div class="ann"><code>CTRL-0030</code> <span class="pill p-na">Not Assessed</span> — de preventieve 3-way match heeft geen matrixregel: 0% risicoreductie. Niets telt gesplitste facturen bij elkaar op. <code>RISK-0016</code> <span class="sc s-h">21,25 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-7)">Ed Kloosterboer</span>
+            <span class="txt">Even bellen in plaats van appen over die drie deelfacturen graag, makkelijker uitleggen dan typen 👍</span>
+            <span class="tm">11:09<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0030</code> — de organisatie heeft geen control op communicatie buiten de systemen om. Het ontwijken van schriftelijk spoor is zelf een bevinding. <code>RISK-0016</code> <span class="sc s-h">21,25 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-7)">Ed Kloosterboer</span>
+            <div class="voice">
+              <span class="play">▶</span>
+              <span class="wave"><i style="height:5px"></i><i style="height:11px"></i><i style="height:17px"></i><i style="height:8px"></i><i style="height:14px"></i><i style="height:19px"></i><i style="height:6px"></i><i style="height:12px"></i><i style="height:16px"></i><i style="height:9px"></i><i style="height:13px"></i><i style="height:7px"></i><i style="height:15px"></i><i style="height:10px"></i><i style="height:5px"></i><i style="height:12px"></i></span>
+              <span class="dur">0:47</span>
+            </div>
+            <span class="tm">11:24<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann">Spraakbericht in plaats van tekst. Geen enkele control in de RCM raakt communicatie buiten FinCore en ZorgDossier om; er is dus geen bewijsvorm om later op terug te vallen.</div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-6)">Ronald Verheggen</span>
+            <span class="txt">Laat die nieuwe teamleider in Zaltbommel deze maar goedkeuren, die weet nog niet beter na de reorganisatie.</span>
+            <span class="tm">11:31</span>
+          </div>
+          <div class="ann"><code>CTRL-0015</code> <span class="pill p-na">Not Assessed</span> — de mandaattabel is na de reorganisatie niet bijgewerkt; INC-2025-131 bewijst dat dit al EUR 86.000 heeft gekost. <code>RISK-0008</code> <span class="sc s-l">4,8 Low</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-7)">Ed Kloosterboer</span>
+            <div class="attach">
+              <span class="ic">PDF</span>
+              <div><div class="fn">Werkbon_maart_locatie_Vianen.pdf</div><div class="sz">1,2 MB</div></div>
+            </div>
+            <span class="txt">Kun je die factuur zelf even aftekenen? Scheelt weer een schakel, jij kent de locatie toch het best.</span>
+            <span class="tm">11:38<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0015</code> <span class="pill p-na">Not Assessed</span> — niemand toetst achteraf of de goedkeurder bevoegd was. <code>RISK-0008</code> <span class="sc s-l">4,8 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-6)">Ronald Verheggen</span>
+            <span class="txt">Check je die 3-way-match Excel nog handmatig of trekt iemand dat automatisch?</span>
+            <span class="tm">13:47</span>
+          </div>
+          <div class="ann"><code>CTRL-0031</code> <span class="pill p-u">Unreliable</span> — het 3-way-match rapport is een bewerkbare export (IPE Weak) zonder consolidatie per leverancier. <code>RISK-0016</code> <span class="sc s-h">21,25 High</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-1)">Sander Kuijpers</span>
+            <div class="quote"><b>Ronald Verheggen</b>Check je die 3-way-match Excel nog handmatig…</div>
+            <span class="txt">Handmatig. En per periode, niet per leverancier. Dus over locaties heen ziet niemand iets.</span>
+            <span class="tm">13:52</span>
+          </div>
+          <div class="ann"><code>CTRL-0031</code> <span class="pill p-u">Unreliable</span> — spreiding over 14 locaties en meerdere maanden blijft onzichtbaar zonder cumulatieve leveranciersanalyse. <code>RISK-0016</code> <span class="sc s-h">21,25 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-7)">Ed Kloosterboer</span>
+            <span class="txt">Laat die andere bv maar factureren voor het extra stuk, is administratief simpeler voor iedereen.</span>
+            <span class="tm">14:05<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0031</code> — leveranciersstamdata wordt niet getoetst op gedeelde bankrekening, adres of UBO tussen "verschillende" crediteuren. <code>RISK-0036</code> <span class="sc s-l">7,8 Low</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-1)">Sander Kuijpers</span>
+            <span class="txt">Gewoon zelf even afgerond, scheelt weer een dag wachten op Treasury.</span>
+            <span class="tm">15:20</span>
+          </div>
+          <div class="ann"><code>CTRL-0005</code> <span class="pill p-r">Reliable</span> — het wijzigingslog is compleet en tijdig (IPE Strong), maar toetst nergens of mutator en goedkeurder dezelfde gebruiker zijn. <code>RISK-0003</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-1)">Sander Kuijpers</span>
+            <span class="txt">Batch klopt weer mooi met de run, dus verder geen gedoe.</span>
+            <span class="tm">15:22</span>
+          </div>
+          <div class="ann"><code>CTRL-0006</code> <span class="pill p-p">Partially Reliable</span> — de aansluiting toetst consistentie met de goedgekeurde run, niet de integriteit van die goedkeuring. <code>RISK-0003</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-7)">Ed Kloosterboer</span>
+            <span class="deleted">🚫 Dit bericht is verwijderd</span>
+            <span class="tm">15:31<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann">Verwijderde berichten zijn zelf een bevinding: er is geen bewaarplicht of archivering belegd voor communicatie waarin goedkeuringen feitelijk tot stand komen.</div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-6)">Ronald Verheggen</span>
+            <span class="txt">Volgende maand liever een andere locatie, niet twee keer achter elkaar Culemborg.</span>
+            <span class="tm">15:44</span>
+          </div>
+          <div class="ann"><code>CTRL-0031</code> <span class="pill p-u">Unreliable</span> — het exceptierapport wordt per periode en locatie opgesteld, nooit geaggregeerd. <code>RISK-0016</code> <span class="sc s-h">21,25 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-3)">Diederik van Emmerik</span>
+            <span class="txt">Laten we dit onderling afstemmen voordat het naar de commissie gaat, scheelt vragen achteraf.</span>
+            <span class="tm">17:02<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0052</code> <span class="pill p-p">Partially Reliable</span> — de secundaire IT-detectie leunt op dezelfde Excel-bron als CTRL-0025 en toetst vorm, geen materialiteit. <code>RISK-0033</code> <span class="sc s-l">7,8 Low</span></div>
+        </div>
+
+        <div class="day">vrijdag 3 april 2026</div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">IAM-koppeling hapert weer, toegang gaat vandaag maar via het oude Excelbestand.</span>
+            <span class="tm">08:12<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0003</code> valt van <span class="pill p-r">Reliable</span> naar <span class="pill p-u">Unreliable</span> zodra toegang via bewerkbare Excel loopt. <code>RISK-0002</code> springt van <span class="sc s-m">10,0</span> naar <span class="sc s-h">16,25 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">Release ging vrijdag toch de deur uit, iemand tekent maandag wel af.</span>
+            <span class="tm">08:15<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0017</code> <span class="pill p-na">Not Assessed</span> — geen matrixregel voor release-goedkeuring: niet alleen geen bewijs, ook geen norm. <code>RISK-0009</code> <span class="sc s-h">17,0 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">ChangeFlow weer plat, tickets komen later wel. We weten toch wat we deden.</span>
+            <span class="tm">08:16<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0009</code> <span class="pill p-u">Unreliable</span> — alle changebewijs is handmatig (IPE None). Bij 7 van 11 noodwijzigingen ontbrak het al (F-2025-09). <code>RISK-0005</code> <span class="sc s-m">10,2 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-2)">Bart Wieringa</span>
+            <div class="quote"><b>Marnix Verheul</b>Release ging vrijdag toch de deur uit…</div>
+            <span class="txt">Is de goedkeuringslog van de journaalposten er nog? Die zag ik niet in de export.</span>
+            <span class="tm">09:40</span>
+          </div>
+          <div class="ann"><code>CTRL-0001</code> valt van <span class="pill p-r">Reliable</span> naar <span class="pill p-na">Not Assessed</span> als de ERP-leverancier de log niet meer levert. <code>RISK-0001</code> springt van <span class="sc s-l">8,0 Low</span> naar <span class="sc s-h">17,0 High</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">Logs staan aan hoor, alleen kijkt er nooit iemand naar. Klassiek.</span>
+            <span class="tm">09:44<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0039</code> <span class="pill p-p">Partially Reliable</span> — NEN 7510-2 12.4: logging staat aan, niemand beoordeelt de logs. De control bestaat op papier. <code>RISK-0020</code> <span class="sc s-l">6,0 Low</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">DLP-Exceloverzicht weer bijgewerkt, hopelijk klopt het deze keer een beetje.</span>
+            <span class="tm">09:47<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0019</code> <span class="pill p-u">Unreliable</span> — een aangepaste export is niet te onderscheiden van een juiste. <code>RISK-0010</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-8)">Marnix Verheul</span>
+            <span class="txt">PrivacyPortaal loopt achter, register vul ik in als het regent.</span>
+            <span class="tm">09:49<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0036</code> en <code>CTRL-0037</code> beide <span class="pill p-u">Unreliable</span> — register en toestemmingen handmatig, IPE None. <code>RISK-0019</code> <span class="sc s-m">12,75 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-1)">Sander Kuijpers</span>
+            <span class="txt">IAM ligt er weer uit, toegang loopt nu gewoon via het Excelletje. Handig eigenlijk.</span>
+            <span class="tm">10:03</span>
+          </div>
+          <div class="ann"><code>CTRL-0004</code> <span class="pill p-p">Partially Reliable</span> — een tijdelijke handmatige procedure toetst nog minder op rolcombinaties. <code>RISK-0002</code> <span class="sc s-h">16,25 High</span> in het what-if-scenario</div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-1)">Sander Kuijpers</span>
+            <span class="txt">Niemand kijkt hier echt naar wie iets goedkeurt, alleen of het klopt.</span>
+            <span class="tm">10:05</span>
+          </div>
+          <div class="ann"><code>CTRL-0006</code> — de kernbevinding van de hele analyse, in één zin. <code>RISK-0003</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-5)">Marloes Verkerk</span>
+            <span class="txt">Mijn account-rechten zijn nog van voor de reorganisatie, laat dat zo, scheelt gedoe.</span>
+            <span class="tm">10:22</span>
+          </div>
+          <div class="ann"><code>CTRL-0028</code> <span class="pill p-r">Reliable</span> — de workflow toetst autorisatieniveau, niet functiescheiding tussen registreren en goedkeuren binnen dezelfde rol. <code>RISK-0015</code> <span class="sc s-m">10,0 Medium</span></div>
+        </div>
+
+        <div class="msg">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-1)">Sander Kuijpers</span>
+            <span class="txt">Die IT-check op de betaalrun komt toch pas over weken langs.</span>
+            <span class="tm">14:38</span>
+          </div>
+          <div class="ann"><code>CTRL-0042</code> <span class="pill p-p">Partially Reliable</span> — laag geprioriteerd (final 7,8 Low), dus signalering duurt weken: ruim meerdere betaalcycli. <code>RISK-0023</code> <span class="sc s-l">7,8 Low</span></div>
+        </div>
+
+        <div class="msg out">
+          <div class="bubble">
+            <span class="who" style="color:var(--c-3)">Diederik van Emmerik</span>
+            <span class="txt">Rapportage over de bezoldiging kan best wachten tot na Q4, geen prioriteit op dit moment.</span>
+            <span class="tm">16:55<span class="tick">✓✓</span></span>
+          </div>
+          <div class="ann"><code>CTRL-0035</code> <span class="pill p-na">Not Assessed</span> — 0% risicoreductie op de enige control die een WNT-overschrijding via herrubricering zou signaleren. <code>RISK-0038</code> <span class="sc s-l">7,8 Low</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="card">
+        <h3>Betrouwbaarheid van controls</h3>
+        <div class="legend">
+          <div><span class="pill p-r">Reliable</span><span>60% risicoreductie</span></div>
+          <div><span class="pill p-p">Partially</span><span>35% reductie</span></div>
+          <div><span class="pill p-u">Unreliable</span><span>15% — bewijs is Weak of None</span></div>
+          <div><span class="pill p-na">Not Assessed</span><span>0% — geen matrixregel</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>De regel achter alles</h3>
+        <p class="axis">Een control zakt naar Unreliable zodra het onderliggende rapport een bewerkbare Excel is of handmatig wordt bijgehouden. Niet omdat de control slecht is ontworpen, maar omdat het bewijs waarop hij steunt niet controleerbaar is.</p>
+      </div>
+      <div class="card">
+        <h3>Restrisico</h3>
+        <div class="legend">
+          <div><span class="sc s-l">Low</span><span>tot 8,0</span></div>
+          <div><span class="sc s-m">Medium</span><span>8,1 – 15,0</span></div>
+          <div><span class="sc s-h">High</span><span>vanaf 15,1</span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="collusie">
+  <div class="sechead">
+    <h2>Wie wie nodig heeft</h2>
+    <p>Elke deelnemer noemde onafhankelijk van de anderen welke rol moest meewerken. Die antwoorden vormen samen een gerichte graaf. Waar twee rollen elkaar wederzijds noemen, is de functiescheiding niet zwak maar afwezig — dat zijn de assen die er werkelijk toe doen.</p>
+  </div>
+  <div class="axes">
+    <div class="axis-card">
+      <div class="pair">Controller <span>↔</span> Lid Raad van Bestuur</div>
+      <p>De bestuurder tekent de top-side post zonder onderbouwing te vragen; de controller beoordeelt zijn eigen post en escaleert niet. De vier-ogen-eis is formeel voldaan en materieel leeg.</p>
+      <div class="refs">CTRL-0024 · CTRL-0025 · RISK-0013</div>
+    </div>
+    <div class="axis-card">
+      <div class="pair">Controller <span>↔</span> Applicatiebeheerder</div>
+      <p>De beheerder houdt de declaratiekoppeling handmatig zodat de periodetoewijzing stuurbaar blijft; de controller vinkt het exceptierapport af zonder changeticket te eisen. Geen van beiden hoeft iets te vervalsen.</p>
+      <div class="refs">CTRL-0002 · CTRL-0020 · RISK-0011</div>
+    </div>
+    <div class="axis-card">
+      <div class="pair">Inkoper <span>↔</span> Directeur leverancier</div>
+      <p>De enige as met een externe partij, en de enige waar het restrisico in de basisrun al High is. De leverancier levert de facade, de inkoper de drempelkennis.</p>
+      <div class="refs">CTRL-0030 · CTRL-0031 · RISK-0016 · 21,25 High</div>
+    </div>
+  </div>
+  <div class="hub">
+    <span class="k">De spil</span>
+    <h3>Vier van de acht rollen hebben de applicatiebeheerder nodig</h3>
+    <p>Crediteuren, salarisadministratie, teamleider en controller vragen alle vier hetzelfde: laat een autorisatie staan, houd een koppeling handmatig, lever het bewijs later aan. Deze rol pleegt in geen enkel scenario zelf de fraude — hij produceert het bewijs waarop tien andere controls steunen. Zolang dat bewijs handmatig is, is de betrouwbaarheid van die controls een aanname, geen vaststelling. Het raamwerk kan bovendien een storing niet van opzet onderscheiden: het what-if-scenario van 3 april tilt twee risico's naar High zonder dat er één bedrag is verplaatst.</p>
+  </div>
+</section>
+
+<section id="bevindingen">
+  <div class="sechead">
+    <h2>Wat de controls doen als je erop drukt</h2>
+    <p>De controls die in het gesprek voorbijkomen, met hun eigenaar, het bewijs waarop ze steunen en het restrisico dat overblijft. De twee rood gemarkeerde regels zijn de scenario's die in de basisrun slagen.</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>Control</th><th>Eigenaar</th><th>Bewijs (IPE)</th><th>Betrouwbaar</th><th>Risico</th><th>Final</th><th>Wat er misgaat</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hi">
+          <td class="m">CTRL-0030</td><td>Treasury Manager</td><td>geen matrixregel</td><td><span class="pill p-na">Not Assessed</span></td><td class="m">RISK-0016</td><td class="num">21,25</td>
+          <td>De preventieve 3-way match bestaat niet als toetsbare maatregel. Gesplitste facturen worden nergens opgeteld.</td>
+        </tr>
+        <tr class="hi">
+          <td class="m">CTRL-0017</td><td>IT Service Delivery Manager</td><td>geen matrixregel</td><td><span class="pill p-na">Not Assessed</span></td><td class="m">RISK-0009</td><td class="num">17,00</td>
+          <td>Geen norm en geen bewijs voor release-goedkeuring. ECD-release 8.4 ging zonder regressietest naar productie.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0031</td><td>Cash Operations Supervisor</td><td>Excel-export · Weak</td><td><span class="pill p-u">Unreliable</span></td><td class="m">RISK-0016</td><td class="num">21,25</td>
+          <td>Het 3-way-match rapport wordt per periode en locatie gedraaid, nooit cumulatief per leverancier.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0007</td><td>Treasury Manager</td><td>geen matrixregel</td><td><span class="pill p-na">Not Assessed</span></td><td class="m">RISK-0004</td><td class="num">13,00</td>
+          <td>Uren uit PlanWijs gaan zonder aansluiting naar LoonLink. De hele correctiestroom is onbeheerst.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0013</td><td>IT Operations Manager</td><td>ZorgDossier · Strong</td><td><span class="pill p-p">Partially</span></td><td class="m">RISK-0007</td><td class="num">13,00</td>
+          <td>Enige control op de zorgplan-toets is detectief. Geen preventieve koppeling aan indicatie; EUR 1,4 mln correcties in 2023, herhaald in 2024.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0020</td><td>Financial Reporting Manager</td><td>Excel-export · Weak</td><td><span class="pill p-u">Unreliable</span></td><td class="m">RISK-0011</td><td class="num">13,00</td>
+          <td>Het declaratiebatch-log is bewerkbaar, dus in welke periode omzet valt is een keuze in plaats van een vaststelling.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0036 / 0037</td><td>Compliance Officer</td><td>handmatig · None</td><td><span class="pill p-u">Unreliable</span></td><td class="m">RISK-0019</td><td class="num">12,75</td>
+          <td>Verwerkingsregister en toestemmingen worden met de hand bijgehouden. Beide lagen falen tegelijk.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0009 / 0016 / 0022</td><td>Change Advisory Board Chair</td><td>ChangeFlow · None</td><td><span class="pill p-u">Unreliable</span></td><td class="m">RISK-0005</td><td class="num">10,20</td>
+          <td>Al het changebewijs is handmatig en wordt ingevoerd door degene die de wijziging doet.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0025</td><td>Controller</td><td>Excel-export · Weak</td><td><span class="pill p-u">Unreliable</span></td><td class="m">RISK-0013</td><td class="num">10,00</td>
+          <td>Self-review: de opsteller van de top-side post beoordeelt het rapport dat die post moet signaleren.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0002</td><td>Controller</td><td>Excel-export · Weak</td><td><span class="pill p-u">Unreliable</span></td><td class="m">RISK-0001</td><td class="num">8,00</td>
+          <td>Tweede detectielaag, zelfde eigenaar en zelfde bron als CTRL-0025. Onafhankelijkheid is schijn.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0005</td><td>Treasury Manager</td><td>FinCore log · Strong</td><td><span class="pill p-r">Reliable</span></td><td class="m">RISK-0003</td><td class="num">10,00</td>
+          <td>Sterk bewijs, verkeerde vraag: het log toont dát er is goedgekeurd, niet dat mutator en goedkeurder verschillen.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0015</td><td>Cash Operations Supervisor</td><td>geen matrixregel</td><td><span class="pill p-na">Not Assessed</span></td><td class="m">RISK-0008</td><td class="num">4,80</td>
+          <td>Mandaattabel niet bijgewerkt na de reorganisatie. Laag gescoord risico dat in de praktijk de deur openzette.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0035</td><td>Privacy Operations Manager</td><td>geen matrixregel</td><td><span class="pill p-na">Not Assessed</span></td><td class="m">RISK-0018</td><td class="num">6,00</td>
+          <td>De enige detectieve control op bestuurlijke bezoldiging levert 0% reductie. WNT-herrubricering blijft ongezien.</td>
+        </tr>
+        <tr>
+          <td class="m">CTRL-0039</td><td>Privacy Operations Manager</td><td>LogWacht · Strong</td><td><span class="pill p-p">Partially</span></td><td class="m">RISK-0020</td><td class="num">6,00</td>
+          <td>Sterk bewijs dat niemand leest. NEN 7510-2 12.4 is technisch ingeregeld en organisatorisch niet belegd.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="tests">
+  <div class="sechead">
+    <h2>Wat de auditor hierna moet testen</h2>
+    <p>Elk scenario is afgesloten met de vraag waar het alsnog stukloopt. Die faalpunten zijn hieronder omgezet in testwerk, in volgorde van het restrisico dat ermee wordt afgedekt.</p>
+  </div>
+  <div class="tests">
+    <div class="test">
+      <div>
+        <b>Tel leveranciersfacturen cumulatief op, niet per periode</b>
+        <p>Aggregeer alle facturen per leverancier over alle 14 locaties en 12 maanden en zet ze af tegen contract en aanbestedingsdrempel. Toets tegelijk of leveranciers een bankrekening, adres of UBO delen. Dit is de test die het enige High-scenario in de basisrun blootlegt.</p>
+        <span class="src">CTRL-0030 · CTRL-0031 · RISK-0016 · 21,25 High</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Vraag changebewijs dat de beheerder niet zelf kan invoeren</b>
+        <p>Kies een release en een noodwijziging en vraag om systeemgegenereerd bewijs uit de uitrolketen zelf. Blijkt dat alleen het handmatige ChangeFlow-register bestaat, dan is elke control die daarop steunt onbewijsbaar — ongeacht de rating in de matrix.</p>
+        <span class="src">CTRL-0009 · CTRL-0016 · CTRL-0017 · CTRL-0022 · RISK-0009 · 17,0 High</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Draai een query op "gewijzigd door" versus "goedgekeurd door"</b>
+        <p>Vergelijk over alle bankrekeningmutaties van leveranciers de mutator met de goedkeurder, en toets of die gebruiker nog in dienst is. Geen enkele matrixregel stelt deze vraag op dit moment, terwijl F-2025-02 hem al beantwoordde.</p>
+        <span class="src">CTRL-0005 · CTRL-0006 · RISK-0003</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Test de uitzonderingenstroom, niet de reguliere run</b>
+        <p>Neem de populatie handmatige nabetalingen en roostercorrecties buiten de PlanWijs-interface om, en kruis die met uitdiensttredingsdata uit IdentiteitsHub. De reguliere salarisrun is beheerst; de correctiestroom die na het onderbetalingsincident ontstond, is dat niet.</p>
+        <span class="src">CTRL-0007 · CTRL-0026 · CTRL-0027 · RISK-0004 · 13,0 Medium</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Herleid het rapportagecijfer naar de grootboekmutatie</b>
+        <p>Vraag niet of de journaalpost-controls aanwezig zijn, maar wie de post boekte versus wie hem beoordeelde, en of het rapport systeemgegenereerd en onwijzigbaar is. Verplaats daarna het eigendom van CTRL-0002, 0012, 0021 en 0025 weg van de Controller.</p>
+        <span class="src">CTRL-0002 · CTRL-0012 · CTRL-0021 · CTRL-0025 · RISK-0013</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Selecteer clienten die de zorg niet kunnen bevestigen</b>
+        <p>Richt de steekproef op registraties bij clienten met vergevorderde cognitieve beperking en laat de geleverde zorg onafhankelijk terugkoppelen. Toets de registraties tegelijk aan indicatie en zorgplan — dat is de preventieve toets die nu volledig ontbreekt.</p>
+        <span class="src">CTRL-0013 · CTRL-0028 · CTRL-0029 · RISK-0007 · 13,0 Medium</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Toets of interne audit haar eigen scope bepaalt</b>
+        <p>Stel vast of het auditjaarplan zonder voorafgaande bestuursinstemming door de auditcommissie wordt vastgesteld, en of top-side posten en bezoldigingsclassificaties buiten de lijn om worden voorgelegd. Doelstelling OBJ-0005 belooft dat management override wordt ontdekt; elke control die dat moet waarmaken valt hiërarchisch onder het bestuur.</p>
+        <span class="src">CTRL-0034 · CTRL-0035 · OBJ-0005 · RISK-0018</span>
+      </div>
+    </div>
+    <div class="test">
+      <div>
+        <b>Ruim de 112 accounts op en koppel de review aan HR-uitstroom</b>
+        <p>Bevinding F-2024-07 staat sinds 2024 open en duikt in vier van de acht scenario's op als hulpmiddel. Een periodieke accountreview die automatisch tegen de uitstroomlijst draait, dicht meer gaten dan enige andere maatregel in deze lijst.</p>
+        <span class="src">CTRL-0003 · CTRL-0004 · RISK-0002 · 16,25 High in what-if</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Over dit stuk.</strong> Stichting Zorggroep Waterlinie is een fictieve casus. De risico's, controls, betrouwbaarheidsoordelen en restrisico's komen uit de RCM-Builder-pipeline (20 risico's, 39 controls, schema-validatie geslaagd); de fraudeschema's zijn benoemd volgens de ACFE-lijst Fraud Risk Exposures. De acht rollen zijn afzonderlijk bevraagd en wisten niet van elkaars antwoord; de collusie-assen zijn afgeleid uit de rollen die zij onafhankelijk aanwezen. Personen en gesprekken zijn verzonnen en dienen uitsluitend om beheersingsmaatregelen te repareren.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var toggle = document.getElementById('auditToggle');
+  var skip   = document.getElementById('skipBtn');
+  var stream = document.querySelector('.stream');
+
+  var items = Array.prototype.filter.call(stream.children, function(el){
+    return el.classList.contains('msg') || el.classList.contains('day');
+  });
+
+  var TYPING = 850;   /* hoe lang de typindicator staat */
+  var GAP    = 1150;  /* pauze daarna, samen ~2 seconden per bericht */
+  var i = 0, timer = null, typingEl = null, done = false;
+
+  function applyAudit(){ document.body.classList.toggle('audit', toggle.checked); }
+
+  function nearBottom(){
+    return stream.scrollHeight - stream.scrollTop - stream.clientHeight < 90;
+  }
+  function follow(stick){
+    if (stick) stream.scrollTop = stream.scrollHeight;
+  }
+
+  function clearTyping(){
+    if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+    typingEl = null;
+  }
+
+  function showTyping(msg){
+    var out  = msg.classList.contains('out');
+    var who  = msg.querySelector('.who');
+    typingEl = document.createElement('div');
+    typingEl.className = 'msg typing shown' + (out ? ' out' : '');
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    if (who){
+      var nm = document.createElement('span');
+      nm.className = 'who';
+      nm.style.color = who.style.color;
+      nm.textContent = who.textContent;
+      bubble.appendChild(nm);
+    }
+    var dots = document.createElement('span');
+    dots.className = 'dots';
+    dots.innerHTML = '<i></i><i></i><i></i>';
+    bubble.appendChild(dots);
+    typingEl.appendChild(bubble);
+    typingEl.setAttribute('aria-hidden', 'true');
+    var stick = nearBottom();
+    stream.appendChild(typingEl);
+    follow(stick);
+  }
+
+  function reveal(el){
+    var stick = nearBottom();
+    el.classList.add('shown');
+    follow(stick);
+  }
+
+  function finish(){
+    done = true;
+    clearTimeout(timer);
+    clearTyping();
+    stream.classList.remove('playing');
+    skip.hidden = true;
+  }
+
+  function revealAll(){
+    items.forEach(function(el){ el.classList.add('shown'); });
+    finish();
+  }
+
+  function step(){
+    if (done) return;
+    if (i >= items.length){ finish(); return; }
+    var el = items[i];
+
+    if (el.classList.contains('day')){
+      reveal(el); i++;
+      timer = setTimeout(step, 900);
+      return;
+    }
+
+    showTyping(el);
+    timer = setTimeout(function(){
+      clearTyping();
+      reveal(el); i++;
+      timer = setTimeout(step, GAP);
+    }, TYPING);
+  }
+
+  toggle.addEventListener('change', function(){
+    applyAudit();
+    if (toggle.checked && !done) revealAll();
+  });
+
+  skip.addEventListener('click', revealAll);
+
+  applyAudit();
+
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (toggle.checked || still){
+    revealAll();
+  } else {
+    stream.classList.add('playing');
+    skip.hidden = false;
+    timer = setTimeout(step, 700);
+  }
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,27 @@
+# Customs settings.
+#
+# When Customs checks a pull request, it reads this file from the base branch,
+# so a contribution cannot change the rules that apply to itself.
+#
+# Every setting is optional. Use extra_include, extra_exclude and
+# extra_allowed_domains to add to the defaults, or include, exclude and
+# allowed_domains to replace them.
+
+# Lowest severity that blocks a merge: Informational, Low, Medium, High or Critical.
+fail_on = "High"
+
+# Destinations a shared skill may point to without being reported.
+# Subdomains are covered, so "bis.org" also covers "www.bis.org".
+extra_allowed_domains = [
+  # "bis.org",
+]
+
+# Further files your repository uses for prompts or agent instructions.
+extra_include = [
+  # "prompts/**/*.yaml",
+]
+
+# Files Customs should not inspect.
+extra_exclude = [
+  # "docs/archive/**",
+]

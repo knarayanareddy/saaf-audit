@@ -1,0 +1,60 @@
+{
+  "idx": 2,
+  "hash": "c7ed47f34b76",
+  "chars": 1203,
+  "turns": 13,
+  "inputs": [
+    {
+      "text": "Check je die three-way match in Excel nog handmatig, of trekt iemand dat automatisch?",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9"
+    },
+    {
+      "text": "[flatly] Handmatig. En per periode, niet per leverancier. Dus over locaties heen ziet niemand iets.",
+      "voice_id": "N2lVS1w4EtoT3dr4eOWO"
+    },
+    {
+      "text": "[smoothly] Laat die andere B.V. maar factureren voor het extra stuk. Administratief simpeler voor iedereen.",
+      "voice_id": "iP95p4xoKVk53GoZ742B"
+    },
+    {
+      "text": "Volgende maand liever een andere locatie. Niet twee keer achter elkaar Culemborg.",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9"
+    },
+    {
+      "text": "Restrisico eenentwintig komma vijfentwintig. Het hoogste in de hele matrix. Er bestaat geen control die facturen per leverancier bij elkaar optelt.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "Vrijdag drie april. Een storing.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "De I-A-M-koppeling hapert weer. Toegang gaat vandaag maar via het oude Excelbestand.",
+      "voice_id": "bIHbv24MWmeRgasZH58o"
+    },
+    {
+      "text": "[sighs] ChangeFlow is ook plat, tickets komen later wel. We weten toch wat we deden.",
+      "voice_id": "bIHbv24MWmeRgasZH58o"
+    },
+    {
+      "text": "Is de goedkeuringslog van de journaalposten er nog? Die zag ik niet in de export.",
+      "voice_id": "cjVigY5qzO86Huf0OWal"
+    },
+    {
+      "text": "[dryly] De logs staan aan hoor. Alleen kijkt er nooit iemand naar. Klassiek.",
+      "voice_id": "bIHbv24MWmeRgasZH58o"
+    },
+    {
+      "text": "[amused] I-A-M ligt eruit, toegang loopt nu gewoon via het Excelletje. Handig eigenlijk.",
+      "voice_id": "N2lVS1w4EtoT3dr4eOWO"
+    },
+    {
+      "text": "Op dit moment kantelen twee risico's van gemiddeld naar hoog, zonder dat er één bedrag is verplaatst. Het raamwerk kan een storing niet van opzet onderscheiden.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "[quietly] Niemand kijkt hier echt naar wie iets goedkeurt. Alleen of het klopt.",
+      "voice_id": "N2lVS1w4EtoT3dr4eOWO"
+    }
+  ]
+}

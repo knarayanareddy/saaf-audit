@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAAF Hackathon #3 Recap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Slide container */
+.deck { width: 100vw; height: 100vh; }
+.slide { display: none; width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+.slide.active { display: flex; }
+
+/* Navigation */
+.nav { position: fixed; bottom: 24px; right: 32px; display: flex; gap: 10px; z-index: 100; }
+.nav button { width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer; font-size: 18px; background: rgba(255,255,255,0.15); color: #fff; backdrop-filter: blur(4px); transition: background 0.2s; }
+.nav button:hover { background: rgba(255,255,255,0.3); }
+.slide-count { position: fixed; bottom: 32px; left: 32px; font-size: 13px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif; z-index: 100; }
+
+/* Shared layout */
+.center { flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px; }
+
+/* Typography */
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; opacity: 0.7; }
+h1 { font-size: 72px; font-weight: 900; line-height: 1; margin-bottom: 24px; }
+h2 { font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+h3 { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+.subtitle { font-size: 22px; font-weight: 400; line-height: 1.5; opacity: 0.75; }
+.gradient-text { background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.gradient-text-warm { background: linear-gradient(135deg, #fb923c, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* Backgrounds */
+.bg-dark { background: #020617; color: #E2E8F0; }
+.bg-hero { background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%); color: #E2E8F0; }
+.bg-indigo { background: linear-gradient(135deg, #1E1B4B, #312E81); color: #E2E8F0; }
+
+/* Decorative orbs */
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+.orb-1 { width: 500px; height: 500px; background: rgba(129,140,248,0.2); top: -150px; right: -100px; }
+.orb-2 { width: 400px; height: 400px; background: rgba(192,132,252,0.15); bottom: -100px; left: -100px; }
+.orb-3 { width: 300px; height: 300px; background: rgba(251,146,60,0.15); top: 50%; right: 10%; }
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 16px; }
+.stat-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 32px 24px; text-align: center; backdrop-filter: blur(4px); }
+.stat-num { font-size: 64px; font-weight: 900; line-height: 1; margin-bottom: 8px; }
+.stat-label { font-size: 15px; color: rgba(255,255,255,0.6); font-weight: 500; }
+
+/* Track cards */
+.track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; max-width: 1000px; }
+.track-card { border-radius: 16px; padding: 24px 20px; }
+.track-card-0 { background: rgba(251,146,60,0.15); border: 1px solid rgba(251,146,60,0.3); }
+.track-card-1 { background: rgba(129,140,248,0.15); border: 1px solid rgba(129,140,248,0.3); }
+.track-card-2 { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); }
+.track-card-3 { background: rgba(192,132,252,0.15); border: 1px solid rgba(192,132,252,0.3); }
+.track-card-4 { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); }
+.track-card-5 { background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); }
+.track-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+.track-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+.track-desc { font-size: 12px; opacity: 0.65; line-height: 1.5; }
+.track-stats { display: flex; gap: 10px; margin-top: 8px; font-size: 11px; font-weight: 600; opacity: 0.5; }
+
+/* PR grid */
+.pr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 920px; width: 100%; }
+.pr-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; text-align: left; }
+.pr-num { width: 30px; height: 30px; border-radius: 50%; background: rgba(74,222,128,0.2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #4ade80; flex-shrink: 0; }
+.pr-info { flex: 1; min-width: 0; }
+.pr-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-meta { font-size: 11px; color: rgba(255,255,255,0.45); }
+.pr-more { grid-column: 1 / -1; text-align: center; font-size: 13px; color: rgba(255,255,255,0.35); padding: 8px; }
+
+/* People */
+.people-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1100px; }
+.person-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px 16px; text-align: center; }
+.person-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.person-detail { font-size: 12px; color: rgba(255,255,255,0.5); }
+.badge-first { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: rgba(251,191,36,0.15); color: #fbbf24; letter-spacing: 0.5px; text-transform: uppercase; margin-left: 6px; }
+
+/* Step list */
+.step-list { list-style: none; text-align: left; width: 100%; max-width: 700px; }
+.step-list li { display: flex; align-items: flex-start; gap: 20px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.step-list li:last-child { border-bottom: none; }
+.step-num { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #818cf8, #c084fc); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+.step-text { flex: 1; }
+.step-text strong { display: block; font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+.step-text span { font-size: 14px; color: rgba(255,255,255,0.55); }
+
+/* Logo */
+.logo-img { height: 52px; width: auto; margin-bottom: 40px; }
+
+/* PDCA bar */
+.pdca-bar { display: flex; gap: 4px; border-radius: 16px; overflow: hidden; margin-top: 24px; height: 56px; }
+.pdca-seg { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; gap: 2px; }
+.pdca-p { background: #4F46E5; }
+.pdca-d { background: #7C3AED; }
+.pdca-c { background: rgba(124,58,237,0.6); border: 2px solid #c084fc; font-size: 16px; color: #fff; animation: pdca-pulse 2s infinite; }
+.pdca-a { background: rgba(99,102,241,0.25); font-size: 14px; color: rgba(255,255,255,0.4); }
+.pdca-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-align: center; margin-top: 8px; color: rgba(255,255,255,0.5); }
+
+@keyframes pdca-pulse {
+  0%, 100% { border-color: #c084fc; box-shadow: 0 0 0 0 rgba(192,132,252,0.3); }
+  50% { border-color: #818cf8; box-shadow: 0 0 14px 4px rgba(192,132,252,0.25); }
+}
+
+/* Divider line */
+.divider { width: 60px; height: 3px; border-radius: 2px; background: linear-gradient(135deg, #818cf8, #c084fc); margin: 20px 0; }
+.divider-center { margin: 20px auto; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide bg-hero center active">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <img src="./saaf-logo-white.png" alt="SAAF Project" class="logo-img">
+    <div class="eyebrow" style="color:#818cf8">April 21, 2026 &nbsp;·&nbsp; Wolters Kluwer, Alphen aan den Rijn</div>
+    <h1 style="font-size:80px">Hackathon #3 <span class="gradient-text">Recap</span></h1>
+    <p class="subtitle" style="max-width:620px;margin:0 auto">100 participants from 50+ organizations built AI audit agents together in a single day.</p>
+    <div style="margin-top:48px;display:flex;gap:32px;font-size:14px;color:rgba(255,255,255,0.4)">
+      <span>Eduward van de Kamp</span>
+      <span style="opacity:0.3">·</span>
+      <span>Mathijs Schouten</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: BY THE NUMBERS -->
+  <div class="slide bg-indigo center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="eyebrow" style="color:#c084fc">What happened</div>
+    <h2>By the <span class="gradient-text">numbers</span></h2>
+    <div class="stat-grid" style="margin-top:40px;max-width:900px">
+      <div class="stat-card">
+        <div class="stat-num gradient-text">100</div>
+        <div class="stat-label">Participants on site</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num gradient-text">50+</div>
+        <div class="stat-label">Organizations at this hackathon</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num gradient-text">18</div>
+        <div class="stat-label">Pull requests merged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="background:linear-gradient(135deg,#fb923c,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">60</div>
+        <div class="stat-label">Plans in the portfolio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">6</div>
+        <div class="stat-label">Build tracks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">10</div>
+        <div class="stat-label">Tables in the room</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: WHAT WE BUILT -->
+  <div class="slide bg-dark center">
+    <div class="orb orb-1" style="background:rgba(74,222,128,0.08)"></div>
+    <div class="eyebrow" style="color:#818cf8">Outcomes</div>
+    <h2>What we <span class="gradient-text">built</span></h2>
+    <div class="divider divider-center"></div>
+    <div class="track-grid">
+      <div class="track-card track-card-0">
+        <div class="track-num" style="color:#fb923c">Track 0</div>
+        <div class="track-title">Shared Infrastructure</div>
+        <div class="track-desc">Strapi synthetic data sandbox · shared RAG knowledge base · MCP integrations · loop orchestration SDK</div>
+        <div class="track-stats"><span>6 participants</span><span>·</span><span>1 PR</span></div>
+      </div>
+      <div class="track-card track-card-1">
+        <div class="track-num" style="color:#818cf8">Track 1</div>
+        <div class="track-title">GIAS Audit Pipeline</div>
+        <div class="track-desc">Policy-to-audit-program skill · UC1–UC9 pipeline agents · RCM generation · work program automation</div>
+        <div class="track-stats"><span>18 participants</span><span>·</span><span>2 PRs</span></div>
+      </div>
+      <div class="track-card track-card-2">
+        <div class="track-num" style="color:#4ade80">Track 2</div>
+        <div class="track-title">Evidence Collection</div>
+        <div class="track-desc">P2P 3-way match report generator · document evidence extraction · OCR + CLI wrappers</div>
+        <div class="track-stats"><span>12 participants</span><span>·</span><span>1 PR</span></div>
+      </div>
+      <div class="track-card track-card-3">
+        <div class="track-num" style="color:#c084fc">Track 3</div>
+        <div class="track-title">Compliance Assessment</div>
+        <div class="track-desc">ICFCOP control testing agent · EU AI Act compliance monitor · Compliance-Harnas configurator</div>
+        <div class="track-stats"><span>18 participants</span><span>·</span><span>3 PRs</span></div>
+      </div>
+      <div class="track-card track-card-4">
+        <div class="track-num" style="color:#fbbf24">Track 4</div>
+        <div class="track-title">Reporting &amp; Visualization</div>
+        <div class="track-desc">Audit report generator · evidence visualization · Power BI MCP integration</div>
+        <div class="track-stats"><span>11 participants</span><span>·</span><span>0 PRs</span></div>
+      </div>
+      <div class="track-card track-card-5">
+        <div class="track-num" style="color:#f87171">Track 5</div>
+        <div class="track-title">AI Governance &amp; Quality</div>
+        <div class="track-desc">OWASP LLM audit pipeline · hallucination detection agent · finding fact-checker · AI escalation tooling</div>
+        <div class="track-stats"><span>7 participants</span><span>·</span><span>8 PRs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: TOP CONTRIBUTIONS -->
+  <div class="slide bg-indigo center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2" style="background:rgba(74,222,128,0.1)"></div>
+    <div class="eyebrow" style="color:#4ade80">Contributions</div>
+    <h2><span class="gradient-text">18</span> merged pull requests</h2>
+    <div class="divider divider-center"></div>
+    <div class="pr-grid">
+      <div class="pr-card">
+        <div class="pr-num">#98</div>
+        <div class="pr-info">
+          <div class="pr-title">OWASP LLM audit pipeline v2: tests, README, 7 improvements</div>
+          <div class="pr-meta">@EvW-RFC-CIA93 · Track 5</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#102</div>
+        <div class="pr-info">
+          <div class="pr-title">Strapi synthetic data sandbox</div>
+          <div class="pr-meta">@erik-yice · Track 0</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#100</div>
+        <div class="pr-info">
+          <div class="pr-title">P2P 3-way match audit report generator</div>
+          <div class="pr-meta">@wehren · Track 2</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#104</div>
+        <div class="pr-info">
+          <div class="pr-title">Policy-to-audit-program pipeline (GIAS 13.2)</div>
+          <div class="pr-meta">@vandissel · Track 1</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#95</div>
+        <div class="pr-info">
+          <div class="pr-title">Hallucination detection agent</div>
+          <div class="pr-meta">@furyknl · Track 5</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#89</div>
+        <div class="pr-info">
+          <div class="pr-title">Hallucination check skill: validate 5 findings from H2</div>
+          <div class="pr-meta">@frankheldens · Track 5</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#103</div>
+        <div class="pr-info">
+          <div class="pr-title">AI finding escalation to Azure DevOps</div>
+          <div class="pr-meta">@lubbers-agent · Track 5</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">#96</div>
+        <div class="pr-info">
+          <div class="pr-title">Compliance-Harnas Configurator plan</div>
+          <div class="pr-meta">@volwerk · Track 3</div>
+        </div>
+      </div>
+      <div class="pr-more">... and 10 more PRs including plans, updates, and EU AI Act compliance work</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: CONTRIBUTORS -->
+  <div class="slide bg-hero center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="eyebrow" style="color:#fbbf24">The people</div>
+    <h2>Top <span class="gradient-text">contributors</span></h2>
+    <div class="divider divider-center"></div>
+    <div style="width:min(960px,100%);display:flex;flex-direction:column;gap:20px">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+        <div class="person-card" style="border-color:rgba(251,191,36,0.3)">
+          <div class="person-name">@EvW-RFC-CIA93<span class="badge-first">1st contributor</span></div>
+          <div class="person-detail">3 PRs · OWASP LLM pipeline</div>
+        </div>
+        <div class="person-card">
+          <div class="person-name">@lubbers-agent</div>
+          <div class="person-detail">3 PRs · OWASP + Azure DevOps</div>
+        </div>
+        <div class="person-card">
+          <div class="person-name">@frankheldens</div>
+          <div class="person-detail">2 PRs · Hallucination check</div>
+        </div>
+        <div class="person-card">
+          <div class="person-name">@vandissel</div>
+          <div class="person-detail">1 PR · Policy analysis skill</div>
+        </div>
+        <div class="person-card">
+          <div class="person-name">@erik-yice</div>
+          <div class="person-detail">1 PR · Strapi sandbox</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+        <div class="person-card" style="padding:12px 10px">
+          <div class="person-name" style="font-size:13px">@wehren</div>
+          <div class="person-detail" style="font-size:11px">P2P 3-way match</div>
+        </div>
+        <div class="person-card" style="padding:12px 10px">
+          <div class="person-name" style="font-size:13px">@Iodine98</div>
+          <div class="person-detail" style="font-size:11px">LLM judge agent plan</div>
+        </div>
+        <div class="person-card" style="padding:12px 10px">
+          <div class="person-name" style="font-size:13px">@furyknl</div>
+          <div class="person-detail" style="font-size:11px">Hallucination detection</div>
+        </div>
+        <div class="person-card" style="padding:12px 10px">
+          <div class="person-name" style="font-size:13px">@volwerk</div>
+          <div class="person-detail" style="font-size:11px">Compliance-Harnas</div>
+        </div>
+        <div class="person-card" style="padding:12px 10px">
+          <div class="person-name" style="font-size:13px">@techcomplynl-svg</div>
+          <div class="person-detail" style="font-size:11px">EU AI Act monitor</div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:14px;color:rgba(255,255,255,0.35);margin-top:4px">
+        + 85 more participants from across the Dutch and international audit community
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: PDCA STATUS -->
+  <div class="slide bg-indigo center">
+    <div class="orb orb-1"></div>
+    <div class="eyebrow" style="color:#c084fc">Where we are now</div>
+    <h2>PDCA <span class="gradient-text">after the hackathon</span></h2>
+    <div class="divider divider-center"></div>
+    <div style="max-width:720px;width:100%">
+      <div class="pdca-bar">
+        <div class="pdca-seg pdca-p">Plan ✅</div>
+        <div class="pdca-seg pdca-d">Do ✅</div>
+        <div class="pdca-seg pdca-c"><span>Check</span><small style="font-size:11px;font-weight:600">← you are here</small></div>
+        <div class="pdca-seg pdca-a"><span>Act</span><small style="font-size:11px">next session</small></div>
+      </div>
+      <div style="display:flex;gap:0;margin-top:2px">
+        <div class="pdca-label" style="flex:1">60 plans ready</div>
+        <div class="pdca-label" style="flex:1">Built at hackathon</div>
+        <div class="pdca-label" style="flex:1;color:#c084fc;font-weight:700">Test at your org</div>
+        <div class="pdca-label" style="flex:1">Share learnings</div>
+      </div>
+      <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:left">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px">
+          <div style="font-size:15px;font-weight:700;color:#4ade80;margin-bottom:8px">Done (Plan + Do)</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">60 plans submitted · 18 PRs merged · 6 tracks built · Prototypes demonstrated · Leaderboard scored</div>
+        </div>
+        <div style="background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.3);border-radius:16px;padding:24px">
+          <div style="font-size:15px;font-weight:700;color:#c084fc;margin-bottom:8px">Now (Check)</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">Test your prototype at your organization · Document what works and what breaks · Update your plan's PDCA table</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: HOMEWORK -->
+  <div class="slide bg-dark center">
+    <div class="orb orb-1" style="background:rgba(129,140,248,0.12)"></div>
+    <div class="eyebrow" style="color:#4ade80">Between sessions</div>
+    <h2>Your <span class="gradient-text">homework</span></h2>
+    <div class="divider divider-center"></div>
+    <ul class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Test your prototype at your organization</strong>
+          <span>Run it against real (or representative) data. Does it work? What breaks? What's missing?</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Document your findings</strong>
+          <span>Update your plan's PDCA table. Fill in the Check column with what you learned</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Share learnings in the community</strong>
+          <span>Post in WhatsApp, open a GitHub issue, write a LinkedIn posthelp others learn from your experience</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>Prepare for Hackathon #4 (Act phase)</strong>
+          <span>Refine your agent based on findings · Claim additional plans · Recruit colleagues to join</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SLIDE 8: CALL TO ACTION -->
+  <div class="slide bg-hero center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <img src="./saaf-logo-white.png" alt="SAAF Project" class="logo-img">
+    <div class="eyebrow" style="color:#4ade80">What's next</div>
+    <h1 style="font-size:88px">Check.<br><span class="gradient-text">Act.</span><br>Repeat.</h1>
+    <div style="margin-top:40px;font-size:18px;color:rgba(255,255,255,0.55);line-height:1.8">
+      Test at your org &nbsp;·&nbsp; Update your plan &nbsp;·&nbsp; Share your findings &nbsp;·&nbsp; Come build at <strong style="color:#818cf8">Hackathon #4</strong>
+    </div>
+    <div style="margin-top:48px;padding:20px 36px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;font-size:14px;color:rgba(255,255,255,0.5)">
+      Next session: <strong style="color:#fbbf24">Hackathon #4</strong> &nbsp;·&nbsp; May 19, 2026 &nbsp;·&nbsp; NOREA, Hoofddorp
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="slide-count" id="slide-count">1 / 8</div>
+<div class="nav">
+  <button onclick="prevSlide()">&#8592;</button>
+  <button onclick="nextSlide()">&#8594;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+function show(n) {
+  slides[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  document.getElementById('slide-count').textContent = `${current + 1} / ${slides.length}`;
+}
+
+function nextSlide() { show(current + 1); }
+function prevSlide() { show(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+// Click anywhere on slide to advance
+document.querySelectorAll('.slide').forEach(s => {
+  s.addEventListener('click', e => {
+    if (!e.target.closest('button')) nextSlide();
+  });
+});
+</script>
+</body>
+</html>

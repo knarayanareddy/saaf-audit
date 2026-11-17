@@ -1,0 +1,87 @@
+{
+  "_contract": "Elke turn heeft OF een 'source' met bericht-ids uit chat.json, OF 'synthetic': true (vertellerzin). Een turn met geen van beide faalt de validatie. 'beat' groepeert turns die de chunker niet uit elkaar mag trekken.",
+  "_target": "circa 5 minuten — 23 van de 43 berichten geselecteerd; weggelaten berichten staan in _omitted",
+  "_omitted": ["m01","m04","m06","m11","m14","m15","m16","m17","m18","m23","m27","m28","m29","m31","m33","m37","m38","m41","m42","m43"],
+
+  "turns": [
+    { "speaker": "narrator", "synthetic": true, "beat": "open",
+      "text": "Wat u nu hoort is verzonnen. Stichting Zorggroep Waterlinie bestaat niet; de namen, de gesprekken en de incidenten zijn gebouwd voor een fraude-risicoanalyse. Acht rollen uit de risk control matrix kregen los van elkaar één vraag: welke beheersingsmaatregel faalt bij jou, en waarom? Hun antwoorden staan hier op één tijdlijn, als groepsapp." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "jan",
+      "text": "Maandag zesentwintig januari. De salarisadministratie loopt nog na op een onderbetalingsincident." },
+    { "speaker": "MD", "source": ["m02"], "beat": "jan",
+      "text": "Het rooster klopt toch nooit met LoonLink, dus dan regel ik het zelf wel even." },
+    { "speaker": "MV", "source": ["m03"], "beat": "jan",
+      "text": "[warmly] Ik lever hem gewoon aan zoals altijd. Jij kijkt toch niet naar de einddatum." },
+    { "speaker": "MH", "source": ["m05"], "beat": "jan",
+      "text": "[laughs] Die honderdtwaalf oude accounts ruim ik weer eens volgende sprint op. Beloofd." },
+    { "speaker": "narrator", "synthetic": true, "beat": "jan-slot",
+      "text": "Geen van deze drie zinnen is een leugen. De correctiestroom die na dat incident ontstond, heeft alleen nooit een control gekregen." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "feb-1",
+      "text": "Donderdag twaalf februari. De kwartaalafsluiting." },
+    { "speaker": "BW", "source": ["m07"], "beat": "feb-1",
+      "text": "Laten we de laatste boekingen dit kwartaal even sneller afronden. Het bestuur wil strakke cijfers voor vrijdag." },
+    { "speaker": "DE", "source": ["m08"], "beat": "feb-1",
+      "text": "[calm, unhurried] Laten we de jaarcijfers nog even netjes afronden voor de audit. Dan hoeven we straks niets meer te herzien." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "feb-2",
+      "text": "Bart deelt een bestand. Topside, Q1, definitief, versie vier. Een Excel van vierhonderdtwaalf kilobyte." },
+    { "speaker": "BW", "source": ["m09"], "beat": "feb-2",
+      "text": "Het top-side overzicht neem ik zelf wel door, dat hoeft niet apart op de agenda." },
+    { "speaker": "BW", "source": ["m10"], "beat": "feb-2",
+      "text": "Die Excel met de journaalpost-uitzonderingen stuur ik zelf ook wel door. Scheelt weer een rondje." },
+    { "speaker": "narrator", "synthetic": true, "beat": "feb-2",
+      "text": "Twee detectielagen die elkaar zouden moeten controleren, delen één bron en één eigenaar. Namelijk de man wiens eigen posten ze moeten signaleren." },
+
+    { "speaker": "MV", "source": ["m12"], "beat": "feb-3",
+      "text": "[lightly] Kijk je dit kwartaal niet te scherp naar ons declaratielogje? We hebben nog een inhaalslag na de storing." },
+    { "speaker": "BW", "source": ["m13"], "beat": "feb-3",
+      "text": "Die afgekeurde declaraties van januari schuiven we gewoon mee. Is toch maar tijdelijk." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "mrt-1",
+      "text": "Woensdag achttien maart. Facilitaire inkoop, na de reorganisatie. Dit is het enige scenario dat in de basisrun gewoon slaagt." },
+    { "speaker": "RV", "source": ["m19"], "beat": "mrt-1",
+      "text": "Kun je die schoonmaakfactuur in drie delen splitsen? Elk net onder de drempel. Scheelt gedoe met goedkeuring." },
+    { "speaker": "EK", "source": ["m20"], "beat": "mrt-1",
+      "text": "[warmly] Even bellen in plaats van appen over die drie deelfacturen, graag. Makkelijker uit te leggen dan te typen." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "mrt-2",
+      "text": "Daarna stuurt hij een spraakbericht. Zevenenveertig seconden. Geen enkele control in de matrix raakt communicatie buiten de systemen om, dus wat daarin is afgesproken bestaat nergens." },
+    { "speaker": "RV", "source": ["m22"], "beat": "mrt-2",
+      "text": "Laat die nieuwe teamleider in Zaltbommel deze maar goedkeuren. Die weet nog niet beter na de reorganisatie." },
+
+    { "speaker": "RV", "source": ["m24"], "beat": "mrt-3",
+      "text": "Check je die three-way match in Excel nog handmatig, of trekt iemand dat automatisch?" },
+    { "speaker": "SK", "source": ["m25"], "beat": "mrt-3",
+      "text": "[flatly] Handmatig. En per periode, niet per leverancier. Dus over locaties heen ziet niemand iets." },
+    { "speaker": "EK", "source": ["m26"], "beat": "mrt-3",
+      "text": "[smoothly] Laat die andere B.V. maar factureren voor het extra stuk. Administratief simpeler voor iedereen." },
+    { "speaker": "RV", "source": ["m30"], "beat": "mrt-3",
+      "text": "Volgende maand liever een andere locatie. Niet twee keer achter elkaar Culemborg." },
+    { "speaker": "narrator", "synthetic": true, "beat": "mrt-slot",
+      "text": "Restrisico eenentwintig komma vijfentwintig. Het hoogste in de hele matrix. Er bestaat geen control die facturen per leverancier bij elkaar optelt." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "apr-1",
+      "text": "Vrijdag drie april. Een storing." },
+    { "speaker": "MH", "source": ["m32"], "beat": "apr-1",
+      "text": "De I-A-M-koppeling hapert weer. Toegang gaat vandaag maar via het oude Excelbestand." },
+    { "speaker": "MH", "source": ["m34"], "beat": "apr-1",
+      "text": "[sighs] ChangeFlow is ook plat, tickets komen later wel. We weten toch wat we deden." },
+
+    { "speaker": "BW", "source": ["m35"], "beat": "apr-2",
+      "text": "Is de goedkeuringslog van de journaalposten er nog? Die zag ik niet in de export." },
+    { "speaker": "MH", "source": ["m36"], "beat": "apr-2",
+      "text": "[dryly] De logs staan aan hoor. Alleen kijkt er nooit iemand naar. Klassiek." },
+    { "speaker": "SK", "source": ["m39"], "beat": "apr-2",
+      "text": "[amused] I-A-M ligt eruit, toegang loopt nu gewoon via het Excelletje. Handig eigenlijk." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "slot",
+      "text": "Op dit moment kantelen twee risico's van gemiddeld naar hoog, zonder dat er één bedrag is verplaatst. Het raamwerk kan een storing niet van opzet onderscheiden." },
+    { "speaker": "SK", "source": ["m40"], "beat": "slot",
+      "text": "[quietly] Niemand kijkt hier echt naar wie iets goedkeurt. Alleen of het klopt." },
+
+    { "speaker": "narrator", "synthetic": true, "beat": "outro",
+      "text": "Dat is de bevinding van de hele analyse, in één zin, uit de mond van de crediteurenadministrateur. Negenendertig controls beoordeeld, elf onbetrouwbaar, vijf zonder matrixregel. En de spil is niemand van deze acht. Het is de applicatiebeheerder, die in geen enkel scenario zelf iets wegneemt, maar wel het bewijs levert waarop tien andere controls steunen. Zolang dat bewijs een handmatige Excel is, is hun betrouwbaarheid een aanname en geen vaststelling." }
+  ]
+}

@@ -1,0 +1,41 @@
+services:
+  strapi:
+    build:
+      context: .
+    ports:
+      - "1340:1340"
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          node -e "const http=require('http'); const req=http.get('http://127.0.0.1:1340/admin/init', (res) => process.exit(res.statusCode === 200 ? 0 : 1)); req.on('error', () => process.exit(1));"
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 20s
+    volumes:
+      - ./:/opt/app
+      - strapi_node_modules:/opt/app/node_modules
+      - strapi_data:/opt/app/.data
+  seed:
+    image: python:3.11-slim
+    working_dir: /workspace
+    depends_on:
+      strapi:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      STRAPI_BASE_URL: http://strapi:1340
+    volumes:
+      - ../../:/workspace
+    command:
+      - sh
+      - -lc
+      - python3 tools/scripts/seed_strapi.py --base-url http://strapi:1340 && python3 tools/scripts/verify_strapi_seed.py --check-api --base-url http://strapi:1340
+
+volumes:
+  strapi_node_modules:
+  strapi_data:

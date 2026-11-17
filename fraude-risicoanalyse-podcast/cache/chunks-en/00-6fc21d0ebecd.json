@@ -1,0 +1,44 @@
+{
+  "idx": 0,
+  "hash": "6fc21d0ebecd",
+  "chars": 1095,
+  "turns": 9,
+  "inputs": [
+    {
+      "text": "What you are about to hear is fiction. Waterlinie Care Group does not exist; the names, the conversations and the incidents were built for a fraud risk assessment. Eight roles from the risk control matrix were each asked one question, separately: which control fails on your side, and why? Their answers are laid out here on a single timeline, as a group chat.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "Monday, the twenty-sixth of January. Payroll is still catching up after an underpayment incident.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "The roster never matches LoonLink anyway, so I just sort it out myself.",
+      "voice_id": "EXAVITQu4vr4xnSDxMaL"
+    },
+    {
+      "text": "[warmly] I'll just submit it the way I always do. You don't look at the end date anyway.",
+      "voice_id": "cgSgspJ2msm6clMCkdW9"
+    },
+    {
+      "text": "[laughs] Those hundred and twelve old accounts, I'll clear them out next sprint. Promise.",
+      "voice_id": "bIHbv24MWmeRgasZH58o"
+    },
+    {
+      "text": "None of those three sentences is a lie. The correction flow that grew out of that incident simply never got a control.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "Thursday, the twelfth of February. Quarter-end close.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "Let's wrap up the last entries a bit faster this quarter. The board wants clean figures by Friday.",
+      "voice_id": "cjVigY5qzO86Huf0OWal"
+    },
+    {
+      "text": "[calm, unhurried] Let's tidy up the annual figures nicely before the audit. Then we won't have to restate anything later.",
+      "voice_id": "pqHfZKP75CvOlQylNhV4"
+    }
+  ]
+}

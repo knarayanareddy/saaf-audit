@@ -1,0 +1,9 @@
+# Development and test only — not installed in the deployed image.
+#
+#   venv/Scripts/python.exe -m pip install -r requirements-dev.txt
+#
+# pyflakes backs tests/test_scan_start: it fails the suite on any name used in
+# the backend but defined nowhere. That is the class of bug that left the Topic
+# Intelligence Run button dead (`attributed` never imported) and two more crashes
+# unnoticed (anl_drafter, policy_agent) while every other suite was green.
+pyflakes==4.0.3

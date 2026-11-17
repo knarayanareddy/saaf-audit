@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "HighTable \u2013 Audit Intelligence",
+  "version": "1.0.0",
+  "description": "Find similar past audit issues and generate AI-powered recommendations",
+  "permissions": ["storage"],
+  "host_permissions": ["https://br1ght8.teammatehosting.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://br1ght8.teammatehosting.com/TeamMate/*"],
+      "js": ["content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html"
+}

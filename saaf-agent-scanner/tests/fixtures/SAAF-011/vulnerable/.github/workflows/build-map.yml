@@ -1,0 +1,22 @@
+name: Build map
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest discover tests
+  release:
+    needs: test
+    uses: example-org/shared-ci/.github/workflows/release.yml@main
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          git clone --depth 1 https://github.com/example-org/guard.git "$RUNNER_TEMP/guard"
+          python "$RUNNER_TEMP/guard/check.py"

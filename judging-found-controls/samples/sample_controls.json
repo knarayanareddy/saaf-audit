@@ -1,0 +1,35 @@
+[
+  {
+    "id": "POL-ACCESS-001",
+    "who": "IT Security team",
+    "what": "System administrators shall revoke user access within 24 hours of employment termination.",
+    "why": "Reduces risk of unauthorized access by former employees",
+    "when": "Within 24 hours of employment termination notification",
+    "where": "All IT systems in scope",
+    "how": "Formal termination notification from Human Resources triggers credential revocation",
+    "source_anchor": "Section 4.2",
+    "open_questions": []
+  },
+  {
+    "id": "POL-ACCESS-002",
+    "who": "System administrator",
+    "what": "System administrators shall revoke user access within 24 hours of employment termination.",
+    "why": "Reduces risk of unauthorized access by former employees",
+    "when": "Within 24 hours of employment termination notification",
+    "where": "All IT systems in scope",
+    "how": "TBD",
+    "source_anchor": "Section 4.2",
+    "open_questions": []
+  },
+  {
+    "id": "POL-CRYPTO-001",
+    "who": "All employees",
+    "what": "All employees shall use AES-256 encryption for files stored on portable media.",
+    "why": "Prevents data loss if portable media is misplaced or stolen",
+    "when": "At all times",
+    "where": "USB drives, external hard drives, and other portable storage",
+    "how": "Enforced via endpoint management tooling",
+    "source_anchor": "Section 6.1",
+    "open_questions": ["Is this enforced by technical controls or policy only?"]
+  }
+]

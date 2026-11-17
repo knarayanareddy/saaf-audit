@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="{{ lang }}" data-style="saaf-light" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ t('report.title') }} · {{ review.organisation }}</title>
+<link rel="stylesheet" href="/static/brand/saaf-light.css?v={{ v }}">
+<link rel="stylesheet" href="/static/report.css?v={{ v }}">
+<style>
+  @page{size:A4;margin:18mm 16mm 22mm;
+    @bottom-left{content:"{{ t('report.running') }}{% if not signoff %} · {{ t('report.draft.short') }}{% endif %}";font:8pt 'Geist Mono',monospace;color:#767684}
+    @bottom-right{content:counter(page) " / " counter(pages);font:8pt 'Geist Mono',monospace;color:#767684}}
+  @page :first{@bottom-left{content:none}@bottom-right{content:none}}
+</style>
+</head>
+<body>
+{% set s = stats %}
+{% macro chip(r) %}<span class="chip {{ r }}"><i></i>{{ t('risk.' ~ r) }}</span>{% endmacro %}
+{% macro chapter(n, key) %}<div class="chapter-h"><span class="num">{{ '%02d' % n }}</span><h1>{{ t(key) }}</h1></div>{% endmacro %}
+
+<div class="toolbar">
+  <span class="logo">{{ logo_svg | safe }}</span>
+  <button class="btn" type="button" onclick="window.print()">{{ t('report.print') }}</button>
+</div>
+
+{% if not signoff %}<div class="watermark" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+
+<div class="doc">
+
+  <!-- Cover -->
+  <section class="sheet cover">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    <div class="top">{{ logo_svg | safe }}<span class="mono">{{ t('report.kicker') }}</span></div>
+    <div class="kicker mono">{{ review.organisation }}</div>
+    <h1>{{ t('report.title') }}.</h1>
+    <p class="sub">{{ t('report.subtitle', start=review.audit_period.start, end=review.audit_period.end) }}</p>
+    <dl class="meta">
+      <dt>{{ t('report.meta.org') }}</dt><dd>{{ review.organisation }}</dd>
+      <dt>{{ t('report.meta.period') }}</dt><dd class="tn">{{ review.audit_period.start }} {{ t('report.to') }} {{ review.audit_period.end }}</dd>
+      <dt>{{ t('report.meta.extracted') }}</dt><dd class="tn">{{ review.extraction_date }}</dd>
+      <dt>{{ t('report.meta.date') }}</dt><dd class="tn">{{ report_date }}</dd>
+      <dt>{{ t('report.meta.status') }}</dt><dd>{% if signoff %}<span class="chip signed">{{ t('report.signed.short') }}</span> {{ signoff.reviewer }}, {{ signoff.signed_at }}{% else %}<span class="chip draft">{{ t('report.draft.short') }}</span> {{ t('report.draft') }}{% endif %}</dd>
+      <dt>{{ t('report.meta.prepared') }}</dt><dd>{{ t('report.prepared_by', version=version) }}</dd>
+    </dl>
+    <div class="band">
+      <div class="pixels" aria-hidden="true">{% for k in range(9) %}<i style="opacity:{{ [0.25, 0.45, 0.65, 0.85, 1, 0.8, 0.55, 0.35, 0.2][k] }}"></i>{% endfor %}</div>
+      <div class="kpis">
+        <div class="k"><b class="tn">{{ s.exceptions }}</b><span>{{ t('report.kpi.exceptions') }}</span></div>
+        <div class="k"><b class="tn">{{ s.exc_by_risk.High }}</b><span>{{ t('report.kpi.high') }}</span></div>
+        <div class="k"><b class="tn">{{ s.findings }}</b><span>{{ t('report.kpi.findings') }}</span></div>
+        <div class="k"><b class="tn">{{ s.tests_total }}</b><span>{{ t('report.kpi.controls') }}</span></div>
+      </div>
+      <p class="note">{{ t('report.synthetic') }}</p>
+    </div>
+  </section>
+
+  <!-- 1 Executive summary -->
+  <section class="sheet chapter exec">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    {{ chapter(1, 'report.exec') }}
+    {% if draft %}<p class="lede">{{ draft.summary_display }}</p>{% endif %}
+
+    <div class="kpis4">
+      <div class="kpi"><b class="tn">{{ s.exceptions }}</b><span>{{ t('report.kpi.exceptions.of', people=s.people) }}</span></div>
+      <div class="kpi High"><b class="tn">{{ s.exc_by_risk.High }}</b><span>{{ t('report.kpi.high') }}</span></div>
+      <div class="kpi"><b class="tn">{{ s.findings }}</b><span>{{ t('report.kpi.findings') }}</span></div>
+      <div class="kpi Medium"><b class="tn">{{ s.follow_up }}</b><span>{{ t('report.kpi.follow') }}</span></div>
+    </div>
+
+    <h2>{{ t('report.dist') }}</h2>
+    <div class="squares" aria-label="{{ t('report.dist') }}">{% for r in s.risks %}{% for i in range(s.exc_by_risk[r]) %}<i class="{{ r }}"></i>{% endfor %}{% endfor %}</div>
+    <div class="legend">{% for r in s.risks %}{% if s.exc_by_risk[r] %}<span><i style="background:var(--risk-{{ r }})"></i>{{ t('risk.' ~ r) }} <b class="tn">{{ s.exc_by_risk[r] }}</b></span>{% endif %}{% endfor %}</div>
+
+    <div class="two">
+      <div>
+        <h2>{{ t('report.heatmap') }}</h2>
+        <div class="heat">
+          <span></span>{% for r in ['High', 'Medium', 'Low'] %}<span class="h">{{ t('risk.' ~ r) }}</span>{% endfor %}<span class="h">{{ t('report.total') }}</span>
+          {% for lc in s.lifecycles %}
+          <span class="lc">{{ t('lc.' ~ lc ~ '.short') }}</span>
+          {% for r in ['High', 'Medium', 'Low'] %}{% set n = s.heat[lc][r] %}<span class="cell {{ r }} {{ 'n' if n else 'z' }} tn">{{ n if n else '·' }}</span>{% endfor %}
+          <span class="tot tn">{{ s.lc_totals[lc] }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h2>{{ t('report.overview') }}</h2>
+        {% if draft %}
+        <table class="t">
+          <tbody>
+          {% for f in draft.findings_display %}
+          <tr><td class="mono nowrap">{{ f.id }}</td><td>{{ f.title }}</td><td class="nowrap">{{ chip(f.risk_rating) }}</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}<p class="mono">{{ t('report.nofindings') }}</p>{% endif %}
+      </div>
+    </div>
+
+    {% if draft %}
+    <p class="footnote">{% if draft.mode == 'live' %}{{ t('s4.mode.live', model=draft.model, seconds=draft.duration_s) }}{% else %}{{ t('s4.mode.' ~ draft.mode) }}{% endif %} · {{ t('s4.check.kept', kept=draft.checks.findings_kept, received=draft.checks.findings_received) }} · {{ t('s4.check.covered', n=draft.checks.exceptions_covered, total=draft.checks.exceptions_total) }}</p>
+    {% endif %}
+  </section>
+
+  <!-- 2 Findings -->
+  {% if draft %}
+  <section class="sheet chapter">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    {{ chapter(2, 'report.findings') }}
+    {% for f in draft.findings_display %}
+    <article class="fcard {{ f.risk_rating }}">
+      <div class="fh"><span class="mono">{{ f.id }}</span>{{ chip(f.risk_rating) }}{% if f.ai_assisted %}<span class="chip ref">{{ t('report.ai') }}</span>{% endif %}<span class="chip ref">{{ f.status }}</span></div>
+      <h3>{{ f.title }}</h3>
+      <dl>
+        {% for k in ['control_objective', 'observation', 'root_cause', 'impact', 'recommendation'] %}{% if f[k] %}
+        <dt>{{ t('s4.f.' ~ k) }}</dt><dd>{{ f[k] }}</dd>{% endif %}{% endfor %}
+        <dt>{{ t('s4.f.sources') }}</dt>
+        <dd class="chips">{% for r in f.evidence_references %}{% set e = s.exc_by_id.get(r) %}{% if e %}<span class="chip {{ e.risk_rating }}"><i></i>{{ r }}</span>{% else %}<span class="chip ref">{{ r }}</span>{% endif %}{% endfor %}</dd>
+      </dl>
+    </article>
+    {% endfor %}
+  </section>
+
+  <!-- 3 Assessment per exception -->
+  <section class="sheet chapter">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    {{ chapter(3, 'report.assessments') }}
+    <p>{{ t('report.assess.intro') }}</p>
+    <table class="t">
+      <thead><tr><th></th><th class="nowrap">ID</th><th>{{ t('report.col.risk') }}</th><th>{{ t('report.col.conclusion') }}</th><th>{{ t('report.col.rationale') }}</th></tr></thead>
+      <tbody>
+      {% for a in draft.assessments_display %}{% set e = s.exc_by_id.get(a.exception_id) %}
+      <tr><td class="riskbar"><i style="background:var(--risk-{{ e.risk_rating if e else 'Informational' }})"></i></td>
+        <td class="mono nowrap">{{ a.exception_id }}{% if e %}<br>{{ e.test_id }}{% endif %}</td>
+        <td class="nowrap">{% if e %}{{ chip(e.risk_rating) }}{% endif %}</td>
+        <td class="nowrap"><span class="chip {{ 'follow' if a.conclusion == 'Needs follow-up' else 'confirmed' }}">{{ t('s4.conclusion.' ~ a.conclusion) }}</span></td>
+        <td>{{ a.rationale }}{% if a.follow_up %}<br><span class="mono">{{ a.follow_up }}</span>{% endif %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  {% endif %}
+
+  <!-- 4 Exceptions -->
+  <section class="sheet chapter">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    {{ chapter(4 if draft else 2, 'report.exceptions') }}
+    <p>{{ t('report.exc.intro') }}</p>
+    <table class="t">
+      <thead><tr><th></th><th class="nowrap">ID</th><th>{{ t('report.col.test') }}</th><th>{{ t('report.col.risk') }}</th><th>{{ t('report.col.exception') }}</th></tr></thead>
+      <tbody>
+      {% for lc in s.lifecycles %}
+      {% set ids = review.by_lifecycle[lc] %}{% if ids %}
+      <tr class="group"><td colspan="5">{{ t('lc.' ~ lc) }} <span class="mono">· {{ ids | length }}</span></td></tr>
+      {% for e in review.exceptions if e.id in ids %}
+      <tr><td class="riskbar"><i style="background:var(--risk-{{ e.risk_rating }})"></i></td>
+        <td class="mono nowrap">{{ e.id }}</td>
+        <td><span class="mono">{{ e.test_id }}</span> {{ t('test.' ~ e.test_id) }}</td>
+        <td class="nowrap">{{ chip(e.risk_rating) }}</td>
+        <td>{{ summary(e) }}<span class="refs">{% for v in e.evidence %}<span class="chip ref">{{ v.ref }}</span> {% endfor %}</span></td></tr>
+      {% endfor %}{% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 5 Approach and scope -->
+  <section class="sheet chapter">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    {{ chapter(5 if draft else 3, 'report.approach') }}
+    <div class="steps3">
+      <div><b>{{ t('report.ap.1.t') }}</b><p>{{ t('report.ap.1') }}</p></div>
+      <div><b>{{ t('report.ap.2.t') }}</b><p>{{ t('report.ap.2') }}</p></div>
+      <div><b>{{ t('report.ap.3.t') }}</b><p>{{ t('report.ap.3') }}</p></div>
+    </div>
+    <p>{{ t('report.ap.limits') }}</p>
+
+    <h2>{{ t('report.tests') }}</h2>
+    <table class="t">
+      <thead><tr><th class="nowrap">ID</th><th>{{ t('report.col.test') }}</th><th class="nowrap">{{ t('report.col.tested') }}</th><th>{{ t('report.col.result') }}</th></tr></thead>
+      <tbody>
+      {% for x in review.tests %}
+      {% set worst = (review.exceptions | selectattr('test_id', 'equalto', x.id) | map(attribute='risk_rating') | list) %}
+      <tr><td class="mono nowrap">{{ x.id }}</td>
+        <td>{{ t('test.' ~ x.id) }}<br><span class="mono">{{ x.control_refs | join(' · ') }}</span></td>
+        <td class="tn nowrap">{{ x.tested }}</td>
+        <td class="nowrap">{% if x.exceptions %}{% set r = 'High' if 'High' in worst else ('Medium' if 'Medium' in worst else 'Low') %}<span class="chip {{ r }}"><i></i>{{ t('s2.exception' if x.exceptions == 1 else 's2.exceptions', n=x.exceptions) }}</span>{% else %}<span class="chip pass">{{ t('s2.pass') }}</span>{% endif %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>{{ t('report.sources') }}</h2>
+    <table class="t">
+      <thead><tr><th>{{ t('report.col.source') }}</th><th>{{ t('report.col.file') }}</th><th class="nowrap">{{ t('report.col.rows') }}</th><th>{{ t('report.col.sha') }}</th></tr></thead>
+      <tbody>
+      {% for src in review.sources %}{% set k = 'source.' ~ src.key %}
+      <tr><td>{{ t(k) if t(k) != k else src.label }}</td><td class="mono">{{ src.file }}</td><td class="tn">{{ src.rows }}</td><td class="mono">{{ src.sha256[:16] }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="footnote">{{ t('s1.fingerprint') }}: {{ review.fingerprint }} · {{ t('report.meta.extracted') }} {{ review.extraction_date }} · engine {{ review.engine_version }}</p>
+  </section>
+
+  <!-- 6 Sign-off -->
+  <section class="sheet chapter">
+    {% if not signoff %}<div class="wm" aria-hidden="true"><span>{{ t('report.draft.mark') }}</span></div>{% endif %}
+    {{ chapter(6 if draft else 4, 'report.signoff') }}
+    <div class="statement">{{ t('s5.statement') }}</div>
+    <div class="signbox">
+      <div><div class="line">{{ signoff.reviewer if signoff else '' }}</div><div class="lab">{{ t('s5.reviewer') }}</div></div>
+      <div><div class="line tn">{{ signoff.signed_at if signoff else '' }}</div><div class="lab">{{ t('report.col.date') }}</div></div>
+    </div>
+    {% if signoff %}<p class="footnote">{{ t('report.signed', name=signoff.reviewer, date=signoff.signed_at) }}</p>{% else %}<p class="footnote">{{ t('report.draft') }}</p>{% endif %}
+    <p class="footnote">{{ t('report.footer', version=version, mode=(draft.mode if draft else '-')) }} {{ t('report.synthetic') }}</p>
+  </section>
+
+</div>
+</body>
+</html>

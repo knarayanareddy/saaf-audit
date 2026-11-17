@@ -1,0 +1,11 @@
+# Local working state — never commit fetched private code, excerpts, or draft mandates.
+tools/scripts/agent_drift_rater/cache/
+tools/scripts/agent_drift_rater/runs/
+tools/scripts/agent_drift_rater/mandates/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.DS_Store

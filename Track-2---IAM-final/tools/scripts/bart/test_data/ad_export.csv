@@ -1,0 +1,62 @@
+username,department,access_role,enabled,last_login
+alice.johnson,Finance,Finance Analyst,true,2026-05-10
+bob.martinez,IT,Systems Engineer,true,2026-05-12
+carol.smith,HR,HR Business Partner,true,2026-05-08
+david.lee,Sales,Account Executive,true,2026-05-15
+emma.wilson,Marketing,Marketing Manager,true,2026-05-11
+frank.brown,Legal,Legal Counsel,true,2026-05-09
+grace.taylor,Finance,Finance Analyst,true,2026-05-14
+henry.anderson,IT,DevOps Engineer,true,2026-05-13
+iris.thomas,Operations,Operations Analyst,true,2026-05-07
+james.jackson,Compliance,Compliance Officer,true,2026-05-16
+kate.white,Finance,Senior Accountant,true,2026-05-06
+liam.harris,IT,Security Analyst,true,2026-05-17
+mia.martin,HR,Recruiter,true,2026-05-05
+noah.garcia,Sales,Sales Manager,true,2026-05-18
+olivia.davis,Marketing,Content Strategist,true,2026-05-04
+peter.rodriguez,Operations,Project Manager,true,2026-05-03
+quinn.lewis,Legal,Paralegal,true,2026-05-02
+rachel.walker,Compliance,Risk Analyst,true,2026-05-01
+sam.hall,Finance,Budget Analyst,true,2026-04-30
+tina.allen,IT,Network Engineer,true,2026-04-29
+bwilliams,Finance,Finance User,true,2025-10-01
+unknown.contractor,IT,Contractor,true,2026-04-15
+extern.vandijk,Operations,External Consultant,true,2026-03-20
+temp.user01,Finance,Finance User,true,2026-02-10
+old.vendor,IT,Vendor Access,true,2025-06-01
+j.departed99,HR,HR Assistant,true,2024-12-01
+legacy.account,Legal,Legal Assistant,true,2025-03-15
+backup.operator,IT,Backup Operator,true,2026-05-01
+test.account,Finance,Test User,true,2026-01-15
+ex.employee2024,Sales,Sales Representative,true,2025-11-20
+cformer,Operations,Operations User,true,2026-04-01
+d.resigned,Sales,Account Executive,true,2026-04-10
+e.dismissed,Finance,Finance Analyst,true,2026-03-25
+f.retired,HR,HR Director,true,2026-02-20
+g.resigned2,IT,Junior Developer,true,2026-04-05
+asmith,IT,IT Admin,true,2026-04-22
+h.mismatch1,Accounting,Finance Analyst,true,2026-05-03
+i.mismatch2,Sales,Account Executive,true,2026-05-01
+j.mismatch3,Supply Chain,Logistics Coordinator,true,2026-04-28
+k.mismatch4,IT,IT Admin,true,2026-04-25
+l.mismatch5,Communications,Content Manager,true,2026-05-02
+m.mismatch6,Compliance,Risk Manager,true,2026-04-20
+n.mismatch7,Contracts,Legal Assistant,true,2026-04-18
+o.stale1,Finance,Finance Analyst,true,2025-11-01
+p.stale2,IT,Systems Admin,true,2025-10-15
+q.stale3,HR,HR Coordinator,true,2025-12-01
+r.stale4,Sales,Sales Representative,true,2025-09-01
+s.stale5,Operations,Operations User,true,2026-01-15
+t.stale6,Legal,Legal Advisor,true,2025-08-15
+u.stale7,Finance,Accounts Payable,true,2026-02-01
+v.stale8,IT,IT Support,true,never
+w.duplicate1,Finance,Finance Analyst,true,2026-05-10
+w.duplicate1,Finance,Finance User,true,2026-05-08
+x.duplicate2,IT,IT Admin,true,2026-05-12
+x.duplicate2,IT,Security Analyst,true,2026-05-11
+svc_backup,IT,Backup Service,true,2026-05-01
+svc_database,IT,Database Service,true,2026-05-18
+service_monitor,IT,Monitoring Service,true,2026-05-15
+app_reporting,Finance,Reporting App,true,2026-05-17
+svc_email,IT,Email Service,true,2026-05-16
+app_gateway,IT,API Gateway,true,2026-05-14

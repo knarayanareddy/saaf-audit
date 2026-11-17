@@ -1,0 +1,62 @@
+username,display_name,email,department,role,last_login,account_status,created_date
+alice.johnson,Alice Johnson,alice.johnson@example.com,Finance,Finance Analyst,2026-05-10,Active,2022-01-15
+bob.martinez,Bob Martinez,bob.martinez@example.com,IT,Systems Engineer,2026-05-12,Active,2021-06-20
+carol.smith,Carol Smith,carol.smith@example.com,HR,HR Business Partner,2026-05-08,Active,2020-09-01
+david.lee,David Lee,david.lee@example.com,Sales,Account Executive,2026-05-15,Active,2023-03-10
+emma.wilson,Emma Wilson,emma.wilson@example.com,Marketing,Marketing Manager,2026-05-11,Active,2019-11-05
+frank.brown,Frank Brown,frank.brown@example.com,Legal,Legal Counsel,2026-05-09,Active,2021-02-28
+grace.taylor,Grace Taylor,grace.taylor@example.com,Finance,Finance Analyst,2026-05-14,Active,2022-07-19
+henry.anderson,Henry Anderson,henry.anderson@example.com,IT,DevOps Engineer,2026-05-13,Active,2023-05-01
+iris.thomas,Iris Thomas,iris.thomas@example.com,Operations,Operations Analyst,2026-05-07,Active,2020-04-14
+james.jackson,James Jackson,james.jackson@example.com,Compliance,Compliance Officer,2026-05-16,Active,2018-08-22
+kate.white,Kate White,kate.white@example.com,Finance,Senior Accountant,2026-05-06,Active,2019-03-30
+liam.harris,Liam Harris,liam.harris@example.com,IT,Security Analyst,2026-05-17,Active,2024-01-08
+mia.martin,Mia Martin,mia.martin@example.com,HR,Recruiter,2026-05-05,Active,2022-11-15
+noah.garcia,Noah Garcia,noah.garcia@example.com,Sales,Sales Manager,2026-05-18,Active,2020-06-01
+olivia.davis,Olivia Davis,olivia.davis@example.com,Marketing,Content Strategist,2026-05-04,Active,2021-09-20
+peter.rodriguez,Peter Rodriguez,peter.rodriguez@example.com,Operations,Project Manager,2026-05-03,Active,2019-07-11
+quinn.lewis,Quinn Lewis,quinn.lewis@example.com,Legal,Paralegal,2026-05-02,Active,2023-02-14
+rachel.walker,Rachel Walker,rachel.walker@example.com,Compliance,Risk Analyst,2026-05-01,Active,2020-12-01
+sam.hall,Sam Hall,sam.hall@example.com,Finance,Budget Analyst,2026-04-30,Active,2021-04-05
+tina.allen,Tina Allen,tina.allen@example.com,IT,Network Engineer,2026-04-29,Active,2022-08-18
+bwilliams,Bob Williams,bwilliams@example.com,Finance,Finance User,2025-10-01,Active,2020-03-01
+unknown.contractor,Unknown Contractor,unknown.contractor@example.com,IT,Contractor,2026-04-15,Active,2025-09-01
+extern.vandijk,Extern Van Dijk,extern.vandijk@example.com,Operations,External Consultant,2026-03-20,Active,2025-11-10
+temp.user01,Temp User,temp.user01@example.com,Finance,Finance User,2026-02-10,Active,2026-01-05
+old.vendor,Old Vendor,old.vendor@example.com,IT,Vendor Access,2025-06-01,Active,2019-05-15
+j.departed99,J Departed,j.departed99@example.com,HR,HR Assistant,2024-12-01,Active,2018-02-01
+legacy.account,Legacy Account,legacy@example.com,Legal,Legal Assistant,2025-03-15,Active,2017-10-20
+backup.operator,Backup Operator,backup.operator@example.com,IT,Backup Operator,2026-05-01,Active,2021-01-10
+test.account,Test Account,test.account@example.com,Finance,Test User,2026-01-15,Active,2025-12-01
+ex.employee2024,Ex Employee,ex.employee2024@example.com,Sales,Sales Representative,2025-11-20,Active,2020-08-14
+cformer,Carl Former,cformer@example.com,Operations,Operations User,2026-04-01,Active,2019-09-01
+d.resigned,Dana Resigned,d.resigned@example.com,Sales,Account Executive,2026-04-10,Active,2021-03-15
+e.dismissed,Eric Dismissed,e.dismissed@example.com,Finance,Finance Analyst,2026-03-25,Active,2020-11-01
+f.retired,Fiona Retired,f.retired@example.com,HR,HR Director,2026-02-20,Active,2015-04-01
+g.resigned2,Gary Resigned,g.resigned2@example.com,IT,Junior Developer,2026-04-05,Active,2023-07-01
+asmith,Alice Smith,asmith@example.com,IT,IT Admin,2026-04-22,Active,2021-06-01
+h.mismatch1,Helen Mismatch,h.mismatch1@example.com,Accounting,Finance Analyst,2026-05-03,Active,2022-05-20
+i.mismatch2,Ivan Mismatch,i.mismatch2@example.com,Sales,Account Executive,2026-05-01,Active,2023-01-10
+j.mismatch3,Julia Mismatch,j.mismatch3@example.com,Supply Chain,Logistics Coordinator,2026-04-28,Active,2022-09-05
+k.mismatch4,Karl Mismatch,k.mismatch4@example.com,IT,IT Admin,2026-04-25,Active,2024-02-20
+l.mismatch5,Lisa Mismatch,l.mismatch5@example.com,Communications,Content Manager,2026-05-02,Active,2021-10-30
+m.mismatch6,Mark Mismatch,m.mismatch6@example.com,Compliance,Risk Manager,2026-04-20,Active,2020-07-14
+n.mismatch7,Nina Mismatch,n.mismatch7@example.com,Contracts,Legal Assistant,2026-04-18,Active,2022-03-01
+o.stale1,Oscar Stale,o.stale1@example.com,Finance,Finance Analyst,2025-11-01,Active,2019-06-15
+p.stale2,Paula Stale,p.stale2@example.com,IT,Systems Admin,2025-10-15,Active,2020-02-28
+q.stale3,Quinn Stale,q.stale3@example.com,HR,HR Coordinator,2025-12-01,Active,2018-11-05
+r.stale4,Ryan Stale,r.stale4@example.com,Sales,Sales Representative,2025-09-01,Active,2021-08-20
+s.stale5,Sara Stale,s.stale5@example.com,Operations,Operations User,2026-01-15,Active,2020-05-10
+t.stale6,Tom Stale,t.stale6@example.com,Legal,Legal Advisor,2025-08-15,Active,2019-01-20
+u.stale7,Uma Stale,u.stale7@example.com,Finance,Accounts Payable,2026-02-01,Active,2022-06-30
+v.stale8,Victor Stale,v.stale8@example.com,IT,IT Support,never,Active,2023-04-01
+w.duplicate1,Wendy Duplicate,w.duplicate1@example.com,Finance,Finance Analyst,2026-05-10,Active,2021-07-15
+w.duplicate1,Wendy Duplicate,w.duplicate1b@example.com,Finance,Finance User,2026-05-08,Active,2021-07-15
+x.duplicate2,Xavier Duplicate,x.duplicate2@example.com,IT,IT Admin,2026-05-12,Active,2022-10-01
+x.duplicate2,Xavier Duplicate,x.duplicate2b@example.com,IT,Security Analyst,2026-05-11,Active,2022-10-01
+svc_backup,SVC Backup,,IT,Backup Service,2026-05-01,Active,2018-01-01
+svc_database,SVC Database,,IT,Database Service,2026-05-18,Active,2017-06-15
+service_monitor,Service Monitor,,IT,Monitoring Service,2026-05-15,Active,2019-03-01
+app_reporting,App Reporting,,Finance,Reporting App,2026-05-17,Active,2020-09-10
+svc_email,SVC Email,,IT,Email Service,2026-05-16,Active,2018-07-20
+app_gateway,App Gateway,,IT,API Gateway,2026-05-14,Active,2021-02-05

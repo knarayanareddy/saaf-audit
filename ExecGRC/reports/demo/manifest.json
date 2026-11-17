@@ -1,0 +1,38 @@
+{
+  "artifacts": [
+    {
+      "path": "tactical_report.html",
+      "sha256": "47f94809bb39fbde3ab97861521140a597ee9703a695ef7657286237066cddad",
+      "size_bytes": 19845
+    },
+    {
+      "path": "executive_report.html",
+      "sha256": "e4f225ebcc0b3a8fd2570e803e29f265f0071350cb28fd24b9a4532fdced412d",
+      "size_bytes": 18090
+    },
+    {
+      "path": "analysis_result.json",
+      "sha256": "0d81e17278f192ca4e5bc0f550eb9783ddf63df8416cf1922c76d45f51ea434e",
+      "size_bytes": 12321
+    },
+    {
+      "path": "dashboard.html",
+      "sha256": "b3b5afb3601cd5b89c8c457831060ccbdb15f881c65d4e9c863079fb4aabac85",
+      "size_bytes": 17002
+    },
+    {
+      "path": "audit_trail.ndjson",
+      "sha256": "20f167932c8a7c8a9fbfcc327f8c1f9d80de88d443367d51739a18c3f303c58a",
+      "size_bytes": 10207
+    },
+    {
+      "path": "audit_summary.md",
+      "sha256": "fb41522966348e052ccb505e3664b76896371f1d587fee6ef04192337de210ea",
+      "size_bytes": 1412
+    }
+  ],
+  "created_utc": "2026-05-19T13:31:13+00:00",
+  "final_audit_hash": "26d269fd5d30c22e3ee7ef819b70eb8e3e7d2998b7eb2a111b8de3ce45478200",
+  "note": "Manifest is written last and therefore does not include its own hash.",
+  "run_id": "demo"
+}

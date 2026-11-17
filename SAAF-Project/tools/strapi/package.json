@@ -1,0 +1,28 @@
+{
+  "name": "saaf-strapi-synthetic-data",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local Strapi 4 sandbox with deterministic synthetic audit datasets for SAAF hackathons.",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/plugin-users-permissions": "4.25.12",
+    "@strapi/strapi": "4.25.12",
+    "better-sqlite3": "9.4.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^5.3.4",
+    "styled-components": "^5.3.11"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=8.0.0"
+  },
+  "strapi": {
+    "uuid": "7f0c9f23-7d96-4f5d-bd9e-6bfddc3dcb01"
+  }
+}

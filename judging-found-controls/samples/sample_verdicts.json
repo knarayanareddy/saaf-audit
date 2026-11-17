@@ -1,0 +1,20 @@
+[
+  {
+    "control_id": "POL-ACCESS-001",
+    "found": "yes",
+    "page_no": 4,
+    "paragraph": "The IT Security team is responsible for revoking all system credentials within 24 hours of receiving a formal termination notification from Human Resources."
+  },
+  {
+    "control_id": "POL-ACCESS-002",
+    "found": "no",
+    "page_no": 4,
+    "paragraph": "When an employee leaves the organisation, their access rights should be reviewed and removed in a timely manner in accordance with the organisation's HR processes."
+  },
+  {
+    "control_id": "POL-CRYPTO-001",
+    "found": "no",
+    "page_no": 0,
+    "paragraph": ""
+  }
+]

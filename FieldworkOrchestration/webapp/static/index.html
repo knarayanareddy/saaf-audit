@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <h1>Engagements</h1>
+  <p class="muted">
+    Prototype to validate the concept — no real authentication: the role picker in the
+    header is a dropdown, not a login. See <code>webapp/README.md</code>.
+  </p>
+
+  <h2>Existing engagements</h2>
+  <div id="runs-list" class="card">Loading…</div>
+
+  <h2>New engagement from a UC8 work program (Track 1 → Track 2)</h2>
+  <div class="card">
+    <p class="muted">
+      Upload a <code>work_program.json</code> as produced by UC8 (Audit Work Program
+      Agent) — the PBC list is derived automatically, with traceability back to risks and
+      controls. Can take a couple of minutes.
+    </p>
+    <form id="wp-run-form">
+      <label>Audit scope</label>
+      <input type="text" name="audit_scope" required placeholder="FY2025 financial statement audit">
+      <label>Audit period</label>
+      <input type="text" name="audit_period" required placeholder="Year ended 31 December 2025">
+      <label>Auditee name</label>
+      <input type="text" name="auditee_name" required>
+      <label>Auditee email</label>
+      <input type="email" name="auditee_email" required>
+      <label>Auditee organization</label>
+      <input type="text" name="auditee_org" required>
+      <label>Auditor name</label>
+      <input type="text" name="auditor_name" required placeholder="J. de Vries">
+      <label>Final auditor name</label>
+      <input type="text" name="senior_auditor_name" required placeholder="A. Verhoeven">
+      <label>UC8 work_program.json</label>
+      <input type="file" name="work_program_file" accept="application/json" required>
+      <button type="submit">Derive and draft PBC list</button>
+    </form>
+    <p id="wp-run-status" class="muted"></p>
+  </div>
+
+  <h2>New engagement (typed document list)</h2>
+  <div class="card">
+    <form id="new-run-form">
+      <label>Audit scope</label>
+      <input type="text" name="audit_scope" required placeholder="Annual statutory audit of financial statements">
+      <label>Audit period</label>
+      <input type="text" name="audit_period" required placeholder="Year ended 31 December 2024">
+      <label>Auditee name</label>
+      <input type="text" name="auditee_name" required placeholder="Sarah Johnson">
+      <label>Auditee email</label>
+      <input type="email" name="auditee_email" required placeholder="sarah.johnson@acme-corp.com">
+      <label>Auditee organization</label>
+      <input type="text" name="auditee_org" required placeholder="ACME Corporation Ltd">
+      <label>Auditor name</label>
+      <input type="text" name="auditor_name" required placeholder="J. de Vries">
+      <label>Final auditor name</label>
+      <input type="text" name="senior_auditor_name" required placeholder="A. Verhoeven">
+      <label>Required documents (one per line)</label>
+      <textarea name="required_documents" required placeholder="Signed trial balance&#10;General ledger (full year)&#10;Bank statements for all accounts"></textarea>
+      <button type="submit">Draft PBC list</button>
+    </form>
+    <p id="new-run-status" class="muted"></p>
+  </div>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader("index");
+
+  async function loadRuns() {
+    const el = document.getElementById("runs-list");
+    let runs;
+    try {
+      runs = await api("/api/runs");
+    } catch (err) {
+      el.textContent = "Could not load engagements: " + err.message;
+      return;
+    }
+    if (!runs.length) {
+      el.textContent = "No engagements yet.";
+      return;
+    }
+    el.innerHTML = runs
+      .map(
+        (r) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid var(--border)">
+          <div>
+            <a href="${`dashboard.html?run=${encodeURIComponent(r.run_id)}`}"><b>${escapeHtml(r.audit_scope)}</b></a>
+            — ${escapeHtml((r.auditee_contact && r.auditee_contact.organization) || "")} · ${escapeHtml(r.audit_period)} · ${r.item_count} PBC items
+            <div class="muted">${escapeHtml(r.run_id)}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <a class="btn" href="${`engagement.html?run=${encodeURIComponent(r.run_id)}`}">Details</a>
+            <button type="button" class="danger delete-run" data-run="${escapeHtml(r.run_id)}" data-scope="${escapeHtml(r.audit_scope)}" style="margin-top:0">Delete</button>
+          </div>
+        </div>`
+      )
+      .join("");
+
+    document.querySelectorAll(".delete-run").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const runId = btn.dataset.run;
+        const confirmed = confirm(
+          `Delete "${btn.dataset.scope}" permanently?\n\n` +
+            `This removes the entire engagement — audit trail, uploaded documents, ` +
+            `decisions, everything — and CANNOT BE UNDONE.`
+        );
+        if (!confirmed) return;
+        btn.disabled = true;
+        btn.textContent = "Deleting…";
+        try {
+          await api(`/api/runs/${encodeURIComponent(runId)}`, { method: "DELETE" });
+        } catch (err) {
+          alert("Delete failed: " + err.message);
+          btn.disabled = false;
+          btn.textContent = "Delete";
+          return;
+        }
+        loadRuns();
+      });
+    });
+  }
+  loadRuns();
+
+  document.getElementById("new-run-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const statusEl = document.getElementById("new-run-status");
+    const form = new FormData(e.target);
+    const body = {
+      audit_scope: form.get("audit_scope"),
+      audit_period: form.get("audit_period"),
+      auditee_name: form.get("auditee_name"),
+      auditee_email: form.get("auditee_email"),
+      auditee_org: form.get("auditee_org"),
+      auditor_name: form.get("auditor_name"),
+      senior_auditor_name: form.get("senior_auditor_name"),
+      required_documents: form
+        .get("required_documents")
+        .split("\n")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    };
+    statusEl.textContent = `Drafting the PBC list for ${body.required_documents.length} item(s)… this may take a moment.`;
+    try {
+      const result = await apiPost("/api/runs", body);
+      location.href = `dashboard.html?run=${encodeURIComponent(result.run_id)}`;
+    } catch (err) {
+      statusEl.textContent = "Error: " + err.message;
+    }
+  });
+
+  document.getElementById("wp-run-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const statusEl = document.getElementById("wp-run-status");
+    const fd = new FormData(e.target);
+    statusEl.textContent = "Processing the work program (consolidation + PBC list) — please wait…";
+    try {
+      const res = await fetch("/api/runs/from-work-program", { method: "POST", body: fd });
+      if (!res.ok) throw new Error(await res.text());
+      const result = await res.json();
+      location.href = `dashboard.html?run=${encodeURIComponent(result.run_id)}`;
+    } catch (err) {
+      statusEl.textContent = "Error: " + err.message;
+    }
+  });
+</script>
+</body>
+</html>

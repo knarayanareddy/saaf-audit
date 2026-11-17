@@ -1,0 +1,1894 @@
+{
+ "run_at": "2026-10-22T14:38:33.864490+00:00",
+ "sections": {
+  "retrieval": {
+   "reach": 1.0,
+   "rank": 0.96,
+   "cases": 12,
+   "reached_by_depth": {
+    "early": "1/1",
+    "late": "6/6",
+    "mid": "5/5"
+   },
+   "old_clip_would_have_found": "1/12",
+   "scores": [
+    {
+     "name": "cdd-ubo-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 49% of 16,011 chars read",
+     "value": null
+    },
+    {
+     "name": "cdd-ubo-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "cdd-ubo-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 23.4 vs best decoy 21.3",
+     "value": null
+    },
+    {
+     "name": "cdd-edd-trigger-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 85% of 9,099 chars read",
+     "value": null
+    },
+    {
+     "name": "cdd-edd-trigger-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "cdd-edd-trigger-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 34.0 vs best decoy 25.6",
+     "value": null
+    },
+    {
+     "name": "cdd-rescreen-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 47% of 15,908 chars read",
+     "value": null
+    },
+    {
+     "name": "cdd-rescreen-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "cdd-rescreen-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 10.3 vs best decoy 9.2",
+     "value": null
+    },
+    {
+     "name": "dora-exit-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 48% of 16,013 chars read",
+     "value": null
+    },
+    {
+     "name": "dora-exit-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "dora-exit-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 25.6 vs best decoy 18.5",
+     "value": null
+    },
+    {
+     "name": "dora-incident-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 83% of 9,080 chars read",
+     "value": null
+    },
+    {
+     "name": "dora-incident-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 2 of 13",
+     "value": 2.0
+    },
+    {
+     "name": "dora-incident-mid: beats its near-misses",
+     "passed": false,
+     "detail": "needle 9.5 vs best decoy 10.1",
+     "value": null
+    },
+    {
+     "name": "esg-scenario-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 47% of 15,942 chars read",
+     "value": null
+    },
+    {
+     "name": "esg-scenario-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "esg-scenario-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 33.7 vs best decoy 15.3",
+     "value": null
+    },
+    {
+     "name": "esg-appetite-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 85% of 9,021 chars read",
+     "value": null
+    },
+    {
+     "name": "esg-appetite-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "esg-appetite-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 46.7 vs best decoy 17.1",
+     "value": null
+    },
+    {
+     "name": "model-validation-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 50% of 15,985 chars read",
+     "value": null
+    },
+    {
+     "name": "model-validation-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "model-validation-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 24.4 vs best decoy 15.3",
+     "value": null
+    },
+    {
+     "name": "itsec-access-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 85% of 9,004 chars read",
+     "value": null
+    },
+    {
+     "name": "itsec-access-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "itsec-access-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 23.5 vs best decoy 12.8",
+     "value": null
+    },
+    {
+     "name": "itsec-segregation-early: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=early, 100% of 5,497 chars read",
+     "value": null
+    },
+    {
+     "name": "itsec-segregation-early: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 8",
+     "value": 1.0
+    },
+    {
+     "name": "itsec-segregation-early: beats its near-misses",
+     "passed": true,
+     "detail": "needle 19.5 vs best decoy 15.6",
+     "value": null
+    },
+    {
+     "name": "cass-reconciliation-late: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=late, 47% of 15,917 chars read",
+     "value": null
+    },
+    {
+     "name": "cass-reconciliation-late: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 23",
+     "value": 1.0
+    },
+    {
+     "name": "cass-reconciliation-late: beats its near-misses",
+     "passed": true,
+     "detail": "needle 16.2 vs best decoy 15.5",
+     "value": null
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: the answer reaches the model",
+     "passed": true,
+     "detail": "depth=mid, 60% of 13,207 chars read",
+     "value": null
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: ranks in the top three",
+     "passed": true,
+     "detail": "rank 1 of 13",
+     "value": 1.0
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: beats its near-misses",
+     "passed": true,
+     "detail": "needle 25.9 vs best decoy 12.3",
+     "value": null
+    },
+    {
+     "name": "gdpr-lawfulbasis-mid: picks the right file",
+     "passed": true,
+     "detail": "57% of the budget went to the document holding the answer",
+     "value": 0.5652394223460856
+    }
+   ]
+  },
+  "retrieval_adversarial": {
+   "stuffing": 4,
+   "reached": "12/12",
+   "outranked_decoy": "8/12",
+   "gating": false
+  },
+  "agents": {
+   "by_agent": {
+    "topic_intelligence": {
+     "runs": 12,
+     "passed": 33,
+     "total": 38,
+     "ratio": 0.868421052631579,
+     "refusals": 0,
+     "cost_usd": 0.2093,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence",
+      "sliced"
+     ]
+    },
+    "frameworks": {
+     "runs": 9,
+     "passed": 35,
+     "total": 39,
+     "ratio": 0.8974358974358975,
+     "refusals": 0,
+     "cost_usd": 0.1955,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    "governance": {
+     "runs": 3,
+     "passed": 18,
+     "total": 18,
+     "ratio": 1.0,
+     "refusals": 0,
+     "cost_usd": 0.0332,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    "finding": {
+     "runs": 9,
+     "passed": 25,
+     "total": 27,
+     "ratio": 0.9259259259259259,
+     "refusals": 0,
+     "cost_usd": 0.0833,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "schema-retry"
+     ]
+    },
+    "qa_review": {
+     "runs": 6,
+     "passed": 15,
+     "total": 18,
+     "ratio": 0.8333333333333334,
+     "refusals": 0,
+     "cost_usd": 0.0779,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    "rcsa_mapping": {
+     "runs": 3,
+     "passed": 6,
+     "total": 6,
+     "ratio": 1.0,
+     "refusals": 0,
+     "cost_usd": 0.0806,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "schema-retry+unstringified",
+      "unstringified"
+     ]
+    }
+   },
+   "runs": [
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-ict-dora",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-ict-dora: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: mentions DORA / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: names its sources",
+       "passed": true,
+       "detail": "7 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01857,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-aml-cdd",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-aml-cdd: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions AMLD / Anti-Money Laundering Directive / AMLR / Anti-Money Laundering Regulation",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: names its sources",
+       "passed": true,
+       "detail": "7 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02059,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-aml-cdd",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-aml-cdd: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: mentions AMLD / Anti-Money Laundering Directive / AMLR / Anti-Money Laundering Regulation",
+       "passed": false,
+       "detail": "absent from the summary",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-aml-cdd: names its sources",
+       "passed": true,
+       "detail": "8 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02166,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-aml-cdd",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-aml-cdd: the run completed",
+       "passed": false,
+       "detail": "AgentTruncated: The answer was cut off at 2,000 tokens (2,000 produced). Nothing partial is returned.",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02224,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens2-ict-supervisor",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens2-ict-supervisor: an object with a summary",
+       "passed": false,
+       "detail": "got list without a summary",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01361,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "sliced"
+     ]
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens2-ict-supervisor",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens2-ict-supervisor: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: mentions DNB / De Nederlandsche Bank",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: names its sources",
+       "passed": true,
+       "detail": "6 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01387,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-ict-dora",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-ict-dora: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: mentions DORA / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: names its sources",
+       "passed": true,
+       "detail": "8 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01801,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens1-ict-dora",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens1-ict-dora: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: mentions DORA / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens1-ict-dora: names its sources",
+       "passed": true,
+       "detail": "7 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01769,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens2-ict-supervisor",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens2-ict-supervisor: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: mentions DNB / De Nederlandsche Bank",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens2-ict-supervisor: names its sources",
+       "passed": true,
+       "detail": "6 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01421,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens3-sustainable-finance",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens3-sustainable-finance: an object with a summary",
+       "passed": true,
+       "detail": "summary present",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: mentions greenwashing / green-washing / greenwash",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: stays inside NL+EU",
+       "passed": true,
+       "detail": "no out-of-scope regulator named",
+       "skipped": false
+      },
+      {
+       "name": "lens3-sustainable-finance: names its sources",
+       "passed": true,
+       "detail": "5 source(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01667,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens3-sustainable-finance",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens3-sustainable-finance: an object with a summary",
+       "passed": false,
+       "detail": "got list without a summary",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01667,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "sliced"
+     ]
+    },
+    {
+     "agent": "topic_intelligence",
+     "case": "lens3-sustainable-finance",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "lens3-sustainable-finance: an object with a summary",
+       "passed": false,
+       "detail": "got list without a summary",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.0155,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "sliced"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-aml-cdd",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-aml-cdd: includes Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: includes AMLD / Anti-Money Laundering / AMLR / 2015/849",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: provisions are specific (article numbers)",
+       "passed": true,
+       "detail": "7/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02141,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-aml-cdd",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-aml-cdd: includes Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: includes AMLD / Anti-Money Laundering / AMLR / 2015/849",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: provisions are specific (article numbers)",
+       "passed": true,
+       "detail": "7/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01906,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-aml-cdd",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-aml-cdd: includes Wwft / WWFT",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: includes AMLD / Anti-Money Laundering / AMLR / 2015/849",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-aml-cdd: provisions are specific (article numbers)",
+       "passed": true,
+       "detail": "7/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02113,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-ict",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-ict: includes DORA / 2022/2554 / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: provisions are specific (article numbers)",
+       "passed": false,
+       "detail": "4/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02167,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-ict",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-ict: includes DORA / 2022/2554 / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: provisions are specific (article numbers)",
+       "passed": true,
+       "detail": "7/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02039,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-ict",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-ict: includes DORA / 2022/2554 / Digital Operational Resilience",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-ict: provisions are specific (article numbers)",
+       "passed": false,
+       "detail": "5/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02013,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-sfdr",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-sfdr: includes SFDR / 2019/2088 / Sustainable Finance Disclosure",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: provisions are specific (article numbers)",
+       "passed": false,
+       "detail": "6/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02334,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-sfdr",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-sfdr: includes SFDR / 2019/2088 / Sustainable Finance Disclosure",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: provisions are specific (article numbers)",
+       "passed": true,
+       "detail": "7/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02598,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "governance",
+     "case": "gov-dora-ict",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "gov-dora-ict: at most three requirements, as the prompt asks",
+       "passed": true,
+       "detail": "3 item(s)",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: every 'covered' cites a real passage",
+       "passed": true,
+       "detail": "all supported",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: no invented passage ids",
+       "passed": true,
+       "detail": "none",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'incident' rated covered/partial",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'register' rated partial/gap",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'third' rated partial/gap",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01144,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "governance",
+     "case": "gov-dora-ict",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "gov-dora-ict: at most three requirements, as the prompt asks",
+       "passed": true,
+       "detail": "3 item(s)",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: every 'covered' cites a real passage",
+       "passed": true,
+       "detail": "all supported",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: no invented passage ids",
+       "passed": true,
+       "detail": "none",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'incident' rated covered/partial",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'register' rated partial/gap",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'third' rated partial/gap",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01225,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "governance",
+     "case": "gov-dora-ict",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "gov-dora-ict: at most three requirements, as the prompt asks",
+       "passed": true,
+       "detail": "3 item(s)",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: every 'covered' cites a real passage",
+       "passed": true,
+       "detail": "all supported",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: no invented passage ids",
+       "passed": true,
+       "detail": "none",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'incident' rated covered/partial",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'register' rated partial/gap",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      },
+      {
+       "name": "gov-dora-ict: 'third' rated partial/gap",
+       "passed": true,
+       "detail": "as expected",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00954,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-rescreening",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-rescreening: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-rescreening: rated high",
+       "passed": true,
+       "detail": "rated high",
+       "skipped": false
+      },
+      {
+       "name": "finding-rescreening: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00917,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "frameworks",
+     "case": "fw-sfdr",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "fw-sfdr: includes SFDR / 2019/2088 / Sustainable Finance Disclosure",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: nothing from outside the scope",
+       "passed": true,
+       "detail": "clean",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: every item's jurisdiction is in scope",
+       "passed": true,
+       "detail": "all in scope",
+       "skipped": false
+      },
+      {
+       "name": "fw-sfdr: provisions are specific (article numbers)",
+       "passed": false,
+       "detail": "6/8 name a numbered provision",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.02239,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "finding",
+     "case": "finding-rescreening",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-rescreening: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-rescreening: rated high",
+       "passed": true,
+       "detail": "rated high",
+       "skipped": false
+      },
+      {
+       "name": "finding-rescreening: no numbers the auditor did not give",
+       "passed": false,
+       "detail": "introduces 3 \u2014 in: ['21, representing a gap of approximately 3+ years of exposure to list updates. Cus']",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00868,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-expense-signature",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-expense-signature: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-expense-signature: rated low/medium",
+       "passed": true,
+       "detail": "rated low",
+       "skipped": false
+      },
+      {
+       "name": "finding-expense-signature: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00704,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-expense-signature",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-expense-signature: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-expense-signature: rated low/medium",
+       "passed": true,
+       "detail": "rated low",
+       "skipped": false
+      },
+      {
+       "name": "finding-expense-signature: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00679,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-rescreening",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-rescreening: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-rescreening: rated high",
+       "passed": true,
+       "detail": "rated high",
+       "skipped": false
+      },
+      {
+       "name": "finding-rescreening: no numbers the auditor did not give",
+       "passed": false,
+       "detail": "introduces 3 \u2014 in: [' to ongoing screening for approximately 3+ years. Failure to re-screen customers ']",
+       "skipped": false
+      }
+     ],
+     "calls": 2,
+     "cost_usd": 0.01858,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "schema-retry"
+     ]
+    },
+    {
+     "agent": "finding",
+     "case": "finding-expense-signature",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-expense-signature: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-expense-signature: rated low/medium",
+       "passed": true,
+       "detail": "rated low",
+       "skipped": false
+      },
+      {
+       "name": "finding-expense-signature: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00758,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-sod",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-sod: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-sod: rated medium/high",
+       "passed": true,
+       "detail": "rated high",
+       "skipped": false
+      },
+      {
+       "name": "finding-sod: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00799,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-sod",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-sod: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-sod: rated medium/high",
+       "passed": true,
+       "detail": "rated high",
+       "skipped": false
+      },
+      {
+       "name": "finding-sod: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00938,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "finding",
+     "case": "finding-sod",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "finding-sod: all five C's and a title",
+       "passed": true,
+       "detail": "complete",
+       "skipped": false
+      },
+      {
+       "name": "finding-sod: rated medium/high",
+       "passed": true,
+       "detail": "rated high",
+       "skipped": false
+      },
+      {
+       "name": "finding-sod: no numbers the auditor did not give",
+       "passed": true,
+       "detail": "none invented",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.00806,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": []
+    },
+    {
+     "agent": "qa_review",
+     "case": "qa-planted-defects",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "qa-planted-defects: finds 'Test 1 sample too small for a daily control'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Test 2 concludes 'effective' despite 3 exceptions'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Test 3 concludes before testing'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Tests 2 and 3 lack / Test 2 lacks a stated control'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: does not call a defective artifact good",
+       "passed": true,
+       "detail": "overall: needs_work",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01327,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "qa_review",
+     "case": "qa-planted-defects",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "qa-planted-defects: finds 'Test 1 sample too small for a daily control'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Test 2 concludes 'effective' despite 3 exceptions'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Test 3 concludes before testing'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Tests 2 and 3 lack / Test 2 lacks a stated control'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: does not call a defective artifact good",
+       "passed": true,
+       "detail": "overall: needs_work",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01195,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "qa_review",
+     "case": "qa-planted-defects",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "qa-planted-defects: finds 'Test 1 sample too small for a daily control'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Test 2 concludes 'effective' despite 3 exceptions'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Test 3 concludes before testing'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: finds 'Tests 2 and 3 lack / Test 2 lacks a stated control'",
+       "passed": true,
+       "detail": "found",
+       "skipped": false
+      },
+      {
+       "name": "qa-planted-defects: does not call a defective artifact good",
+       "passed": true,
+       "detail": "overall: needs_work",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01376,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "qa_review",
+     "case": "qa-clean",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "qa-clean: no false alarms on a clean artifact",
+       "passed": false,
+       "detail": "4 must-fix comment(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01247,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "qa_review",
+     "case": "qa-clean",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "qa-clean: no false alarms on a clean artifact",
+       "passed": false,
+       "detail": "5 must-fix comment(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01275,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "qa_review",
+     "case": "qa-clean",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "qa-clean: no false alarms on a clean artifact",
+       "passed": false,
+       "detail": "5 must-fix comment(s)",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.0137,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "fence"
+     ]
+    },
+    {
+     "agent": "rcsa_mapping",
+     "case": "rcsa-photo-shape",
+     "attempt": 1,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "rcsa-photo-shape: one proposal per column",
+       "passed": true,
+       "detail": "23 for 23 columns",
+       "skipped": false
+      },
+      {
+       "name": "rcsa-photo-shape: columns mapped to the right field",
+       "passed": true,
+       "detail": "18/20; wrong: ['Undesirable event\u2192None', 'Resulting in\u2192None']",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01955,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "rcsa_mapping",
+     "case": "rcsa-photo-shape",
+     "attempt": 2,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "rcsa-photo-shape: one proposal per column",
+       "passed": true,
+       "detail": "23 for 23 columns",
+       "skipped": false
+      },
+      {
+       "name": "rcsa-photo-shape: columns mapped to the right field",
+       "passed": true,
+       "detail": "19/20; wrong: ['Undesirable event\u2192None']",
+       "skipped": false
+      }
+     ],
+     "calls": 1,
+     "cost_usd": 0.01835,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified"
+     ]
+    },
+    {
+     "agent": "rcsa_mapping",
+     "case": "rcsa-photo-shape",
+     "attempt": 3,
+     "refused": [],
+     "needs_review": true,
+     "scores": [
+      {
+       "name": "rcsa-photo-shape: one proposal per column",
+       "passed": true,
+       "detail": "23 for 23 columns",
+       "skipped": false
+      },
+      {
+       "name": "rcsa-photo-shape: columns mapped to the right field",
+       "passed": true,
+       "detail": "18/20; wrong: ['Undesirable event\u2192None', 'Resulting in\u2192None']",
+       "skipped": false
+      }
+     ],
+     "calls": 2,
+     "cost_usd": 0.04269,
+     "models": [
+      "claude-sonnet-5"
+     ],
+     "repairs": [
+      "unstringified",
+      "schema-retry+unstringified"
+     ]
+    }
+   ],
+   "spent_usd": 0.6798,
+   "cap_usd": 8.0,
+   "not_started": 0
+  }
+ }
+}

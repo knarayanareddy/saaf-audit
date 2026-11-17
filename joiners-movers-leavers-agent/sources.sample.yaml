@@ -1,0 +1,26 @@
+# Sources for the joiners-movers-leavers agent.
+# Paths are relative to this file. Copy it (for example to sources.yaml) and point
+# the paths at your own exports to run the agent on other data.
+name: "Harbourline Services (fictional), Q3 2026 JML review"
+
+hr: sample_data/hr_employees.csv            # HR master data with start, transfer and termination dates
+
+directory:                                  # identity directory accounts (used by the Track 2 baseline engine)
+  label: Active Directory accounts
+  accounts: sample_data/ad_accounts.csv
+
+systems:                                    # entitlement exports, one per system
+  - name: AD
+    label: Active Directory groups
+    type: directory                         # directory | application
+    entitlements: sample_data/ad_group_memberships.csv
+  - name: ERP
+    label: ERP roles
+    type: application
+    entitlements: sample_data/erp_user_roles.csv
+
+tickets:                                    # Jira export of access requests and removals
+  label: Jira access requests
+  file: sample_data/jira_access_requests.csv
+
+policy: sample_data/access_policy.json      # audit period, SLAs, role model, SoD rules, privileged roles

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAAF Hackathon #3 — Intro Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Slide container */
+.deck { width: 100vw; height: 100vh; }
+.slide { display: none; width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+.slide.active { display: flex; }
+
+/* Navigation */
+.nav { position: fixed; bottom: 24px; right: 32px; display: flex; gap: 10px; z-index: 100; }
+.nav button { width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer; font-size: 18px; background: rgba(255,255,255,0.15); color: #fff; backdrop-filter: blur(4px); transition: background 0.2s; }
+.nav button:hover { background: rgba(255,255,255,0.3); }
+.slide-count { position: fixed; bottom: 32px; left: 32px; font-size: 13px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif; z-index: 100; }
+
+/* Shared layout */
+.center { flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px; }
+.split { flex-direction: row; align-items: stretch; }
+.left-col { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 80px 60px 80px 80px; }
+.right-col { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 80px 80px 80px 60px; }
+
+/* Typography */
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; opacity: 0.7; }
+h1 { font-size: 72px; font-weight: 900; line-height: 1; margin-bottom: 24px; }
+h2 { font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+h3 { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+.subtitle { font-size: 22px; font-weight: 400; line-height: 1.5; opacity: 0.75; }
+.gradient-text { background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.gradient-text-warm { background: linear-gradient(135deg, #fb923c, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* Backgrounds */
+.bg-dark { background: #020617; color: #E2E8F0; }
+.bg-hero { background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%); color: #E2E8F0; }
+.bg-indigo { background: linear-gradient(135deg, #1E1B4B, #312E81); color: #E2E8F0; }
+.bg-white { background: #fff; color: #0F172A; }
+.bg-slate { background: #F1F5F9; color: #0F172A; }
+
+/* Decorative orbs */
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+.orb-1 { width: 500px; height: 500px; background: rgba(129,140,248,0.2); top: -150px; right: -100px; }
+.orb-2 { width: 400px; height: 400px; background: rgba(192,132,252,0.15); bottom: -100px; left: -100px; }
+.orb-3 { width: 300px; height: 300px; background: rgba(251,146,60,0.15); top: 50%; right: 10%; }
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 16px; }
+.stat-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 32px 24px; text-align: center; backdrop-filter: blur(4px); }
+.stat-num { font-size: 64px; font-weight: 900; line-height: 1; margin-bottom: 8px; }
+.stat-label { font-size: 15px; color: rgba(255,255,255,0.6); font-weight: 500; }
+
+/* Source grid */
+.source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+.source-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; display: flex; align-items: flex-start; gap: 16px; }
+.source-icon { font-size: 32px; }
+.source-info { flex: 1; }
+.source-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.source-detail { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+/* People */
+.people-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1100px; }
+.person-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px 16px; text-align: center; }
+.person-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.person-detail { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+/* Track cards */
+.track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; max-width: 1000px; }
+.track-card { border-radius: 16px; padding: 24px 20px; }
+.track-card-0 { background: rgba(251,146,60,0.15); border: 1px solid rgba(251,146,60,0.3); }
+.track-card-1 { background: rgba(129,140,248,0.15); border: 1px solid rgba(129,140,248,0.3); }
+.track-card-2 { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); }
+.track-card-3 { background: rgba(192,132,252,0.15); border: 1px solid rgba(192,132,252,0.3); }
+.track-card-4 { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); }
+.track-card-5 { background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); }
+.track-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+.track-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+.track-desc { font-size: 12px; opacity: 0.65; line-height: 1.5; }
+
+/* Step list */
+.step-list { list-style: none; text-align: left; width: 100%; max-width: 700px; }
+.step-list li { display: flex; align-items: flex-start; gap: 20px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.step-list li:last-child { border-bottom: none; }
+.step-num { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #818cf8, #c084fc); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+.step-text { flex: 1; }
+.step-text strong { display: block; font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+.step-text span { font-size: 14px; color: rgba(255,255,255,0.55); }
+
+/* Logo */
+.logo-img { height: 52px; width: auto; margin-bottom: 40px; }
+.logo-img-sm { height: 36px; width: auto; margin-bottom: 20px; }
+
+/* PDCA bar */
+.pdca-bar { display: flex; gap: 4px; border-radius: 16px; overflow: hidden; margin-top: 24px; height: 56px; }
+.pdca-seg { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; gap: 2px; }
+.pdca-p { background: #4F46E5; }
+.pdca-d { background: #7C3AED; }
+.pdca-c { background: rgba(124,58,237,0.4); font-size: 14px; color: rgba(255,255,255,0.5); }
+.pdca-a { background: rgba(99,102,241,0.25); font-size: 14px; color: rgba(255,255,255,0.4); }
+.pdca-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-align: center; margin-top: 8px; color: rgba(255,255,255,0.5); }
+
+/* Divider line */
+.divider { width: 60px; height: 3px; border-radius: 2px; background: linear-gradient(135deg, #818cf8, #c084fc); margin: 20px 0; }
+.divider-center { margin: 20px auto; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide bg-hero center active">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <img src="./saaf-logo-white.png" alt="SAAF Project" class="logo-img">
+    <div class="eyebrow" style="color:#818cf8">April 21, 2026 &nbsp;·&nbsp; Wolters Kluwer, Alphen aan den Rijn</div>
+    <h1 style="font-size:80px">Hackathon <span class="gradient-text">#3</span></h1>
+    <p class="subtitle" style="max-width:600px;margin:0 auto">Building AI audit agents together —<br>65+ organizations, one shared framework.</p>
+    <div style="margin-top:48px;display:flex;gap:32px;font-size:14px;color:rgba(255,255,255,0.4)">
+      <span>Eduward van de Kamp</span>
+      <span style="opacity:0.3">·</span>
+      <span>Mathijs Schouten</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: HOW WE GOT HERE -->
+  <div class="slide bg-dark center">
+    <div class="orb orb-1" style="background:rgba(129,140,248,0.12)"></div>
+    <div class="eyebrow" style="color:#818cf8">The journey</div>
+    <h2>How we got to <span class="gradient-text">60 plans</span></h2>
+    <div class="divider divider-center"></div>
+    <ul class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Participants submitted plans via GitHub</strong>
+          <span>Using a shared 12-section template covering Prompts, Tools, Regulatory, and Outputs</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Sessions were recorded &amp; transcribed</strong>
+          <span>92 videos processed with Whisper AI — surfacing ideas never formally written down</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>WhatsApp chats &amp; external sources scraped</strong>
+          <span>AI Innovators Hub discussions, GitHub repos, news feeds, and presentations analyzed</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>Mathijs synthesized it all into a structured portfolio</strong>
+          <span>Gap analysis, quality scoring, workstream decomposition, and today's hackathon program</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SLIDE 3: THE NUMBERS -->
+  <div class="slide bg-indigo center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="eyebrow" style="color:#c084fc">By the numbers</div>
+    <h2>A lot went into <span class="gradient-text">getting here</span></h2>
+    <div class="stat-grid" style="margin-top:40px;max-width:900px">
+      <div class="stat-card">
+        <div class="stat-num gradient-text">60</div>
+        <div class="stat-label">Plans in the portfolio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num gradient-text">92</div>
+        <div class="stat-label">TikTok videos transcribed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num gradient-text">53</div>
+        <div class="stat-label">Audit domains mapped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="background:linear-gradient(135deg,#fb923c,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">32</div>
+        <div class="stat-label">People whose work is in the portfolio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">6</div>
+        <div class="stat-label">Build tracks today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">10</div>
+        <div class="stat-label">Tables in this room</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: EXTERNAL SOURCES -->
+  <div class="slide bg-dark center">
+    <div class="orb orb-2" style="background:rgba(192,132,252,0.1)"></div>
+    <div class="eyebrow" style="color:#818cf8">Data pipeline</div>
+    <h2>External sources <span class="gradient-text">processed</span></h2>
+    <div class="divider divider-center"></div>
+    <div class="source-grid" style="max-width:900px">
+      <div class="source-item">
+        <div class="source-icon">🎥</div>
+        <div class="source-info">
+          <div class="source-title">92 TikTok videos</div>
+          <div class="source-detail">Transcribed with OpenAI Whisper — surfacing 14 new plan ideas that were only ever spoken, never written</div>
+        </div>
+      </div>
+      <div class="source-item">
+        <div class="source-icon">📊</div>
+        <div class="source-info">
+          <div class="source-title">8 slide decks</div>
+          <div class="source-detail">Presentations from all sessions extracted via XML parsing and Claude Vision for diagrams and screenshots</div>
+        </div>
+      </div>
+      <div class="source-item">
+        <div class="source-icon">💬</div>
+        <div class="source-info">
+          <div class="source-title">WhatsApp group chats</div>
+          <div class="source-detail">AI Innovators Hub and peer discussions analyzed — yielding 7 new plans including the OWASP AI Testing Agent and EU AI Act Monitor</div>
+        </div>
+      </div>
+      <div class="source-item">
+        <div class="source-icon">🌐</div>
+        <div class="source-info">
+          <div class="source-title">GitHub repos, feeds &amp; news</div>
+          <div class="source-detail">10+ org repos scraped, 30 intelligence feeds curated, regulatory corpus built from DORA · GDPR · ISO 27001 · EU AI Act · NIS2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: APPLAUSE FOR CONTRIBUTORS -->
+  <div class="slide bg-hero center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="eyebrow" style="color:#fbbf24">👏 Deserves a round of applause</div>
+    <h2 style="font-size:52px;margin-bottom:28px">Everyone who <span class="gradient-text">interacted with the repo</span></h2>
+
+    <div style="width:min(960px,100%);display:flex;flex-direction:column;gap:16px">
+
+      <!-- Direct GitHub PR contributors -->
+      <div style="background:rgba(129,140,248,0.08);border:1px solid rgba(129,140,248,0.25);border-radius:20px;padding:18px 24px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#818cf8;text-transform:uppercase;margin-bottom:12px">⬆ Submitted directly via GitHub Pull Request</div>
+        <div style="display:flex;gap:12px;justify-content:center">
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 28px;text-align:center;flex:1">
+            <div style="font-size:15px;font-weight:700;color:#e2e8f0">Inge Garretsen</div>
+            <div style="font-size:12px;color:#818cf8;margin-top:4px">Audit Work Program · PR #2</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 28px;text-align:center;flex:1">
+            <div style="font-size:15px;font-weight:700;color:#e2e8f0">Floris Stokkers</div>
+            <div style="font-size:12px;color:#818cf8;margin-top:4px">Work Program Agent · PR #3</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 28px;text-align:center;flex:1">
+            <div style="font-size:15px;font-weight:700;color:#e2e8f0">immistyle</div>
+            <div style="font-size:12px;color:#818cf8;margin-top:4px">CUEC Crosscheck · PR #4</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Uploaded on behalf of -->
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:10px">Uploaded by Mathijs on behalf of</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">Frank van Dissel &amp; Lauren Browne</div>
+            <div class="person-detail" style="font-size:11px">9 plans · UC1–UC9</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">Ellert van der Vecht</div>
+            <div class="person-detail" style="font-size:11px">OWASP LLM + multi-model</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">The Control Freaks</div>
+            <div class="person-detail" style="font-size:11px">Ilona · Imane · Peter · Guus · Bart · Joey</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">Diyve Garg + team</div>
+            <div class="person-detail" style="font-size:11px">Juriën · Karim · Mourad</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">robeminem94</div>
+            <div class="person-detail" style="font-size:11px">GDPR AI Audit + Vendor Guard</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">JohannesIV</div>
+            <div class="person-detail" style="font-size:11px">Policy-to-Controls</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">Rohan Sobha</div>
+            <div class="person-detail" style="font-size:11px">Compliance Report Generator</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">Linda Nyvelius</div>
+            <div class="person-detail" style="font-size:11px">TeamMate+ Knowledge Reuse</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px">
+            <div class="person-name" style="font-size:13px">Yellowraptor</div>
+            <div class="person-detail" style="font-size:11px">Regulatory Monitoring</div>
+          </div>
+          <div class="person-card" style="padding:12px 10px;background:rgba(255,255,255,0.03)">
+            <div class="person-name" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6">RCM Rangers · KOEKENPAN · TheMonteCristo · Francois · Julian &amp; more</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 6: WHAT WE BUILT -->
+  <div class="slide bg-dark center">
+    <div class="orb orb-1" style="background:rgba(74,222,128,0.08)"></div>
+    <div class="eyebrow" style="color:#818cf8">Portfolio</div>
+    <h2>60 plans across <span class="gradient-text">6 tracks</span></h2>
+    <div class="divider divider-center"></div>
+    <div class="track-grid">
+      <div class="track-card track-card-0">
+        <div class="track-num" style="color:#fb923c">Track 0</div>
+        <div class="track-title">Shared Infrastructure</div>
+        <div class="track-desc">Strapi · RAG KB · Jira/Confluence MCP · Loop SDK — built once, used by all</div>
+      </div>
+      <div class="track-card track-card-1">
+        <div class="track-num" style="color:#818cf8">Track 1</div>
+        <div class="track-title">GIAS Audit Pipeline</div>
+        <div class="track-desc">UC1–UC9 end-to-end: context brief → RCM → work program</div>
+      </div>
+      <div class="track-card track-card-2">
+        <div class="track-num" style="color:#4ade80">Track 2</div>
+        <div class="track-title">Evidence Extraction</div>
+        <div class="track-desc">PDF · OCR · CLI wrappers · access review · M365 fieldwork</div>
+      </div>
+      <div class="track-card track-card-3">
+        <div class="track-num" style="color:#c084fc">Track 3</div>
+        <div class="track-title">Compliance Assessment</div>
+        <div class="track-desc">GDPR · EU AI Act · ICFCOP · Vendor Guard · regulatory corpus</div>
+      </div>
+      <div class="track-card track-card-4">
+        <div class="track-num" style="color:#fbbf24">Track 4</div>
+        <div class="track-title">Reporting &amp; Visualization</div>
+        <div class="track-desc">Audit reports · HTML visuals · Power BI MCP · 3-way match</div>
+      </div>
+      <div class="track-card track-card-5">
+        <div class="track-num" style="color:#f87171">Track 5</div>
+        <div class="track-title">AI Governance &amp; Quality</div>
+        <div class="track-desc">OWASP · hallucination detection · explainability · multi-model validation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: PDCA -->
+  <div class="slide bg-indigo center">
+    <div class="orb orb-1"></div>
+    <div class="eyebrow" style="color:#c084fc">The model</div>
+    <h2>PDCA — <span class="gradient-text">where we are</span></h2>
+    <div class="divider divider-center"></div>
+    <div style="max-width:720px;width:100%">
+      <div class="pdca-bar">
+        <div class="pdca-seg pdca-p">Plan ✅</div>
+        <div class="pdca-seg pdca-d">Do ← today</div>
+        <div class="pdca-seg pdca-c"><span>Check</span><small>at your org</small></div>
+        <div class="pdca-seg pdca-a"><span>Act</span><small>next session</small></div>
+      </div>
+      <div style="display:flex;gap:0;margin-top:2px">
+        <div class="pdca-label" style="flex:1">60 plans ready</div>
+        <div class="pdca-label" style="flex:1">Build today</div>
+        <div class="pdca-label" style="flex:1">Test at work</div>
+        <div class="pdca-label" style="flex:1">Share learnings</div>
+      </div>
+      <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:left">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px">
+          <div style="font-size:15px;font-weight:700;color:#4ade80;margin-bottom:8px">Today (Plan + Do)</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">Pick a track · Join your table · Build a working prototype · Demo at 16:00</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px">
+          <div style="font-size:15px;font-weight:700;color:#94a3b8;margin-bottom:8px">Between sessions (Check + Act)</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">Test your prototype at your org · Collect findings · Share results at Hackathon #4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: CALL TO ACTION -->
+  <div class="slide bg-hero center">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <img src="./saaf-logo-white.png" alt="SAAF Project" class="logo-img">
+    <div class="eyebrow" style="color:#4ade80">Let's build</div>
+    <h1 style="font-size:88px">Think Big.<br><span class="gradient-text">Start Small.</span><br>Move Fast.</h1>
+    <div style="margin-top:40px;font-size:18px;color:rgba(255,255,255,0.55);line-height:1.8">
+      Pull the repo &nbsp;·&nbsp; <code style="background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:6px;color:#818cf8">cd website &amp;&amp; python3 -m http.server 8080</code> &nbsp;·&nbsp; Open <strong style="color:#818cf8">localhost:8080</strong> &nbsp;·&nbsp; Register &nbsp;·&nbsp; Build
+    </div>
+    <div style="margin-top:48px;padding:20px 36px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;font-size:14px;color:rgba(255,255,255,0.5)">
+      Tables close at <strong style="color:#fbbf24">6 seats</strong> &nbsp;·&nbsp; Fill in your second choice &nbsp;·&nbsp; Demos at <strong style="color:#fbbf24">16:00</strong>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="slide-count" id="slide-count">1 / 8</div>
+<div class="nav">
+  <button onclick="prevSlide()">&#8592;</button>
+  <button onclick="nextSlide()">&#8594;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+function show(n) {
+  slides[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  document.getElementById('slide-count').textContent = `${current + 1} / ${slides.length}`;
+}
+
+function nextSlide() { show(current + 1); }
+function prevSlide() { show(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+// Click anywhere on slide to advance
+document.querySelectorAll('.slide').forEach(s => {
+  s.addEventListener('click', e => {
+    if (!e.target.closest('button')) nextSlide();
+  });
+});
+</script>
+</body>
+</html>

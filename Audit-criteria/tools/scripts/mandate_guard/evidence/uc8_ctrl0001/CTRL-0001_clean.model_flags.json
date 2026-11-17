@@ -1,0 +1,10 @@
+[
+  "The control description appears incomplete or garbled ('...close activities for Ensure revenue is recognized accurately and in the correct period'). It mixes a general JE posting risk with a revenue recognition objective. Confirm the exact control wording and scope with the control owner before fieldwork.",
+  "Scope mismatch: the risk covers all unauthorized or unsupported journal entries, but the control covers only 'high-risk' entries with a revenue focus. Coverage of non-high-risk and non-revenue entries depends on other controls not in this RCM entry. Assess residual coverage.",
+  "The definition and thresholds for 'high-risk' journal entries and close activities are not provided in the RCM. Obtain them during the test of design; the CAAT high-risk tagging depends on them.",
+  "The source system (ERP or GL and workflow tool) is not specified in the RCM. Confirm the system and data extraction approach before the CAAT is run.",
+  "The 'Reliable' IT dependency rating and 'Strong' design rating are management or RCM assertions. Reliance requires corroborating ITGC evidence (access, change management) for the full period of Jan-Dec 2025.",
+  "Wording inconsistency: the control description refers to a 'Supervisor', while the control owner is the 'Financial Reporting Manager'. Confirm who performs the approval and any delegation arrangements.",
+  "Year-end entries for period 12 may be posted in Jan 2026. Make sure the extraction covers post-period postings that relate to fiscal 2025.",
+  "Resource check: assigned hours are within each auditor's availability (Priya Nair 14/16, Jan Bakker 8/40, Lars Jensen 6/20, Sara Li 12/24, Mehmet Yilmaz 10/32). Mehmet Yilmaz's work should be reviewed by a Senior Auditor."
+]

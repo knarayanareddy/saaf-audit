@@ -1,0 +1,34 @@
+# Customs: inspects each pull request before it is merged.
+#
+# This version runs the copy of Customs kept in this repository (customs/).
+# Other SAAF repositories should use the reusable workflow instead, so that
+# the checker comes from a tagged release and not from the pull request.
+# See README.md, "Add Customs to a SAAF repository".
+
+name: Customs
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  customs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the contribution
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inspect the contribution
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: python customs/customs.py --changed-since "origin/$BASE_REF"

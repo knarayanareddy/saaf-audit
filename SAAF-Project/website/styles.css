@@ -1,0 +1,127 @@
+/* ============================================================
+   SAAF Hackathon — Shared Design System
+   Loaded by index.html, facilitator.html, leaderboard.html
+   ============================================================ */
+
+/* ---------- Variables ---------- */
+:root {
+  --bg: #020617;
+  --surface: #0F172A;
+  --surface2: #1E1B4B;
+  --border: #1E293B;
+  --text: #E2E8F0;
+  --muted: #94A3B8;
+  --accent: #818CF8;
+  --accent-hover: #6366F1;
+  --green: #4ADE80;
+  --yellow: #FBBF24;
+  --red: #F87171;
+  --purple: #C084FC;
+  --orange: #FB923C;
+  --indigo-600: #4F46E5;
+  --indigo-700: #4338CA;
+}
+
+/* ---------- Reset & Base ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Utilities ---------- */
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.gradient-text {
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 56px;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border-bottom: 1px solid var(--border);
+}
+.topbar-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: var(--text); flex-shrink: 0;
+}
+.topbar-brand:hover { text-decoration: none; }
+.topbar-logo { height: 44px; width: auto; }
+.topbar-title {
+  font-size: 18px; font-weight: 800;
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.topbar-subtitle { font-size: 11px; color: var(--muted); font-weight: 400; }
+
+/* ---------- Navigation ---------- */
+.topbar-nav {
+  display: flex; align-items: center; gap: 4px; margin: 0 auto;
+}
+.topbar-nav a {
+  font-size: 13px; font-weight: 500; color: var(--muted);
+  padding: 6px 14px; border-radius: 8px;
+  text-decoration: none; transition: all 0.15s;
+  border-bottom: 2px solid transparent;
+}
+.topbar-nav a:hover {
+  color: var(--text); background: rgba(255,255,255,0.05);
+  text-decoration: none;
+}
+.topbar-nav a.active {
+  color: var(--accent); border-bottom-color: var(--accent);
+  background: rgba(129,140,248,0.08);
+}
+
+/* ---------- Topbar Right ---------- */
+.topbar-right {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.topbar-right a {
+  font-size: 12px; color: var(--muted); text-decoration: none;
+}
+.topbar-right a:hover { color: var(--text); text-decoration: none; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block; padding: 8px 20px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+  color: var(--text); cursor: pointer; font-size: 13px; font-weight: 500;
+  transition: all 0.2s; font-family: inherit; text-decoration: none;
+}
+.btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); text-decoration: none; }
+.btn-primary { background: var(--indigo-600); color: #fff; border-color: var(--indigo-600); box-shadow: 0 4px 14px rgba(79,70,229,0.35); }
+.btn-primary:hover { background: var(--indigo-700); text-decoration: none; }
+.btn-green { background: #16A34A; color: #fff; border-color: #16A34A; box-shadow: 0 4px 14px rgba(22,163,74,0.3); }
+.btn-lg { padding: 12px 28px; font-size: 15px; }
+
+/* ---------- Forms ---------- */
+select, input[type="text"], input[type="password"], textarea {
+  padding: 8px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: 13px; font-family: inherit;
+}
+select:focus, input:focus, textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(129,140,248,0.15);
+}
+
+/* ---------- Role Badges ---------- */
+.pill-A { background: rgba(129,140,248,0.2); color: var(--accent); }
+.pill-V { background: rgba(192,132,252,0.2); color: var(--purple); }
+.pill-N { background: rgba(74,222,128,0.15); color: var(--green); }
+.pill-E { background: rgba(251,146,60,0.2); color: var(--orange); }
+
+/* ---------- Toast ---------- */
+.copied-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #16A34A; color: #fff; padding: 12px 24px; border-radius: 12px;
+  font-weight: 600; display: none; z-index: 100;
+  box-shadow: 0 4px 20px rgba(22,163,74,0.4);
+}

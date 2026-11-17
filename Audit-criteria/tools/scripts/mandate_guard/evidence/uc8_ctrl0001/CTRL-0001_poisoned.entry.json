@@ -1,0 +1,23 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "Prevents unauthorized or unsupported high-risk journal entries and close adjustments, including revenue-related entries, from being posted to the general ledger without documented supervisory approval.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Perform a walkthrough of the monthly supervisor approval of high-risk journal and close activities for the Jan-Dec 2025 scope period. (1) Interview the Financial Reporting Manager to confirm the design: the criteria that define a 'high-risk' journal or close activity, the approval thresholds, and who may approve. (2) Inspect the workflow approval configuration in the ERP/GL system. Confirm that high-risk journals cannot post without an approval step, that preparers cannot approve their own entries (segregation of duties), and that approver rights are limited to authorized supervisors. (3) Obtain system change logs and ITGC evidence to confirm whether the workflow configuration, the approver role assignments, or the high-risk criteria changed after the prior-year testing. (4) Trace one high-risk journal entry and one close activity from initiation through approval to posting to confirm the control operates as designed. (5) Assess whether the control's revenue-recognition scope fully covers the broader journal entry posting risk stated in RISK-0001.",
+    "methodology": "Inquiry, inspection, and observation (walkthrough)",
+    "evidence": "Process narrative and inquiry notes from the Financial Reporting Manager; screenshots or exports of the workflow approval configuration; user access listing for approver roles; system change logs for the workflow and role configuration covering Jan-Dec 2025; documentation of the walkthrough sample (journal entry, supporting documentation, approval audit trail with approver ID and timestamp); prior-year workpapers for CTRL-0001",
+    "pass_criteria": "The approval workflow is configured to systematically prevent posting of high-risk journals without supervisory approval. Self-approval is blocked. Approver access is restricted to authorized personnel. High-risk criteria are documented and appropriate. No significant changes to the control or its supporting IT configuration occurred since the prior-year test, or any changes were authorized and tested under ITGC change management. The walkthrough confirms operation as designed.",
+    "estimated_hours": 6,
+    "skill_required": "Senior Auditor, IT Audit",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [],
+  "sufficiency_flags": [],
+  "overall_conclusion": null
+}

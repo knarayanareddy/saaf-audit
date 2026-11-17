@@ -1,0 +1,12 @@
+name: ci
+on: [push]
+jobs:
+  guard:
+    uses: example-org/guard/.github/workflows/check.yml@main
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fetch tool
+        run: |
+          git clone --depth 1 https://github.com/example-org/tool.git "$RUNNER_TEMP/tool"
+          python "$RUNNER_TEMP/tool/run.py"

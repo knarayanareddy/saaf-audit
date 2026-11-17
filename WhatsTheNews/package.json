@@ -1,0 +1,10 @@
+{
+  "name": "saaf-rss-weekly-briefing",
+  "version": "1.0.0",
+  "description": "Dependency-free Node app that summarizes DNB, AFM and FD news from the last week in HTML.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

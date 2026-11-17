@@ -1,0 +1,183 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+SAAF Portal — participant portal for the SAAF Project (Shared Audit Agents Framework). Members of the SAAF-Project GitHub organization log in via GitHub OAuth to view their profile, leaderboard, tracks, repos, achievements, and onboarding. Non-members can request access via a signup form; requests are processed by the admin locally via CLI.
+
+Deployed on Vercel at https://saaf-portal.vercel.app/. The portal button lives on saafproject.com (separate `SAAF-Project/website` repo).
+
+**This is the only source of truth.** The old `SAAF-Project/SAAF-Project/public-harness-website/` directory has been removed from tracking — it is gitignored in the SAAF-Project repo.
+
+## Commands
+
+```bash
+npm run dev          # Start dev server (localhost:3000)
+npm run build        # prisma generate + next build
+npm run lint         # ESLint
+npm test             # vitest: the progress visual's geometry, stage, filter and tag tests (src/components/temple/)
+npx prisma generate  # Regenerate Prisma client after schema changes
+npx prisma db push   # Push schema (uses prisma.config.ts → PROD_DATABASE_URL or DATABASE_URL)
+
+# Scripts — run from project root. All scripts support --prod flag for production DB.
+npx tsx scripts/import-registrations.ts --prod   # Import GitHub issues with label "register" → User table
+npx tsx scripts/process-signups.ts --prod        # Interactively approve signup requests + send org invites via gh CLI
+npx tsx scripts/backup-db.ts --prod              # Dump all tables to backups/saaf-portal_prod_<ts>.json (gitignored)
+npx tsx scripts/fix-logo-matches.ts --prod       # Re-run logo matching against all users with current logic
+npx tsx scripts/insert-placeholders.ts           # Insert placeholder users via raw SQL (negative githubId)
+npx tsx scripts/add-column.ts                    # Add a column via raw SQL (bypass Prisma cache)
+npx tsx scripts/check-db.ts                      # Quick DB health check
+```
+
+## Architecture
+
+**Stack:** Next.js 16 (App Router) · NextAuth.js 4 (GitHub OAuth) · Prisma 7 (`@prisma/adapter-pg`) · Vercel Postgres (Neon) · Tailwind v4 · react-markdown
+
+### Prisma 7 quirks (important!)
+
+- Generator is `prisma-client` (not `prisma-client-js`) with output `../src/generated/prisma`
+- Connection URL lives in `prisma.config.ts`, **not** in `schema.prisma`
+- `PrismaClient` requires an adapter: `new PrismaClient({ adapter: new PrismaPg({ connectionString }) })`
+- Client is lazy-loaded via `getPrisma()` in `src/lib/prisma.ts` — the build must succeed without `DATABASE_URL`
+- Import from `@/generated/prisma/client`, **not** from `@prisma/client`
+- When `prisma db push` claims "already in sync" but a column is missing: it's the Prisma client cache. Use `scripts/add-column.ts` with raw SQL as a fallback.
+- Scripts use native `pg` Client (not Prisma) for things that bypass Prisma's schema cache.
+
+### Tailwind v4
+
+Uses CSS-based config with `@theme inline` in `globals.css` — no `tailwind.config.ts`. SAAF color tokens are defined as `--color-*` CSS variables:
+- `bg`, `surface`, `surface2`, `border`, `text`, `muted`
+- `accent`, `accent-hover`, `indigo-600`, `indigo-700`
+- `saaf-green`, `saaf-yellow`, `saaf-red`, `saaf-purple`, `saaf-orange`
+
+### Auth flow
+
+1. GitHub OAuth via NextAuth → `signIn` callback checks org membership using server-side `GITHUB_PAT`
+2. Non-members get redirected to `/login?error=not-member&username=...` → signup form
+3. Signup requests stored in `SignupRequest` table → admin processes via CLI script (no `admin:org` PAT in prod for safety)
+4. Middleware (`src/middleware.ts`) protects all `/(authenticated)/` routes
+
+### Data sources
+
+- **User profiles + observability checks + feedback + signup requests:** Postgres (Prisma)
+- **Leaderboard + activity:** Computed live from GitHub API (merged PRs). Scoring logic in `src/lib/scoring.ts`.
+- **Plans + submitters:** logged-in users only (#8). Read live from `SAAF-Project/website/data/` by `src/lib/progress-data.ts` (server-side `GITHUB_PAT`) and served by `/api/data/plans` and `/api/data/submitters`; the server routes (leaderboard, achievements, suggestions) use the same loader. The fallback copies in `data/` (not `public/`) carry no personal fields and the submitter list is empty; tests use the synthetic `src/components/temple/__fixtures__/submitters.sample.json`. Never put plan or person data in `public/`.
+- **Tracks:** static JSON in `public/data/tracks.json` (no personal data)
+- **SAAF Visualised (`/visualised`):** `SAAF-Project/website/data/progress.json` (+ `submitters.json`), fetched live by `/api/progress` through `src/lib/progress-data.ts` (server-side `GITHUB_PAT`, 10 min cache); the copy in `data/` is only the fallback (the page says when it shows that). `/api/progress` also adds live repo alerts (no AUDIT-CRITERIA.md, no tests, quiet, not found/archived) from `src/lib/repo-signals.ts` (org repo list + one git-tree call per Ready+ agent repo; rules in `components/temple/liveAlerts.ts`; no GitHub answer = no live alerts, never a false alert). The 3D module in `src/components/temple/` is self-contained (see its `README.md`) and has its own tests (`npm test`, vitest). Each visualisation (Temple, Islands, Agent dependencies, Standards) describes itself in `src/components/temple/views/<id>/visualization.yaml` (read and checked on the server by `src/lib/visualisations.ts`, parsed with `js-yaml`; format and how to add a view: `views/README.md`); the page shows a chooser first, then the view with its own onboarding tour (`src/components/TourShell.tsx`, shared with the dashboard `OnboardingWizard`). Three.js stack: `three`, `@react-three/fiber`, `@react-three/drei`.
+- **Standards board (`/standards`) and hardening day handout (`/hardening`):** the nine standards are one typed list in `src/components/temple/standards/standards.ts` (label, text and a rule per standard that needs only a repo's file list); the handout and the board both read it. `/api/standards` serves `src/lib/repo-standards.ts`: one org repo list call plus one git-tree call per repo that is not archived, not a meta repo and not a dot repo (server-side `GITHUB_PAT`, `no-store`). Kept for 60 seconds per server instance; a repo's answer is kept until its `pushed_at` changes. A file list that cannot be read or is cut off gives "not checked" (null), never "missing"; no repo list gives the last good result marked stale. The board polls once a minute while its tab is visible. The same data is the fourth view of SAAF Visualised (`/visualised#/?view=standards`, "The last layer"): a wall of 3x3 faces, one per repo (`standards/Wall.tsx`, `WallView.tsx`, `wall.css`). That view reads `/api/standards` through the board's own hook (`useStandards`), a second read-only source next to the engine's data, and joins repos to plans in the browser on the repo name (`standards/marks.ts`). The engine, `VisualProps` and `/api/progress` are unchanged.
+- **Reviver achievement (dashboard):** a member has revived an agent when the repo is on the list of repos that were quiet before the hardening day, has all nine standards, and its `CODEOWNERS` names the member (`src/lib/revived.ts`). The list is in `src/lib/revivable.ts` as SHA-256 hashes of the lower-case repo name, because the names are private and this repo is public: never write one of those names in source, tests, fixtures or commit messages. The repos and checks come from the standards board loader (no second org scan); `CODEOWNERS` is read only for a repo that is on the list and complete, and kept until its `pushed_at` changes. `/api/achievements` returns the count as the `revived` badge plus the member's own revived repo names; the dashboard shows a message once per new one (`src/components/RevivedModal.tsx`, last seen count per login in `localStorage`). No leaderboard points.
+- **Plan markdown content:** Fetched on-demand via `/api/plan-content` (proxies GitHub API with PAT — needed because SAAF-Project repo is private so raw.githubusercontent.com URLs don't work)
+- **Company logos:** Word-boundary matched from organisation name via `src/lib/logo-match.ts` against logos hosted on saafproject.com
+- **Agent library:** Allowlist in `src/lib/github.ts` (`AGENT_LIBRARY_REVIEWED`) — manually curated subset of org repos with quality metadata. Other org repos shown with auto-detected status (work-in-progress / needs-readme / not-reviewed).
+
+### GitHub API caching layers
+
+All `githubFetch` calls accept a `revalidate` option that maps to Next.js fetch cache (CDN-shared across instances). TTLs defined in `CACHE_TTL` in `src/lib/github.ts`:
+
+- `REPOS_LIST`: 600s (10min) — repo list rarely changes
+- `README`: 3600s (1h) — READMEs change infrequently
+- `CONTRIBUTORS`: 1800s (30min)
+- `PRS_CLOSED`: 120s (2min) — leaderboard needs near-real-time
+- `PR_FILES`: 86400s (1 day) — immutable after merge
+- `USER_LOOKUP`: 86400s (1 day) — user IDs are immutable
+- `ORG_MEMBER`: 300s (5min)
+- `SEARCH`: 300s (5min)
+
+Plus per-user in-memory cache in `fetchUserOrgRepos` (10min) — the slowest endpoint due to N+1 contributor checks.
+
+### Admin
+
+Admin page at `/admin` is restricted to GitHub username `MSACC` (hardcoded in `Navbar.tsx`, `api/admin/signups/route.ts`, `api/admin/feedback/route.ts`). Admin page has 2 tabs: Signup Requests + Feedback.
+
+### Placeholder users
+
+Users with `githubId < 0` are placeholders — registered via the GitHub issues but didn't provide a valid GitHub username. They appear on `/participants` with "No GitHub account linked" label and a "?" avatar. They cannot log in. ID is `-(issue.number)`.
+
+## Environment variables
+
+Required in `.env.local` for local dev:
+
+```
+DATABASE_URL          # Local Postgres (Docker: postgresql://postgres:saaf@localhost:5432/saaf)
+NEXTAUTH_URL          # http://localhost:3000
+NEXTAUTH_SECRET       # openssl rand -base64 32
+GITHUB_ID             # OAuth App Client ID
+GITHUB_SECRET         # OAuth App Client Secret
+GITHUB_PAT            # Fine-grained PAT, All repos in SAAF-Project org, scopes: Contents:Read, PRs:Read, Issues:Read, Members:Read
+```
+
+For `--prod` scripts, set `PROD_DATABASE_URL` in `.env.production.local` (gitignored).
+
+`prisma.config.ts` loads `.env.production.local` first then `.env.local` — and prefers `PROD_DATABASE_URL` over `DATABASE_URL`. So `npx prisma db push` runs against prod by default if `PROD_DATABASE_URL` is set.
+
+## Backups
+
+`scripts/backup-db.ts --prod` dumps all tables to `backups/saaf-portal_prod_<timestamp>.json` (~40KB). The `/backups/` directory is gitignored. Neon free tier gives 24h point-in-time recovery — backups extend that horizon.
+
+## Skills
+
+The `skills/` directory contains Claude Code skill definitions following the standard SKILL.md format (YAML frontmatter + markdown body). Discoverable via the docus.dev / Cloudflare Agent Skills RFC pattern.
+
+- `skills/pr-review/SKILL.md` — generic GitHub PR review
+- `skills/saaf-pr-review/SKILL.md` — SAAF-specific PR review (plan template, leaderboard impact, guardrails)
+
+## Leaderboard scoring rules (for reference)
+
+Implemented in `src/lib/scoring.ts`. Two pools, summed into one ranking. **`MAX_SCORE` is
+exported from `scoring.ts`** (single source of truth) — don't hardcode it in the UI.
+
+### Pool 1 — Central repo (`SAAF-Project/SAAF-Project` PRs), max 105
+
+| Action | Points | Cap |
+|---|---|---|
+| Merged PR | +10 | 5 PRs |
+| New plan file (`plans/*.md` status=added) | +15 | 3 plans |
+| Modified plan file (status=modified, unique filename) | +5 | None |
+| Plan claim (`claimed_by` set in metadata) | +5 | 2 claims |
+
+### Pool 2 — Agent Builder bonus (own org agent-repos), max +50
+
+Rewards building quality agents in your own org repo. Gated on the **reviewed flag /
+README quality**, NOT on raw commit count. Constants live at the top of `scoring.ts`
+(`AGENT_LIMITS`, `VOLUME_TIERS`). Data comes from `fetchAgentContributions()` in `github.ts`.
+
+| Action | Points | Cap |
+|---|---|---|
+| Contributed to a quality agent-repo (real README + passes code gate) | +8 | best 2 repos |
+| That repo is `reviewed` (in `agent-reviews.json`) | +12 extra | within those 2 |
+| Lines changed (additions+deletions) in your quality repos | tiered (200/1500/6000 → 3/6/10) | hard cap +10 |
+
+So a reviewed repo = +20; `MAX_SCORE = 105 + 2×20 + 10 = 155`.
+
+**Gotchas:**
+- `renamed` status is ignored entirely (0pt).
+- Plan updates have no cap — theoretically unbounded.
+- A PR with files only in `prompts/`, `tools/`, etc. earns only the +10pt PR base — no bonus per file.
+- The "first 5 PRs" cap applies in iteration order of `Object.entries(prCache)`, which is GitHub API order = newest first.
+- **Agent Builder attribution** uses the reliable `/contributors` endpoint (200, never 202).
+  `/stats/contributors` is best-effort for lines-changed only (returns 202 while GitHub
+  computes — volume degrades to 0 that load; base/reviewed bonus still applies).
+- **Code gate** (`repoHasCode` in `github.ts`): a non-reviewed repo needs a dependency
+  manifest OR ≥15 KB of code to earn the base bonus — blocks "big README on empty stub".
+  Reviewed repos skip it.
+- Agent bonus is a **portfolio measure**, applied identically on all filters (not session-windowed).
+- **Identity caveat:** contributors under multiple GitHub accounts (e.g. `JohannesIV` vs
+  `Johannes-KoutersVanderMeer`) are counted separately — no alias map yet.
+
+## Agent reviews & the reviewed flag
+
+The "reviewed" badge (agent library) AND the Agent Builder reviewed bonus are both driven by
+**`public/data/agent-reviews.json`** (records with `verdict:"reviewed"`), read by
+`getReviewedAgents()` in `src/lib/github.ts`. Per-agent analysis lives in
+**`reviews/agents/<repo>.md`** (see `reviews/README.md` for the bar + workflow).
+
+**To promote an agent to reviewed:** add/flip its record to `verdict:"reviewed"` in
+`agent-reviews.json` (category, tags, quality flags), write `reviews/agents/<repo>.md`,
+deploy. The bar: real working code + runnable interface + manifest; ideally tests + samples
+(no-test agents can pass with samples + polished interface — precedent: `CUEC_Crosscheck`,
+`llm_owasp`). Verdicts: `reviewed` / `borderline` / `not-yet`.
+
+Reviews can be (re)generated by fanning out per-repo assessment agents and posting GitHub
+issues on each agent-repo as an audit trail (4 reviewed + 3 borderline issues opened
+2026-06-03). See `skills/saaf-pr-review/` for the PR-side review skill.

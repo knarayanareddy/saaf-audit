@@ -1,0 +1,21 @@
+{
+  "_note": "Stemmen komen uit de gedeelde ElevenLabs Voice Library. Alle beschikbare stemmen zijn Engelstalig getraind; eleven_v3 spreekt er Nederlands mee, maar er blijft accent hoorbaar. Gecast op maximale timbre-scheiding omdat luisteraars geen chatballonnen hebben. De custom stem 'Rohan' (W8987RxuyOj8fR06BQEm) is bewust NIET gebruikt: dat is een gekloonde stem van de gebruiker en die hoort niet aan een frauderend personage geplakt te worden zonder expliciete keuze.",
+
+  "narrator": { "voice_id": "Xb7hH8MSUJpSbSDYk0k2", "voice_name": "Alice",   "note": "vrouw, middelbaar, Brits, helder-didactisch — bewust buiten de cast, rustiger tempo" },
+
+  "MD": { "voice_id": "EXAVITQu4vr4xnSDxMaL", "voice_name": "Sarah",   "note": "vrouw, jong — Marieke: praktisch, gehaast" },
+  "MV": { "voice_id": "cgSgspJ2msm6clMCkdW9", "voice_name": "Jessica", "note": "vrouw, jong, helder en warm — Marloes: informeel, vraagt half als grap" },
+  "BW": { "voice_id": "cjVigY5qzO86Huf0OWal", "voice_name": "Eric",    "note": "man, middelbaar, glad en vertrouwenwekkend — Bart: bestuurlijk, beheerst" },
+  "DE": { "voice_id": "pqHfZKP75CvOlQylNhV4", "voice_name": "Bill",    "note": "man, OUD — enige oude stem in de cast; Diederik: traag, vriendelijk-autoritair" },
+  "SK": { "voice_id": "N2lVS1w4EtoT3dr4eOWO", "voice_name": "Callum",  "note": "man, middelbaar, hees/husky — enige rauwe textuur; Sander: nuchter, cynisch" },
+  "RV": { "voice_id": "onwK4e9ZLuTAKqWW03F9", "voice_name": "Daniel",  "note": "man, middelbaar, Brits omroeper — Ronald: zakelijk, direct" },
+  "EK": { "voice_id": "iP95p4xoKVk53GoZ742B", "voice_name": "Chris",   "note": "man, middelbaar, charmant-amerikaans — Ed: joviaal, gladjes" },
+  "MH": { "voice_id": "bIHbv24MWmeRgasZH58o", "voice_name": "Will",    "note": "man, JONG — enige jonge mannenstem; Marnix: laconiek, zelfspottend" },
+
+  "_adjacency_check": [
+    "18 maart: Ronald (Daniel, Brits) ↔ Ed (Chris, Amerikaans) — sterk contrast, praten het meest met elkaar",
+    "18 maart: Sander (Callum, hees) ↔ Ronald (Daniel, helder) — contrast in textuur",
+    "3 april: Marnix (Will, jong) ↔ Bart (Eric, middelbaar glad) — contrast in leeftijd",
+    "26 januari: Marieke (Sarah) ↔ Marloes (Jessica) — beide vrouw en jong; grootste risico in de cast. Marloes is helderder en hoger; verteller (Alice, Brits) zit ver genoeg van beiden af."
+  ]
+}

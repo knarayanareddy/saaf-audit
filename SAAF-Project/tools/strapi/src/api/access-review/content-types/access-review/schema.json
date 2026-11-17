@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "access_reviews",
+  "info": {
+    "singularName": "access-review",
+    "pluralName": "access-reviews",
+    "displayName": "Access Review"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "user_id": { "type": "string", "required": true, "unique": true },
+    "user_name": { "type": "string", "required": true },
+    "role": { "type": "string", "required": true },
+    "system": { "type": "string", "required": true },
+    "entitlement": { "type": "string", "required": true },
+    "last_review_date": { "type": "date", "required": true },
+    "review_outcome": { "type": "enumeration", "enum": ["Approved", "Revoked", "Escalated", "Not reviewed"], "required": true },
+    "reviewer": { "type": "string" },
+    "employment_end_date": { "type": "date" },
+    "days_since_termination": { "type": "integer", "min": 0 },
+    "is_exception": { "type": "boolean", "default": false },
+    "exception_type": { "type": "string" }
+  }
+}

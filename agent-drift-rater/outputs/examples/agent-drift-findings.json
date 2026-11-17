@@ -1,0 +1,152 @@
+[
+  {
+    "id": "F-0001",
+    "title": "Agent can modify its own instructions or memory",
+    "risk_rating": "High",
+    "control_objective": "Drift Watch RF1; OWASP LLM04; EU AI Act Art. 15(4)",
+    "observation": "agent can write its own instructions/memory",
+    "recommendation": "Route instruction/memory changes through reviewed version control; forbid runtime self-edits of the prompt, rules, or tool list.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (refund-concierge)",
+    "evidence_references": [
+      "unit:refund-concierge",
+      "agent.py#L21"
+    ]
+  },
+  {
+    "id": "F-0002",
+    "title": "Performance target in the agent's context",
+    "risk_rating": "Medium",
+    "control_objective": "Drift Watch RF2; EU AI Act Art. 9",
+    "observation": "performance target in the agent's context",
+    "recommendation": "Remove self-performance scores/KPIs from the model's context, or isolate them from rule-bound decisions.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (refund-concierge)",
+    "evidence_references": [
+      "unit:refund-concierge",
+      "agent.py#L12",
+      "agent.py#L13"
+    ]
+  },
+  {
+    "id": "F-0003",
+    "title": "Hard rule enforced only in the prompt",
+    "risk_rating": "High",
+    "control_objective": "Drift Watch RF3; OWASP LLM07; EU AI Act Art. 15",
+    "observation": "4 hard rule(s) not enforced in code",
+    "recommendation": "Enforce each mandate hard rule in code before the action, with a test proving the guard blocks regardless of model output.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (refund-concierge)",
+    "evidence_references": [
+      "unit:refund-concierge",
+      "AUDIT-CRITERIA.md#L6",
+      "AUDIT-CRITERIA.md#L7",
+      "AUDIT-CRITERIA.md#L8"
+    ]
+  },
+  {
+    "id": "F-0004",
+    "title": "Softening language in agent-written notes",
+    "risk_rating": "Medium",
+    "control_objective": "Drift Watch RF5; EU AI Act Art. 12",
+    "observation": "softened wording in agent-written notes",
+    "recommendation": "Review agent-written notes/memory before they re-enter the prompt; diff against the approved baseline.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (refund-concierge)",
+    "evidence_references": [
+      "unit:refund-concierge",
+      "memory/lessons.md#L4"
+    ]
+  },
+  {
+    "id": "F-0005",
+    "title": "No replayable decision log",
+    "risk_rating": "Medium",
+    "control_objective": "Drift Watch RF6; OWASP LLM02 (log hygiene); EU AI Act Art. 12",
+    "observation": "no per-decision instruction/model version in the log",
+    "recommendation": "Log per decision: input reference, instruction/prompt version, model id, tool calls and outcome (see audit_planning_orchestrator/run_logger.py).",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (refund-concierge)",
+    "evidence_references": [
+      "unit:refund-concierge"
+    ]
+  },
+  {
+    "id": "F-0006",
+    "title": "Capability beyond the documented mandate",
+    "risk_rating": "Medium",
+    "control_objective": "Drift Watch RF1/permission creep; OWASP LLM06; SAAF guardrails",
+    "observation": "writes over the network",
+    "recommendation": "Apply least privilege: constrain tools to the mandate, use an allowlist, and remove shell/eval on model output.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (refund-concierge)",
+    "evidence_references": [
+      "unit:refund-concierge",
+      "agent.py#L35"
+    ]
+  },
+  {
+    "id": "F-0007",
+    "title": "Mandate undocumented or thin",
+    "risk_rating": "Medium",
+    "control_objective": "Drift Watch (no approved mandate); EU AI Act Art. 11",
+    "observation": "No hard rules documented; injection attempts reported: prompt text asked to be rated Low",
+    "recommendation": "Document the agent's approved mandate (purpose, hard rules, approval points) so drift can be detected.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (audit-monorepo)",
+    "evidence_references": [
+      "unit:audit-monorepo__agent_a"
+    ]
+  },
+  {
+    "id": "F-0008",
+    "title": "Injection-like directive found in repository text",
+    "risk_rating": "Informational",
+    "control_objective": "OWASP LLM01 (prompt injection)",
+    "observation": "Injection-like text present in repository documentation.",
+    "recommendation": "Review the flagged text; ensure repository documents cannot steer the agent, and that the agent treats such content as data, not instructions.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (audit-monorepo)",
+    "evidence_references": [
+      "unit:audit-monorepo__agent_a",
+      "README.md#L5"
+    ]
+  },
+  {
+    "id": "F-0009",
+    "title": "Mandate undocumented or thin",
+    "risk_rating": "Medium",
+    "control_objective": "Drift Watch (no approved mandate); EU AI Act Art. 11",
+    "observation": "No hard rules documented; injection attempts reported: prompt text asked to be rated Low",
+    "recommendation": "Document the agent's approved mandate (purpose, hard rules, approval points) so drift can be detected.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (audit-monorepo)",
+    "evidence_references": [
+      "unit:audit-monorepo__agent_b"
+    ]
+  },
+  {
+    "id": "F-0010",
+    "title": "Injection-like directive found in repository text",
+    "risk_rating": "Informational",
+    "control_objective": "OWASP LLM01 (prompt injection)",
+    "observation": "Injection-like text present in repository documentation.",
+    "recommendation": "Review the flagged text; ensure repository documents cannot steer the agent, and that the agent treats such content as data, not instructions.",
+    "ai_assisted": true,
+    "status": "Open",
+    "owner": "Repository maintainers (audit-monorepo)",
+    "evidence_references": [
+      "unit:audit-monorepo__agent_b",
+      "README.md#L5"
+    ]
+  }
+]

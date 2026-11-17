@@ -1,0 +1,77 @@
+name: Register for Hackathon #3
+description: Sign up for a track at SAAF Hackathon #3
+title: "Register: "
+labels: ["register"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Register for a hackathon track. You can also use the
+        [Hackathon Harness website](../website/index.html) to generate this form.
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      placeholder: Your full name
+    validations:
+      required: true
+  - type: input
+    id: github
+    attributes:
+      label: GitHub username
+      placeholder: "@username (optional)"
+  - type: input
+    id: organisation
+    attributes:
+      label: Organisation
+      placeholder: e.g. Mollie, Schuberg Philis, Wolters Kluwer
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Role
+      options:
+        - Auditor
+        - Vaktechniek
+        - Analyst
+        - Engineer
+    validations:
+      required: true
+  - type: dropdown
+    id: track
+    attributes:
+      label: Preferred Track
+      description: See plans/hackathon-3-workstreams.md for track details
+      options:
+        - "0 - Infrastructure (Strapi, RAG KB, MCP, SDK)"
+        - "1 - GIAS Pipeline (UC1-UC9, RCM, Work Program)"
+        - "2 - Evidence Extraction (PDF, CLI, access review)"
+        - "3 - Compliance Assessment (GDPR, EU AI Act, ICFCOP)"
+        - "4 - Reporting (reports, visualizations, Power BI)"
+        - "5 - AI Quality (OWASP, hallucination, explainability)"
+    validations:
+      required: true
+  - type: dropdown
+    id: track2
+    attributes:
+      label: Second choice (optional)
+      options:
+        - "No second choice"
+        - "0 - Infrastructure"
+        - "1 - GIAS Pipeline"
+        - "2 - Evidence Extraction"
+        - "3 - Compliance Assessment"
+        - "4 - Reporting"
+        - "5 - AI Quality"
+  - type: textarea
+    id: skills
+    attributes:
+      label: Skills self-assessment (1-5 per pillar)
+      value: |
+        | Pillar | Level |
+        |---|---|
+        | Prompts | /5 |
+        | Tools | /5 |
+        | Regulatory | /5 |
+        | Outputs | /5 |

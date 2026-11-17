@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SAAF Hackathon #3 — Table Signs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 portrait; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+.sign {
+  width: 210mm; height: 297mm;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 25mm 30mm;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+}
+.sign:last-child { page-break-after: auto; }
+
+/* Colored top band — SAAF brand palette */
+.sign::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 18mm;
+}
+.sign.c-orange::before { background: linear-gradient(135deg, #FB923C, #EA580C); }
+.sign.c-indigo::before { background: linear-gradient(135deg, #818CF8, #4F46E5); }
+.sign.c-green::before { background: linear-gradient(135deg, #4ADE80, #16A34A); }
+.sign.c-purple::before { background: linear-gradient(135deg, #C084FC, #7C3AED); }
+.sign.c-yellow::before { background: linear-gradient(135deg, #FBBF24, #D97706); }
+.sign.c-red::before { background: linear-gradient(135deg, #F87171, #DC2626); }
+.sign.c-gray::before { background: linear-gradient(135deg, #94A3B8, #64748B); }
+
+/* Decorative corner accents */
+.sign::after {
+  content: '';
+  position: absolute; bottom: 0; right: 0;
+  width: 80mm; height: 80mm;
+  border-radius: 50%;
+  opacity: 0.04;
+}
+.sign.c-orange::after { background: #FB923C; }
+.sign.c-indigo::after { background: #818CF8; }
+.sign.c-green::after { background: #4ADE80; }
+.sign.c-purple::after { background: #C084FC; }
+.sign.c-yellow::after { background: #FBBF24; }
+.sign.c-red::after { background: #F87171; }
+.sign.c-gray::after { background: #94A3B8; }
+
+/* Logo */
+.logo { margin-top: 20mm; margin-bottom: 8mm; position: relative; z-index: 1; }
+.logo img { width: 60mm; height: auto; object-fit: contain; }
+
+/* Table number — big circle */
+.table-num-wrap {
+  width: 50mm; height: 50mm;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10mm; position: relative; z-index: 1;
+}
+.sign.c-orange .table-num-wrap { background: rgba(251,146,60,0.1); border: 3px solid #FB923C; }
+.sign.c-indigo .table-num-wrap { background: rgba(129,140,248,0.1); border: 3px solid #818CF8; }
+.sign.c-green .table-num-wrap { background: rgba(74,222,128,0.1); border: 3px solid #4ADE80; }
+.sign.c-purple .table-num-wrap { background: rgba(192,132,252,0.1); border: 3px solid #C084FC; }
+.sign.c-yellow .table-num-wrap { background: rgba(251,191,36,0.1); border: 3px solid #FBBF24; }
+.sign.c-red .table-num-wrap { background: rgba(248,113,113,0.1); border: 3px solid #F87171; }
+.sign.c-gray .table-num-wrap { background: rgba(148,163,184,0.1); border: 3px solid #94A3B8; }
+.table-num { font-size: 72pt; font-weight: 900; line-height: 1; }
+.sign.c-orange .table-num { color: #EA580C; }
+.sign.c-indigo .table-num { color: #4F46E5; }
+.sign.c-green .table-num { color: #16A34A; }
+.sign.c-purple .table-num { color: #7C3AED; }
+.sign.c-yellow .table-num { color: #D97706; }
+.sign.c-red .table-num { color: #DC2626; }
+.sign.c-gray .table-num { color: #64748B; }
+
+.track-name { font-size: 26pt; font-weight: 700; color: #0F172A; margin-bottom: 6mm; position: relative; z-index: 1; }
+.track-focus { font-size: 14pt; color: #64748B; margin-bottom: 10mm; line-height: 1.5; position: relative; z-index: 1; }
+
+/* Divider */
+.divider { width: 40mm; height: 1.5px; background: #E2E8F0; margin: 4mm auto 8mm; }
+
+/* Team composition */
+.team-info { font-size: 11pt; color: #94A3B8; margin-bottom: 8mm; position: relative; z-index: 1; }
+.team-pill { display: inline-block; padding: 2mm 5mm; border-radius: 20px; font-size: 10pt; font-weight: 600; margin: 1mm; }
+.pill-auditor { background: rgba(129,140,248,0.12); color: #4F46E5; }
+.pill-vaktech { background: rgba(192,132,252,0.12); color: #7C3AED; }
+.pill-analyst { background: rgba(74,222,128,0.1); color: #16A34A; }
+.pill-engineer { background: rgba(251,146,60,0.12); color: #EA580C; }
+
+.footer {
+  font-size: 10pt; color: #94A3B8; margin-top: auto; position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 3mm;
+}
+.footer strong { color: #0F172A; }
+.footer-dot { width: 4px; height: 4px; border-radius: 50%; background: #CBD5E1; }
+
+@media screen {
+  body { background: #F1F5F9; }
+  .sign { background: white; margin: 20px auto; box-shadow: 0 4px 24px rgba(15,23,42,0.1); border-radius: 8px; }
+  .no-print { text-align: center; padding: 24px; font-size: 16px; font-family: 'Inter', sans-serif; }
+  .no-print button { padding: 14px 36px; font-size: 16px; border: none; background: #4F46E5; color: white; border-radius: 12px; cursor: pointer; font-weight: 600; font-family: inherit; box-shadow: 0 4px 14px rgba(79,70,229,0.35); }
+  .no-print button:hover { background: #4338CA; }
+}
+@media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <button onclick="window.print()">Print All Table Signs (10 pages)</button>
+</div>
+
+<div class="sign c-orange">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">1</div></div>
+  <div class="track-name">Track 0: Infrastructure</div>
+  <div class="divider"></div>
+  <div class="track-focus">Strapi Sandbox &middot; RAG Knowledge Base<br>Jira/Confluence MCP &middot; Loop SDK</div>
+  <div class="team-info">
+    <span class="team-pill pill-engineer">Engineers</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-indigo">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">2</div></div>
+  <div class="track-name">Track 1a: GIAS Pipeline</div>
+  <div class="divider"></div>
+  <div class="track-focus">UC1&ndash;UC4: Policy Intake &middot; Previous Audits<br>Incident Intelligence &middot; Fraud Risk Assessment</div>
+  <div class="team-info">
+    <span class="team-pill pill-auditor">Auditors</span>
+    <span class="team-pill pill-vaktech">Vaktechniek</span>
+    <span class="team-pill pill-analyst">Analyst</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-indigo">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">3</div></div>
+  <div class="track-name">Track 1b: GIAS Pipeline</div>
+  <div class="divider"></div>
+  <div class="track-focus">UC5&ndash;UC9: Regulatory Criteria &middot; IT Dependencies<br>RCM Builder &middot; Work Program &middot; Quality Guard</div>
+  <div class="team-info">
+    <span class="team-pill pill-auditor">Auditors</span>
+    <span class="team-pill pill-vaktech">Vaktechniek</span>
+    <span class="team-pill pill-analyst">Analyst</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-green">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">4</div></div>
+  <div class="track-name">Track 2: Evidence Extraction</div>
+  <div class="divider"></div>
+  <div class="track-focus">PDF/OCR Extraction &middot; CLI System Wrapper<br>Access Review &middot; M365 Copilot &middot; Fieldwork Prep</div>
+  <div class="team-info">
+    <span class="team-pill pill-auditor">Auditor</span>
+    <span class="team-pill pill-analyst">Analyst</span>
+    <span class="team-pill pill-engineer">Engineer</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-gray">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">5</div></div>
+  <div class="track-name">Flex Table</div>
+  <div class="divider"></div>
+  <div class="track-focus">Overflow from the busiest track<br>Cross-track collaboration &middot; Open projects</div>
+  <div class="team-info">
+    <span class="team-pill" style="background:rgba(110,118,129,0.1);color:#6e7681">All roles welcome</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-purple">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">6</div></div>
+  <div class="track-name">Track 3a: Compliance</div>
+  <div class="divider"></div>
+  <div class="track-focus">GDPR Audit Agent &middot; EU AI Act Monitor<br>Policy-to-Controls Extractor</div>
+  <div class="team-info">
+    <span class="team-pill pill-vaktech">Vaktechniek</span>
+    <span class="team-pill pill-analyst">Analyst</span>
+    <span class="team-pill pill-auditor">Auditor</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-purple">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">7</div></div>
+  <div class="track-name">Track 3b: Compliance</div>
+  <div class="divider"></div>
+  <div class="track-focus">ICFCOP Control Testing &middot; Vendor Guard<br>Compliance Report Generator</div>
+  <div class="team-info">
+    <span class="team-pill pill-vaktech">Vaktechniek</span>
+    <span class="team-pill pill-analyst">Analyst</span>
+    <span class="team-pill pill-auditor">Auditor</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-yellow">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">8</div></div>
+  <div class="track-name">Track 4: Reporting</div>
+  <div class="divider"></div>
+  <div class="track-focus">Audit Report Generator &middot; Evidence Visualization<br>Power BI MCP &middot; 3-Way Match Analysis</div>
+  <div class="team-info">
+    <span class="team-pill pill-analyst">Analyst</span>
+    <span class="team-pill pill-engineer">Engineer</span>
+    <span class="team-pill pill-auditor">Auditor</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-red">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">9</div></div>
+  <div class="track-name">Track 5: AI Quality</div>
+  <div class="divider"></div>
+  <div class="track-focus">OWASP LLM Audit &middot; Hallucination Detection<br>Explainability Framework &middot; Multi-Model Validation</div>
+  <div class="team-info">
+    <span class="team-pill pill-engineer">Engineer</span>
+    <span class="team-pill pill-vaktech">Vaktechniek</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+<div class="sign c-gray">
+  <div class="logo"><img src="./saaf-logo-cropped.png" alt="SAAF"></div>
+  <div class="table-num-wrap"><div class="table-num">10</div></div>
+  <div class="track-name">Flex Table</div>
+  <div class="divider"></div>
+  <div class="track-focus">Overflow from the busiest track<br>Cross-track collaboration &middot; Open projects</div>
+  <div class="team-info">
+    <span class="team-pill" style="background:rgba(110,118,129,0.1);color:#6e7681">All roles welcome</span>
+  </div>
+  <div class="footer"><strong>SAAF Hackathon #3</strong> <span class="footer-dot"></span> April 21, 2026 <span class="footer-dot"></span> Wolters Kluwer, Alphen aan den Rijn</div>
+</div>
+
+</body>
+</html>

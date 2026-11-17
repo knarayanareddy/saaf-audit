@@ -1,0 +1,66 @@
+{
+  "process_map": {
+    "process": "Accounts Payable",
+    "sub_processes": [
+      {"name": "Invoice Receipt", "business_objective": "Ensure all received invoices are captured completely and accurately"},
+      {"name": "Invoice Approval", "business_objective": "Ensure only valid, authorized invoices are approved for payment"},
+      {"name": "Payment", "business_objective": "Ensure only approved invoices are paid, once, to the correct beneficiary"}
+    ]
+  },
+  "walkthrough": [
+    {
+      "speaker": "owner",
+      "utterance": "When an invoice comes in it lands in a shared mailbox, and someone in AP keys it into the ERP and matches it to the PO and the goods receipt.",
+      "capture": {
+        "sub_process": "Invoice Receipt",
+        "risk_description": "Invoices received outside the system may bypass controls and go unrecorded",
+        "control_description": "Central mailbox intake with three-way match before posting",
+        "control_type": "Manual",
+        "control_frequency": "Daily",
+        "impact": "Medium",
+        "likelihood": "Medium",
+        "source": "Walkthrough - AP process owner"
+      }
+    },
+    {
+      "speaker": "owner",
+      "utterance": "The duplicate-payment check is automatic; the system blocks anything with the same supplier, amount and date.",
+      "capture": {
+        "sub_process": "Invoice Approval",
+        "risk_description": "Duplicate or fraudulent invoices may be approved for payment",
+        "control_description": "System-generated duplicate-payment check on supplier + amount + date",
+        "control_type": "Automated",
+        "control_frequency": "Every transaction",
+        "impact": "High",
+        "likelihood": "High",
+        "source": "Walkthrough - AP process owner"
+      }
+    },
+    {
+      "speaker": "owner",
+      "utterance": "For approvals, honestly, it's whoever is around. There's no hard segregation between who raises the PO and who approves it.",
+      "capture": {
+        "sub_process": "Invoice Approval",
+        "risk_description": "Invoices may be approved without segregation of duties from the PO initiator",
+        "control_description": "",
+        "control_type": null,
+        "impact": "High",
+        "likelihood": "Medium",
+        "source": "Walkthrough - AP process owner"
+      }
+    },
+    {
+      "speaker": "owner",
+      "utterance": "Payments go out in a weekly run. To be honest nobody double-checks the beneficiary bank details before release.",
+      "capture": {
+        "sub_process": "Payment",
+        "risk_description": "Payments may be released to unauthorized or duplicate beneficiaries",
+        "control_description": "",
+        "control_type": null,
+        "impact": "High",
+        "likelihood": "Medium",
+        "source": "Walkthrough - AP process owner"
+      }
+    }
+  ]
+}

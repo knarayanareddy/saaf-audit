@@ -1,0 +1,11 @@
+{
+  "id": "F-0104",
+  "title": "PBC submission missing GDPR Article 35 DPIA for new processing activity",
+  "risk_rating": "Medium",
+  "control_objective": "GDPR Article 35 — Data Protection Impact Assessment",
+  "observation": "The Provided-by-Client (PBC) package for the customer analytics project includes documentation for a new profiling activity targeting EU residents. GDPR Article 35(1) requires a Data Protection Impact Assessment (DPIA) prior to processing that is likely to result in a high risk to individuals. GDPR Article 35(3)(a) specifically requires a DPIA for systematic and extensive profiling. No DPIA was included in the PBC package, and the Data Protection Officer confirmed none has been initiated. Additionally, GDPR Article 36(1) requires prior consultation with the supervisory authority where the DPIA indicates a high residual risk; this step cannot be evaluated without the DPIA.",
+  "recommendation": "Halt the processing activity until a DPIA is completed and reviewed by the DPO. If residual risk remains high after mitigations, consult with the Autoriteit Persoonsgegevens per GDPR Article 36 before going live.",
+  "ai_assisted": true,
+  "source_track": "Audit Document Pre-Check (PBC-Assistant-Isabelle)",
+  "status": "Open"
+}

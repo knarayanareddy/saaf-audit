@@ -1,0 +1,152 @@
+FFFFFFF                                                                  [100%]
+================================== FAILURES ===================================
+____________ test_anyone_can_no_longer_approve_in_the_seniors_name ____________
+
+    def test_anyone_can_no_longer_approve_in_the_seniors_name():
+        trail, entry = _run_with_one_entry()
+        response = _client().post(
+            f"/api/runs/{trail.run_id}/approve",
+            json={"entry_id": entry["entry_id"], "decision": "approved", "role": "senior_auditor"},
+        )
+>       assert response.status_code == 401, "approval accepted from an anonymous caller"
+E       AssertionError: approval accepted from an anonymous caller
+E       assert 200 == 401
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests\test_four_eyes_approvals.py:98: AssertionError
+________ test_a_logged_in_person_cannot_approve_in_someone_elses_role _________
+
+    def test_a_logged_in_person_cannot_approve_in_someone_elses_role():
+        trail, entry = _run_with_one_entry()
+        response = _client().post(
+            f"/api/runs/{trail.run_id}/approve",
+            headers={HEADER: AUDITOR},
+            json={
+                "entry_id": entry["entry_id"],
+                "decision": "approved",
+                "role": "senior_auditor",
+>               "confirmation": _phrase(entry),
+                                ^^^^^^^^^^^^^^
+            },
+        )
+
+tests\test_four_eyes_approvals.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+entry = {'entry_id': '340680503aca4bfd945aca8ad4333822', 'run_id': '20261110T135615Z-764ad1c2', 'agent': 'pbc_validation', 'item_ref': 'PBC-01', ...}
+
+    def _phrase(entry):
+>       from agents.approval_seal import approval_phrase
+E       ModuleNotFoundError: No module named 'agents.approval_seal'
+
+tests\test_four_eyes_approvals.py:75: ModuleNotFoundError
+_____________ test_a_hand_written_approval_line_does_not_finalize _____________
+
+    def test_a_hand_written_approval_line_does_not_finalize():
+        trail, entry = _run_with_one_entry()
+        with trail.approvals_path.open("a", encoding="utf-8") as handle:
+            handle.write(
+                json.dumps(
+                    {
+                        "run_id": trail.run_id,
+                        "entry_id": entry["entry_id"],
+                        "decision": "approved",
+                        "reviewer": SENIOR,
+                        "role": "senior_auditor",
+                        "comment": None,
+                        "reviewed_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                )
+                + "\n"
+            )
+>       with pytest.raises(ApprovalRequiredError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ApprovalRequiredError
+
+tests\test_four_eyes_approvals.py:135: Failed
+__________ test_changing_the_answer_after_approval_does_not_finalize __________
+
+    def test_changing_the_answer_after_approval_does_not_finalize():
+        trail, entry = _run_with_one_entry()
+        record_approval(
+            trail.run_id,
+            entry_id=entry["entry_id"],
+            decision="approved",
+            reviewer=SENIOR,
+            role="senior_auditor",
+>           confirmation=_phrase(entry),
+                         ^^^^^^^^^^^^^^
+        )
+
+tests\test_four_eyes_approvals.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+entry = {'entry_id': '8f255fae63ae4fd2b34c7b2a43b583a1', 'run_id': '20261110T135615Z-9eedea2f', 'agent': 'pbc_validation', 'item_ref': 'PBC-01', ...}
+
+    def _phrase(entry):
+>       from agents.approval_seal import approval_phrase
+E       ModuleNotFoundError: No module named 'agents.approval_seal'
+
+tests\test_four_eyes_approvals.py:75: ModuleNotFoundError
+_________________________ test_yes_is_not_an_approval _________________________
+
+    def test_yes_is_not_an_approval():
+        trail, entry = _run_with_one_entry()
+        response = _client().post(
+            f"/api/runs/{trail.run_id}/approve",
+            headers={HEADER: SENIOR},
+            json={"entry_id": entry["entry_id"], "decision": "approved", "role": "senior_auditor", "confirmation": "yes"},
+        )
+>       assert response.status_code == 400
+E       assert 200 == 400
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests\test_four_eyes_approvals.py:164: AssertionError
+_______ test_the_assigned_senior_approving_this_exact_answer_finalizes ________
+
+    def test_the_assigned_senior_approving_this_exact_answer_finalizes():
+        trail, entry = _run_with_one_entry()
+        response = _client().post(
+            f"/api/runs/{trail.run_id}/approve",
+            headers={HEADER: SENIOR},
+            json={
+                "entry_id": entry["entry_id"],
+                "decision": "approved",
+                "role": "senior_auditor",
+>               "confirmation": _phrase(entry),
+                                ^^^^^^^^^^^^^^
+                # Ignored: the name comes from the login, never from the body.
+                "reviewer": "Somebody Else",
+            },
+        )
+
+tests\test_four_eyes_approvals.py:178: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+entry = {'entry_id': '598b0b58119d4854a8c464949fbc549b', 'run_id': '20261110T135615Z-7af6732c', 'agent': 'pbc_validation', 'item_ref': 'PBC-01', ...}
+
+    def _phrase(entry):
+>       from agents.approval_seal import approval_phrase
+E       ModuleNotFoundError: No module named 'agents.approval_seal'
+
+tests\test_four_eyes_approvals.py:75: ModuleNotFoundError
+____________ TestFieldworkFourEyesKit.test_four_eyes_is_installed _____________
+
+self = <test_four_eyes_approvals.TestFieldworkFourEyesKit testMethod=test_four_eyes_is_installed>
+
+    def setUp(self):
+        if _Kit is _NotInstalled:
+>           self.fail("Four Eyes is not installed in agents/four_eyes")
+E           AssertionError: Four Eyes is not installed in agents/four_eyes
+
+tests\test_four_eyes_approvals.py:218: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_four_eyes_approvals.py::test_anyone_can_no_longer_approve_in_the_seniors_name
+FAILED tests/test_four_eyes_approvals.py::test_a_logged_in_person_cannot_approve_in_someone_elses_role
+FAILED tests/test_four_eyes_approvals.py::test_a_hand_written_approval_line_does_not_finalize
+FAILED tests/test_four_eyes_approvals.py::test_changing_the_answer_after_approval_does_not_finalize
+FAILED tests/test_four_eyes_approvals.py::test_yes_is_not_an_approval - asser...
+FAILED tests/test_four_eyes_approvals.py::test_the_assigned_senior_approving_this_exact_answer_finalizes
+FAILED tests/test_four_eyes_approvals.py::TestFieldworkFourEyesKit::test_four_eyes_is_installed
+7 failed in 4.88s
+

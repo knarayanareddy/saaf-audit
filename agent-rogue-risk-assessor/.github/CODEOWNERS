@@ -1,0 +1,9 @@
+# Default owners
+*                                              @SAAF-Project/maintainers
+
+# Approved baseline: rubric, scanner and skill instructions need independent review (C3)
+/skills/agent-rogue-risk-assessor/SKILL.md     @SAAF-Project/independent-reviewers
+/skills/agent-rogue-risk-assessor/references/  @SAAF-Project/independent-reviewers
+/skills/agent-rogue-risk-assessor/scripts/     @SAAF-Project/independent-reviewers
+/tools/                                        @SAAF-Project/independent-reviewers
+/.github/                                      @SAAF-Project/independent-reviewers

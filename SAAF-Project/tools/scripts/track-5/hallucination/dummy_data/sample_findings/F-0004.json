@@ -1,0 +1,16 @@
+{
+  "id": "F-0004",
+  "title": "Encryption of personal data at rest not consistently applied",
+  "risk_rating": "High",
+  "control_objective": "Appropriate technical measures to ensure the security of processing of personal data, including encryption, in accordance with GDPR Article 32.",
+  "observation": "Review of data-at-rest encryption identified that while the primary customer database uses AES-256 encryption, three ancillary databases containing personal data (the marketing-analytics store, the support-ticket archive, and the historical-payment log) are unencrypted. GDPR Article 32 requires the controller to implement appropriate technical measures, including encryption of personal data, taking into account the state of the art and the costs of implementation. Leaving three stores unencrypted, when encryption is demonstrably feasible (the primary database already uses it), is not an 'appropriate' measure. The data-protection policy requires a 90-day review cycle for encryption controls; no such review has been documented in the past 14 months.",
+  "root_cause": "The three ancillary stores were provisioned ad-hoc over 2023-2024 and never added to the encryption-governance inventory.",
+  "impact": "Unencrypted personal data increases the risk of unauthorised access in the event of a breach and is a potential violation of GDPR Article 32.",
+  "recommendation": "Apply AES-256 encryption at rest to the marketing-analytics store, support-ticket archive, and historical-payment log. Add all three stores to the encryption-governance inventory. Resume the 90-day review cycle required by the data-protection policy.",
+  "ai_assisted": true,
+  "evidence_references": [
+    "database-inventory-2026-03.csv",
+    "encryption-governance-policy-v2.pdf",
+    "marketing-analytics-aws-config.json"
+  ]
+}

@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code local config (per-machine settings, not project content)
+.claude/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS noise
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Local drafts (committed drafts go under their section folders)
+*.draft.md
+*.local.md

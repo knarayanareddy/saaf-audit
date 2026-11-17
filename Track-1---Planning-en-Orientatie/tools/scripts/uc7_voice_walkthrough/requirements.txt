@@ -1,0 +1,6 @@
+# Live voice session (the --live path):
+elevenlabs[pyaudio]>=1.9
+
+# UC7 refine reuses the anthropic SDK from the orchestrator package
+# (tools/scripts/audit_planning_orchestrator/requirements.txt). Optional — the
+# --simulate path needs neither of these.

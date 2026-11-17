@@ -1,0 +1,32 @@
+{
+  "manifest_version": "0.3",
+  "name": "mcp-starter",
+  "display_name": "MCP Starter",
+  "version": "0.1.0",
+  "description": "Your local MCP server. The starter has no tools yet.",
+  "author": {
+    "name": "Python MCP Starter contributors"
+  },
+  "license": "MIT",
+  "server": {
+    "type": "python",
+    "entry_point": "server.py",
+    "mcp_config": {
+      "command": "${user_config.python_path}",
+      "args": [
+        "${__dirname}/server.py"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "mcp-starter"
+      }
+    }
+  },
+  "user_config": {
+    "python_path": {
+      "type": "file",
+      "title": "Python executable",
+      "description": "Select a Python executable matching the Python version and architecture in BUILD-INFO.json. Python is not included.",
+      "required": true
+    }
+  }
+}

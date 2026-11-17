@@ -1,0 +1,52 @@
+{
+  "idx": 1,
+  "hash": "7621ad33a80f",
+  "chars": 1312,
+  "turns": 11,
+  "inputs": [
+    {
+      "text": "Bart shares a file. Topside, Q1, final, version four. A spreadsheet of four hundred and twelve kilobytes.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "I'll go through the top-side overview myself, no need to put that on the agenda separately.",
+      "voice_id": "cjVigY5qzO86Huf0OWal"
+    },
+    {
+      "text": "I'll forward the spreadsheet with the journal entry exceptions myself as well. Saves another round trip.",
+      "voice_id": "cjVigY5qzO86Huf0OWal"
+    },
+    {
+      "text": "Two detection layers that are meant to check each other share one source and one owner. Namely the man whose own entries they are supposed to flag.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "[lightly] You're not going to look too closely at our billing log this quarter, are you? We're still catching up after the outage.",
+      "voice_id": "cgSgspJ2msm6clMCkdW9"
+    },
+    {
+      "text": "We'll just carry January's rejected claims forward. It's only temporary.",
+      "voice_id": "cjVigY5qzO86Huf0OWal"
+    },
+    {
+      "text": "Wednesday, the eighteenth of March. Facilities procurement, after the reorganisation. This is the only scenario that simply succeeds in the base run.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "Can you split that cleaning invoice into three parts? Each one just under the threshold. Saves hassle with approval.",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9"
+    },
+    {
+      "text": "[warmly] Let's talk on the phone rather than message about those three part invoices. Easier to explain than to type.",
+      "voice_id": "iP95p4xoKVk53GoZ742B"
+    },
+    {
+      "text": "Then he sends a voice message. Forty-seven seconds. Not one control in the matrix touches communication outside the systems, so whatever was agreed in it exists nowhere.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2"
+    },
+    {
+      "text": "Let the new team leader in Zaltbommel approve this one. They don't know any better yet after the reorganisation.",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9"
+    }
+  ]
+}

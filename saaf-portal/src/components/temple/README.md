@@ -1,0 +1,64 @@
+# Temple module
+
+The 3D progress visual of the SAAF project, as a React module. It has no dependency on Next.js: the host passes the data in
+and gives it a box to live in. The step-by-step tour uses the portal's shared `TourShell` (`src/components/TourShell.tsx`),
+the same guide as the dashboard's onboarding wizard.
+
+```tsx
+import { ProgressApp } from "./ProgressApp";
+import "./temple.css";
+
+<ProgressApp
+  data={progressJson}            // website/data/progress.json (built by tools/scripts/generate_dashboard.py)
+  submitters={submittersJson}    // website/data/submitters.json (for the personal view)
+  identity={{ name, owned }}     // optional: the signed-in person; without it the personal view offers a name picker
+  assetBase="/"                  // where accents/ (sky and ground pictures) are served from
+  theme="dark"                   // "dark" | "light"; follow the host's theme
+  visualisations={manifests}     // the visualization.yaml of every view; the host reads them (src/lib/visualisations.ts)
+  onToggleTheme={...}            // optional: omit when the host owns the theme
+/>
+```
+
+The component fills its parent (`width/height: 100%`), so give the parent a height. It needs a browser (WebGL): in Next.js load it with `dynamic(..., { ssr: false })`.
+
+## Where things are
+
+| File | What |
+|---|---|
+| `views.ts` | the registration of the visualisations (one entry each, loaded only when shown), what each one receives, and the join with its manifest |
+| `visualisation.ts`, `views/` | the `visualization.yaml` contract: the types and checks, and one folder per view with its yaml and preview picture. Format and "adding a view": `views/README.md` |
+| `viewLink.ts` | which view a visit opens (the link, the remembered choice, or the chooser) |
+| `ViewChooser.tsx`, `DisplayMenu.tsx` | the first-visit chooser with a tile per view; the Display menu (scenery, line style) with only the options the view supports |
+| `CalculationDialog.tsx`, `ScoreDiagram.tsx` | "How this is calculated": a few lines per view, a diagram drawn from the weights in the data, a link to the scoring code |
+| `flow/` | the Agent dependencies visualisation (a flat SVG map of which plan feeds which): `graph.ts` (cycles, columns, a plan's whole chain; pure and tested), `layout.ts` (lanes, columns, ordering, arrows; pure and tested), `Flow.tsx` (drawing, pan and zoom, the disclaimer) |
+| `relations.ts`, `relations.json` | which plan's output is another plan's input. `relations.json` is the **temporary** home of that list (see below); `relations.ts` checks it against the plans, merges duplicates, and holds the disclaimer text shown in the view, the panel and "How this is calculated" |
+| `landscape/` | the Islands visualisation: `layout.ts` (islands, slots, bridges; pure and tested), `objects.tsx` (robot, ring, gem, page), `Landscape.tsx` (scene, labels, camera), `camera.ts`, `palette.ts` |
+| `standards/` | the nine standards (`standards.ts`), the table of the standards board (`StandardsView.tsx`, `StandardsBoard.tsx`), and the Standards visualisation: `Wall.tsx` (a wall of 3x3 faces, one per repo; pure and tested), `WallView.tsx` (the view: its own read-only fetch of `/api/standards`, the selection, the link to the engine's focus), `marks.ts` (which plan a repo belongs to; pure and tested), `wall.css` |
+| `ProgressApp.tsx` | the whole UI: chooser, scene, side panel, filters, legend, tour, links (`#/part/<id>`, `#/plan/<slug>`, `#/annex`, `?stage=..&type=..&alert=..`) |
+| `Temple.tsx` | the 3D scene (react-three-fiber): collapsed parts banded by stage, opened parts tiled with plans |
+| `layout.ts` | geometry: every plan covers the same surface of its part, the parts tile exactly |
+| `stages.ts` | the six stages (Draft plan ... Improving) and their red-to-green colours; the stage of a plan is decided by the generator |
+| `liveAlerts.ts` | alerts that need the state of a plan's repo on GitHub (no AUDIT-CRITERIA.md, no tests, quiet, not found or archived): the host passes repo signals in, this adds the alerts. Missing information never raises an alert |
+| `alerts.ts`, `glyphs.ts`, `GlyphIcon.tsx` | alert tags by severity; the symbol of each plan type |
+| `tags.ts`, `Outline.tsx`, `sketch.ts` | where tags and symbols go on a piece, hand-drawn outlines |
+| `filters.ts`, `FilterBar.tsx` | stage / type / alert / sector / personal-view filters |
+| `Scenery.tsx` | sky and stone ground (static AI-generated pictures in `public/accents/`) |
+| `temple.css` | all styles, nested under `.temple-app`; uses the host's tokens `--bg --surface --surface2 --border --text --muted --accent --hover` and the host's `data-theme="light"` on `<html>` |
+
+## Data
+
+The visual draws exactly what `progress.json` says; nothing is hardcoded. Stages, types and alerts are decided by the generator (so there is one definition, tested in Python); this module only draws them and checks that its stage list matches the generator's. The data is regenerated by a GitHub Action in
+`SAAF-Project` whenever `plans/` changes. The plan-to-repo links, sector tags and track proposals the visual shows are
+curated in `SAAF-Project/plans/metadata/`.
+
+**Relations between plans** (which plan's output is another plan's input) are not in `progress.json` yet. Until the plan owners decide where they belong, they live in `relations.json` next to this module, so they travel with it into the portal without any change there. Each entry names two plan slugs, what flows, a status (`suggested` = an AI reading of the plan texts, `confirmed` = checked by an owner, with `confirmed_by`) and the plan lines it was read from. When the generator starts writing a `relations` list into `progress.json` in the same shape, that list is used instead and `relations.json` can go.
+
+## Tests
+
+`*.test.ts` next to the module (`npm test`, vitest) cover the geometry (equal surface per plan, exact tiling), the stages,
+the filters, the repo tags and the hand-drawn strokes, all against the bundled `data/progress.json` (the real plans, without personal fields), so they also
+fail when the generated data no longer fits the module. They find the data from the project root, so they run
+unchanged in any host.
+
+Browser checks (colour fidelity, click-through, the portal page) need a running app and live in the playground:
+`node scripts/colorcheck.mjs`, `node scripts/interactions.mjs`, `node scripts/portal-check.mjs`.

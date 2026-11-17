@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="{{ lang }}" data-style="saaf-light" data-theme="{{ theme }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joiners, movers and leavers · SAAF</title>
+<link rel="icon" href="/static/brand/icons/agent.svg">
+<link rel="stylesheet" href="/static/brand/saaf-light.css?v={{ v }}">
+<link rel="stylesheet" href="/static/app.css?v={{ v }}">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="/" aria-label="SAAF">{{ logo_svg | safe }}</a>
+    <div class="top-right">
+      <span class="chip" id="claude-chip"><i></i><span data-i18n="claude.checking"></span></span>
+      <div class="seg" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="nl" aria-pressed="false">NL</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="lab" data-i18n="app.label"></span>
+      <h1 data-i18n="app.title"></h1>
+      <p class="lede" data-i18n="app.lede"></p>
+    </div>
+    <div class="rcr" aria-label="Reads, checks, returns">
+      <div class="col"><span class="lab" data-i18n="rcr.reads"></span><span class="tile-ic"><i class="ic" style="--u:url(/static/brand/icons/database.svg);width:26px;height:26px"></i></span><span data-i18n="rcr.reads.text"></span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="col"><span class="lab" data-i18n="rcr.checks"></span><span class="tile-ic"><i class="ic" style="--u:url(/static/brand/icons/decision.svg);width:26px;height:26px"></i></span><span data-i18n="rcr.checks.text"></span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="col"><span class="lab" data-i18n="rcr.returns"></span><span class="tile-ic"><i class="ic" style="--u:url(/static/brand/icons/workflow.svg);width:26px;height:26px"></i></span><span data-i18n="rcr.returns.text"></span></div>
+    </div>
+  </section>
+
+  <nav class="stepper" id="stepper" aria-label="Steps">
+    {% for n in range(1, 6) %}
+    <button type="button" data-goto="{{ n }}" {% if n > 1 %}disabled{% endif %}><span class="bar"></span><span class="name"><span class="mono">0{{ n }}</span><span data-i18n="step.{{ n }}"></span></span></button>
+    {% endfor %}
+  </nav>
+
+  <main>
+    <!-- 1 Scope -->
+    <section class="step on" id="step-1">
+      <div class="opener">
+        <div><span class="lab" data-i18n="s1.index"></span><h2 data-i18n="s1.title"></h2></div>
+        <p class="lede" id="s1-lede"></p>
+      </div>
+      <div class="list" id="sources"></div>
+      <p class="note" id="s1-fp"></p>
+      <div class="actions">
+        <button class="btn" id="s1-load" type="button"><span data-i18n="s1.button"></span><span aria-hidden="true">→</span></button>
+        <button class="btn" id="s1-next" type="button" hidden><span data-i18n="s1.next"></span><span aria-hidden="true">→</span></button>
+        <span class="keys" data-i18n="nav.keys"></span>
+      </div>
+    </section>
+
+    <!-- 2 Controls -->
+    <section class="step" id="step-2">
+      <div class="opener">
+        <div><span class="lab" data-i18n="s2.index"></span><h2 data-i18n="s2.title"></h2></div>
+        <p class="lede" data-i18n="s2.lede"></p>
+      </div>
+      <div class="pix-wrap" style="margin-bottom:var(--light-s4)">
+        <span class="lab"><span data-i18n="s2.progress"></span><span id="s2-count" class="tn"></span></span>
+        <div class="pix" id="s2-pix" style="--n:17;--w:520px"></div>
+      </div>
+      <div id="tests"></div>
+      <p class="note" data-i18n="s2.engine"></p>
+      <div class="actions">
+        <button class="btn ghost" type="button" data-back><span data-i18n="nav.back"></span></button>
+        <button class="btn" id="s2-next" type="button" disabled><span data-i18n="s2.next"></span><span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- 3 Exceptions -->
+    <section class="step" id="step-3">
+      <div class="opener">
+        <div><span class="lab" data-i18n="s3.index"></span><h2 id="s3-title"></h2></div>
+        <p class="lede" data-i18n="s3.lede"></p>
+      </div>
+      <div class="tiles" id="tiles"></div>
+      <div class="exc-grid">
+        <div class="list" id="exc-list" role="listbox" aria-label="Exceptions"></div>
+        <aside class="panel" id="exc-detail" aria-live="polite"></aside>
+      </div>
+      <div class="actions">
+        <button class="btn ghost" type="button" data-back><span data-i18n="nav.back"></span></button>
+        <button class="btn" id="s3-next" type="button"><span data-i18n="s3.next"></span><span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- 4 Findings -->
+    <section class="step" id="step-4">
+      <div class="opener">
+        <div><span class="lab" data-i18n="s4.index"></span><h2 data-i18n="s4.title"></h2></div>
+        <p class="lede" data-i18n="s4.lede"></p>
+      </div>
+      <div id="s4-start">
+        <details class="input"><summary data-i18n="s4.input"></summary><pre id="s4-input"></pre></details>
+      </div>
+      <div class="pix-wrap" id="s4-progress" hidden>
+        <span class="lab"><span id="s4-working"></span><span id="s4-secs" class="tn"></span></span>
+        <div class="pix" id="s4-pix" style="--n:30;--w:620px"></div>
+      </div>
+      <div id="s4-result" hidden></div>
+      <div class="actions">
+        <button class="btn ghost" type="button" data-back><span data-i18n="nav.back"></span></button>
+        <button class="btn" id="s4-draft" type="button"><span data-i18n="s4.button"></span><span aria-hidden="true">→</span></button>
+        <button class="btn" id="s4-next" type="button" hidden><span data-i18n="s4.next"></span><span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- 5 Sign-off -->
+    <section class="step" id="step-5">
+      <div class="opener">
+        <div><span class="lab" data-i18n="s5.index"></span><h2 data-i18n="s5.title"></h2></div>
+        <p class="lede" data-i18n="s5.lede"></p>
+      </div>
+      <div class="sign">
+        <span class="tile-ic"><i class="ic" style="--u:url(/static/brand/icons/mind-pixel.svg);width:34px;height:34px"></i></span>
+        <div>
+          <label class="check"><input type="checkbox" id="s5-check"><span data-i18n="s5.statement"></span></label>
+          <input type="text" id="s5-name" autocomplete="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore>
+          <div class="actions" style="margin-top:var(--light-s3)">
+            <button class="btn" id="s5-sign" type="button" disabled><span data-i18n="s5.button"></span><span aria-hidden="true">→</span></button>
+          </div>
+          <p class="signed" id="s5-done" hidden></p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost" type="button" data-back><span data-i18n="nav.back"></span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span class="mono">joiners-movers-leavers-agent {{ version }} · SAAF Project · MIT</span>
+    <span class="mono">Spin-off of Track-2---IAM-final</span>
+  </footer>
+</div>
+<script>window.I18N = {{ i18n | tojson }}; window.APP = {{ app | tojson }};</script>
+<script src="/static/app.js?v={{ v }}"></script>
+</body>
+</html>

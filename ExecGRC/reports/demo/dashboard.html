@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GRC Reporting Dashboard - demo</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-soft: #f9fafb;
+      --text: #17202a;
+      --muted: #607080;
+      --border: #d8e0e8;
+      --accent: #2367a2;
+      --accent-2: #6f4bb8;
+      --green: #23834f;
+      --amber: #b76e00;
+      --red: #c83737;
+      --blue-soft: #e8f1fa;
+      --green-soft: #e8f5ed;
+      --amber-soft: #fff3dd;
+      --red-soft: #fdebea;
+      --purple-soft: #f0ecf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-end;
+      padding: 28px 34px 22px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    main { padding: 24px 34px 42px; }
+    h1 { margin: 0; font-size: 30px; font-weight: 760; letter-spacing: 0; }
+    h2 { margin: 0; font-size: 18px; font-weight: 730; letter-spacing: 0; }
+    h3 { margin: 0; font-size: 15px; font-weight: 720; }
+    p { margin: 6px 0 0; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.93em; }
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 760;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .subtitle { color: var(--muted); max-width: 900px; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .links a {
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .dashboard-grid {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .dashboard-grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .panel, .kpi-card, .finding-card, .insight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      min-width: 0;
+    }
+    .panel { padding: 18px; }
+    .kpi-card { padding: 16px; }
+    .kpi-label { color: var(--muted); font-size: 12px; font-weight: 680; text-transform: uppercase; letter-spacing: .05em; }
+    .kpi-value { margin-top: 5px; font-size: 28px; font-weight: 780; }
+    .kpi-note { color: var(--muted); font-size: 13px; }
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      margin-bottom: 14px;
+    }
+    .section-heading p { color: var(--muted); font-size: 13px; max-width: 480px; }
+    .matrix-wrap {
+      display: grid;
+      grid-template-columns: 34px repeat(5, minmax(54px, 1fr));
+      gap: 6px;
+      align-items: stretch;
+    }
+    .matrix-axis {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .matrix-cell {
+      min-height: 62px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      text-align: center;
+    }
+    .matrix-cell strong { font-size: 22px; line-height: 1; }
+    .matrix-cell span { margin-top: 5px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    .matrix-low { background: var(--green-soft); }
+    .matrix-medium { background: var(--amber-soft); }
+    .matrix-high { background: #ffe7c2; }
+    .matrix-critical { background: var(--red-soft); border-color: #f0b5b5; }
+    .matrix-footer {
+      display: grid;
+      grid-template-columns: 34px repeat(5, minmax(54px, 1fr));
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .bar-list { display: grid; gap: 12px; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 1.2fr) minmax(160px, 2.4fr) minmax(48px, .4fr);
+      gap: 12px;
+      align-items: center;
+      font-size: 13px;
+    }
+    .track {
+      height: 14px;
+      border-radius: 5px;
+      overflow: hidden;
+      background: #e9eef3;
+      border: 1px solid var(--border);
+      display: flex;
+    }
+    .bar { height: 100%; min-width: 2px; }
+    .bar.effective { background: var(--green); }
+    .bar.weak { background: var(--red); }
+    .bar.high { background: var(--amber); }
+    .bar.accent { background: var(--accent); }
+    .bar.purple { background: var(--accent-2); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--muted); font-weight: 720; background: var(--surface-soft); }
+    .finding-grid, .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+    .finding-card, .insight-card { padding: 15px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--blue-soft);
+      color: #174c79;
+    }
+    .badge.critical, .badge.high { background: var(--red-soft); color: #9a2525; }
+    .badge.medium { background: var(--amber-soft); color: #8a5200; }
+    .badge.low { background: var(--green-soft); color: #17613a; }
+    .clean-list { margin: 10px 0 0; padding-left: 18px; }
+    .clean-list li { margin: 6px 0; }
+    .callout {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--text);
+    }
+    .source-list { display: grid; gap: 8px; margin-top: 10px; }
+    .source-item { padding: 9px 10px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface-soft); font-size: 13px; }
+    @media (max-width: 980px) {
+      .page-header { align-items: flex-start; flex-direction: column; }
+      .links { justify-content: flex-start; }
+      .dashboard-grid.two { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .page-header, main { padding-left: 16px; padding-right: 16px; }
+      h1 { font-size: 24px; }
+      .bar-row { grid-template-columns: 1fr; gap: 5px; }
+      .matrix-wrap, .matrix-footer { grid-template-columns: 28px repeat(5, minmax(42px, 1fr)); gap: 4px; }
+      .matrix-cell { min-height: 54px; padding: 4px; }
+      .matrix-cell strong { font-size: 18px; }
+      .section-heading { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Auditable GRC reporting run</p>
+    <h1>GRC Reporting Dashboard</h1>
+    <p class="subtitle">Run demo - posture: Critical</p>
+  </div>
+  <nav class="links">
+    <a href="tactical_report.html">Tactical</a>
+    <a href="executive_report.html">Executive</a>
+    <a href="audit_summary.md">Audit</a>
+    <a href="manifest.json">Manifest</a>
+  </nav>
+</header>
+<main>
+  <section class="kpi-grid" aria-label="Key metrics">
+    <div class="kpi-card"><div class="kpi-label">Controls</div><div class="kpi-value">5</div><div class="kpi-note">Loaded controls</div></div>
+    <div class="kpi-card"><div class="kpi-label">Weak controls</div><div class="kpi-value">4</div><div class="kpi-note">Ineffective or partially effective</div></div>
+    <div class="kpi-card"><div class="kpi-label">Risks</div><div class="kpi-value">5</div><div class="kpi-note">Loaded risks</div></div>
+    <div class="kpi-card"><div class="kpi-label">High risks</div><div class="kpi-value">3</div><div class="kpi-note">At or above configured threshold</div></div>
+    <div class="kpi-card"><div class="kpi-label">Critical risks</div><div class="kpi-value">1</div><div class="kpi-note">At or above critical threshold</div></div>
+    <div class="kpi-card"><div class="kpi-label">Findings</div><div class="kpi-value">4</div><div class="kpi-note">Generated report findings</div></div>
+  </section>
+
+  <section class="dashboard-grid two">
+    <div class="panel">
+      <div class="section-heading">
+        <h2>Risk Matrix</h2>
+        <p>Risk count by impact and likelihood.</p>
+      </div>
+      <div class="matrix-wrap" aria-label="Risk matrix"><div class="matrix-axis">Impact</div><div class="matrix-axis">1</div><div class="matrix-axis">2</div><div class="matrix-axis">3</div><div class="matrix-axis">4</div><div class="matrix-axis">5</div><div class="matrix-axis">5</div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-medium" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-high" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-critical" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-critical" title="R-004"><strong>1</strong><span>R-004</span></div><div class="matrix-axis">4</div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-medium" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-medium" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-high" title="R-001"><strong>1</strong><span>R-001</span></div><div class="matrix-cell matrix-critical" title="R-002"><strong>1</strong><span>R-002</span></div><div class="matrix-axis">3</div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-medium" title="R-003"><strong>1</strong><span>R-003</span></div><div class="matrix-cell matrix-medium" title="R-005"><strong>1</strong><span>R-005</span></div><div class="matrix-cell matrix-high" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-axis">2</div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-medium" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-medium" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-axis">1</div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div><div class="matrix-cell matrix-low" title="No risks"><strong>0</strong><span> </span></div></div><div class="matrix-footer" aria-hidden="true"><div class="matrix-axis"></div><div class="matrix-axis">1</div><div class="matrix-axis">2</div><div class="matrix-axis">3</div><div class="matrix-axis">4</div><div class="matrix-axis">5</div></div><p class="subtitle">Y-axis: likelihood. X-axis: impact. Cells show number of risks and IDs.</p>
+    </div>
+    <div class="panel">
+      <div class="section-heading">
+        <h2>Strategic Impact by Process</h2>
+        <p>Exposure index highlights where residual risk and weak controls combine.</p>
+      </div>
+      <div class="bar-list"><div class="bar-row"><div><strong>Identity and Access</strong><div class="kpi-note">Max score 21 - weak controls 2</div></div><div class="track"><div class="bar high" style="width:100%"></div></div><div>41</div></div><div class="bar-row"><div><strong>Third Party Risk</strong><div class="kpi-note">Max score 18 - weak controls 1</div></div><div class="track"><div class="bar high" style="width:49%"></div></div><div>20</div></div><div class="bar-row"><div><strong>Policy Management</strong><div class="kpi-note">Max score 11 - weak controls 1</div></div><div class="track"><div class="bar high" style="width:32%"></div></div><div>13</div></div><div class="bar-row"><div><strong>Resilience</strong><div class="kpi-note">Max score 9 - weak controls 0</div></div><div class="track"><div class="bar high" style="width:22%"></div></div><div>9</div></div></div>
+    </div>
+  </section>
+
+  <section class="dashboard-grid two">
+    <div class="panel">
+      <div class="section-heading">
+        <h2>Measure Effectiveness</h2>
+        <p>Effective versus weak controls by process.</p>
+      </div>
+      <div class="bar-list"><div class="bar-row"><div><strong>Identity and Access</strong><div class="kpi-note">2 high risks - avg score 18.5</div></div><div class="track"><div class="bar effective" style="width:0%"></div><div class="bar weak" style="width:100%"></div></div><div>0%</div></div><div class="bar-row"><div><strong>Third Party Risk</strong><div class="kpi-note">1 high risks - avg score 18</div></div><div class="track"><div class="bar effective" style="width:0%"></div><div class="bar weak" style="width:100%"></div></div><div>0%</div></div><div class="bar-row"><div><strong>Policy Management</strong><div class="kpi-note">0 high risks - avg score 11</div></div><div class="track"><div class="bar effective" style="width:0%"></div><div class="bar weak" style="width:100%"></div></div><div>0%</div></div><div class="bar-row"><div><strong>Resilience</strong><div class="kpi-note">0 high risks - avg score 9</div></div><div class="track"><div class="bar effective" style="width:100%"></div><div class="bar weak" style="width:0%"></div></div><div>100%</div></div></div>
+    </div>
+    <div class="panel">
+      <div class="section-heading">
+        <h2>Trend Analysis</h2>
+        <p>Residual risk movement and process-level trend pressure.</p>
+      </div>
+      <div class="bar-list"><div class="bar-row"><div>Increasing</div><div class="track"><div class="bar weak" style="width:100%"></div></div><div>3</div></div><div class="bar-row"><div>Stable</div><div class="track"><div class="bar accent" style="width:67%"></div></div><div>2</div></div><div class="bar-row"><div>Decreasing</div><div class="track"><div class="bar effective" style="width:0%"></div></div><div>0</div></div><div class="bar-row"><div>Unknown</div><div class="track"><div class="bar purple" style="width:0%"></div></div><div>0</div></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Process</th><th>Increasing</th><th>Stable</th><th>Decreasing</th><th>High risks</th></tr></thead><tbody><tr><td>Identity and Access</td><td>2</td><td>0</td><td>0</td><td>2</td></tr><tr><td>Third Party Risk</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>Resilience</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>Policy Management</td><td>0</td><td>1</td><td>0</td><td>0</td></tr></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="dashboard-grid two">
+    <div class="panel">
+      <h2>Theme Overview</h2>
+      <div class="table-wrap"><table><thead><tr><th>Theme</th><th>High risks</th><th>Weak controls</th><th>Max score</th></tr></thead><tbody><tr><td>Identity and Access</td><td>2</td><td>2</td><td>21</td></tr><tr><td>Third Party Risk</td><td>1</td><td>1</td><td>18</td></tr><tr><td>Policy Management</td><td>0</td><td>1</td><td>11</td></tr><tr><td>Resilience</td><td>0</td><td>0</td><td>9</td></tr></tbody></table></div>
+    </div>
+    <div class="panel">
+      <h2>Findings Snapshot</h2>
+      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Severity</th><th>Confidence</th><th>Theme</th><th>Finding</th></tr></thead><tbody><tr><td>F-001</td><td>Critical</td><td>High</td><td>Identity and Access</td><td>High residual risk linked to weak controls: Credential theft through phishing</td></tr><tr><td>F-002</td><td>High</td><td>High</td><td>Third Party Risk</td><td>High residual risk linked to weak controls: Critical supplier outage</td></tr><tr><td>F-003</td><td>High</td><td>High</td><td>Identity and Access</td><td>High residual risk linked to weak controls: Privileged access misuse</td></tr><tr><td>F-004</td><td>Medium</td><td>High</td><td>Policy Management</td><td>Weak control requires remediation: Policy exception review</td></tr></tbody></table></div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

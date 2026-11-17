@@ -1,0 +1,12 @@
+{
+  "url": "https://github.com/modelcontextprotocol/python-sdk",
+  "tag": "v2.2.0",
+  "commit": "9972c21aa42054fb1450c5fc614761ed11847ec6",
+  "sdk_version": "2.2.0",
+  "examples": [
+    "examples/snippets/servers/mcpserver_quickstart.py",
+    "examples/snippets/servers/basic_tool.py",
+    "examples/snippets/servers/structured_output.py",
+    "examples/snippets/clients/stdio_client.py"
+  ]
+}

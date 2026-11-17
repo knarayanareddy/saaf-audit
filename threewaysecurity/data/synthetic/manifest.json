@@ -1,0 +1,1673 @@
+{
+  "created_at": "2026-03-24T15:15:46.046514+00:00",
+  "files": {
+    "01_suppliers.csv": {
+      "hash": "37c71e64f5d275036c8bb8fc6de150aaf5636b16c4079cbd98e3903aea729fe4",
+      "size": 989
+    },
+    "02_parts.csv": {
+      "hash": "df3045d056aefb3704975bae1123ba49da8adc481205b86d1a0e0b731725ce2b",
+      "size": 3665
+    },
+    "03_contracts.csv": {
+      "hash": "775f345da728f0ee3c4bff180d37056fce29b5da7dba8c87126c2db562f108fa",
+      "size": 3148
+    },
+    "04_purchase_orders.csv": {
+      "hash": "80156b8f561a0eb3ec424b52405f94cc3df15955d622b0ef4db4b6e34b04ced0",
+      "size": 20421
+    },
+    "05_goods_receipts.csv": {
+      "hash": "9ce78c1ba7cb2bee4239eb05a2124964316b037fa71b67cf1bda7552017472d2",
+      "size": 15610
+    },
+    "06_payments.csv": {
+      "hash": "e95022de6ec04e16502b67c23cac95a504e4bd988f52afe12ed86e73576951df",
+      "size": 15102
+    },
+    "audit_trail.jsonl": {
+      "hash": "edb73df5f01e10e167b9af4fc005d953846ac90618cc5c68cea6ef00721b508b",
+      "size": 509658
+    },
+    "blocked_queue.json": {
+      "hash": "d1f12dda384bff413fe6aee3f484b14feb2128aaf7b0b5ae0bb8880d62d5e65f",
+      "size": 45791
+    },
+    "check_results.json": {
+      "hash": "b215db44943839b3660d445d3c0116fa14a74fc893f879e22451bebfaa7fa0b5",
+      "size": 254940
+    },
+    "decisions.json": {
+      "hash": "db4285edfb3ca93c06022d0011b6e7b9512a809aea5ca06b92a12a45846a031d",
+      "size": 313121
+    },
+    "escalation_register.json": {
+      "hash": "64fc5e87c81187369aeeb2132cd1cb261f854add62943d372cf97be7d644dde2",
+      "size": 72852
+    },
+    "evaluation_metrics.json": {
+      "hash": "981636cf3c59d075fa8859d50aa9ecf017c83e292ebec52f1112a86a116e52ac",
+      "size": 763
+    },
+    "invoices\\INV-2025-00001.json": {
+      "hash": "d10c5fb63f1a80b61b320951a550162cff0c80b0f5f44237d5465180d34c356e",
+      "size": 636
+    },
+    "invoices\\INV-2025-00001.pdf": {
+      "hash": "780c27b44bf7a596e786138a1910076c81b1fbb82c237a297c946a3ed10e1ba2",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00002.json": {
+      "hash": "e98eb72bf06886a1cead03ab8b90c96ddba850bf9fa2d04792621fd7cbe896ea",
+      "size": 645
+    },
+    "invoices\\INV-2025-00002.pdf": {
+      "hash": "90b5f96c496d23a20ac9c6b24c84051e6fc2f5a732deba594ab1eff43dcec584",
+      "size": 2619
+    },
+    "invoices\\INV-2025-00003.json": {
+      "hash": "d92ccf6d7be25a75831220f36bde4913ae5bbce3645ae548170c59e80df024e0",
+      "size": 638
+    },
+    "invoices\\INV-2025-00003.pdf": {
+      "hash": "0d85457ca8ee594a542133f27a2458cc8700739c7ce2b3262dd7634ded7d21fa",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00004.json": {
+      "hash": "f85033fb327bdb74ffd1607ef1516f2e063b0f2d9879f8899a290e3e76af7c8a",
+      "size": 640
+    },
+    "invoices\\INV-2025-00004.pdf": {
+      "hash": "f12c3861d88119c4daede647c67ff1e953917a8287ca9ae4bdecbc924ac9106e",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00005.json": {
+      "hash": "e6237b401ebd86aac622cb56f084c7103494092e02a6c7fa8a82079603a50052",
+      "size": 628
+    },
+    "invoices\\INV-2025-00005.pdf": {
+      "hash": "2d9a44b01d556d454e382494c11fccfec6a5093f4df2719eeed4fcab440eb028",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00006.json": {
+      "hash": "28fd3193bf4e4cd896d3b2d2f3317b5abb438c533e011412b926de8657db034e",
+      "size": 624
+    },
+    "invoices\\INV-2025-00006.pdf": {
+      "hash": "1e49caa5e5c412209db86e7ab45b36be9877c570b88cd080f442f3f683933f4d",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00007.json": {
+      "hash": "b4e02e4f475bddbe4dfefbe3f34c2cc116e6376cd3e9886aceaf32c8bde6cf04",
+      "size": 627
+    },
+    "invoices\\INV-2025-00007.pdf": {
+      "hash": "02af180ceec2dbb49785960ede1a0212b4dd2b9d9ffbb1aa9710d161b1059a72",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00008.json": {
+      "hash": "1cc11f82ad3d5b45c689c47336fff1732e0a31963053a199f1c2236fc8710e09",
+      "size": 624
+    },
+    "invoices\\INV-2025-00008.pdf": {
+      "hash": "637a2be9a0036399f693bef9a728d3d62b6d96008b75e08c74d4284fa811fceb",
+      "size": 2588
+    },
+    "invoices\\INV-2025-00009.json": {
+      "hash": "af406a1bf410ce1a972f62ae7dec3afb34f87e852ede918affdd96f9cdddc55c",
+      "size": 633
+    },
+    "invoices\\INV-2025-00009.pdf": {
+      "hash": "d9b02de6ce125c203149730816eb4d55c0a83ad87e524a687503d889b1198095",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00010.json": {
+      "hash": "aef2ac79f2941925519df543b2aae09f0f5730cf9d0f37f12ab146dbb00b75ab",
+      "size": 624
+    },
+    "invoices\\INV-2025-00010.pdf": {
+      "hash": "0a8cd03062446bb56069e5c9b9df7cef58a4bd4a604f57c0fe075975e68a91f4",
+      "size": 2590
+    },
+    "invoices\\INV-2025-00011.json": {
+      "hash": "0a2cb615ef98f2cae52bc450c0542f293a813671b06e1e130b6323faf3c6cdc1",
+      "size": 636
+    },
+    "invoices\\INV-2025-00011.pdf": {
+      "hash": "f8822ce57779937a4440ebcf2a5744288aa6d37f36b2c5a6fc4df5ddffee8650",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00012.json": {
+      "hash": "a700d7b7691225b752d806be13b8cedb40db1f1df9e0ac7be2f1fde73efa21cb",
+      "size": 648
+    },
+    "invoices\\INV-2025-00012.pdf": {
+      "hash": "84aa384f127b19c0d9a0083f7b6dfc2f8bb6503b94a064464dc0da4ccd0ae75b",
+      "size": 2617
+    },
+    "invoices\\INV-2025-00013.json": {
+      "hash": "7be2292f5a91532cf17562710ee7eedc72f45fa43dc0d52b244beb84dd1e98a1",
+      "size": 627
+    },
+    "invoices\\INV-2025-00013.pdf": {
+      "hash": "39f7684bed4e31c3d49292461512d122506134100c7750721c6b32249b37e08f",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00014.json": {
+      "hash": "6e2b5677412b637a7d264dcc9ead4ade7d4cc0cd4cca84641968fad2f8b0d6a9",
+      "size": 635
+    },
+    "invoices\\INV-2025-00014.pdf": {
+      "hash": "c9d4e5535a150cb30699a8a6614fd67d1ce03ca4f7dc669bf6c52ec78b5d97ad",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00015.json": {
+      "hash": "a200b089f57151e3cf48ab740d866c87ca020e658d73c80e4f88b1fe1c20a18b",
+      "size": 636
+    },
+    "invoices\\INV-2025-00015.pdf": {
+      "hash": "3dc5938b1a2ec25380420843c0dcc2c8fc2e41581bddbb136ffeb6a0fbb4e380",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00016.json": {
+      "hash": "5ebe650a54311e9cb075889a5c38a6878e697df10acd04f2f4db60946cbb112c",
+      "size": 643
+    },
+    "invoices\\INV-2025-00016.pdf": {
+      "hash": "4e12079c3ee0ea6e4f7ebdddbb79bf767dbf5f7e692f7aae8ef787123c8d9b98",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00017.json": {
+      "hash": "a5fb6652ce56de08763accaee6329a1d023d81c2e1d2762f9467ed113450c6c2",
+      "size": 628
+    },
+    "invoices\\INV-2025-00017.pdf": {
+      "hash": "1e90c687e986ba79df1e8996b3fabc873c3ce9b19b943b6bef4b8460b7b73228",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00018.json": {
+      "hash": "81708d9cd5d768c738bd05d0369bd7f812b64f76896e5c89613e0a7a9ff6f940",
+      "size": 623
+    },
+    "invoices\\INV-2025-00018.pdf": {
+      "hash": "7f87ecbe175343ddfae6410fd9411a2cd7775147b31b6817dacda9034b67c43c",
+      "size": 2588
+    },
+    "invoices\\INV-2025-00019.json": {
+      "hash": "e2c2303e4bd61c76611a16f0289b330e64411f69d8bf8be344e2faf82313e5e6",
+      "size": 627
+    },
+    "invoices\\INV-2025-00019.pdf": {
+      "hash": "a4330da48c0f8ebe86b4455fb47ff11324b8e01ea2dbe79316dde5c72cd862d3",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00020.json": {
+      "hash": "ca8a266902b417a5d913e0eb7541c22dbb6399e2e6234305e33fa26ca5280f58",
+      "size": 631
+    },
+    "invoices\\INV-2025-00020.pdf": {
+      "hash": "3f117ffbb1331c6bf0661f5e599f14c13294263266425aa90724fd8c3ac56622",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00021.json": {
+      "hash": "c6a74836354ae73c46e28eeb2c8aa260a7d1c2f4d9a35151bb2fce7140b1eaea",
+      "size": 641
+    },
+    "invoices\\INV-2025-00021.pdf": {
+      "hash": "f36b8cbe6306e2243cdd9c7b2ac98ea48ca6aa5e7a42ec4575abaf7b74926338",
+      "size": 2617
+    },
+    "invoices\\INV-2025-00022.json": {
+      "hash": "b94c32b6f6432259d8f4287b189c00e30e662a77bd6194379dd0ef56c67a1865",
+      "size": 631
+    },
+    "invoices\\INV-2025-00022.pdf": {
+      "hash": "d8044c0cd0541fd71f346b34a992ba83839df4acf7eae80979350bccbbf66efa",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00023.json": {
+      "hash": "6e2033bad961db911385527755b6f54bf59dc275c0398e40edaa4a8475c7bf53",
+      "size": 634
+    },
+    "invoices\\INV-2025-00023.pdf": {
+      "hash": "824e2a6e09e169724e8e7beee6450006a24540d9fe662260009d09ff1306361e",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00024.json": {
+      "hash": "3d463c8e4eb5650df1c0c831c521d4e3bfa4bc1b14e9180e97167c37d2cdbf36",
+      "size": 635
+    },
+    "invoices\\INV-2025-00024.pdf": {
+      "hash": "0667deae03981d0f554ac1b6718444ac54d75eaf5f62f101627630858cfe33f8",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00025.json": {
+      "hash": "eab7f7965131c1e2533c4e2197d794ad102a05ec9be1374d4849720d4e44cc1a",
+      "size": 645
+    },
+    "invoices\\INV-2025-00025.pdf": {
+      "hash": "cb2060f05917809b7ba77775394d09a87f10591a6728a0a6c86a0dbd48dfa946",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00026.json": {
+      "hash": "96c354ddff1614d35d17fc58e54601e94326e1cf116f8995b3254b61e6455dd4",
+      "size": 636
+    },
+    "invoices\\INV-2025-00026.pdf": {
+      "hash": "6001666ffe8f00e4095e6de4f7b8a3275e2421393d82d8f2541e24dfebc462c9",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00027.json": {
+      "hash": "9b1fbbcb77f9c9b735fdc678e648fc3df90abb34100fad1856b3c1477de9a2ba",
+      "size": 638
+    },
+    "invoices\\INV-2025-00027.pdf": {
+      "hash": "62e096fcc20d603fa057d449efa1c93d23574be37d2f40aabf1ff7fc2797a3e5",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00028.json": {
+      "hash": "4dbb1d7ea057ce7db0ab8c5ee3fb7376ffc268693a79841553e1886a14e4b717",
+      "size": 627
+    },
+    "invoices\\INV-2025-00028.pdf": {
+      "hash": "8337a1c7a409b019b021dec255fbeda91ae573967784b0484fbe12c06adefcf6",
+      "size": 2598
+    },
+    "invoices\\INV-2025-00029.json": {
+      "hash": "fd9fa743a6004aca16321d19f8505d1eae93d4327c8b0408ce01455b02d76613",
+      "size": 625
+    },
+    "invoices\\INV-2025-00029.pdf": {
+      "hash": "02668e79cbdea667f8dc724e93bb74e3c7f37e0d8cb11c57f2e911360bdd18f0",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00030.json": {
+      "hash": "5911c5cbf25a412514b527dd7f57902042042654dc197cc0af2c8c27f411a91d",
+      "size": 638
+    },
+    "invoices\\INV-2025-00030.pdf": {
+      "hash": "eee884d236eb9f546dde65729fe044054de5f471e6b411cb780782c5ec11b5f3",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00031.json": {
+      "hash": "44416cfcae62a74c8bd121894cecc777539cf3ce2a61a7962fb6ab3ced678996",
+      "size": 630
+    },
+    "invoices\\INV-2025-00031.pdf": {
+      "hash": "1e2e14844b2bb2e66e3dc79c1ce02546e8dbf80ea1cd09952b03534318cb9790",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00032.json": {
+      "hash": "d56b1a06ca2f871eb668becbfeff327abe0b2c9e4da489da41a2139c174ec4f8",
+      "size": 643
+    },
+    "invoices\\INV-2025-00032.pdf": {
+      "hash": "f57b406c71edebfa2fd7d09b5fab2efb1a934d130e0aa396f445719d255a8769",
+      "size": 2620
+    },
+    "invoices\\INV-2025-00033.json": {
+      "hash": "f5397e65117cdb02686b61ca3318c193e035d006b67e144fdd1c8ccf5aa7ffd1",
+      "size": 636
+    },
+    "invoices\\INV-2025-00033.pdf": {
+      "hash": "91b5340a97da5c4db4c4c54a702798f762ace49cd503f4851fb44409e03c87eb",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00034.json": {
+      "hash": "43b10d52ea03b1ffa799fca0177fb63ad08f59a7f675f0ff3fa9ad318f6417df",
+      "size": 631
+    },
+    "invoices\\INV-2025-00034.pdf": {
+      "hash": "99077fee1fe6c8fe361167817ca2d6d91e762cf13ad3aca60c8dd5aa20bdcd34",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00035.json": {
+      "hash": "ccf6eb3ab4f48793ae071ea638ad824acd6516a004944e53fbbff84d23f416ae",
+      "size": 646
+    },
+    "invoices\\INV-2025-00035.pdf": {
+      "hash": "a1ada3cad369b3ddf026429930f26c121d257ba2816d284b8243c344ee9b4d09",
+      "size": 2617
+    },
+    "invoices\\INV-2025-00036.json": {
+      "hash": "dd275d3995ca006742554b9a57c29f4a5aa3f2dab33415067b9c1aa75a2fc5ff",
+      "size": 628
+    },
+    "invoices\\INV-2025-00036.pdf": {
+      "hash": "dfc2992f01bed0f957af9086305ce0de28461fc8984e18bb4f1bd3e7b19116d6",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00037.json": {
+      "hash": "8464c42a80515441f2e094deb6f45bcc8fb3956df9f76bee9e8ba4de4c8d4f94",
+      "size": 639
+    },
+    "invoices\\INV-2025-00037.pdf": {
+      "hash": "cdc1352e9e88aae29ba3d92200b4f8cda7b928f1b8cf90012cf7a50a1943b007",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00038.json": {
+      "hash": "c0525ebce92ab4001596b6fe7e4fc94b61c6c9665d9eff66ca90050fd7e665f6",
+      "size": 633
+    },
+    "invoices\\INV-2025-00038.pdf": {
+      "hash": "82624d2b6717426f652c0de6f5b15d0f5b1980bfc547a8049e5f5e4a7c0e321f",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00039.json": {
+      "hash": "f966f301a4251cb3dc15f17563d5b93b333a48527e053a0e459956e4a87707dc",
+      "size": 632
+    },
+    "invoices\\INV-2025-00039.pdf": {
+      "hash": "81ac4ad7b22e1e3a3a896185cb9b081be49aee2a7a8b29491a526bfb49deb518",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00040.json": {
+      "hash": "c4db4d5cff804ff85e032bd941733628982f16d24e8c16371cce65d761e1ba68",
+      "size": 634
+    },
+    "invoices\\INV-2025-00040.pdf": {
+      "hash": "30a768a7ee202ff59025a9bb6630421f32abc8ac41ca7a440147fe1fe83ea62a",
+      "size": 2599
+    },
+    "invoices\\INV-2025-00041.json": {
+      "hash": "a1ef7d25c8e87275c51b13ad1962cbb5c8bde3315eedb78b643d8aba0a6ef9f9",
+      "size": 633
+    },
+    "invoices\\INV-2025-00041.pdf": {
+      "hash": "2a2b520653b12918773b8d9d4458cfaf6dfb317cee1507f685e086bc3789e1c9",
+      "size": 2597
+    },
+    "invoices\\INV-2025-00042.json": {
+      "hash": "fe3bd1cc6dc8c462a4787b731ed1b7332cf5da8c07f73b602c5dd9646bb3acc5",
+      "size": 638
+    },
+    "invoices\\INV-2025-00042.pdf": {
+      "hash": "eacff676c2ad1f5a68b09b8c20a21af422dda6944f4f869df39eaef461019e1e",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00043.json": {
+      "hash": "23892a3b8e1404b20dc0d1f78ab8abb636c47c81d5a6c07539027bb16e19c467",
+      "size": 630
+    },
+    "invoices\\INV-2025-00043.pdf": {
+      "hash": "45ed6f93381f40e0bff3fe9f959c0e25177130ff6b1dd42f73a53aca290a2985",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00044.json": {
+      "hash": "7f3b031cd8122422540053ddb6777a867bff55bc249b235d0403310543903ca5",
+      "size": 645
+    },
+    "invoices\\INV-2025-00044.pdf": {
+      "hash": "98efbc1fa3df078932b8d902cf0d829354970675a1b45e56b15487e1afdcc5f5",
+      "size": 2620
+    },
+    "invoices\\INV-2025-00045.json": {
+      "hash": "f908ab82f826fcdde1b26215d769b135f2a93073a53678e5b3c51ae44832aa93",
+      "size": 645
+    },
+    "invoices\\INV-2025-00045.pdf": {
+      "hash": "ac7807621706517caf6ecc7d226a543c9ff3a79af555f52e105ed655f65813d0",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00046.json": {
+      "hash": "5104ba9d414f94bc6dec38e8ea938a37ed5f68abe70b70de81a956660e0fccd9",
+      "size": 635
+    },
+    "invoices\\INV-2025-00046.pdf": {
+      "hash": "0a71c32d5853bafa7230f7d3995055a331b4d9ffc33a3d7ffc02f5c20c476cad",
+      "size": 2599
+    },
+    "invoices\\INV-2025-00047.json": {
+      "hash": "5ebe5232575d4359d06a4a1c4b4fe8aa7f6ed18b9b9ab4316f0b305dd097a49e",
+      "size": 630
+    },
+    "invoices\\INV-2025-00047.pdf": {
+      "hash": "e6d1bcf799a56d8a571001970170478b4e1f1f961aea86b2c7595ce8bb3ba5a2",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00048.json": {
+      "hash": "e87ee3de1e39e0b2f7bc9abcfefaa8864f3729a2c8f1a1d6af1073d11409ce43",
+      "size": 634
+    },
+    "invoices\\INV-2025-00048.pdf": {
+      "hash": "6683fd4706b6c4bca1fdee15390cb00d8f3aa07c3924048331236af4dec36795",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00049.json": {
+      "hash": "d84d2fbdf633c9c1f6bfc62e63d2737252edd4afa10f5d6b91c5173194b79a22",
+      "size": 633
+    },
+    "invoices\\INV-2025-00049.pdf": {
+      "hash": "494f76ce18e275c979f32d8a5b2d9189ca59164f543681c00c7f2ffe2b66f676",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00050.json": {
+      "hash": "1dcd70a7ca3fdbc2b9299f4621b80a73a2a93fb9def9f4a2228bd7c72655ff9d",
+      "size": 628
+    },
+    "invoices\\INV-2025-00050.pdf": {
+      "hash": "d94ae76ee64bc14f274ddc25476d071c16e2a20340293105023c01eba33f832f",
+      "size": 2600
+    },
+    "invoices\\INV-2025-00051.json": {
+      "hash": "f95ed28cf52d0d7d1f4d04bb4238003dcb93fc50a560858e3d231d91a1131446",
+      "size": 630
+    },
+    "invoices\\INV-2025-00051.pdf": {
+      "hash": "7cad307c8404674aa38e3205d696717032ec512830eadb74346915278767c1b5",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00052.json": {
+      "hash": "974830d21fe1b4821ae3346123ac960bd818c70bd0bc7307b300cbb790290a40",
+      "size": 629
+    },
+    "invoices\\INV-2025-00052.pdf": {
+      "hash": "3edd4bb46fed90033f5d19fbcf04c3f4af29db6b85569a37152de48597e9cb46",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00053.json": {
+      "hash": "fdea9498ec837d6269c35095d8d5f67ba1afa652b279041d6b49c34744e15fbc",
+      "size": 626
+    },
+    "invoices\\INV-2025-00053.pdf": {
+      "hash": "03546b784ad8eda4b877af9017daf36f1b59775fa5e8fbea25114d271e3bc9c2",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00054.json": {
+      "hash": "a103c31f9e612693537179193762cc5622e28ccbe816346c068cbea55c05aa86",
+      "size": 634
+    },
+    "invoices\\INV-2025-00054.pdf": {
+      "hash": "88807834a33d63de1b48c13eef76a16431f51a7130c826baecbbbb686cfca543",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00055.json": {
+      "hash": "5fc5feb3ac570983fb80b6b271d30b9ab78caea4131b0c15e2f68a27ec2e2d35",
+      "size": 629
+    },
+    "invoices\\INV-2025-00055.pdf": {
+      "hash": "c97d2414a54f7d610536f08456de1713f0244ffb3528d1ec95798e43e447dfc5",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00056.json": {
+      "hash": "433d161dd76bff31b1da649c71f51b3a9d14f3e81020c5eab6da72da9a99f530",
+      "size": 634
+    },
+    "invoices\\INV-2025-00056.pdf": {
+      "hash": "95974351474b0f5e199aaffec00da42c9facfc981b963592286fe5270b79be73",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00057.json": {
+      "hash": "9d2c627a380f39db23af0c4ca6d548350d00d3752852883a41d86ec7a2082350",
+      "size": 643
+    },
+    "invoices\\INV-2025-00057.pdf": {
+      "hash": "fa474ba3d69feb37c61230dbde9d47535d773fdd987e1aa69aa353f99ff7ba10",
+      "size": 2617
+    },
+    "invoices\\INV-2025-00058.json": {
+      "hash": "24f4010934e6717b22c421e7ca570d76f313c2a84a8248aea287aca8c00477cb",
+      "size": 641
+    },
+    "invoices\\INV-2025-00058.pdf": {
+      "hash": "637dd1c0131bf7614b83088bad62a595830e0e701bf0588e88b758d364cbc9d6",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00059.json": {
+      "hash": "9f6a6f1853dbb0392c3ee9d5018e95872b9eddf3de2ebbe972a0cf94a51d90ab",
+      "size": 631
+    },
+    "invoices\\INV-2025-00059.pdf": {
+      "hash": "f251c3197f572eeaeb0c1a35a2a8aeacfe2e91ff7b0adbae123885d97b8966fc",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00060.json": {
+      "hash": "518896724817ce83bc28242441d98fae8717eaca5acd8e98a8ddf66d675f69b3",
+      "size": 632
+    },
+    "invoices\\INV-2025-00060.pdf": {
+      "hash": "7394ad61c606b2a1059b63ebdd8eedb060e3fd1d33fb4b3e72c8237bd72526fa",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00061.json": {
+      "hash": "92bca8352cdb482c1e9ecfedcfcbf17dc048471dd8fe4802d7d9aeacfcf8ed63",
+      "size": 629
+    },
+    "invoices\\INV-2025-00061.pdf": {
+      "hash": "5bd5524eca0fccff2b3e25e529f7b0071d9ae28acb30d1e9269b04765eb14d66",
+      "size": 2590
+    },
+    "invoices\\INV-2025-00062.json": {
+      "hash": "06f5c9bdb9001401c63b03b7e73558c57e417aa41640c6098d1d8e5465a736c2",
+      "size": 630
+    },
+    "invoices\\INV-2025-00062.pdf": {
+      "hash": "2f7f3d3c5985cd5c952fb721bc9af3c6b2318316bf72ee0644128e113256373e",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00063.json": {
+      "hash": "558948db95ed0fb1e818f31db1c0e33afb26d8d309a39a4ea187510627384446",
+      "size": 641
+    },
+    "invoices\\INV-2025-00063.pdf": {
+      "hash": "0c101aa3a9db586994a2549d49d31bc7202d1da016efcb9a2754d8f11036d985",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00064.json": {
+      "hash": "84c6c4bbb67d5a659fc2b62b3cd9a5f521772b76b487d6df872f780ebb949d37",
+      "size": 637
+    },
+    "invoices\\INV-2025-00064.pdf": {
+      "hash": "6d3544ba9f106149715114a805eeaa791e5b8f3e017dae25cada0036df3a39ef",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00065.json": {
+      "hash": "f32ac6311460990d2237d89667a565aa7823e8ab84841c66be4c9e154ac9d5ab",
+      "size": 630
+    },
+    "invoices\\INV-2025-00065.pdf": {
+      "hash": "283edf9affaf15f3f43f5d155ba9e86c5ef90ddd234ad7ceb32fedc9ab7b15fa",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00066.json": {
+      "hash": "d6f95aae8820423a836ed7c802d0c71bef503cb424ef3629431ce2461d0940e0",
+      "size": 638
+    },
+    "invoices\\INV-2025-00066.pdf": {
+      "hash": "dfcdb511404d4fbcd753db5aa56ad3a21ae457b44c5c1ad987920272f8152f17",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00067.json": {
+      "hash": "587e8223f6060be5083582ffe105a7500d1640767e4639cc6a81f4732db2a06f",
+      "size": 627
+    },
+    "invoices\\INV-2025-00067.pdf": {
+      "hash": "fd26bba7ecc23b5094819eafda82b958cc8c510fcdc60fc3e6844f5b254c5e09",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00068.json": {
+      "hash": "f82cde0260717860746b56751f2a7f14ff21ac82e8c3a8c981ad54bbba21e28f",
+      "size": 636
+    },
+    "invoices\\INV-2025-00068.pdf": {
+      "hash": "e47d7946db89158b5d715c22f86d7988f6aed8c92e9cbc2f7b08aa59d4da4fa1",
+      "size": 2622
+    },
+    "invoices\\INV-2025-00069.json": {
+      "hash": "334d303db809c8d82a9a3175e3bf5a929a7ac5a3470d46d2c4b7e4abb5232224",
+      "size": 623
+    },
+    "invoices\\INV-2025-00069.pdf": {
+      "hash": "06a235690806ad2ce07cd6b754f176fbb40b5cd409b201263f9e1f4b6d416719",
+      "size": 2588
+    },
+    "invoices\\INV-2025-00070.json": {
+      "hash": "fc2397ebf8fc5355377c518916b795db08377fbccef17de5dad930b9de3b4e98",
+      "size": 635
+    },
+    "invoices\\INV-2025-00070.pdf": {
+      "hash": "fc5602a3f1735e518e34c8a4ec6532a500bb9441c73a5a236d2484999d51d62c",
+      "size": 2600
+    },
+    "invoices\\INV-2025-00071.json": {
+      "hash": "ffec83743c48d91e0c6b35c06193422c650a41ebd866e86b2813847aed27234b",
+      "size": 632
+    },
+    "invoices\\INV-2025-00071.pdf": {
+      "hash": "d8c2f522f9b964c9c2329997c70b3c6da1d6bf16262b33339d6d77bba60b0327",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00072.json": {
+      "hash": "d8544a87e2273eff020f60f1e73ea711ecb992a2c23d9673cb6dceb95c979163",
+      "size": 634
+    },
+    "invoices\\INV-2025-00072.pdf": {
+      "hash": "666b3825fe1b92e625690cefec1bdc6d23dbe7c6e24ea8c3306f85008607cb31",
+      "size": 2594
+    },
+    "invoices\\INV-2025-00073.json": {
+      "hash": "16004954c11bf326cb57b35e12129fac2d4f204501edc3b05e0f03afbaaa4a46",
+      "size": 627
+    },
+    "invoices\\INV-2025-00073.pdf": {
+      "hash": "9176da9cbf3262d3b604636c6b3e444830717571ebff088c694371e4b98a37ff",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00074.json": {
+      "hash": "dffc2d3a179a9b0bac1102b1a3939144fbf0ddad15cd1febb155f721735e5674",
+      "size": 631
+    },
+    "invoices\\INV-2025-00074.pdf": {
+      "hash": "335b4ab1293c80d9bc6b5c94deaae44eebfb10f6b3c634024fd3d77a6d272c8c",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00075.json": {
+      "hash": "48d461ec0c5d926a0b25e66a62da798c65aa53a9e360b6994c2778fab9bc2fe1",
+      "size": 640
+    },
+    "invoices\\INV-2025-00075.pdf": {
+      "hash": "13d5b74c0e29ee43b0e468cc501112a4622e549827a19136f15942cdfa48022c",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00076.json": {
+      "hash": "8a752503b73fa958d93d9826ee5644f5d5922816dee2d8b7df6323492b2f5a09",
+      "size": 636
+    },
+    "invoices\\INV-2025-00076.pdf": {
+      "hash": "a0f37bdc88477ee743f62323e30ee1efbbd7461d207f46b57304d9b5c06b35e7",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00077.json": {
+      "hash": "a786c4434337755bba5eec04e38c5e82846859d0e42968c676701e33db0848bc",
+      "size": 630
+    },
+    "invoices\\INV-2025-00077.pdf": {
+      "hash": "5746402a0a166386d30125601b2f4b52e16ac977df21508ad8aea7ef9d295b80",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00078.json": {
+      "hash": "6a6996c19e444086492afaaab13a9e0c5e05d63a35af66f61b2c3fdf42446534",
+      "size": 626
+    },
+    "invoices\\INV-2025-00078.pdf": {
+      "hash": "4a050ab35dfb70066a69c6158c897dd930d6eb687197781feb1b90b2faf30e73",
+      "size": 2600
+    },
+    "invoices\\INV-2025-00079.json": {
+      "hash": "6a2f9f0ce7ee5efb67a22d13bbfa7acc0ac954c3f0f615c1d899268a47f87f5d",
+      "size": 626
+    },
+    "invoices\\INV-2025-00079.pdf": {
+      "hash": "c5d04b17c1d57b8268060e8b63a8e13127bc91938b54825c2658c0d69abff3a0",
+      "size": 2600
+    },
+    "invoices\\INV-2025-00080.json": {
+      "hash": "a26c3c041700f167f1275f86719d29aa7a0445c139d6d2999ec17113de9f4371",
+      "size": 642
+    },
+    "invoices\\INV-2025-00080.pdf": {
+      "hash": "b68e579fdad855ebefbd8c2e7bb8facfd4cfec4334b1791e47a28f6e29798bc1",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00081.json": {
+      "hash": "4d909aa8e738a72819d26a0b1346fb29d273f0c03d37e80531c1d9bc6cb95f5c",
+      "size": 634
+    },
+    "invoices\\INV-2025-00081.pdf": {
+      "hash": "def047cdafe1e9c2a536bd76030942e416cc96771dc9f2970eba582aa7375354",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00082.json": {
+      "hash": "26a428d1f67a6d7f4a68bc6654dbf05cffea49a8a3ef7d576b6ac52780e5a7b4",
+      "size": 626
+    },
+    "invoices\\INV-2025-00082.pdf": {
+      "hash": "de83b5f1c8e8801d24c23ef953eeb7093d95f45a553fe04c1443aacdec0ecad1",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00083.json": {
+      "hash": "436b58e8b6ac83f69a1105614dee3a05ea3897f11e52b8d0a1d52f26edc0f45d",
+      "size": 631
+    },
+    "invoices\\INV-2025-00083.pdf": {
+      "hash": "72cd4e7b9cde2accd7dd04b935b5b5ad34b8ee57f662a83187926d0fa408622a",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00084.json": {
+      "hash": "f5f016901456d583a6493e03617538a282e295967589ca84b9e2f7b74fbe6931",
+      "size": 633
+    },
+    "invoices\\INV-2025-00084.pdf": {
+      "hash": "2e9850ebfcc09b041816ba938f5895c2942eb75c42aa0b1edce20b1217bdd7d4",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00085.json": {
+      "hash": "b6e3c5e43ec5516653103091da2a48843b33069febf0a4f479efeca86f839681",
+      "size": 635
+    },
+    "invoices\\INV-2025-00085.pdf": {
+      "hash": "ea9f96ed912d19627730d534ede7e76829e39e27b985eabf0a6b8305427313b3",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00086.json": {
+      "hash": "027175fc6b33909401c082e59de05cdc3647823533d543c7790feff4a65f27bc",
+      "size": 634
+    },
+    "invoices\\INV-2025-00086.pdf": {
+      "hash": "893137164a12f3572af6bb29bf4b8d2e0b7fe94b19085db632d524868efa2799",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00087.json": {
+      "hash": "8150931406e3ada7ecb0698bf710fcb5c00709074840cc6d6baea06c98c14c16",
+      "size": 633
+    },
+    "invoices\\INV-2025-00087.pdf": {
+      "hash": "04cf4b4bb6a7f7c32ef5d6f127676a0b03d3c2db1acde6329e92e3e6c0c4d716",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00088.json": {
+      "hash": "074fbe76033ac81f46049872e8d5ef09333f2551a4ea9cb5c7a89bd98001d4ac",
+      "size": 635
+    },
+    "invoices\\INV-2025-00088.pdf": {
+      "hash": "f320d8f4179c070c615abf21966aa569764a6ccab8e1ade330e53993ae12ca41",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00089.json": {
+      "hash": "9319c70462aff3f53f8cf8d5f824ba6aafa52c689c298f0346e0c261c060428a",
+      "size": 626
+    },
+    "invoices\\INV-2025-00089.pdf": {
+      "hash": "7c7fb28d1da0f093d8d723225ed04914b410371f41706cdb028f5299ddbadd4d",
+      "size": 2599
+    },
+    "invoices\\INV-2025-00090.json": {
+      "hash": "f8ceb9d5e027645fcdf49f3c38dc20fc4e88fcb244bd2ee944c14d5d84d98f92",
+      "size": 639
+    },
+    "invoices\\INV-2025-00090.pdf": {
+      "hash": "26d58d10eb745ba96782ee12897b2bc2b37a12fda8bff0756a56aa3cd8414380",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00091.json": {
+      "hash": "dd1f3fb0d19b18fe120a22b51f1f40edaa667ee961c5e5254b2d366e8eb554f0",
+      "size": 633
+    },
+    "invoices\\INV-2025-00091.pdf": {
+      "hash": "63d02be4c04fc6f61576b868fe1b87728873c1123e0ca59514ba57989d9ff6e7",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00092.json": {
+      "hash": "81ea55306df235afe01db94d9a9d1bb777916838bbf3e1030f7b674e6e0f2a2f",
+      "size": 627
+    },
+    "invoices\\INV-2025-00092.pdf": {
+      "hash": "e1d96fcd83bd09312b1f94d6b3b1b95a9125f34f6fb2171fd855c3cab2f0c36d",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00093.json": {
+      "hash": "a523114365b351679ad4294c863707544a3dece4196a7bfe9b68f49f77dbacb9",
+      "size": 633
+    },
+    "invoices\\INV-2025-00093.pdf": {
+      "hash": "74937f4e2a298cefeb9278a4313572599fd063a0667ec8f37360cebc82f6a94d",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00094.json": {
+      "hash": "8a1cfe4496e86da2b9744984d7056f0095d44b111d474ef29b34bb37d10daf52",
+      "size": 635
+    },
+    "invoices\\INV-2025-00094.pdf": {
+      "hash": "e5499b1e8cef084d050b277a795f0c113c8e96c29a992b06e8f3a6ca68dd9868",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00095.json": {
+      "hash": "f4461021787c73700ba14f2fb5a1de3ce18e16dc2f60b05a8ead07891486b4d7",
+      "size": 632
+    },
+    "invoices\\INV-2025-00095.pdf": {
+      "hash": "4a3400865ef9926d1e40d9d36ad29839ad5cf45bbbf29a5ab29e6f03aa7edf39",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00096.json": {
+      "hash": "e230cacb102f034538853e1ecbf5a7a17c9035b7dd9ad6517d75d5c3af98bcee",
+      "size": 636
+    },
+    "invoices\\INV-2025-00096.pdf": {
+      "hash": "6b62cbaf7c508266a1a84fbdd24239a6be48e67a3e67c7672d499a1fdc6405ff",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00097.json": {
+      "hash": "e346d0788990fec3ccd3411c4c8bb4c2ae4739177c4e763f856dc326624c7c4b",
+      "size": 634
+    },
+    "invoices\\INV-2025-00097.pdf": {
+      "hash": "d75aa01a90d44b62c1ede47922e66040565574a15291694c5cda224d6c44ea86",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00098.json": {
+      "hash": "72930b80b1296d96f5f0116fef4ac1b9628d640e354dde799482388690e9f202",
+      "size": 634
+    },
+    "invoices\\INV-2025-00098.pdf": {
+      "hash": "1e57ac868dae1e2a5ae67c2362600a03b6544da21a483a1adea3fdb215ea2d3e",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00099.json": {
+      "hash": "7089c231911d5db3aa55d238ad537f6073cfdc38e29fa906b7532ad563320506",
+      "size": 639
+    },
+    "invoices\\INV-2025-00099.pdf": {
+      "hash": "1dfce4c0de64c10a113ffc85aa2edd254ceac44b600cd0875b49645f9bb4389a",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00100.json": {
+      "hash": "7c3d305ec0377adf72e731978abd25b7ce0d8dbc28b310e99b83c47f0d24c6ac",
+      "size": 629
+    },
+    "invoices\\INV-2025-00100.pdf": {
+      "hash": "81a92e1fe3e7bb3eed78180a3604ead84e48cf90c3d1c4b28c1b35383d3c27ee",
+      "size": 2599
+    },
+    "invoices\\INV-2025-00101.json": {
+      "hash": "fe18d68a6bfedb82fad12f686349163b3294d29e296467d4d14b7ba8e840e812",
+      "size": 636
+    },
+    "invoices\\INV-2025-00101.pdf": {
+      "hash": "b7cbb3f3132c09450ac4bee64c6c375fa18927a9cba84f27a4b650e50ac48dcb",
+      "size": 2600
+    },
+    "invoices\\INV-2025-00102.json": {
+      "hash": "6fc2e311098e0ff5f76e73dacf04407431da2d8d8b2df872a2a3b0fcb62cfec0",
+      "size": 643
+    },
+    "invoices\\INV-2025-00102.pdf": {
+      "hash": "7eb193b38afcd8cc85075528698c64c63f4747611bc8626593e17bf71c056a73",
+      "size": 2622
+    },
+    "invoices\\INV-2025-00103.json": {
+      "hash": "9b1ebcc0d75cfeb26fbb41e6aec4788a482445deeabfa18ad852f2acc528ce52",
+      "size": 631
+    },
+    "invoices\\INV-2025-00103.pdf": {
+      "hash": "ebf46163ecc4545672ff703cc3f18431af78b1c626e4bb89042c86da141ef4cc",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00104.json": {
+      "hash": "a141cf6a8e7df5c6c36c77f7eb7fc867cca74db41fe41b4d8966d4026d21febb",
+      "size": 642
+    },
+    "invoices\\INV-2025-00104.pdf": {
+      "hash": "4f105f05d6ce06f125f5335e1c44f89fdc4e5504d7aa8ae403b5fea479598876",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00105.json": {
+      "hash": "7aad2df329727d16117de8da8d3977e0f1966111a0d0e97632c0a668ccdcd610",
+      "size": 639
+    },
+    "invoices\\INV-2025-00105.pdf": {
+      "hash": "28f10aaafda4b769f938b56fcc9d019848c64911ecf0134c30401f139dce504d",
+      "size": 2617
+    },
+    "invoices\\INV-2025-00106.json": {
+      "hash": "80ffdae57edeff7cb70851022e25a28fc5dd99a2722ec033373f2d4b81c4edeb",
+      "size": 633
+    },
+    "invoices\\INV-2025-00106.pdf": {
+      "hash": "8d6846946dfdfd551afebf4185192cce7d73742487b04f601ea79db1c55f3080",
+      "size": 2594
+    },
+    "invoices\\INV-2025-00107.json": {
+      "hash": "e9fb821fc350798b6b4a8913ae13b85c7e588c33dfa004c44e31740b852bc1b0",
+      "size": 634
+    },
+    "invoices\\INV-2025-00107.pdf": {
+      "hash": "56fcc768e06b7160d316eefa176152534c6974b89f710dfd81ded6a1ab7637a1",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00108.json": {
+      "hash": "7a84bafcd6164fbd14463d2d003a0dab2d1eab5f0cf8e40a5b875aa5be7e8c05",
+      "size": 626
+    },
+    "invoices\\INV-2025-00108.pdf": {
+      "hash": "1dddf8100d80dde10898b5653736ed409c67d049ae60fad76dd479b4edd6fa71",
+      "size": 2595
+    },
+    "invoices\\INV-2025-00109.json": {
+      "hash": "c42a7aa8637406afd3655e93851bb49f1b1d41788b928a5efa782389934c48ce",
+      "size": 637
+    },
+    "invoices\\INV-2025-00109.pdf": {
+      "hash": "eb13a015971c9e18fa159f5da13f4f0904f04706b05f547fadd7c22d0e85d317",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00110.json": {
+      "hash": "d6a8c66940ce309b1f584275cabfe8d05c179c5747295a9cd83530a8847afd73",
+      "size": 639
+    },
+    "invoices\\INV-2025-00110.pdf": {
+      "hash": "085ddc74834d2ad2441d4a1cf3aefabff9f4fb804253a0c7ce21eca7b34568fd",
+      "size": 2619
+    },
+    "invoices\\INV-2025-00111.json": {
+      "hash": "fdad16b4a551dd6eb9486f358bd9dc34b0f9d19a25588cdad76e66db009d1e37",
+      "size": 632
+    },
+    "invoices\\INV-2025-00111.pdf": {
+      "hash": "675b937c4f188de912972c0f24fda68867f7ae6a6cebc9b32a59dba73e6c5191",
+      "size": 2600
+    },
+    "invoices\\INV-2025-00112.json": {
+      "hash": "0e0c09bc34b2908fe9b25f03762f53dc9bc648632f94b732da8497ce6e27e05a",
+      "size": 633
+    },
+    "invoices\\INV-2025-00112.pdf": {
+      "hash": "c6201cf38ce14e1ba542ffbcd1eac56eaadd68a0daa8e64c75074aff7ac3b130",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00113.json": {
+      "hash": "59da3ab01402bebd1326d59996f1177ac15a70263e50e5ade1ef05ab9eb6b699",
+      "size": 634
+    },
+    "invoices\\INV-2025-00113.pdf": {
+      "hash": "f055ab4c55715be6e41103b1d150d87910fda9d2eba91bcbd7da8e09e93e9692",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00114.json": {
+      "hash": "6f27a22f3116b9b150163ad09f96686fa749db047902be63e24e8e87c865461a",
+      "size": 629
+    },
+    "invoices\\INV-2025-00114.pdf": {
+      "hash": "fd8e96443e1d78293060e8af543fda7e497bbd4f142ebbdc2a0ae45d9a1550b6",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00115.json": {
+      "hash": "17392c8027b419b3e2ab02081eea4ba0a23d5aed045928e5a1ddfb666ef890e3",
+      "size": 640
+    },
+    "invoices\\INV-2025-00115.pdf": {
+      "hash": "ea71e9eaf152d7f32b5ca895209d4ec1f921dbe04e554a9adad6c75e0e841a38",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00116.json": {
+      "hash": "d7fa0e2a9df2890c534316b816d50dba8ab157ac190409cc0738f9ad2a957d03",
+      "size": 632
+    },
+    "invoices\\INV-2025-00116.pdf": {
+      "hash": "4cc3dcb04ae8891bcefb6e19e1765e8a2d4cc86fcaf58cced61a78737457d7a2",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00117.json": {
+      "hash": "6024a7176b9e53119227dc52d0a9240e83d1703cc8cc284d4d4b16d5de980a3c",
+      "size": 635
+    },
+    "invoices\\INV-2025-00117.pdf": {
+      "hash": "d039dd471b2f12e901a9c0bed67aee562c97d6945801e643a9c1d1bc12936fc0",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00118.json": {
+      "hash": "d9f03f6a55274ed77162fc424b45f5045e7604e605a743430ae74e0967c97961",
+      "size": 631
+    },
+    "invoices\\INV-2025-00118.pdf": {
+      "hash": "3c3eb1ce2be6195944d7670fe026c791c2d05ce16c5dbd1ecc39dc0f9288c332",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00119.json": {
+      "hash": "da370712c66cf4063f124a295eea17c3f03c21e0d0e0badf73a05f5b8304ae98",
+      "size": 625
+    },
+    "invoices\\INV-2025-00119.pdf": {
+      "hash": "e4723c6bf5e91558632c2d8a3941ca7feda0d86dfd7b8aaedc837e0526f884be",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00120.json": {
+      "hash": "b47be937ec9344214f6c14f61be742dd3cdec7743a08ba987711a159a0a7d98e",
+      "size": 634
+    },
+    "invoices\\INV-2025-00120.pdf": {
+      "hash": "2904978c67f3d91769e1333e1ec6b247c12083aedc1d141ce9cacd084232a650",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00121.json": {
+      "hash": "cd0ed5214a16b5019f1e080e0fdb9b562071368e056408c82aa7618a61034078",
+      "size": 635
+    },
+    "invoices\\INV-2025-00121.pdf": {
+      "hash": "53fd24ad999592a434e0192a653efbbd50e4d8b76ca0729076caed2a4c7f85c9",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00122.json": {
+      "hash": "4186aadc2cd40d2bd660b05c605cac1c4139ba795af24389200ff3ad18acb7be",
+      "size": 628
+    },
+    "invoices\\INV-2025-00122.pdf": {
+      "hash": "6b59c32aef6586fd37b95631190d9dd5e0d5f90b4ce17b7cfedcf56061016d09",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00123.json": {
+      "hash": "83690f4808175447e1f6ed673d193f1b1f8a543ef38557ea0819910880a9eb76",
+      "size": 624
+    },
+    "invoices\\INV-2025-00123.pdf": {
+      "hash": "2d879e4e37eaab493f4079d30e337aff2aabacfc8c3b1854d96d8092687c2ce9",
+      "size": 2593
+    },
+    "invoices\\INV-2025-00124.json": {
+      "hash": "96a11bcec6f9ba72a5fe8bebed6098c3a8322c494fd79b4cab3347fc20aa45ff",
+      "size": 630
+    },
+    "invoices\\INV-2025-00124.pdf": {
+      "hash": "b8147d8fc7a07e090d6a0ed0f7f425ecef762377ca9a592062dea24ba6770500",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00125.json": {
+      "hash": "605924f55a804777ca21eb2123e99dc073155050a24ab89536dfde17a0b2ab66",
+      "size": 630
+    },
+    "invoices\\INV-2025-00125.pdf": {
+      "hash": "f33d949e8e8b9f422a16d41104e36f66d4885005588bbbb491c999bcddf2e22f",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00126.json": {
+      "hash": "d30a55564e40e940910462b933b3d70decf377462639bca5ee4dcddeee26f1ec",
+      "size": 631
+    },
+    "invoices\\INV-2025-00126.pdf": {
+      "hash": "76fad139fc35972de0db919a97c8cf91c9bbde74426b2ab7671ee80b88fc4e87",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00127.json": {
+      "hash": "62fc8a42ff68b56d97c31db9602ed14c2aad165e896435593311e6b24863ee71",
+      "size": 635
+    },
+    "invoices\\INV-2025-00127.pdf": {
+      "hash": "f8ad65a00fea9ba7a7ec0432dbb56e82baff94c5ba978b781386c83a4810e9d2",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00128.json": {
+      "hash": "6701b4dd3b7ad8a8977db0fcd5654d52c6633c59bf12fe3575bbaaf0d2f42dd6",
+      "size": 639
+    },
+    "invoices\\INV-2025-00128.pdf": {
+      "hash": "90998d5475017c0aa7e6bb051c930d82da80f89329707686c3880f73591b1aa4",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00129.json": {
+      "hash": "8911e0d5cc0a209855e7f89a13d41f2867d3819c2dbaaee0abbde9912eb37f87",
+      "size": 628
+    },
+    "invoices\\INV-2025-00129.pdf": {
+      "hash": "2b4a1779c8e288318c658f9681acb856f7773e5e15c5ea3939a6c36ec69cf000",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00130.json": {
+      "hash": "3906ad5cb5cf899bb95073447897aa1eba8a9178392ece7af10b7db2c88b2362",
+      "size": 630
+    },
+    "invoices\\INV-2025-00130.pdf": {
+      "hash": "623146607b897dfce7f99fa7434337457f3ee98474fcd74af878a58637b16219",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00131.json": {
+      "hash": "0ceee0b65715f3f78fb556308016672e0ddfa96e24b3d26ba97516dfa820d2bb",
+      "size": 629
+    },
+    "invoices\\INV-2025-00131.pdf": {
+      "hash": "e52d7e2f53390bc899d2bd19c4ecae0bfa115d27019df52b3490da6ce95d572f",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00132.json": {
+      "hash": "71c3ea7f19b6a16a9e9c9cfece081b5741f81c8ee82db90da72d8612eb1b30a4",
+      "size": 631
+    },
+    "invoices\\INV-2025-00132.pdf": {
+      "hash": "42924c1d48c84fe106ccd336d5fda15a6e8ddeae0b24488216d1281f031947d2",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00133.json": {
+      "hash": "bb45ca8a71fa15b35d41df1f74be32d504f1daabd9d3bd5ebc83dd99f420717c",
+      "size": 639
+    },
+    "invoices\\INV-2025-00133.pdf": {
+      "hash": "2f7a8cd9fb523bbaccfac8845e155e1266e289c00d0692b80af9b0c1f5041567",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00134.json": {
+      "hash": "a660625db26d53cac7232b4afe5f058675b33870ed011fd5d9e0cd1e9796b8a8",
+      "size": 629
+    },
+    "invoices\\INV-2025-00134.pdf": {
+      "hash": "d273bc36c1eaf5c54fab4693ddd91f4bf0fe2f03344cfe9af03ad9a3ae4558d7",
+      "size": 2597
+    },
+    "invoices\\INV-2025-00135.json": {
+      "hash": "28a994fa966a9d22663821cd108beb949eaf299d8f8698db5b52bf78624de67b",
+      "size": 631
+    },
+    "invoices\\INV-2025-00135.pdf": {
+      "hash": "55a24d72404ac3b61be9450e3cb3381fe42e8a6b4c999167ce262589cc1bce11",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00136.json": {
+      "hash": "3b9e2bcade7a741712cef9628eb10a9664e74b91d489e8766afbfaba35bc7981",
+      "size": 635
+    },
+    "invoices\\INV-2025-00136.pdf": {
+      "hash": "b48ec5c89602ec45b7652d7349694084ef38fde3911c5a5e24f53425f3567f8c",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00137.json": {
+      "hash": "182f3577090d78a02460e435b50f7725546738ce7c4ad6e8f2525a5d1917941b",
+      "size": 627
+    },
+    "invoices\\INV-2025-00137.pdf": {
+      "hash": "3f151ac2fe553a1912443ee6651a7e5b6ff30273fd4d9e93cffd012a705b4c44",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00138.json": {
+      "hash": "e2b2f4aae3b2ef1776f9462359a3e3cf64a891486d6cf12087ccb3a44f128411",
+      "size": 641
+    },
+    "invoices\\INV-2025-00138.pdf": {
+      "hash": "0becfe19f230942476a3f9ad2bb8848e80b6ab7a5f34a69acedd6dd4935fc05b",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00139.json": {
+      "hash": "b68205f910616e40e323eac6341be7a795c617885a646ece1b5d7d7aef12b57f",
+      "size": 631
+    },
+    "invoices\\INV-2025-00139.pdf": {
+      "hash": "b7998074918db9858bce8625cce99a232ea0c843cced8f836162f183098b61da",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00140.json": {
+      "hash": "0a73b7043f91c7b9e0addd7f20718d40b0ae8f1fcd55e6df952149aad095de7a",
+      "size": 636
+    },
+    "invoices\\INV-2025-00140.pdf": {
+      "hash": "c7fde9bc69a5510181718be21a6d52c5fa4de408260207b47813cb1d2c640219",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00141.json": {
+      "hash": "07e0aa52c3ac8a98e147c22a1b1c46a0ad2305d0cc1408bf741e85efbf6bb62e",
+      "size": 639
+    },
+    "invoices\\INV-2025-00141.pdf": {
+      "hash": "8a64266f22a754ac45bcbf7283f9044566676b852263192d8916de0ff9ed9b59",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00142.json": {
+      "hash": "77036d497f9031f926031e31af4464421fff74924af295d0dfdf6f7203c1ca8f",
+      "size": 635
+    },
+    "invoices\\INV-2025-00142.pdf": {
+      "hash": "6a6814d4a83eacb8769c08f97d7f89d64963339d47f4adc90001dd9ee38cccfc",
+      "size": 2598
+    },
+    "invoices\\INV-2025-00143.json": {
+      "hash": "44d57c2ba32da42c335e48b2cff4c632610f7ab3ec7fe6de7208f38c76faa8d0",
+      "size": 629
+    },
+    "invoices\\INV-2025-00143.pdf": {
+      "hash": "66433dad8f9ecc78e3c4549bd30abe101e7fcf85d48430d02db048157d215812",
+      "size": 2604
+    },
+    "invoices\\INV-2025-00144.json": {
+      "hash": "c25578167a4c111a0638071b7c5a0d0d912ffc8546b911746174380e9a2e0fbd",
+      "size": 628
+    },
+    "invoices\\INV-2025-00144.pdf": {
+      "hash": "c43c69887557ad3437a8491aeb763be0b4b5d598e37646a384e5480e11d81a5f",
+      "size": 2595
+    },
+    "invoices\\INV-2025-00145.json": {
+      "hash": "d78ee8f2fea600759f9677d2e32e8090135bcf86544ce40abb30ffb3718e8378",
+      "size": 641
+    },
+    "invoices\\INV-2025-00145.pdf": {
+      "hash": "9fac11513f5048ca4fb649b57d8a9259c7567f13c1ad8641f80d1d024d7c089f",
+      "size": 2619
+    },
+    "invoices\\INV-2025-00146.json": {
+      "hash": "7b11e76bddd5aa3242eb58a0b6b8ee19cc1629f18fbc20e04bc52a3e143a6a5f",
+      "size": 627
+    },
+    "invoices\\INV-2025-00146.pdf": {
+      "hash": "33709b6313329fd911d574306886131c460aefa2711f9be43b3a3a8878129248",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00147.json": {
+      "hash": "d47203cb5bb22712c3cb49211325938289cbc4c9eccb2cb7efefb0ef13c75fe1",
+      "size": 637
+    },
+    "invoices\\INV-2025-00147.pdf": {
+      "hash": "ae8814a04a3f9f9aae7c838f02dcca4ea9908342a5f6324f39ce4046d5a77111",
+      "size": 2593
+    },
+    "invoices\\INV-2025-00148.json": {
+      "hash": "c924ac13cc7145b47e0f727d37132f9d3902a5c6e459019ce96da9d572b20294",
+      "size": 630
+    },
+    "invoices\\INV-2025-00148.pdf": {
+      "hash": "1c53b337361bdffeccc9c94fa726ce8601ee2ae6596e35ac81fcadb4cc6cf311",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00149.json": {
+      "hash": "4aa69984e1b7bad43d34d8ba75b6760a3bec656c7fde7fa6c88ba437a87a3a53",
+      "size": 630
+    },
+    "invoices\\INV-2025-00149.pdf": {
+      "hash": "8494807696aaf5939d55d4c39d1dbf9c7253f981ae345943b3086809c8b9bd96",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00150.json": {
+      "hash": "0995ee104fdb71672cfcd4e12fdb3fbaa7880f185412b173c8ce027cd32af8a3",
+      "size": 635
+    },
+    "invoices\\INV-2025-00150.pdf": {
+      "hash": "ecd595905e583cf764fd3c973f27907c5ed29ba2da1bd55c93b0f144089b7263",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00151.json": {
+      "hash": "f97d72cba694b2e35176afaf1892015bb2b0a096bd198bad0233c115dab2977f",
+      "size": 643
+    },
+    "invoices\\INV-2025-00151.pdf": {
+      "hash": "7aa67b098fb2caa0232ad3e99b6282cba06f8c8a74674794355c63b48d2abebd",
+      "size": 2619
+    },
+    "invoices\\INV-2025-00152.json": {
+      "hash": "03c3f0a040ceeb761f3b8b8d1eadedb4843e844f5230d9bc6ed135630150fda0",
+      "size": 626
+    },
+    "invoices\\INV-2025-00152.pdf": {
+      "hash": "b52854c8f2ab54db7855a3688b46531c2796610234f5ad1ade31f4aecc059d75",
+      "size": 2597
+    },
+    "invoices\\INV-2025-00153.json": {
+      "hash": "56f31cdeffa74eff18a70618ba19c5c07ef3f9227cce6af3e9e98ac6d470bb29",
+      "size": 633
+    },
+    "invoices\\INV-2025-00153.pdf": {
+      "hash": "de916e273395abb40a802d30e8d60b824cccc2c6ec4a14d1183d0438795b9b39",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00154.json": {
+      "hash": "df3630a110c8e0a09db2ead700e51720436cab92b31da1366b3c18690a04e4b5",
+      "size": 626
+    },
+    "invoices\\INV-2025-00154.pdf": {
+      "hash": "c55cf4396b29cd139c7d4cf7b9a7015274f91e24b20d2f8cd2617fe057454c24",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00155.json": {
+      "hash": "814d631c6a010aa5c765e4bd4dcb0622ac69c6612687634881ca5a68118f991c",
+      "size": 630
+    },
+    "invoices\\INV-2025-00155.pdf": {
+      "hash": "2a2b4691b406c6d4126517ded970ea58c1bc75a2d33d3bf42f0977fcf888f575",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00156.json": {
+      "hash": "a9c53e6457d2f554c70524c61e1ead7eb1b1df7b7fe621276d7212c8231a073f",
+      "size": 626
+    },
+    "invoices\\INV-2025-00156.pdf": {
+      "hash": "4e5a10d515a56acc377fb5bfcfaabb68cdb5bdfa14118025fe091aabbcfcc5a1",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00157.json": {
+      "hash": "996d34317adae7dd665038a238ab6ea49953f58f4daf5d7ff2383c99d197e4ed",
+      "size": 642
+    },
+    "invoices\\INV-2025-00157.pdf": {
+      "hash": "4402b6d6b425ae3b32485ecaa3b51308fe221cc0183247d425fbd6988182af51",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00158.json": {
+      "hash": "3dd1b13d01fd4c7d8533ea902c05de7d8deec4b2822e9815035892c67d91d25f",
+      "size": 628
+    },
+    "invoices\\INV-2025-00158.pdf": {
+      "hash": "cfe06b53b11851e13fb4b272f43c1fdc8a30410dae78c8bae0c7cafa075292e6",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00159.json": {
+      "hash": "04c2b64b82b3dfe7962ca085596820a63c1a6ed562895128c53705448525898c",
+      "size": 636
+    },
+    "invoices\\INV-2025-00159.pdf": {
+      "hash": "cb987a9b5757c0302afa794a1be93db37219e48a8b529b9a49d2bcf411c2669e",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00160.json": {
+      "hash": "443b780d1e7a0f0e669a0b7aaab1f5f872f8b49fe7d47bcf2dc0bb1db7469078",
+      "size": 639
+    },
+    "invoices\\INV-2025-00160.pdf": {
+      "hash": "ef337a071d20cbd282b67db6e4ed66c2b89223e46875719fee18c59d6f450eec",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00161.json": {
+      "hash": "8166f155b21a528540233257c90eed8ce83632d66c917e8d3ce4ac4509153f3c",
+      "size": 629
+    },
+    "invoices\\INV-2025-00161.pdf": {
+      "hash": "2d00aabf5caa3443f10c7198b220f2fa721d289d20dd2171d13e93586fc8b0e4",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00162.json": {
+      "hash": "855cc7ed1905c5685f564b73f3f181955cb63885a2957c1db9d5179053970291",
+      "size": 630
+    },
+    "invoices\\INV-2025-00162.pdf": {
+      "hash": "5f717b27a02f9b013a75e26668bdaa81f725ed8d897606831cebd7317fc298d3",
+      "size": 2602
+    },
+    "invoices\\INV-2025-00163.json": {
+      "hash": "8892c28dfdf1045c0e7952941a8a8ce24106212528cd694da31dabbeec79f396",
+      "size": 626
+    },
+    "invoices\\INV-2025-00163.pdf": {
+      "hash": "5524e9cdfc50ed0109d041c3c76abcd0519ef83430bd51e06b7e66b4e53fc0d2",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00164.json": {
+      "hash": "d40ed35a9d68e47dc90a3f7bc6dfc8a504d9e7ad7e73d282cf0e14c298bab3f2",
+      "size": 639
+    },
+    "invoices\\INV-2025-00164.pdf": {
+      "hash": "b9fd7c9833f629c624a566c22eb646c3555daf25a61657bf7d5a9d2769cdaea2",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00165.json": {
+      "hash": "4c34d12a260ea05e8c1f575f53a0d7b877d00765fbcbab690de9c0db171d411f",
+      "size": 631
+    },
+    "invoices\\INV-2025-00165.pdf": {
+      "hash": "89344532cd04537338afa19e6e28c454e40ff1f4786ec07f4153ad330e39cb14",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00166.json": {
+      "hash": "53e836ab8663343c57a5b744b3700721804e24f8974c18eb08d5f0d566fa5f53",
+      "size": 634
+    },
+    "invoices\\INV-2025-00166.pdf": {
+      "hash": "1e6a35bdfa4095c1dddcaaeb87166be083edf6e88b0574faae801301f07b3f31",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00167.json": {
+      "hash": "88c75ffb2dddd866747adf170e86e897ff67449361b6bd28f8a3235f3cdf0236",
+      "size": 634
+    },
+    "invoices\\INV-2025-00167.pdf": {
+      "hash": "1b4a5e5ee8bb806961b4d5aedc242e12d3775107784958c04fa79a13b4a32bd5",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00168.json": {
+      "hash": "be482d275b8c078ad5af2cec7fc12005edeb687703661d16afb8dab2e32ad26a",
+      "size": 626
+    },
+    "invoices\\INV-2025-00168.pdf": {
+      "hash": "02677d44e13b4065d31a15b75120c471381de8fe9444de8b284278236c81db42",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00169.json": {
+      "hash": "e16c0bc7cae644380d26f17776cb3dd5c116370bb3ddbc2195785f45fe1ab405",
+      "size": 628
+    },
+    "invoices\\INV-2025-00169.pdf": {
+      "hash": "ea4d39353b859360a17b1b077283a2fafc55d93e7113d1d502de482ce8b3f5c4",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00170.json": {
+      "hash": "fad69302e2eb437757c9a3d55ef9047f56016dbd2c12f07b247c631f6b69c5c2",
+      "size": 646
+    },
+    "invoices\\INV-2025-00170.pdf": {
+      "hash": "31c46d921d8c44a0187db0e81fc98114f0c7f7e320bac6a1a02cdc4fb9bd8e6a",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00171.json": {
+      "hash": "03d0714146e0629ef65caa5ed3f36b4260751a5de6fc062bceb61f14b48a79f3",
+      "size": 631
+    },
+    "invoices\\INV-2025-00171.pdf": {
+      "hash": "5ddd351f470078876682f2270dc2953b6e164ca6394075cd0df1eb30bf14f9d0",
+      "size": 2592
+    },
+    "invoices\\INV-2025-00172.json": {
+      "hash": "36cd630d2705cbda4b7979dd42ff2b229d1bc6f55df8479b2fe97a934a0fc4ad",
+      "size": 641
+    },
+    "invoices\\INV-2025-00172.pdf": {
+      "hash": "2c8fcf90bdbb04649aef19222336b23fe037d09509a81e841240600a083d2bbc",
+      "size": 2619
+    },
+    "invoices\\INV-2025-00173.json": {
+      "hash": "c16e9d89939bb81b7650fd758e0aa540f7fcbaa43a4825a704de9e96ac256f34",
+      "size": 638
+    },
+    "invoices\\INV-2025-00173.pdf": {
+      "hash": "09944a20be81debac520b1d558c5c260d99f9554da8dc7392f3bd39b0b5ce98b",
+      "size": 2618
+    },
+    "invoices\\INV-2025-00174.json": {
+      "hash": "2533353978530d3282b018fef24a65dfdd78fd833270c59681d2f869074906fc",
+      "size": 639
+    },
+    "invoices\\INV-2025-00174.pdf": {
+      "hash": "dfd146825d6670ab463532bde0a524e355c128e54e53816a63451e97e67bdac6",
+      "size": 2608
+    },
+    "invoices\\INV-2025-00175.json": {
+      "hash": "434f7333277d72b096c81a8d372a8145b994c260b16738c576756779700045c3",
+      "size": 644
+    },
+    "invoices\\INV-2025-00175.pdf": {
+      "hash": "407b21a07cc098165099e82bac6131fa01b1203ca673f1a31fe01be401b3db2b",
+      "size": 2618
+    },
+    "invoices\\INV-2025-00176.json": {
+      "hash": "3fc8ba68fbc9bb8b23e1194c9798e6e484ff563b3a3d34ad6e978e3d5edc825a",
+      "size": 627
+    },
+    "invoices\\INV-2025-00176.pdf": {
+      "hash": "3d1913536e05875249285eb6fe11c3eac3f705a8de596f0fdf0ff155393b08c0",
+      "size": 2605
+    },
+    "invoices\\INV-2025-00177.json": {
+      "hash": "ac831837183045f31aeea35a43d51e5c644131a415568ec8959efc6302604415",
+      "size": 644
+    },
+    "invoices\\INV-2025-00177.pdf": {
+      "hash": "88db8bb514086f84b03ccb7ad5e11f8d4bb3b4d6296964dfd7daa7932573b53d",
+      "size": 2618
+    },
+    "invoices\\INV-2025-00178.json": {
+      "hash": "41846500cff3b49f89d7b8610f21d46a209abb4f33a504b34b486e720429d308",
+      "size": 643
+    },
+    "invoices\\INV-2025-00178.pdf": {
+      "hash": "27d6f1a03e45f8b5ddb9d43439f90eda588ad8c278ff0be929748c41c6ea1445",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00179.json": {
+      "hash": "12e72c455fc90b03cec14fec9668aae162bc7e277f2c8ccf31189ab0b4e6b8d1",
+      "size": 641
+    },
+    "invoices\\INV-2025-00179.pdf": {
+      "hash": "ea672eaeccf3de8e2f71ece5bc5ffaa1f6c348726a496b46994f4086b4005fc1",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00180.json": {
+      "hash": "42a91e4013ae2a7277c72fea511bf28b26227cb3820ba8419090be051f517e81",
+      "size": 626
+    },
+    "invoices\\INV-2025-00180.pdf": {
+      "hash": "b7ea033e661f4fe2556b609993408fe61d146da833ae08f27cf37413212d483d",
+      "size": 2603
+    },
+    "invoices\\INV-2025-00181.json": {
+      "hash": "3cc3304ba65cb1f90028cdfea37edaa24087457532afc0750357c519648db2df",
+      "size": 633
+    },
+    "invoices\\INV-2025-00181.pdf": {
+      "hash": "ee5f23e40da89e3888617d430747a131997364dc2926652d978cbfeaaaed719b",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00182.json": {
+      "hash": "edb9473e8c32410c9a4dfd5d471036af1d027279df95998529c01affcf01139a",
+      "size": 632
+    },
+    "invoices\\INV-2025-00182.pdf": {
+      "hash": "64d6ed70667372f6b2debdb2a0e922c649e252061e3164773535b421dfd8429e",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00183.json": {
+      "hash": "f3e9082124113dc1a552b0f832ce797d3d6ef38a4b8bf50ce07aac8db49e4673",
+      "size": 632
+    },
+    "invoices\\INV-2025-00183.pdf": {
+      "hash": "eef26f3869ef5d8fb020403cf242f0a837075613fd4d3e6ebc8052c9e99a1262",
+      "size": 2610
+    },
+    "invoices\\INV-2025-00184.json": {
+      "hash": "2218b9d9c7c1b97179139d78210653210a5a2491f4128bea25550febd6a83872",
+      "size": 633
+    },
+    "invoices\\INV-2025-00184.pdf": {
+      "hash": "9f1a10db0e362f36a7ab67589d041bbe92a08ea11ce37331121a882bcdcd111b",
+      "size": 2612
+    },
+    "invoices\\INV-2025-00185.json": {
+      "hash": "1948393b0656f977239016ee8a780b743f34244e7a45dec5d6aa83d9981c4740",
+      "size": 634
+    },
+    "invoices\\INV-2025-00185.pdf": {
+      "hash": "f8a4cc716f6ade53e974d622018082fa7d1a62f1916e15bc964a6cbc11e0e223",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00186.json": {
+      "hash": "edeb59ed323f1a268ef7e7dbcb036b5d4c4f3f36ee1b9094696936ca021e806f",
+      "size": 637
+    },
+    "invoices\\INV-2025-00186.pdf": {
+      "hash": "01e4853bd9fe725b9590845eac45c360ac883aed3773885dbd5104071f03940e",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00187.json": {
+      "hash": "717b4901be3fff0e5bea4bd41f5faa1ff8eda1ff2551616cbb26783879e2df2c",
+      "size": 638
+    },
+    "invoices\\INV-2025-00187.pdf": {
+      "hash": "e208a40b416816b614fd38c928e87ea89f55fb786d476c1ce131c960c6b423fc",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00188.json": {
+      "hash": "18d47fb080acfbe5d250071c9049a55f0c0c87c1759ce24100eda60d7b080eec",
+      "size": 636
+    },
+    "invoices\\INV-2025-00188.pdf": {
+      "hash": "1cb5c85897364753b7032c73bf9796cbd44553686a6a24329adc016544da0537",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00189.json": {
+      "hash": "a735914e37aaf4a7cbcf6099ae67adc9d7cd6d9027f4f54f0b3dbf355a21c2a6",
+      "size": 638
+    },
+    "invoices\\INV-2025-00189.pdf": {
+      "hash": "654d6cc783b0a63683d561efca111a087acc3d3a4844c436929c1f1c16c9d43e",
+      "size": 2622
+    },
+    "invoices\\INV-2025-00190.json": {
+      "hash": "0bc5f760ac0d0cc2f1df5471b2163286dbb7e2579db70cfe037d40a4ea4d6ac4",
+      "size": 630
+    },
+    "invoices\\INV-2025-00190.pdf": {
+      "hash": "0fe2b912f018ef5820e47a6342848a6ec005595f85f6300b2a11c21a64dde699",
+      "size": 2598
+    },
+    "invoices\\INV-2025-00191.json": {
+      "hash": "ddda0364d0574baa6890f5e74c471fc4df20447dca9dfd1fee3c32dd6fd219c9",
+      "size": 627
+    },
+    "invoices\\INV-2025-00191.pdf": {
+      "hash": "d2f2ae52235f6d8c8dddf519849b03e8a8cb49e2da98dac6f325d92abdd90110",
+      "size": 2607
+    },
+    "invoices\\INV-2025-00192.json": {
+      "hash": "a59349ecd5c8128d93e214bf831f53cbec1173e41221b3e9c9e61a73a41702ab",
+      "size": 655
+    },
+    "invoices\\INV-2025-00192.pdf": {
+      "hash": "a11d22a1ecee09cf67ead5ba19323016cc527737b15aa8cb0b2f6580816be507",
+      "size": 2619
+    },
+    "invoices\\INV-2025-00193.json": {
+      "hash": "125b5bcc6f58410b6e209dae6434576acef8b6a9f1115f1b69ff18975136bc21",
+      "size": 636
+    },
+    "invoices\\INV-2025-00193.pdf": {
+      "hash": "83710d4e96495dd543bb80602deb8c7af1ca541ee0eb9dd642361bedcb287a38",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00194.json": {
+      "hash": "c442d8e0c4536ea35b25baf455f987f5e8350419612edeba65d0cdcb7cc388a9",
+      "size": 631
+    },
+    "invoices\\INV-2025-00194.pdf": {
+      "hash": "1c0583b3d2e92bfcadd6a1b33eeee8eaf65a2a32c33389f385fc74a966a097f9",
+      "size": 2613
+    },
+    "invoices\\INV-2025-00195.json": {
+      "hash": "263cc5df5c83f53568024086a1a5c6a99dad933b423e4fef30792fd53590c023",
+      "size": 631
+    },
+    "invoices\\INV-2025-00195.pdf": {
+      "hash": "69b63722eb5b5b50f9b78a8f61082cc0889fc8c26166c651fa19c1749e55311a",
+      "size": 2609
+    },
+    "invoices\\INV-2025-00196.json": {
+      "hash": "38bbae548303c6a335b1d6c9efca9388b2ed62155d9ae3163050d95510259916",
+      "size": 638
+    },
+    "invoices\\INV-2025-00196.pdf": {
+      "hash": "af44720858daaec990dce584083e6be5e7cbefb3a288237e9800605b2a7a334c",
+      "size": 2614
+    },
+    "invoices\\INV-2025-00197.json": {
+      "hash": "84dbdbc740e0bd162442aef7adadf0d14e8a2d80f480a727f0aa00084d6c348e",
+      "size": 649
+    },
+    "invoices\\INV-2025-00197.pdf": {
+      "hash": "c28225ec4df7860617ca37994ecfa83d863f9c1f603b7a75d3bfa582275954e2",
+      "size": 2620
+    },
+    "invoices\\INV-2025-00198.json": {
+      "hash": "4e755a962e8bc44defe919925612192bc011bb60a3f299409eb81f2a338540ee",
+      "size": 635
+    },
+    "invoices\\INV-2025-00198.pdf": {
+      "hash": "6cb91828fb74d451d096be9b30e5800e759bec1531709eee90ff5cfef44b98f7",
+      "size": 2615
+    },
+    "invoices\\INV-2025-00199.json": {
+      "hash": "5cdd20ac85ac63445653952206105618332169ccc92bbe86cd72d1b33accb73f",
+      "size": 629
+    },
+    "invoices\\INV-2025-00199.pdf": {
+      "hash": "1b8ae1b034f22132b2e9669fdca33f5186e60d701a7c38733c2dcae0014cab0f",
+      "size": 2592
+    },
+    "invoices\\INV-2025-00200.json": {
+      "hash": "f2c2af356b7166efff0e627dbeacf0693de0b39c3f0ab44eb35712dd6ffccf69",
+      "size": 638
+    },
+    "invoices\\INV-2025-00200.pdf": {
+      "hash": "668547a6970767f249e186622b014329113e27cbfb156372696279aa08097033",
+      "size": 2610
+    },
+    "invoices_index.csv": {
+      "hash": "4c7e57c0083b2c6dcb6bca719392fd2b29f83c13bb3ad87bb84909b4b2f07703",
+      "size": 22444
+    },
+    "labels\\ground_truth.csv": {
+      "hash": "9acfd8646791298e70833fa7d1bbbb4b987077d42e16a3b1571119ec7b90ec2c",
+      "size": 14097
+    },
+    "matched_contracts.json": {
+      "hash": "133fea5d948985a64109c6c9ed3a4e748702b7db4706017ff6d3e53264512c69",
+      "size": 216078
+    },
+    "parsed_records.json": {
+      "hash": "8f1a7a68c24ba3fc83828c816b88cc36a8f74cf5061546771abac0b5a5de86dc",
+      "size": 160739
+    },
+    "payment_instructions.json": {
+      "hash": "80ef35ff6a9e539b80771e29971dc1d59ee7b21c9cea58e310e32bda00e6e283",
+      "size": 66371
+    }
+  }
+}

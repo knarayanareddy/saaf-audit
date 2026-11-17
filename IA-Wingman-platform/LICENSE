@@ -1,0 +1,45 @@
+IA Wingman platform: licence for SAAF project participants
+
+Copyright (c) 2026 the IA Wingman contributors
+
+1. Who may use this software
+   This licence applies to every person and organisation taking part in the SAAF
+   project ("participants"). Each participant has the rights below, without having
+   to ask for separate permission.
+
+2. What participants may do
+   Participants may run, study, copy and modify this software, and share it with
+   other participants, for the purposes of the SAAF project, including training,
+   experiments, demonstrations and internal evaluation within the project.
+
+3. What participants may not do
+   Without the written permission of the copyright holders, nobody may:
+   a. publish this software, or any copy or modified version of it, outside the
+      SAAF project, for example in a public repository or on a public website;
+   b. give it to anyone who is not a participant;
+   c. use it in a commercial product or service, or sell it.
+   A participant who leaves the SAAF project keeps no rights under this licence
+   from that moment and should delete their copies.
+
+4. Conditions
+   Copies and modified versions must keep this licence and the copyright notice.
+   Modified versions must say that they have been modified.
+
+5. Your own keys and data
+   The AI features run on the Anthropic API key that each participant provides,
+   under that participant's own agreement with Anthropic. Do not put real
+   personal data, customer data or confidential audit material into a copy of
+   this software unless your organisation has approved it. The demonstration data
+   in this repository is fictional.
+
+6. Third-party components and sources
+   This software uses open-source packages, which stay under their own licences,
+   and includes parts adapted from SAAF hackathon projects, named in the code
+   where they are used. This licence does not change the terms of either.
+
+7. No warranty and no liability
+   This software is provided "as is", without warranty of any kind. It uses
+   artificial intelligence, and its output can be wrong, incomplete or out of
+   date. Participants must check it before relying on it, in particular before
+   using it in a real audit. To the extent the law allows, the copyright holders
+   are not liable for any loss arising from its use.

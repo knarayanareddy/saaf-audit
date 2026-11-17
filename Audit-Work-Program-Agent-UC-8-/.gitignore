@@ -1,0 +1,27 @@
+# Secrets — nooit committen
+.env
+.env*.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Gegenereerde output (verwijder deze regels als je outputs wilt versiebeheren)
+outputs/*.json
+outputs/*.md
+outputs/*.xlsx
+
+# OS-bestanden
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/

@@ -1,0 +1,75 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "To prevent unauthorized or unsupported high-risk journal entries from being posted to the general ledger, ensuring revenue is recognized accurately and in the correct period.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Obtain and inspect the journal entry policy, workflow configuration documentation, and approval matrix within the ERP/GL system. Walk through one high-risk journal entry from initiation through supervisor approval to posting, confirming that: (1) high-risk journal criteria are defined, (2) the system enforces supervisor approval before posting, (3) segregation of duties exists between preparer and approver, and (4) approval is tied to the Financial Reporting Manager role.",
+    "methodology": "Inquiry, inspection of policy and system configuration, and walkthrough re-performance",
+    "evidence": "Journal entry policy, ERP workflow configuration screenshots, approval matrix, walkthrough documentation, and system role assignments",
+    "pass_criteria": "The control is designed such that no high-risk journal entry can be posted without documented supervisor approval, segregation of duties is enforced, and the system configuration aligns with the documented policy.",
+    "estimated_hours": 6,
+    "skill_required": "Senior Auditor",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [
+    {
+      "population": "All high-risk journal entries posted to the general ledger during the period Jan-Dec 2025, extracted from the ERP/GL source system.",
+      "sampling_approach": {
+        "method": "stratified",
+        "sample_size": 25,
+        "rationale": "Monthly control over 12 periods; stratified sample of ~2 high-risk journals per month to cover all periods and ensure coverage across the fiscal year, consistent with GIAS 13.6 sufficiency requirements for monthly controls."
+      },
+      "step": "For each sampled high-risk journal entry, inspect the workflow approval record to verify that supervisor (Financial Reporting Manager) approval was obtained prior to posting, that the approver was independent of the preparer, that supporting documentation exists, and that the entry was posted in the correct accounting period.",
+      "methodology": "Inspection and re-performance",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "ERP workflow approval logs, journal entry supporting documentation, approver and preparer user IDs, posting timestamps",
+      "pass_criteria": "100% of sampled journals show evidence of supervisor approval prior to posting, approver differs from preparer, supporting documentation is sufficient, and the posting period is appropriate.",
+      "estimated_hours": 10,
+      "skill_required": "Senior Auditor",
+      "assigned_to": "Priya Nair"
+    },
+    {
+      "population": "Full population of journal entries posted to the GL during Jan-Dec 2025, including user IDs of preparer and approver, posting timestamps, amounts, account codes, and workflow status.",
+      "sampling_approach": {
+        "method": "full population",
+        "sample_size": null,
+        "rationale": "CAAT-based analysis over the full journal entry population to identify any high-risk journals posted without approval, same-user prepare-and-approve exceptions, after-hours postings, or round-dollar/threshold-breach anomalies that bypass the workflow."
+      },
+      "step": "Execute a data analytics routine over the full GL journal population to identify: (a) journals meeting high-risk criteria posted without a corresponding approval record, (b) instances where preparer_id = approver_id, (c) approvals that occurred after the posting timestamp, and (d) journals above materiality thresholds lacking approval evidence.",
+      "methodology": "Analytical procedure / re-performance via CAAT",
+      "caat_tool": "Python / SQL",
+      "caat_pseudocode": "1. Load GL_JOURNALS table for period 2025-01-01 to 2025-12-31.\n2. Load WORKFLOW_APPROVALS table and join on journal_id.\n3. Define high_risk_flag = (amount >= materiality_threshold) OR (account_code IN revenue_accounts) OR (manual_entry = True) OR (period_end_adjustment = True).\n4. exceptions_no_approval = journals WHERE high_risk_flag = True AND approval_status != 'Approved'.\n5. sod_exceptions = journals WHERE preparer_id = approver_id.\n6. timing_exceptions = journals WHERE approval_timestamp > posting_timestamp.\n7. Export all exception sets to CSV for follow-up and tie-out.",
+      "evidence": "Full GL extract, workflow approval log extract, CAAT script, output exception files, and reconciliation of extract totals to trial balance.",
+      "pass_criteria": "Zero exceptions identified, OR all identified exceptions are substantively investigated and resolved as valid (e.g., system-generated entries with documented compensating controls).",
+      "estimated_hours": 14,
+      "skill_required": "Data Analyst",
+      "assigned_to": "Sara Li"
+    },
+    {
+      "population": "ERP/GL system configuration, user access roles, and workflow rules governing journal approvals during Jan-Dec 2025.",
+      "sampling_approach": {
+        "method": "judgmental",
+        "sample_size": 3,
+        "rationale": "IT-dependent control requires validation of system configuration and change management. Judgmental selection of configuration snapshots at the start, mid, and end of the audit period."
+      },
+      "step": "Inspect the ERP workflow configuration and change log to confirm that approval rules (thresholds, approver roles, high-risk flags) remained operative and were not disabled or modified without authorization during the audit period. Validate user access to the approver role is restricted to the Financial Reporting Manager and designated backups.",
+      "methodology": "Inspection and inquiry",
+      "caat_tool": "SQL",
+      "caat_pseudocode": "1. Query CONFIG_CHANGE_LOG WHERE module = 'JE_WORKFLOW' AND change_date BETWEEN '2025-01-01' AND '2025-12-31'.\n2. For each change, retrieve change_requestor, approver, and business justification.\n3. Query USER_ROLE_ASSIGNMENT WHERE role = 'JE_APPROVER' at three points in time.\n4. Flag any unauthorized changes or inappropriate role assignments.",
+      "evidence": "System configuration screenshots, change management tickets, user access listings, and ITGC change-management evidence.",
+      "pass_criteria": "Workflow configuration was continuously enforced during the audit period; all changes were authorized and tested; approver role access was appropriately restricted.",
+      "estimated_hours": 8,
+      "skill_required": "IT Audit",
+      "assigned_to": "Lars Jensen"
+    }
+  ],
+  "sufficiency_flags": [],
+  "overall_conclusion": null
+}

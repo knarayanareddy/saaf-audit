@@ -1,0 +1,1902 @@
+[
+  {
+    "id": "F-001",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "High",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-05-21",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0001",
+      "USR-0001"
+    ]
+  },
+  {
+    "id": "F-002",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "High",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-05-22",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0002",
+      "USR-0002"
+    ]
+  },
+  {
+    "id": "F-003",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "High",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-05-23",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0003",
+      "USR-0003"
+    ]
+  },
+  {
+    "id": "F-004",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "High",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-05-24",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0004",
+      "USR-0004"
+    ]
+  },
+  {
+    "id": "F-005",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "High",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-05-25",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0005",
+      "USR-0005"
+    ]
+  },
+  {
+    "id": "F-006",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "High",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-05-26",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0006",
+      "USR-0006"
+    ]
+  },
+  {
+    "id": "F-007",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "High",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-05-27",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0007",
+      "USR-0007"
+    ]
+  },
+  {
+    "id": "F-008",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "High",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-05-28",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0008",
+      "USR-0008"
+    ]
+  },
+  {
+    "id": "F-009",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "High",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-05-29",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0009",
+      "USR-0009"
+    ]
+  },
+  {
+    "id": "F-010",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "High",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-05-30",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0010",
+      "USR-0010"
+    ]
+  },
+  {
+    "id": "F-011",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "High",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-05-31",
+    "owner": "IAM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0011",
+      "USR-0011"
+    ]
+  },
+  {
+    "id": "F-012",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "High",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-06-01",
+    "owner": "SRE Manager",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0012",
+      "USR-0012"
+    ]
+  },
+  {
+    "id": "F-013",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "High",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-06-02",
+    "owner": "CAB Chair",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0013",
+      "USR-0013"
+    ]
+  },
+  {
+    "id": "F-014",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "High",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-06-03",
+    "owner": "TPRM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0014",
+      "USR-0014"
+    ]
+  },
+  {
+    "id": "F-015",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "High",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-06-04",
+    "owner": "Security Governance",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0015",
+      "USR-0015"
+    ]
+  },
+  {
+    "id": "F-016",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "High",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-06-05",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0016",
+      "USR-0016"
+    ]
+  },
+  {
+    "id": "F-017",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "High",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-06-06",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0017",
+      "USR-0017"
+    ]
+  },
+  {
+    "id": "F-018",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "High",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-06-07",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0018",
+      "USR-0018"
+    ]
+  },
+  {
+    "id": "F-019",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-06-08",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0019",
+      "USR-0019"
+    ]
+  },
+  {
+    "id": "F-020",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-06-09",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0020",
+      "USR-0020"
+    ]
+  },
+  {
+    "id": "F-021",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Medium",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-06-10",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0021",
+      "USR-0021"
+    ]
+  },
+  {
+    "id": "F-022",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Medium",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-06-11",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0022",
+      "USR-0022"
+    ]
+  },
+  {
+    "id": "F-023",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Medium",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-06-12",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0023",
+      "USR-0023"
+    ]
+  },
+  {
+    "id": "F-024",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-06-13",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0024",
+      "USR-0024"
+    ]
+  },
+  {
+    "id": "F-025",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-06-14",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0025",
+      "USR-0025"
+    ]
+  },
+  {
+    "id": "F-026",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Medium",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-06-15",
+    "owner": "IAM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0026",
+      "USR-0026"
+    ]
+  },
+  {
+    "id": "F-027",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Medium",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-06-16",
+    "owner": "SRE Manager",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0027",
+      "USR-0027"
+    ]
+  },
+  {
+    "id": "F-028",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Medium",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-06-17",
+    "owner": "CAB Chair",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0028",
+      "USR-0028"
+    ]
+  },
+  {
+    "id": "F-029",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-06-18",
+    "owner": "TPRM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0029",
+      "USR-0029"
+    ]
+  },
+  {
+    "id": "F-030",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-06-19",
+    "owner": "Security Governance",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0030",
+      "USR-0030"
+    ]
+  },
+  {
+    "id": "F-031",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Medium",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-06-20",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0031",
+      "USR-0031"
+    ]
+  },
+  {
+    "id": "F-032",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Medium",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-06-21",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0032",
+      "USR-0032"
+    ]
+  },
+  {
+    "id": "F-033",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Medium",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-06-22",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0033",
+      "USR-0033"
+    ]
+  },
+  {
+    "id": "F-034",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-06-23",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0034",
+      "USR-0034"
+    ]
+  },
+  {
+    "id": "F-035",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-06-24",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0035",
+      "USR-0035"
+    ]
+  },
+  {
+    "id": "F-036",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Medium",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-06-25",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0036",
+      "USR-0036"
+    ]
+  },
+  {
+    "id": "F-037",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Medium",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-06-26",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0037",
+      "USR-0037"
+    ]
+  },
+  {
+    "id": "F-038",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Medium",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-06-27",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0038",
+      "USR-0038"
+    ]
+  },
+  {
+    "id": "F-039",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-06-28",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0039",
+      "USR-0039"
+    ]
+  },
+  {
+    "id": "F-040",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-06-29",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0040",
+      "USR-0040"
+    ]
+  },
+  {
+    "id": "F-041",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Medium",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-06-30",
+    "owner": "IAM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0041",
+      "USR-0041"
+    ]
+  },
+  {
+    "id": "F-042",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Medium",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-01",
+    "owner": "SRE Manager",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0042",
+      "USR-0042"
+    ]
+  },
+  {
+    "id": "F-043",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Medium",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-07-02",
+    "owner": "CAB Chair",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0043",
+      "USR-0043"
+    ]
+  },
+  {
+    "id": "F-044",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-07-03",
+    "owner": "TPRM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0044",
+      "USR-0044"
+    ]
+  },
+  {
+    "id": "F-045",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-07-04",
+    "owner": "Security Governance",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0045",
+      "USR-0045"
+    ]
+  },
+  {
+    "id": "F-046",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Medium",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-07-05",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0046",
+      "USR-0046"
+    ]
+  },
+  {
+    "id": "F-047",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Medium",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-06",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0047",
+      "USR-0047"
+    ]
+  },
+  {
+    "id": "F-048",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Medium",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-07-07",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0048",
+      "USR-0048"
+    ]
+  },
+  {
+    "id": "F-049",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Medium",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-07-08",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0049",
+      "USR-0049"
+    ]
+  },
+  {
+    "id": "F-050",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Medium",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-07-09",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0050",
+      "USR-0050"
+    ]
+  },
+  {
+    "id": "F-051",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-07-10",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0051",
+      "USR-0051"
+    ]
+  },
+  {
+    "id": "F-052",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-11",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0052",
+      "USR-0052"
+    ]
+  },
+  {
+    "id": "F-053",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Low",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-07-12",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0053",
+      "USR-0053"
+    ]
+  },
+  {
+    "id": "F-054",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Low",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-07-13",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0054",
+      "USR-0054"
+    ]
+  },
+  {
+    "id": "F-055",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Low",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-07-14",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0055",
+      "USR-0055"
+    ]
+  },
+  {
+    "id": "F-056",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-07-15",
+    "owner": "IAM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0056",
+      "USR-0056"
+    ]
+  },
+  {
+    "id": "F-057",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-16",
+    "owner": "SRE Manager",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0057",
+      "USR-0057"
+    ]
+  },
+  {
+    "id": "F-058",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Low",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-07-17",
+    "owner": "CAB Chair",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0058",
+      "USR-0058"
+    ]
+  },
+  {
+    "id": "F-059",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Low",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-07-18",
+    "owner": "TPRM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0059",
+      "USR-0059"
+    ]
+  },
+  {
+    "id": "F-060",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Low",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-07-19",
+    "owner": "Security Governance",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0060",
+      "USR-0060"
+    ]
+  },
+  {
+    "id": "F-061",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-07-20",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0061",
+      "USR-0061"
+    ]
+  },
+  {
+    "id": "F-062",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-21",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0062",
+      "USR-0062"
+    ]
+  },
+  {
+    "id": "F-063",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Low",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-07-22",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0063",
+      "USR-0063"
+    ]
+  },
+  {
+    "id": "F-064",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Low",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-07-23",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0064",
+      "USR-0064"
+    ]
+  },
+  {
+    "id": "F-065",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Low",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-07-24",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0065",
+      "USR-0065"
+    ]
+  },
+  {
+    "id": "F-066",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-07-25",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0066",
+      "USR-0066"
+    ]
+  },
+  {
+    "id": "F-067",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-26",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0067",
+      "USR-0067"
+    ]
+  },
+  {
+    "id": "F-068",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Low",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-07-27",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0068",
+      "USR-0068"
+    ]
+  },
+  {
+    "id": "F-069",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Low",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-07-28",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0069",
+      "USR-0069"
+    ]
+  },
+  {
+    "id": "F-070",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Low",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-07-29",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0070",
+      "USR-0070"
+    ]
+  },
+  {
+    "id": "F-071",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-07-30",
+    "owner": "IAM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0071",
+      "USR-0071"
+    ]
+  },
+  {
+    "id": "F-072",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-07-31",
+    "owner": "SRE Manager",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0072",
+      "USR-0072"
+    ]
+  },
+  {
+    "id": "F-073",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Low",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-08-01",
+    "owner": "CAB Chair",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0073",
+      "USR-0073"
+    ]
+  },
+  {
+    "id": "F-074",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Low",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-08-02",
+    "owner": "TPRM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0074",
+      "USR-0074"
+    ]
+  },
+  {
+    "id": "F-075",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Low",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-08-03",
+    "owner": "Security Governance",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0075",
+      "USR-0075"
+    ]
+  },
+  {
+    "id": "F-076",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-08-04",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0076",
+      "USR-0076"
+    ]
+  },
+  {
+    "id": "F-077",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-08-05",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0077",
+      "USR-0077"
+    ]
+  },
+  {
+    "id": "F-078",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Low",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-08-06",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0078",
+      "USR-0078"
+    ]
+  },
+  {
+    "id": "F-079",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Low",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-08-07",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0079",
+      "USR-0079"
+    ]
+  },
+  {
+    "id": "F-080",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Low",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-08-08",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0080",
+      "USR-0080"
+    ]
+  },
+  {
+    "id": "F-081",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Low",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-08-09",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0081",
+      "USR-0081"
+    ]
+  },
+  {
+    "id": "F-082",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Low",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-08-10",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0082",
+      "USR-0082"
+    ]
+  },
+  {
+    "id": "F-083",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Informational",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-08-11",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0083",
+      "USR-0083"
+    ]
+  },
+  {
+    "id": "F-084",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Informational",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-08-12",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0084",
+      "USR-0084"
+    ]
+  },
+  {
+    "id": "F-085",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Informational",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-08-13",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0085",
+      "USR-0085"
+    ]
+  },
+  {
+    "id": "F-086",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Informational",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-08-14",
+    "owner": "IAM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0086",
+      "USR-0086"
+    ]
+  },
+  {
+    "id": "F-087",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Informational",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-08-15",
+    "owner": "SRE Manager",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0087",
+      "USR-0087"
+    ]
+  },
+  {
+    "id": "F-088",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Informational",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-08-16",
+    "owner": "CAB Chair",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0088",
+      "USR-0088"
+    ]
+  },
+  {
+    "id": "F-089",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Informational",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-08-17",
+    "owner": "TPRM Lead",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0089",
+      "USR-0089"
+    ]
+  },
+  {
+    "id": "F-090",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Informational",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-08-18",
+    "owner": "Security Governance",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0090",
+      "USR-0090"
+    ]
+  },
+  {
+    "id": "F-091",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Informational",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-08-19",
+    "owner": "IAM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0091",
+      "USR-0091"
+    ]
+  },
+  {
+    "id": "F-092",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Informational",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-08-20",
+    "owner": "SRE Manager",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0092",
+      "USR-0092"
+    ]
+  },
+  {
+    "id": "F-093",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Informational",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-08-21",
+    "owner": "CAB Chair",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0093",
+      "USR-0093"
+    ]
+  },
+  {
+    "id": "F-094",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Informational",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-08-22",
+    "owner": "TPRM Lead",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0094",
+      "USR-0094"
+    ]
+  },
+  {
+    "id": "F-095",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Informational",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-08-23",
+    "owner": "Security Governance",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0095",
+      "USR-0095"
+    ]
+  },
+  {
+    "id": "F-096",
+    "title": "Privileged account remained active after termination",
+    "risk_rating": "Informational",
+    "control_objective": "ISO 27001 A.5.18 Access rights",
+    "observation": "Synthetic testing shows a terminated user retained privileged access beyond the expected deprovisioning window.",
+    "root_cause": "Joiner-mover-leaver workflow was not consistently monitored.",
+    "impact": "Excess access could allow unauthorized changes or data exposure.",
+    "recommendation": "Enforce automated deprovisioning checks for terminated identities and review exceptions weekly.",
+    "management_response": "Management will review IAM exception handling and automate stale-account reporting.",
+    "target_date": "2026-08-24",
+    "owner": "IAM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0096",
+      "USR-0096"
+    ]
+  },
+  {
+    "id": "F-097",
+    "title": "Major incident review not completed within SLA",
+    "risk_rating": "Informational",
+    "control_objective": "COBIT BAI06 Manage IT Changes",
+    "observation": "Synthetic incident logs indicate the post-incident review was not completed within the required five-business-day SLA.",
+    "root_cause": "Incident management team did not track PIR due dates centrally.",
+    "impact": "Recurring incident causes may remain unidentified and unaddressed.",
+    "recommendation": "Track PIR due dates and require closure evidence before incident closure.",
+    "management_response": "Operations will add a PIR tracking board to the major incident process.",
+    "target_date": "2026-08-25",
+    "owner": "SRE Manager",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0097",
+      "USR-0097"
+    ]
+  },
+  {
+    "id": "F-098",
+    "title": "Change implemented before formal approval",
+    "risk_rating": "Informational",
+    "control_objective": "SOC 2 CC6 Logical access",
+    "observation": "Synthetic change records show implementation activity preceding recorded approver sign-off.",
+    "root_cause": "Emergency implementation pressure bypassed normal CAB timing.",
+    "impact": "Unapproved production changes increase operational and compliance risk.",
+    "recommendation": "Block production implementation when approver sign-off is missing unless emergency workflow is documented.",
+    "management_response": "CAB will enforce workflow gating in the change tool.",
+    "target_date": "2026-08-26",
+    "owner": "CAB Chair",
+    "status": "In Progress",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0098",
+      "USR-0098"
+    ]
+  },
+  {
+    "id": "F-099",
+    "title": "Critical vendor assessment expired",
+    "risk_rating": "Informational",
+    "control_objective": "Third-party risk management policy",
+    "observation": "Synthetic vendor records indicate the latest assurance review expired before contract renewal.",
+    "root_cause": "Third-party review calendar did not alert on upcoming expiries.",
+    "impact": "The organization may rely on a vendor without current assurance evidence.",
+    "recommendation": "Introduce automated reminders for vendor reviews before contract renewal dates.",
+    "management_response": "TPRM will align renewal reminders with procurement checkpoints.",
+    "target_date": "2026-08-27",
+    "owner": "TPRM Lead",
+    "status": "Closed",
+    "ai_assisted": false,
+    "evidence_references": [
+      "INC-2026-0099",
+      "USR-0099"
+    ]
+  },
+  {
+    "id": "F-100",
+    "title": "Access review evidence incomplete",
+    "risk_rating": "Informational",
+    "control_objective": "Incident response standard",
+    "observation": "Synthetic access review records show missing reviewer evidence for a subset of privileged users.",
+    "root_cause": "Review workflow allowed closure without mandatory evidence attachment.",
+    "impact": "Management cannot demonstrate timely completion of access governance controls.",
+    "recommendation": "Require reviewer identity and review outcome evidence before marking a review complete.",
+    "management_response": "IAM governance will update the review checklist and evidence controls.",
+    "target_date": "2026-08-28",
+    "owner": "Security Governance",
+    "status": "Open",
+    "ai_assisted": true,
+    "evidence_references": [
+      "INC-2026-0100",
+      "USR-0100"
+    ]
+  }
+]

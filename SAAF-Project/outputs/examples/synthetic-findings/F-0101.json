@@ -1,0 +1,11 @@
+{
+  "id": "F-0101",
+  "title": "EU AI Act Article 10 training data requirements not documented",
+  "risk_rating": "High",
+  "control_objective": "EU AI Act Article 10 — Data and data governance for high-risk AI systems",
+  "observation": "The organisation deploys a credit-scoring model classified as high-risk under EU AI Act Annex III, Section 5(b). EU AI Act Article 10(2) requires that training, validation, and testing datasets be subject to data governance practices covering origin, scope, and characteristics. Audit evidence shows no data governance documentation exists for this model. Furthermore, Article 10(5) requires bias monitoring on datasets; no such monitoring programme was found.",
+  "recommendation": "Implement a data governance framework for all high-risk AI training datasets as required by EU AI Act Article 10. Document dataset provenance, scope, and known limitations. Establish a bias monitoring programme before the model is re-trained. Target compliance before the EU AI Act obligations become enforceable on 2 August 2026.",
+  "ai_assisted": true,
+  "source_track": "EU AI Act Risk Assessment (Compliance-Report-Generator)",
+  "status": "Open"
+}

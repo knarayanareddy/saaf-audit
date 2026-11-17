@@ -1,0 +1,30 @@
+{
+  "_comment": "Proposed track for plans that have no track in plans/hackathon-3-workstreams.md (the appendix predates later plans). Used only by the progress visual (progress.json); plans.json and the existing website keep the workstream assignments. Proposals are marked 'proposed' in the visual until a plan is added to the workstreams appendix. Track ids: 0 Shared Infrastructure, 1 GIAS Planning, 2 Evidence Collection & Extraction, 3 Compliance & Regulatory (monitoring), 4 Reporting & Visualisation, 5 AI Governance & QA. Based on each plan's audit domain and problem statement; needs review by the plan owners.",
+  "proposals": {
+    "auditflow-ai": {"track": 1, "reason": "Overall audit lifecycle orchestration"},
+    "group-5-hackers-ai-audit-agents": {"track": 5, "reason": "Auditing AI agents in financial services"},
+    "team-67-intelligent-audit-agents": {"track": 3, "reason": "Multi-domain risk and compliance agents"},
+    "immistyle-cuec-crosscheck-agent": {"track": 3, "reason": "Third-party risk: CUEC crosscheck and gap flagging"},
+    "linda-nyvelius-team-hightable": {"track": 1, "reason": "Knowledge reuse from earlier audits (like UC2)"},
+    "yellowraptor-whats-the-news": {"track": 3, "reason": "Regulatory change monitoring (DNB/AFM feeds)"},
+    "always-on-audit-agent": {"track": 0, "reason": "Agent infrastructure: 24/7 field assistant"},
+    "audit-agent-gamified-ui": {"track": 0, "reason": "Agent infrastructure: fleet manager dashboard"},
+    "audit-automation-overview": {"track": 5, "reason": "Strategy overview of the AI audit lifecycle"},
+    "audit-memory-knowledge-system": {"track": 0, "reason": "Shared knowledge store (Obsidian + ChromaDB)"},
+    "audit-skills-transformation-curriculum": {"track": 5, "reason": "Talent and reskilling curriculum"},
+    "audit-subagent-coordination-framework": {"track": 0, "reason": "Agent infrastructure: multi-agent coordination"},
+    "audit-workflow-automation-levels": {"track": 5, "reason": "Automation maturity strategy"},
+    "frank-heldens-llm-finding-fact-check-agent": {"track": 5, "reason": "Quality assurance of AI findings"},
+    "frank-lubbers-ai-finding-escalation-azure-devops": {"track": 5, "reason": "Escalates OWASP and hallucination findings"},
+    "n8n-audit-workflow-migration": {"track": 0, "reason": "Agent infrastructure: workflow migration"},
+    "on-premise-ai-compute-decision-framework": {"track": 0, "reason": "AI infrastructure decision: on-premise vs cloud"},
+    "open-source-audit-agent-framework": {"track": 0, "reason": "Agent infrastructure: local LLM stack"},
+    "overnight-audit-batch-processing-agent": {"track": 0, "reason": "Agent infrastructure: overnight batch processing"},
+    "saaf-intelligence-monitor": {"track": 3, "reason": "Monitoring of AI and audit sources"},
+    "saaf-skills-registry-and-matching": {"track": 0, "reason": "Shared skills registry"},
+    "table-9-execution-plan": {"track": 5, "reason": "Track 5 execution plan of Hackathon #3 (Table 9)"},
+    "Plan_ExecSummary": {"track": 4, "reason": "Board reporting agent"},
+    "rene-volwerk-compliance-harnas-configurator": {"track": 5, "reason": "Compliance harness for AI usage"},
+    "rohan-sobha-judging-found-controls": {"track": 5, "reason": "Verifies extracted controls against the source policy"}
+  }
+}

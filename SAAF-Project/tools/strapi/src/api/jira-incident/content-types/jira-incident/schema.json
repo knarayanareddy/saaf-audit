@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jira_incidents",
+  "info": {
+    "singularName": "jira-incident",
+    "pluralName": "jira-incidents",
+    "displayName": "Jira Incident"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "ticket_id": { "type": "string", "required": true, "unique": true },
+    "title": { "type": "string", "required": true },
+    "priority": { "type": "enumeration", "enum": ["P1", "P2", "P3", "P4"], "required": true },
+    "category": { "type": "enumeration", "enum": ["Network Outage", "Access Issue", "Application Error", "Security Alert", "Data Quality"], "required": true },
+    "reported_at": { "type": "datetime", "required": true },
+    "resolved_at": { "type": "datetime" },
+    "mttr_hours": { "type": "decimal", "min": 0 },
+    "assigned_team": { "type": "string", "required": true },
+    "root_cause": { "type": "text" },
+    "resolution_summary": { "type": "text" },
+    "post_incident_review_completed": { "type": "boolean", "default": false },
+    "is_exception": { "type": "boolean", "default": false },
+    "exception_type": { "type": "string" }
+  }
+}

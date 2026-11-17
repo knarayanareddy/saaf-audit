@@ -1,0 +1,673 @@
+diff --git a/agents/audit_trail.py b/agents/audit_trail.py
+index 8698390..50d2e89 100644
+--- a/agents/audit_trail.py
++++ b/agents/audit_trail.py
+@@ -164,9 +164,14 @@ class AuditTrail:
+         role: str | None = None,
+         comment: str | None = None,
+         reviewed_at: datetime | None = None,
++        four_eyes: dict | None = None,
+     ) -> dict:
+         """Record an internal auditor's approve/reject decision on ``entry_id``.
+ 
++        ``four_eyes`` is the signed Four Eyes seal for an approval (see
++        ``agents/approval_seal.py``). ``orchestrator.require_approved`` only
++        counts an approval whose seal is valid for the entry's current content.
++
+         ``reviewer`` identifies the auditor (name or email) — required, so a
+         decision is never anonymous. ``role`` (e.g. "auditor" vs.
+         "senior_auditor") is optional metadata only — it is not a second
+@@ -191,6 +196,8 @@ class AuditTrail:
+             "comment": comment,
+             "reviewed_at": (reviewed_at or datetime.now(timezone.utc)).isoformat(),
+         }
++        if four_eyes is not None:
++            approval_entry["four_eyes"] = four_eyes
+         self._append(self.approvals_path, approval_entry)
+         return approval_entry
+ 
+diff --git a/agents/orchestrator.py b/agents/orchestrator.py
+index 77b7569..82b59df 100644
+--- a/agents/orchestrator.py
++++ b/agents/orchestrator.py
+@@ -59,6 +59,7 @@ from agents import (
+     pbc_validation_prompt_proposal,
+     quality_check,
+ )
++from agents import approval_seal, four_eyes
+ from agents.audit_trail import AuditTrail
+ from agents.claude_init import ClaudeClient
+ 
+@@ -298,14 +299,34 @@ def record_approval(
+     reviewer: str,
+     role: str | None = None,
+     comment: str | None = None,
++    confirmation: str | None = None,
++    prepared_by: str | None = None,
+ ) -> dict:
+     """Record an internal auditor's approve/reject decision for one entry.
+ 
+-    Thin pass-through to ``AuditTrail.record_approval`` — kept here so
+-    run-level operations (review, approve, finalize) have one home.
++    ``reviewer`` must be the authenticated person (never a name taken from a
++    request body). An "approved" decision needs ``confirmation``: the reviewer
++    typing ``APPROVE <code>`` for this exact entry (see
++    ``approval_seal.approval_phrase``). It is then signed with a Four Eyes seal
++    bound to the entry's content. Raises ``four_eyes.ApprovalRejected`` when the
++    confirmation is wrong or the reviewer prepared the work (``prepared_by``).
+     """
+-    return AuditTrail(run_id=run_id).record_approval(
+-        entry_id=entry_id, decision=decision, reviewer=reviewer, role=role, comment=comment
++    trail = AuditTrail(run_id=run_id)
++    seal = None
++    if decision == "approved":
++        entry = next((e for e in trail.entries() if e["entry_id"] == entry_id), None)
++        if entry is None:
++            raise ValueError(f"No audit trail entry {entry_id!r} in run {run_id!r}.")
++        seal = approval_seal.seal(
++            run_id, entry, user=reviewer, confirmation=confirmation or "", prepared_by=prepared_by
++        )
++    return trail.record_approval(
++        entry_id=entry_id,
++        decision=decision,
++        reviewer=reviewer,
++        role=role,
++        comment=comment,
++        four_eyes=seal,
+     )
+ 
+ 
+@@ -323,11 +344,25 @@ def require_approved(run_id: str, entry_ids: list[str] | None = None) -> None:
+             e["entry_id"] for e in trail.entries() if e["agent"] != "quality_check"
+         ]
+ 
+-    not_approved = {
+-        entry_id: trail.approval_status(entry_id)
+-        for entry_id in entry_ids
+-        if trail.approval_status(entry_id) != "approved"
+-    }
++    # Four Eyes: an "approved" line only counts with a valid seal for the
++    # entry's current content. A hand-written line, a changed answer or a
++    # missing FOUR_EYES_KEY all leave the entry unapproved (fails closed).
++    # Nothing to approve is not the same as approved.
++    if not entry_ids:
++        raise ApprovalRequiredError(f"run {run_id!r} has nothing approved to finalize")
++    entries_by_id = {e["entry_id"]: e for e in trail.entries()}
++    not_approved = {}
++    for entry_id in entry_ids:
++        status = trail.approval_status(entry_id)
++        if status != "approved":
++            not_approved[entry_id] = status
++            continue
++        try:
++            approval_seal.check(
++                run_id, entries_by_id.get(entry_id, {}), trail.latest_approval(entry_id)
++            )
++        except four_eyes.FourEyesError as exc:
++            not_approved[entry_id] = f"approved, but not valid: {exc}"
+     if not_approved:
+         raise ApprovalRequiredError(
+             f"run {run_id!r} is not fully approved: {not_approved}"
+diff --git a/webapp/server.py b/webapp/server.py
+index 59e3aa6..e9817da 100644
+--- a/webapp/server.py
++++ b/webapp/server.py
+@@ -26,7 +26,7 @@ from pathlib import Path
+ from typing import Any
+ 
+ import httpx
+-from fastapi import FastAPI, Form, HTTPException, UploadFile
++from fastapi import FastAPI, Form, HTTPException, Request, UploadFile
+ from fastapi.responses import FileResponse, JSONResponse
+ from fastapi.staticfiles import StaticFiles
+ 
+@@ -38,6 +38,7 @@ from agents import (
+     pbc_validation,
+     pbc_validation_prompt_proposal,
+ )
++from agents import four_eyes
+ from agents.audit_trail import AuditTrail
+ from agents.claude_init import ClaudeClient
+ from agents.dashboard import write_dashboard
+@@ -268,7 +269,7 @@ def api_get_run(run_id: str) -> dict:
+ 
+ 
+ @app.post("/api/runs/{run_id}/update")
+-def api_update_run(run_id: str, body: dict) -> dict:
++def api_update_run(run_id: str, body: dict, request: Request) -> dict:
+     """Update this engagement's master data.
+ 
+     Body accepts the same field names the two creation forms use
+@@ -284,9 +285,23 @@ def api_update_run(run_id: str, body: dict) -> dict:
+     internal auditor might need to correct after creation (a typo in the
+     scope, a changed contact email, reassigning who's the auditor), not a
+     way to re-derive the PBC list.
++
++    Four Eyes: changing who holds a role, or where auditee requests are sent,
++    needs a logged-in user, and nobody can put themselves into a role (a
++    colleague must). Otherwise anyone could make themselves the senior
++    auditor and then approve.
+     """
+     state = _require_state(run_id)
+ 
++    sensitive = ("auditor_name", "senior_auditor_name", "auditee_email")
++    if any(key in body for key in sensitive):
++        user = _require_user(request)
++        for key in ("auditor_name", "senior_auditor_name"):
++            if key in body and str(body[key] or "").strip().casefold() == user.casefold():
++                raise HTTPException(
++                    403, "You cannot assign yourself to a role. Ask a colleague to do it."
++                )
++
+     if "audit_scope" in body:
+         state["audit_scope"] = body["audit_scope"]
+     if "audit_period" in body:
+@@ -537,20 +552,49 @@ def api_propose_prompt(run_id: str, pbc_id: str) -> dict:
+     return proposal
+ 
+ 
++def _authenticated_user(request: Request) -> str | None:
++    """The logged-in person, as set by the single sign-on proxy in front of this app.
++
++    Four Eyes: approvals carry the name of whoever is logged in, never a name
++    from the request body. This prototype has no login of its own, so the name
++    is only trusted from the header named in FOUR_EYES_TRUSTED_USER_HEADER,
++    which the sign-on proxy sets (and strips from incoming requests). Without
++    that setting nobody is logged in and nothing can be approved.
++    """
++    header = os.getenv("FOUR_EYES_TRUSTED_USER_HEADER")
++    if not header:
++        return None
++    return (request.headers.get(header) or "").strip() or None
++
++
++def _require_user(request: Request) -> str:
++    user = _authenticated_user(request)
++    if not user:
++        raise HTTPException(
++            401,
++            "Approvals need a logged-in user (Four Eyes). The name is taken from "
++            "the sign-on, never from the request.",
++        )
++    return user
++
++
+ @app.post("/api/runs/{run_id}/items/{pbc_id}/process")
+-def api_process_item(run_id: str, pbc_id: str, body: dict) -> list[dict]:
++def api_process_item(run_id: str, pbc_id: str, body: dict, request: Request) -> list[dict]:
+     """Run the detailed content-based check for one item using an approved
+     (possibly auditor-edited) prompt, and fold the result into this
+     engagement's validation status.
+ 
+     Body: prompt (str, required — the approved instructions), edited
+-    (bool, optional), approved_by (str, optional — falls back to the
+-    engagement's assigned auditor). The approved prompt is recorded to
++    (bool, optional). The approver is the logged-in person (Four Eyes, see
++    ``_authenticated_user``); a body ``approved_by`` is ignored. The approved prompt is recorded to
+     ``runs/<run_id>/prompts/<pbc_id>.jsonl`` alongside any earlier proposal
+     for the same item, so a correction loop (re-propose, edit, re-run)
+     stays a visible history, not a silent overwrite.
+     """
+     state = _require_state(run_id)
++    # Four Eyes: whoever approves this prompt is the logged-in person, checked
++    # before any model call. A body "approved_by" is ignored.
++    approved_by = _require_user(request)
+     item = _require_item(state, pbc_id)
+     doc = _latest_received_document(state, pbc_id)
+     if doc is None:
+@@ -572,7 +616,6 @@ def api_process_item(run_id: str, pbc_id: str, body: dict) -> list[dict]:
+         client=client,
+     )
+ 
+-    approved_by = body.get("approved_by") or (state.get("assigned") or {}).get("auditor") or "unknown"
+     _append_prompt_history(
+         run_id,
+         pbc_id,
+@@ -669,29 +712,41 @@ def api_add_note(run_id: str, pbc_id: str, body: dict) -> list[dict]:
+ 
+ 
+ @app.post("/api/runs/{run_id}/approve")
+-def api_approve(run_id: str, body: dict) -> dict:
+-    """Body: entry_id, decision ('approved'|'rejected'), role, comment (optional).
+-
+-    ``reviewer`` is resolved here from the engagement's own ``assigned``
+-    record for ``role``, not accepted from the client — the name attached to
+-    an approval is whoever is on record for that engagement, not whatever a
+-    particular browser happened to have typed in (see webapp/README.md).
+-    Falls back to a client-sent ``reviewer`` only for an engagement created
+-    before this field existed.
++def api_approve(run_id: str, body: dict, request: Request) -> dict:
++    """Body: entry_id, decision ('approved'|'rejected'), role, comment (optional),
++    confirmation (required to approve: ``APPROVE <code>`` for this exact entry).
++
++    Four Eyes: the reviewer is the logged-in person (see ``_authenticated_user``),
++    who must be the person assigned to ``role`` on this engagement. A senior
++    approval cannot come from the auditor who prepared the work. The approval
++    is signed and bound to the entry's content, and /finalize checks it.
++    A ``reviewer`` or ``approved_by`` in the body is ignored.
+     """
+     state = _require_state(run_id)
++    user = _require_user(request)
+     role = body.get("role")
+-    reviewer = (state.get("assigned") or {}).get(role) or body.get("reviewer")
+-    if not reviewer:
++    assigned = state.get("assigned") or {}
++    on_record = (assigned.get(role) or "").strip()
++    if not on_record:
+         raise HTTPException(400, f"No name is assigned for role {role!r} on this engagement.")
+-    return record_approval(
+-        run_id,
+-        entry_id=body["entry_id"],
+-        decision=body["decision"],
+-        reviewer=reviewer,
+-        role=role,
+-        comment=body.get("comment"),
+-    )
++    if on_record.casefold() != user.casefold():
++        raise HTTPException(403, f"{user} is not the person assigned as {role!r} on this engagement.")
++    prepared_by = assigned.get("auditor") if role != "auditor" else None
++    try:
++        return record_approval(
++            run_id,
++            entry_id=body["entry_id"],
++            decision=body["decision"],
++            reviewer=user,
++            role=role,
++            comment=body.get("comment"),
++            confirmation=body.get("confirmation"),
++            prepared_by=prepared_by,
++        )
++    except four_eyes.ApprovalRejected as exc:
++        raise HTTPException(400, str(exc)) from None
++    except four_eyes.GateMisconfigured as exc:
++        raise HTTPException(503, str(exc)) from None
+ 
+ 
+ @app.post("/api/runs/{run_id}/finalize")
+diff --git a/agents/approval_seal.py b/agents/approval_seal.py
+new file mode 100644
+index 0000000..b4ce7c3
+--- /dev/null
++++ b/agents/approval_seal.py
+@@ -0,0 +1,97 @@
++"""Four Eyes seals for fieldwork approvals.
++
++Before: an approval was a plain line in ``runs/<run_id>/approvals.jsonl`` with
++a name and "approved". Anyone who could call /approve, or edit the file, could
++satisfy the human sign-off, and the approval did not say *what* was approved,
++so the agent's answer could change afterwards without anyone noticing.
++
++Now an approval carries a Four Eyes seal (see ``agents/four_eyes``):
++- it is signed with ``FOUR_EYES_KEY`` (kept on the server, never in a prompt),
++- it names the logged-in reviewer (the caller passes the authenticated user,
++  never a name from the request body),
++- it is bound to the SHA-256 of exactly the prompt and answer that were
++  reviewed, so editing the answer afterwards invalidates it,
++- the reviewer types ``APPROVE <code>`` naming that exact content.
++
++``orchestrator.require_approved`` checks the seal before anything is finalized.
++Without ``FOUR_EYES_KEY`` nothing can be approved or finalized (fails closed).
++Every approval and refusal is written to ``runs/<run_id>/four-eyes-log.jsonl``,
++signed and chained, so an auditor can re-perform it with
++``python -m agents.four_eyes verify-log runs/<run_id>/four-eyes-log.jsonl``.
++"""
++
++from __future__ import annotations
++
++import json
++
++from agents import audit_trail as _audit_trail
++from agents import four_eyes
++
++STEP = "fieldwork_entry"
++
++# What a reviewer actually looks at when approving one agent call.
++REVIEWED_FIELDS = (
++    "entry_id",
++    "run_id",
++    "agent",
++    "item_ref",
++    "model",
++    "system_prompt",
++    "user_prompt",
++    "response_text",
++)
++
++
++def reviewed_content(entry: dict) -> str:
++    """The exact content an approval covers: the prompt and the answer of one call."""
++    return json.dumps(
++        {field: entry.get(field) for field in REVIEWED_FIELDS},
++        sort_keys=True,
++        ensure_ascii=False,
++    )
++
++
++def approval_phrase(entry: dict) -> str:
++    """What the reviewer types to approve this exact entry."""
++    return f"APPROVE {four_eyes.short_code(reviewed_content(entry))}"
++
++
++def _gate(run_id: str, user: str) -> four_eyes.Gate:
++    return four_eyes.Gate(
++        lambda: user,
++        log_path=_audit_trail.RUNS_DIR / run_id / "four-eyes-log.jsonl",
++    )
++
++
++def seal(
++    run_id: str,
++    entry: dict,
++    *,
++    user: str,
++    confirmation: str,
++    prepared_by: str | None = None,
++) -> dict:
++    """Sign an approval for ``entry`` by the logged-in ``user``.
++
++    Raises ``four_eyes.ApprovalRejected`` when the typed confirmation does not
++    name this exact content, or when ``user`` prepared it (strict four eyes).
++    """
++    approval = _gate(run_id, user).approve(
++        STEP, reviewed_content(entry), confirmation or "", prepared_by=prepared_by
++    )
++    return approval.to_dict()
++
++
++def check(run_id: str, entry: dict, approval_record: dict | None) -> None:
++    """Raise ``four_eyes.FourEyesError`` unless the record carries a valid seal.
++
++    Valid means: signed with this server's key, for exactly this entry's
++    current content, by the reviewer named on the record, not expired.
++    """
++    record = approval_record or {}
++    gate = _gate(run_id, record.get("reviewer") or "")
++    approval = gate.verify(STEP, reviewed_content(entry), record.get("four_eyes"))
++    if approval.approver != record.get("reviewer"):
++        raise four_eyes.ApprovalInvalid(
++            "the name on the approval record is not the person who signed it"
++        )
+diff --git a/tests/test_four_eyes_approvals.py b/tests/test_four_eyes_approvals.py
+new file mode 100644
+index 0000000..d480d19
+--- /dev/null
++++ b/tests/test_four_eyes_approvals.py
+@@ -0,0 +1,278 @@
++"""Four Eyes approvals for FieldworkOrchestration.
++
++Findings (SAAF Security Challenge, 10 November 2026):
++- webapp/server.py api_approve: no login. The caller picks a role and the
++  approval is recorded in the name of whoever is assigned to that role, so
++  anyone can approve as the senior auditor. /finalize then accepts it.
++- approvals.jsonl is plain text: a hand-written "approved" line counts.
++- Approvals point at an entry_id only: the AI's answer can be changed after
++  approval and the old approval still counts.
++
++These tests replay those bypasses. They fail before the fix and pass after it.
++No API key or network needed.
++
++python -m pytest -q tests/test_four_eyes_approvals.py
++"""
++
++from __future__ import annotations
++
++import json
++import sys
++import unittest
++from datetime import datetime, timezone
++from pathlib import Path
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT))
++
++import agents.audit_trail as audit_trail_module  # noqa: E402
++import webapp.state as state_module  # noqa: E402
++from agents.audit_trail import AuditTrail  # noqa: E402
++from agents.orchestrator import ApprovalRequiredError, finalize_run, record_approval  # noqa: E402
++
++KEY = "fieldwork-four-eyes-test-key"
++HEADER = "X-Forwarded-User"
++AUDITOR = "Sam Auditor"
++SENIOR = "Robin Senior"
++
++
++@pytest.fixture(autouse=True)
++def isolated_runs(tmp_path, monkeypatch):
++    """Every test gets its own empty runs/ folder and a Four Eyes key."""
++    monkeypatch.setattr(audit_trail_module, "RUNS_DIR", tmp_path)
++    monkeypatch.setattr(state_module, "RUNS_DIR", tmp_path)
++    monkeypatch.setenv("FOUR_EYES_KEY", KEY)
++    monkeypatch.setenv("FOUR_EYES_TRUSTED_USER_HEADER", HEADER)
++    return tmp_path
++
++
++def _run_with_one_entry():
++    """A run with one agent answer waiting for review, and the assigned team."""
++    trail = AuditTrail()
++    now = datetime.now(timezone.utc)
++    entry = trail.record(
++        agent="pbc_validation",
++        system_prompt="Check the delivered access review against the PBC request.",
++        user_prompt="Access review Q3.pdf",
++        model="test-model",
++        max_tokens=100,
++        thinking=None,
++        response_text="Validated: the access review covers all users. No exceptions.",
++        started_at=now,
++        finished_at=now,
++        item_ref="PBC-01",
++    )
++    state_module.save_state(
++        trail.run_id,
++        {"assigned": {"auditor": AUDITOR, "senior_auditor": SENIOR}, "pbc_list": []},
++    )
++    return trail, entry
++
++
++def _phrase(entry):
++    from agents.approval_seal import approval_phrase
++
++    return approval_phrase(entry)
++
++
++def _client():
++    from fastapi.testclient import TestClient
++    from webapp.server import app
++
++    return TestClient(app)
++
++
++# --------------------------------------------------------------------------
++# The bypasses from today
++# --------------------------------------------------------------------------
++
++
++def test_anyone_can_no_longer_approve_in_the_seniors_name():
++    trail, entry = _run_with_one_entry()
++    response = _client().post(
++        f"/api/runs/{trail.run_id}/approve",
++        json={"entry_id": entry["entry_id"], "decision": "approved", "role": "senior_auditor"},
++    )
++    assert response.status_code == 401, "approval accepted from an anonymous caller"
++    assert trail.approval_status(entry["entry_id"]) == "pending"
++
++
++def test_a_logged_in_person_cannot_approve_in_someone_elses_role():
++    trail, entry = _run_with_one_entry()
++    response = _client().post(
++        f"/api/runs/{trail.run_id}/approve",
++        headers={HEADER: AUDITOR},
++        json={
++            "entry_id": entry["entry_id"],
++            "decision": "approved",
++            "role": "senior_auditor",
++            "confirmation": _phrase(entry),
++        },
++    )
++    assert response.status_code == 403, "the auditor approved as the senior auditor"
++    assert trail.approval_status(entry["entry_id"]) == "pending"
++
++
++def test_process_ignores_a_body_approved_by_and_needs_a_login():
++    trail, _ = _run_with_one_entry()
++    response = _client().post(
++        f"/api/runs/{trail.run_id}/items/PBC-01/process",
++        json={"prompt": "Check the access review.", "approved_by": SENIOR},
++    )
++    assert response.status_code == 401, "a prompt was approved in someone's name without a login"
++
++
++def test_nobody_can_reassign_roles_without_a_login_or_to_themselves():
++    trail, _ = _run_with_one_entry()
++    client = _client()
++    anonymous = client.post(f"/api/runs/{trail.run_id}/update", json={"senior_auditor_name": "Mallory"})
++    assert anonymous.status_code == 401, "roles changed by an anonymous caller"
++    redirect = client.post(f"/api/runs/{trail.run_id}/update", json={"auditee_email": "mallory@example.org"})
++    assert redirect.status_code == 401, "auditee email changed by an anonymous caller"
++    self_assign = client.post(
++        f"/api/runs/{trail.run_id}/update", headers={HEADER: AUDITOR}, json={"senior_auditor_name": AUDITOR}
++    )
++    assert self_assign.status_code == 403, "the auditor made themselves the senior auditor"
++    colleague = client.post(
++        f"/api/runs/{trail.run_id}/update", headers={HEADER: SENIOR}, json={"auditor_name": "Kim Auditor"}
++    )
++    assert colleague.status_code == 200
++    harmless = client.post(f"/api/runs/{trail.run_id}/update", json={"audit_scope": "IT general controls"})
++    assert harmless.status_code == 200  # non-sensitive metadata still editable
++
++
++def test_nothing_to_approve_does_not_finalize():
++    trail, _ = _run_with_one_entry()
++    with pytest.raises(ApprovalRequiredError):
++        finalize_run(trail.run_id, [])
++
++
++def test_a_hand_written_approval_line_does_not_finalize():
++    trail, entry = _run_with_one_entry()
++    with trail.approvals_path.open("a", encoding="utf-8") as handle:
++        handle.write(
++            json.dumps(
++                {
++                    "run_id": trail.run_id,
++                    "entry_id": entry["entry_id"],
++                    "decision": "approved",
++                    "reviewer": SENIOR,
++                    "role": "senior_auditor",
++                    "comment": None,
++                    "reviewed_at": datetime.now(timezone.utc).isoformat(),
++                }
++            )
++            + "\n"
++        )
++    with pytest.raises(ApprovalRequiredError):
++        finalize_run(trail.run_id, [entry["entry_id"]])
++
++
++def test_changing_the_answer_after_approval_does_not_finalize():
++    trail, entry = _run_with_one_entry()
++    record_approval(
++        trail.run_id,
++        entry_id=entry["entry_id"],
++        decision="approved",
++        reviewer=SENIOR,
++        role="senior_auditor",
++        confirmation=_phrase(entry),
++    )
++    lines = trail.path.read_text(encoding="utf-8").splitlines()
++    changed = json.loads(lines[0])
++    changed["response_text"] = "Validated: no exceptions. (Exception for user admin01 removed.)"
++    trail.path.write_text(json.dumps(changed) + "\n", encoding="utf-8")
++    with pytest.raises(ApprovalRequiredError):
++        finalize_run(trail.run_id, [entry["entry_id"]])
++
++
++def test_yes_is_not_an_approval():
++    trail, entry = _run_with_one_entry()
++    response = _client().post(
++        f"/api/runs/{trail.run_id}/approve",
++        headers={HEADER: SENIOR},
++        json={"entry_id": entry["entry_id"], "decision": "approved", "role": "senior_auditor", "confirmation": "yes"},
++    )
++    assert response.status_code == 400
++    assert _phrase(entry) in response.json()["detail"]
++    assert trail.approval_status(entry["entry_id"]) == "pending"
++
++
++def test_the_assigned_senior_approving_this_exact_answer_finalizes():
++    trail, entry = _run_with_one_entry()
++    response = _client().post(
++        f"/api/runs/{trail.run_id}/approve",
++        headers={HEADER: SENIOR},
++        json={
++            "entry_id": entry["entry_id"],
++            "decision": "approved",
++            "role": "senior_auditor",
++            "confirmation": _phrase(entry),
++            # Ignored: the name comes from the login, never from the body.
++            "reviewer": "Somebody Else",
++        },
++    )
++    assert response.status_code == 200, response.text
++    assert trail.latest_approval(entry["entry_id"])["reviewer"] == SENIOR
++    finalized = finalize_run(trail.run_id, [entry["entry_id"]])
++    assert finalized["approved_entries"] == [entry["entry_id"]]
++
++
++# --------------------------------------------------------------------------
++# The reusable Four Eyes bypass kit, against the real seal and check
++# --------------------------------------------------------------------------
++
++
++def _kit():
++    from agents.four_eyes.testkit import FourEyesBypassTests
++
++    return FourEyesBypassTests
++
++
++class _NotInstalled:
++    """Stand-in before the fix, so the file still loads and reports clearly."""
++
++    def test_four_eyes_is_installed(self):
++        pass
++
++
++try:
++    _Kit = _kit()
++except ImportError:  # before the fix: the kit is not vendored yet
++    _Kit = _NotInstalled
++
++
++class TestFieldworkFourEyesKit(_Kit, unittest.TestCase):
++    STEP = "fieldwork_entry"
++
++    def setUp(self):
++        if _Kit is _NotInstalled:
++            self.fail("Four Eyes is not installed in agents/four_eyes")
++        self._tmp = Path(__import__("tempfile").mkdtemp())
++        self._old_runs = audit_trail_module.RUNS_DIR
++        audit_trail_module.RUNS_DIR = self._tmp
++        state_module.RUNS_DIR = self._tmp
++        super().setUp()
++
++    def tearDown(self):
++        audit_trail_module.RUNS_DIR = self._old_runs
++        state_module.RUNS_DIR = self._old_runs
++
++    def prepare(self, gate):
++        _, entry = _run_with_one_entry()
++        return entry
++
++    def artefact(self, state):
++        from agents.approval_seal import reviewed_content
++
++        return reviewed_content(state)
++
++    def tamper(self, state):
++        return {**state, "response_text": state["response_text"] + " Exception closed."}
++
++    def release(self, gate, state, approval):
++        from agents.approval_seal import STEP
++
++        return gate.require(STEP, self.artefact(state), approval)

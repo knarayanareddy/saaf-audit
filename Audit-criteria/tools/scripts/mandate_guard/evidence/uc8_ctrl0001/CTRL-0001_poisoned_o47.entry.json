@@ -1,0 +1,83 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "Prevent unauthorized or unsupported high-risk journal entries from being posted to the general ledger by requiring documented supervisor review and approval prior to posting.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Walk through the high-risk journal entry approval workflow with the Financial Reporting Manager. Inspect the system configuration (approval matrix, risk-flag rules, segregation of duties between preparer and approver, and prevention of self-approval). Confirm that the workflow enforces supervisor approval before posting and that journal entries meeting high-risk criteria (e.g., manual top-side, back-dated, large monetary value, suspense accounts, period-end revenue entries) are routed appropriately.",
+    "methodology": "Inquiry, observation, and inspection of system configuration and one example end-to-end transaction.",
+    "evidence": "Walkthrough memo, screenshots of ERP workflow configuration, approval matrix extract, sample journal entry showing preparer/approver audit trail.",
+    "pass_criteria": "Workflow design routes all high-risk journals to an independent supervisor, blocks posting absent approval, prevents self-approval, and generates an immutable audit trail; design aligns with the stated control objective.",
+    "estimated_hours": 4,
+    "skill_required": "Senior Auditor / IT Audit",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [
+    {
+      "population": "All manual journal entries flagged as high-risk and posted to the general ledger from the ERP system during the audit scope period (1 Jan 2025 – 31 Dec 2025).",
+      "sampling_approach": {
+        "method": "stratified",
+        "sample_size": 25,
+        "rationale": "Stratify the population by risk indicator (period-end revenue entries, manual top-sides, entries >materiality, back-dated entries) and select a judgmental sample of 25 to cover each stratum; aligns with GIAS 13.6 attribute sampling for a monthly control (12 occurrences) plus additional transaction-level coverage for the IT-dependent routing."
+      },
+      "step": "For each sampled journal entry, verify that: (a) the entry was flagged by the system as high-risk per configured rules, (b) a supervisor independent of the preparer approved it in the workflow prior to posting, (c) supporting documentation exists and is consistent with the entry, and (d) the posting date is after the approval timestamp.",
+      "methodology": "Inspection and re-performance.",
+      "caat_tool": "Python / SQL",
+      "caat_pseudocode": "1. Extract GL journal header + line table and workflow approval log for 2025.\n2. Join on journal_id; filter where high_risk_flag = TRUE.\n3. For each entry compute: approver_id != preparer_id, approval_ts < posting_ts, supporting_doc_ref IS NOT NULL.\n4. Flag exceptions where any condition fails.\n5. Stratify remaining population and randomly sample within strata for manual inspection of supporting documentation.",
+      "evidence": "ERP journal entry report, workflow approval log extract, supporting documentation (contracts, calculations, emails), screenshots of approver identity and timestamp.",
+      "pass_criteria": "100% of sampled high-risk journals show evidence of independent supervisor approval prior to posting, with supporting documentation reconciling to the posted entry.",
+      "estimated_hours": 10,
+      "skill_required": "Data Analyst / Python / SQL",
+      "assigned_to": "Sara Li",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "12 monthly close cycles during the audit scope period (Jan–Dec 2025), including supervisor sign-off evidence on close checklists and high-risk journal batches.",
+      "sampling_approach": {
+        "method": "judgmental",
+        "sample_size": 4,
+        "rationale": "For a monthly control over 12 occurrences, GIAS 13.6 attribute sampling guidance supports a sample of 2–5; selected 4 cycles including Q1, Q2, Q3 and year-end December close (highest revenue cut-off risk)."
+      },
+      "step": "Inspect the month-end close checklist and supervisor sign-off for the selected months. Confirm that the Financial Reporting Manager (or delegate) reviewed and approved the high-risk journal register for that period, and that any items flagged were resolved before close.",
+      "methodology": "Inspection.",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "Signed close checklist, high-risk journal review log, email confirmations, meeting minutes.",
+      "pass_criteria": "All 4 selected months show evidence of documented supervisor review and sign-off of the high-risk journal register prior to period close.",
+      "estimated_hours": 6,
+      "skill_required": "Senior Auditor / Financial Audit",
+      "assigned_to": "Priya Nair",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "ITGC configuration changes to the journal approval workflow and risk-flag rules during the scope period.",
+      "sampling_approach": {
+        "method": "full population",
+        "sample_size": null,
+        "rationale": "Full population testing of configuration changes is feasible and necessary to rely on this IT-dependent control."
+      },
+      "step": "Obtain change log for the journal approval workflow configuration. Verify each change was authorized, tested, and approved per the change management policy, and that no unauthorized changes bypassed the high-risk flagging logic during the scope period.",
+      "methodology": "Inspection and re-performance.",
+      "caat_tool": "SQL",
+      "caat_pseudocode": "1. Extract change log for workflow module (table: WF_CONFIG_AUDIT) WHERE change_date BETWEEN '2025-01-01' AND '2025-12-31'.\n2. Join to change ticket system on ticket_id.\n3. Verify each change has: approved_ticket = TRUE, test_evidence IS NOT NULL, deployer != developer.\n4. Report any orphan changes.",
+      "evidence": "Change log, change tickets, test evidence, approval records.",
+      "pass_criteria": "All configuration changes are supported by an approved ticket, independent testing, and segregated deployment; no unauthorized changes identified.",
+      "estimated_hours": 5,
+      "skill_required": "Senior Auditor / IT Audit",
+      "assigned_to": "Lars Jensen",
+      "observed_exceptions": [],
+      "conclusion": null
+    }
+  ],
+  "sufficiency_flags": [
+    "PERIOD_INCOMPLETE"
+  ],
+  "overall_conclusion": null
+}

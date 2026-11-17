@@ -1,0 +1,172 @@
+[
+  {
+    "speaker": "narrator",
+    "start": 0.073,
+    "end": 24.033
+  },
+  {
+    "speaker": "narrator",
+    "start": 25.033,
+    "end": 31.353
+  },
+  {
+    "speaker": "MD",
+    "start": 32.174,
+    "end": 36.573
+  },
+  {
+    "speaker": "MV",
+    "start": 37.373,
+    "end": 41.333
+  },
+  {
+    "speaker": "MH",
+    "start": 42.814,
+    "end": 47.133
+  },
+  {
+    "speaker": "narrator",
+    "start": 48.033,
+    "end": 56.033
+  },
+  {
+    "speaker": "narrator",
+    "start": 57.273,
+    "end": 60.494
+  },
+  {
+    "speaker": "BW",
+    "start": 61.193,
+    "end": 67.453
+  },
+  {
+    "speaker": "DE",
+    "start": 68.133,
+    "end": 74.713
+  },
+  {
+    "speaker": "narrator",
+    "start": 74.934,
+    "end": 83.794
+  },
+  {
+    "speaker": "BW",
+    "start": 84.514,
+    "end": 88.794
+  },
+  {
+    "speaker": "BW",
+    "start": 89.594,
+    "end": 94.915
+  },
+  {
+    "speaker": "narrator",
+    "start": 95.614,
+    "end": 104.954
+  },
+  {
+    "speaker": "MV",
+    "start": 105.694,
+    "end": 112.334
+  },
+  {
+    "speaker": "BW",
+    "start": 113.254,
+    "end": 118.394
+  },
+  {
+    "speaker": "narrator",
+    "start": 119.234,
+    "end": 128.294
+  },
+  {
+    "speaker": "RV",
+    "start": 129.234,
+    "end": 136.454
+  },
+  {
+    "speaker": "EK",
+    "start": 137.354,
+    "end": 142.334
+  },
+  {
+    "speaker": "narrator",
+    "start": 142.995,
+    "end": 154.714
+  },
+  {
+    "speaker": "RV",
+    "start": 155.654,
+    "end": 161.914
+  },
+  {
+    "speaker": "RV",
+    "start": 162.104,
+    "end": 167.124
+  },
+  {
+    "speaker": "SK",
+    "start": 167.804,
+    "end": 175.524
+  },
+  {
+    "speaker": "EK",
+    "start": 176.304,
+    "end": 181.104
+  },
+  {
+    "speaker": "RV",
+    "start": 182.085,
+    "end": 186.825
+  },
+  {
+    "speaker": "narrator",
+    "start": 187.905,
+    "end": 197.704
+  },
+  {
+    "speaker": "narrator",
+    "start": 198.284,
+    "end": 201.124
+  },
+  {
+    "speaker": "MH",
+    "start": 201.944,
+    "end": 207.604
+  },
+  {
+    "speaker": "MH",
+    "start": 209.064,
+    "end": 213.564
+  },
+  {
+    "speaker": "BW",
+    "start": 214.444,
+    "end": 219.044
+  },
+  {
+    "speaker": "MH",
+    "start": 219.964,
+    "end": 224.444
+  },
+  {
+    "speaker": "SK",
+    "start": 225.424,
+    "end": 230.924
+  },
+  {
+    "speaker": "narrator",
+    "start": 231.684,
+    "end": 241.324
+  },
+  {
+    "speaker": "SK",
+    "start": 242.084,
+    "end": 245.624
+  },
+  {
+    "speaker": "narrator",
+    "start": 245.867,
+    "end": 276.767
+  }
+]

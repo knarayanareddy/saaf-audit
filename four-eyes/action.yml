@@ -1,0 +1,33 @@
+# Red Pencil as a reusable GitHub Action. Any SAAF repo can call it from a
+# workflow (see examples/red-pencil.yml). Python's standard library only:
+# no pip install, no network, nothing from the scanned repo is executed.
+name: "Red Pencil"
+description: "Marks unsafe output and prompt-handling patterns in SAAF agent repos and fails the build on them."
+inputs:
+  path:
+    description: "Folder to scan, relative to the repo root"
+    default: "."
+  fail-on:
+    description: "Lowest severity that fails the job: high, medium, low or none"
+    default: "high"
+  exclude:
+    description: "Optional glob of files to skip, e.g. 'tests/*'"
+    default: ""
+runs:
+  using: "composite"
+  steps:
+    - name: Run Red Pencil
+      shell: bash
+      # Inputs go in through environment variables, never pasted into the
+      # script itself, so a crafted input cannot inject shell commands.
+      env:
+        RP_PATH: ${{ inputs.path }}
+        RP_FAIL_ON: ${{ inputs.fail-on }}
+        RP_EXCLUDE: ${{ inputs.exclude }}
+        RP_ACTION_PATH: ${{ github.action_path }}
+      # python3 -I (isolated mode) ignores the scanned repo's own files on the
+      # import path, so a planted module cannot hijack the scanner.
+      run: |
+        args=("$RP_PATH" --fail-on "$RP_FAIL_ON")
+        if [ -n "$RP_EXCLUDE" ]; then args+=(--exclude "$RP_EXCLUDE"); fi
+        python3 -I -c 'import sys; sys.path.insert(0, sys.argv[1]); from red_pencil.__main__ import main; sys.exit(main(sys.argv[2:]))' "$RP_ACTION_PATH" "${args[@]}"

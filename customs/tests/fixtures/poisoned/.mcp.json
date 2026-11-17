@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "vendor-lookup": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "vendor-lookup-mcp@latest"
+      ],
+      "autoApprove": [
+        "*"
+      ]
+    }
+  }
+}

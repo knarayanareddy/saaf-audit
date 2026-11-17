@@ -1,0 +1,399 @@
+{
+  "_comment": "Fictieve casus Stichting Zorggroep Waterlinie (VVT-zorgaanbieder). Risicoteksten zijn in het Engels omdat de blueprint- en signaalwoorden in rcm_builder.py Engels zijn. Elk item heeft een objective dat letterlijk overeenkomt met een business_objective onder processes, anders krijgt het risico geen OBJ-id. Het veld observation is vrije context en wordt door de pipeline genegeerd.",
+  "context": {
+    "organization_name": "Stichting Zorggroep Waterlinie",
+    "assessment_period": "FY2026 (boekjaar 1 januari - 31 december 2026)",
+    "risk_appetite": {
+      "financial": "Cautious: a material misstatement in the annual accounts or in declarations to insurers is not acceptable",
+      "operational": "Moderate: temporary disruption of supporting processes is acceptable as long as care continuity is safeguarded",
+      "compliance": "Low tolerance for privacy breaches involving client data",
+      "fraud": "Zero tolerance",
+      "it": "Moderate: the ECD and ERP must be reliable and traceable; short planned downtime is acceptable"
+    }
+  },
+  "processes": [
+    {
+      "process_id": "PRC-01",
+      "process_name": "Revenue and Billing",
+      "description": "Registratie van geleverde zorg in het ECD (ZorgDossier), declaratie aan zorgverzekeraars en zorgkantoor (Wlz, Zvw, Wmo), journaalposten en maandafsluiting in het ERP (FinCore).",
+      "sub_processes": [
+        {
+          "sub_process_id": "SP-01-01",
+          "sub_process_name": "Care Registration and Declaration",
+          "business_objectives": [
+            {"objective_id": "OBJ-0001", "objective_description": "Care delivered is completely and accurately declared to health insurers and the care office in the correct period"},
+            {"objective_id": "OBJ-0002", "objective_description": "Declared care is supported by a valid indication and the client's care plan"},
+            {"objective_id": "OBJ-0003", "objective_description": "Only care that has actually been delivered is declared"}
+          ]
+        },
+        {
+          "sub_process_id": "SP-01-02",
+          "sub_process_name": "Journal Entries and Financial Close",
+          "business_objectives": [
+            {"objective_id": "OBJ-0004", "objective_description": "Journal entries are authorised, supported and recorded in the correct period"},
+            {"objective_id": "OBJ-0005", "objective_description": "Management override of journal entry controls is prevented and detected"},
+            {"objective_id": "OBJ-0006", "objective_description": "The month-end close is completed timely with reconciled ledger balances"}
+          ]
+        }
+      ]
+    },
+    {
+      "process_id": "PRC-02",
+      "process_name": "Purchase to Pay",
+      "description": "Leveranciersbeheer, inkoop van hulpmiddelen, voeding en facilitaire diensten, factuurverwerking in FinCore en betaling via het bankportaal.",
+      "sub_processes": [
+        {
+          "sub_process_id": "SP-02-01",
+          "sub_process_name": "Vendor Master Data and Procurement",
+          "business_objectives": [
+            {"objective_id": "OBJ-0007", "objective_description": "Vendors are legitimate and changes to vendor master data are independently approved"}
+          ]
+        },
+        {
+          "sub_process_id": "SP-02-02",
+          "sub_process_name": "Invoice Processing and Payment",
+          "business_objectives": [
+            {"objective_id": "OBJ-0008", "objective_description": "Invoices are approved by an authorised mandate holder before payment"},
+            {"objective_id": "OBJ-0009", "objective_description": "Payments are made only for goods and services actually received"}
+          ]
+        }
+      ]
+    },
+    {
+      "process_id": "PRC-03",
+      "process_name": "Payroll",
+      "description": "Salarisverwerking van circa 2.800 fte via de externe salarisprovider LoonLink, gevoed vanuit de roosterapplicatie PlanWijs.",
+      "sub_processes": [
+        {
+          "sub_process_id": "SP-03-01",
+          "sub_process_name": "Payroll Processing and Payment",
+          "business_objectives": [
+            {"objective_id": "OBJ-0010", "objective_description": "Salary payments are accurate and based on reconciled hours"},
+            {"objective_id": "OBJ-0011", "objective_description": "Salary payments are made to current employees only"},
+            {"objective_id": "OBJ-0012", "objective_description": "Remuneration of executives and interim managers complies with the WNT"}
+          ]
+        },
+        {
+          "sub_process_id": "SP-03-02",
+          "sub_process_name": "Leave and Absence Registration",
+          "business_objectives": [
+            {"objective_id": "OBJ-0013", "objective_description": "Leave and absence are recorded completely and timely"}
+          ]
+        }
+      ]
+    },
+    {
+      "process_id": "PRC-04",
+      "process_name": "Client Data and Privacy",
+      "description": "Toegang tot clientdossiers in ZorgDossier via het IAM-portaal IdentiteitsHub, verwerking en bescherming van clientgegevens (AVG, NEN 7510).",
+      "sub_processes": [
+        {
+          "sub_process_id": "SP-04-01",
+          "sub_process_name": "Access to Client Records",
+          "business_objectives": [
+            {"objective_id": "OBJ-0014", "objective_description": "Only authorised care staff have user access to client records in the ECD, limited to the clients in their care"},
+            {"objective_id": "OBJ-0015", "objective_description": "Use of client records in the ECD is logged and monitored"}
+          ]
+        },
+        {
+          "sub_process_id": "SP-04-02",
+          "sub_process_name": "Privacy and Data Protection",
+          "business_objectives": [
+            {"objective_id": "OBJ-0016", "objective_description": "Client data is protected against loss and unauthorised disclosure (GDPR art. 32, NEN 7510)"},
+            {"objective_id": "OBJ-0017", "objective_description": "Client data is processed and shared with third parties on a lawful basis"}
+          ]
+        }
+      ]
+    },
+    {
+      "process_id": "PRC-05",
+      "process_name": "IT Change Management",
+      "description": "Wijzigingen aan ZorgDossier (ECD) en FinCore (ERP) via de servicedesktool ChangeFlow, inclusief releases, noodwijzigingen en configuratie van koppelingen.",
+      "sub_processes": [
+        {
+          "sub_process_id": "SP-05-01",
+          "sub_process_name": "Changes to ECD and ERP",
+          "business_objectives": [
+            {"objective_id": "OBJ-0018", "objective_description": "Changes to the ECD and ERP are tested and approved before release to production"},
+            {"objective_id": "OBJ-0019", "objective_description": "Production configuration is changed only through the change process"}
+          ]
+        }
+      ]
+    }
+  ],
+  "historical_risks": [
+    {
+      "finding_id": "F-2024-03",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-02", "sub_process_name": "Journal Entries and Financial Close",
+      "objective": "Journal entries are authorised, supported and recorded in the correct period",
+      "risk_category": "Financial Reporting",
+      "cause": "manual journal entries above EUR 50,000 are posted in the ERP without documented supervisor approval",
+      "event": "unsupported or unauthorised journal entries are recorded in the general ledger",
+      "impact": "the annual accounts contain a material misstatement",
+      "observation": "Internal audit 2024: 9 of 25 sampled manual journal entries above EUR 50,000 had no approval evidence."
+    },
+    {
+      "finding_id": "F-2024-07",
+      "process_id": "PRC-04", "process_name": "Client Data and Privacy",
+      "sub_process_id": "SP-04-01", "sub_process_name": "Access to Client Records",
+      "objective": "Only authorised care staff have user access to client records in the ECD, limited to the clients in their care",
+      "risk_category": "IT",
+      "cause": "no periodic review of user accounts and access rights in the ECD is performed",
+      "event": "former or transferred employees retain user access to client records",
+      "impact": "client data is viewed by unauthorised users and a privacy breach must be reported",
+      "observation": "Internal audit 2024: 112 active ECD user accounts belonged to employees who had left more than 30 days earlier."
+    },
+    {
+      "finding_id": "F-2025-02",
+      "process_id": "PRC-02", "process_name": "Purchase to Pay",
+      "sub_process_id": "SP-02-01", "sub_process_name": "Vendor Master Data and Procurement",
+      "objective": "Vendors are legitimate and changes to vendor master data are independently approved",
+      "risk_category": "Fraud",
+      "cause": "vendor bank account details in the ERP can be changed and approved by the same accounts payable employee",
+      "event": "vendor bank account details are changed without independent approval",
+      "impact": "payments are diverted to an unauthorized bank account and cash is misappropriated",
+      "observation": "Internal audit 2025: the FinCore role 'AP clerk' includes both maintain and approve rights on vendor master data."
+    },
+    {
+      "finding_id": "F-2025-05",
+      "process_id": "PRC-03", "process_name": "Payroll",
+      "sub_process_id": "SP-03-01", "sub_process_name": "Payroll Processing and Payment",
+      "objective": "Salary payments are accurate and based on reconciled hours",
+      "risk_category": "Financial",
+      "cause": "hours from the roster application are interfaced to the payroll provider without reconciliation",
+      "event": "salary payments to employee bank accounts are based on incomplete or incorrect hours",
+      "impact": "employees are overpaid or underpaid, and payroll cash outflow and expense are misstated",
+      "observation": "Internal audit 2025: no reconciliation between PlanWijs roster totals and LoonLink payroll input is retained."
+    },
+    {
+      "finding_id": "F-2025-09",
+      "process_id": "PRC-05", "process_name": "IT Change Management",
+      "sub_process_id": "SP-05-01", "sub_process_name": "Changes to ECD and ERP",
+      "objective": "Changes to the ECD and ERP are tested and approved before release to production",
+      "risk_category": "Technology",
+      "cause": "emergency changes to the ERP are deployed to production without testing or retrospective approval",
+      "event": "untested changes cause processing errors in the billing and ledger interfaces",
+      "impact": "declarations and ledger balances are incorrect and the financial close is delayed",
+      "observation": "Internal audit 2025: 7 of 11 emergency changes to FinCore lacked a retrospective change record."
+    },
+    {
+      "finding_id": "F-2025-11",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-02", "sub_process_name": "Journal Entries and Financial Close",
+      "objective": "The month-end close is completed timely with reconciled ledger balances",
+      "risk_category": "Financial Reporting",
+      "risk_description": "Absence of a documented month-end close checklist may result in ledger reconciliations being skipped leading to unreconciled balances in the annual accounts.",
+      "observation": "Internal audit 2025: the close is managed from personal to-do lists of two controllers; no checklist or sign-off exists. Dit item staat bewust als lopende zin (risk_description) om de tekstparser te tonen."
+    },
+    {
+      "finding_id": "F-2023-12",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-01", "sub_process_name": "Care Registration and Declaration",
+      "objective": "Declared care is supported by a valid indication and the client's care plan",
+      "risk_category": "Financial Reporting",
+      "cause": "care registrations in the ECD application are not validated against the client's care plan and indication before the declaration report is sent through the insurer interface",
+      "event": "care is declared that deviates from the indicated care",
+      "impact": "insurers claw back revenue and the organisation faces repeated corrections",
+      "observation": "Internal audit 2023: EUR 1.4 million of declarations corrected after insurer material controls; finding repeated in 2024."
+    }
+  ],
+  "incidents": [
+    {
+      "incident_id": "INC-2025-114",
+      "date": "2025-06-18",
+      "process_id": "PRC-04", "process_name": "Client Data and Privacy",
+      "sub_process_id": "SP-04-01", "sub_process_name": "Access to Client Records",
+      "objective": "Only authorised care staff have user access to client records in the ECD, limited to the clients in their care",
+      "risk_category": "Cyber",
+      "cause": "user accounts and access rights in the ECD are not periodically reviewed",
+      "event": "former and transferred employees retain user access to client records",
+      "impact": "client data is viewed by unauthorised users and a privacy breach has to be reported",
+      "observation": "A home-care employee who left in March 2025 opened 14 client records in June 2025 using her still-active ECD account. Bewust gelijkend op F-2024-07: wordt samengevoegd."
+    },
+    {
+      "incident_id": "INC-2025-131",
+      "date": "2025-07-30",
+      "process_id": "PRC-02", "process_name": "Purchase to Pay",
+      "sub_process_id": "SP-02-02", "sub_process_name": "Invoice Processing and Payment",
+      "objective": "Invoices are approved by an authorised mandate holder before payment",
+      "risk_category": "Operations",
+      "cause": "invoice approval limits in the ERP workflow were not updated after the reorganisation of the facility department",
+      "event": "invoices are approved by employees without a valid mandate",
+      "impact": "payments are made for goods and services that were not properly authorised",
+      "observation": "EUR 86,000 of facility invoices approved by a team lead whose mandate ended with the reorganisation."
+    },
+    {
+      "incident_id": "INC-2025-158",
+      "date": "2025-09-12",
+      "process_id": "PRC-05", "process_name": "IT Change Management",
+      "sub_process_id": "SP-05-01", "sub_process_name": "Changes to ECD and ERP",
+      "objective": "Changes to the ECD and ERP are tested and approved before release to production",
+      "risk_category": "IT",
+      "cause": "a new release of the ECD was deployed to production on a Friday without regression testing",
+      "event": "care staff cannot record care activities during a two-day outage",
+      "impact": "care registration is incomplete and declarations to insurers are delayed",
+      "observation": "ZorgDossier release 8.4 broke the mobile app; 1,900 care workers registered on paper for two days."
+    },
+    {
+      "incident_id": "INC-2026-007",
+      "date": "2026-01-09",
+      "process_id": "PRC-04", "process_name": "Client Data and Privacy",
+      "sub_process_id": "SP-04-02", "sub_process_name": "Privacy and Data Protection",
+      "objective": "Client data is protected against loss and unauthorised disclosure (GDPR art. 32, NEN 7510)",
+      "risk_category": "Compliance",
+      "cause": "client reports are exported from the ECD to unencrypted USB devices and personal email",
+      "event": "client data is lost or disclosed outside the organisation",
+      "impact": "a personal data breach must be reported to the Dutch DPA and a fine may be imposed",
+      "observation": "A USB stick with 230 client reports was left in a taxi; reported to the Autoriteit Persoonsgegevens on 12 January 2026."
+    },
+    {
+      "incident_id": "INC-2026-019",
+      "date": "2026-01-27",
+      "process_id": "PRC-03", "process_name": "Payroll",
+      "sub_process_id": "SP-03-01", "sub_process_name": "Payroll Processing and Payment",
+      "objective": "Salary payments are accurate and based on reconciled hours",
+      "risk_category": "Financial",
+      "cause": "hours from the roster application are sent to the payroll provider without a reconciliation",
+      "event": "salary payments to employee bank accounts are calculated on incomplete or incorrect hours",
+      "impact": "employees are overpaid or underpaid, and the payroll cash outflow and expense are misstated",
+      "observation": "December 2025 payroll run: 41 employees underpaid because roster corrections were not transferred to LoonLink. Bewust gelijkend op F-2025-05: wordt samengevoegd."
+    },
+    {
+      "incident_id": "INC-2026-023",
+      "date": "2026-02-10",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-01", "sub_process_name": "Care Registration and Declaration",
+      "objective": "Care delivered is completely and accurately declared to health insurers and the care office in the correct period",
+      "risk_category": "Financial",
+      "cause": "the monthly declaration batch is sent to the insurers manually at month-end close without a deadline check",
+      "event": "declarations are submitted after the insurer's submission deadline",
+      "impact": "revenue is recognised in the wrong period in the ledger and cash receipts are delayed",
+      "observation": "Insurer rejected 3.2% of January 2026 home-care declarations as late; the revenue was booked in February."
+    },
+    {
+      "incident_id": "INC-2025-140",
+      "date": "2025-08-21",
+      "process_id": "PRC-05", "process_name": "IT Change Management",
+      "sub_process_id": "SP-05-01", "sub_process_name": "Changes to ECD and ERP",
+      "objective": "Production configuration is changed only through the change process",
+      "risk_category": "IT",
+      "risk_description": "Configuration changes to the ERP billing interface made directly in production could lead to declaration files being rejected by the insurers resulting in delayed revenue and cash receipts.",
+      "observation": "A field mapping in the FinCore declaration interface was changed in production; two weeks of declaration files rejected by Vecozo. Dit item staat bewust als lopende zin (risk_description) om de tekstparser te tonen."
+    }
+  ],
+  "fraud_scenarios": [
+    {
+      "reference": "FS-01",
+      "process_id": "PRC-02", "process_name": "Purchase to Pay",
+      "sub_process_id": "SP-02-01", "sub_process_name": "Vendor Master Data and Procurement",
+      "objective": "Vendors are legitimate and changes to vendor master data are independently approved",
+      "risk_category": "Fraud",
+      "cause": "an accounts payable employee can change and approve vendor bank account details in the ERP alone",
+      "event": "vendor bank account details are changed without independent approval to a fictitious vendor",
+      "impact": "payments are diverted to an unauthorized bank account and cash is misappropriated",
+      "observation": "Fraud risk workshop 2026, scenario 1: vendor master data manipulation (asset misappropriation). Bewust gelijkend op F-2025-02: wordt samengevoegd."
+    },
+    {
+      "reference": "FS-02",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-02", "sub_process_name": "Journal Entries and Financial Close",
+      "objective": "Management override of journal entry controls is prevented and detected",
+      "risk_category": "Fraud",
+      "cause": "management can override the journal entry approval workflow at period end",
+      "event": "revenue is inflated through manual top-side journal entries",
+      "impact": "the annual accounts are materially misstated to meet financial targets",
+      "observation": "Fraud risk workshop 2026, scenario 2: management override of controls (fraudulent financial reporting)."
+    },
+    {
+      "reference": "FS-03",
+      "process_id": "PRC-03", "process_name": "Payroll",
+      "sub_process_id": "SP-03-01", "sub_process_name": "Payroll Processing and Payment",
+      "objective": "Salary payments are made to current employees only",
+      "risk_category": "Fraud",
+      "cause": "leavers are not removed from the payroll master data timely and payroll master data changes are not independently reviewed",
+      "event": "salary payments continue to former employees or fictitious ghost employees",
+      "impact": "cash is misappropriated through the payroll",
+      "observation": "Fraud risk workshop 2026, scenario 3: ghost employees."
+    },
+    {
+      "reference": "FS-04",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-01", "sub_process_name": "Care Registration and Declaration",
+      "objective": "Only care that has actually been delivered is declared",
+      "risk_category": "Fraud",
+      "cause": "care registration can be entered and approved in the ECD by the same care worker without independent verification (fraud risk)",
+      "event": "care hours that were never delivered are declared through falsified registrations",
+      "impact": "insurers are billed for fictitious care, a misappropriation of care funds that triggers claw-backs and fines",
+      "observation": "Fraud risk workshop 2026, scenario 4: fictitious care declarations (upcoding / phantom billing)."
+    },
+    {
+      "reference": "FS-05",
+      "process_id": "PRC-02", "process_name": "Purchase to Pay",
+      "sub_process_id": "SP-02-02", "sub_process_name": "Invoice Processing and Payment",
+      "objective": "Payments are made only for goods and services actually received",
+      "risk_category": "Fraud",
+      "cause": "purchase invoices below the approval threshold are not matched to purchase orders or goods receipts",
+      "event": "an employee submits fictitious invoices split below the threshold in collusion with a vendor",
+      "impact": "cash is misappropriated through fictitious purchases",
+      "observation": "Fraud risk workshop 2026, scenario 5: invoice splitting and vendor collusion."
+    }
+  ],
+  "regulatory_risks": [
+    {
+      "regulation_reference": "GDPR art. 32 / NEN 7510-2 10.1",
+      "process_id": "PRC-04", "process_name": "Client Data and Privacy",
+      "sub_process_id": "SP-04-02", "sub_process_name": "Privacy and Data Protection",
+      "objective": "Client data is protected against loss and unauthorised disclosure (GDPR art. 32, NEN 7510)",
+      "risk_category": "Regulatory",
+      "cause": "client data exported from the ECD to USB devices and personal email is not encrypted",
+      "event": "client data is lost or disclosed outside the organisation",
+      "impact": "a personal data breach must be reported to the Dutch DPA under the GDPR and a fine may be imposed",
+      "observation": "Compliance scan 2026: encryption of data at rest on removable media is required by NEN 7510-2 and expected by the AP. Bewust gelijkend op INC-2026-007: wordt samengevoegd."
+    },
+    {
+      "regulation_reference": "Wmg / NZa beleidsregel declaraties",
+      "process_id": "PRC-01", "process_name": "Revenue and Billing",
+      "sub_process_id": "SP-01-01", "sub_process_name": "Care Registration and Declaration",
+      "objective": "Declared care is supported by a valid indication and the client's care plan",
+      "risk_category": "Regulatory",
+      "cause": "declaration codes are assigned manually without validation against the client's care indication or the NZa compliance rules",
+      "event": "care is declared under an incorrect code or without a valid indication",
+      "impact": "the NZa or insurers impose regulatory corrections and penalties",
+      "observation": "Compliance scan 2026: NZa enforcement on incorrect declaration codes increased in the VVT sector."
+    },
+    {
+      "regulation_reference": "WNT",
+      "process_id": "PRC-03", "process_name": "Payroll",
+      "sub_process_id": "SP-03-01", "sub_process_name": "Payroll Processing and Payment",
+      "objective": "Remuneration of executives and interim managers complies with the WNT",
+      "risk_category": "Compliance",
+      "cause": "remuneration of executives and interim managers is not monitored against the statutory WNT maximum as part of compliance monitoring during the year",
+      "event": "remuneration exceeds the statutory maximum",
+      "impact": "the excess must be repaid, is disclosed as an irregularity in the annual report and triggers regulatory scrutiny",
+      "observation": "Compliance scan 2026: two interim managers engaged via agencies; WNT class 4 maximum applies."
+    },
+    {
+      "regulation_reference": "GDPR art. 6 en 30",
+      "process_id": "PRC-04", "process_name": "Client Data and Privacy",
+      "sub_process_id": "SP-04-02", "sub_process_name": "Privacy and Data Protection",
+      "objective": "Client data is processed and shared with third parties on a lawful basis",
+      "risk_category": "Compliance",
+      "cause": "the processing register and consent records for sharing client data with partner organisations are incomplete",
+      "event": "client data is shared with third parties without a lawful basis or consent",
+      "impact": "the organisation violates the GDPR and faces regulatory enforcement",
+      "observation": "Compliance scan 2026: data sharing with 3 regional partners (GP posts, hospital) not covered by the processing register."
+    },
+    {
+      "regulation_reference": "NEN 7510-2 12.4",
+      "process_id": "PRC-04", "process_name": "Client Data and Privacy",
+      "sub_process_id": "SP-04-01", "sub_process_name": "Access to Client Records",
+      "objective": "Use of client records in the ECD is logged and monitored",
+      "risk_category": "Compliance",
+      "cause": "access logging of user activity in the ECD is not monitored",
+      "event": "unauthorised viewing of client records by users is not detected",
+      "impact": "privacy breaches remain undetected and NEN 7510 requirements are not met",
+      "observation": "Compliance scan 2026: ECD logging is enabled but no one reviews the logs; NEN 7510 certification audit due Q4 2026."
+    }
+  ]
+}

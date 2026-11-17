@@ -1,0 +1,15 @@
+{
+  "id": "F-0005",
+  "title": "Audit workpapers lack sufficient evidence to support conclusions",
+  "risk_rating": "Medium",
+  "control_objective": "Auditors identify sufficient, reliable, relevant, and useful information to achieve the engagement objectives, in accordance with IIA Standard 2310.",
+  "observation": "Review of 12 completed audit engagements from 2025 identified that 5 engagements (42%) contain conclusions that are not traceable to specific evidence in the workpapers. In 3 of these cases, the conclusion references an interview but no interview notes or recording is present. In the remaining 2 cases, the conclusion references a system extract but the extract cannot be located in the engagement folder. IIA Standard 2310 requires internal auditors to identify sufficient, reliable, relevant, and useful information to achieve the engagement's objectives — conclusions without traceable evidence do not meet this standard.",
+  "root_cause": "No standard workpaper structure requires evidence links to be captured before conclusions are drafted; reviewer checklists do not test for evidence traceability.",
+  "impact": "Conclusions unsupported by evidence expose the internal-audit function to challenge by auditees or external assessors and weaken the reliability of the annual assurance opinion.",
+  "recommendation": "Update the engagement workpaper template to require an 'evidence reference' field for every conclusion. Add an evidence-traceability check to the supervisor review checklist, in line with IIA Standard 2310.",
+  "ai_assisted": true,
+  "evidence_references": [
+    "engagement-sample-2025.xlsx",
+    "workpaper-review-checklist-v4.pdf"
+  ]
+}

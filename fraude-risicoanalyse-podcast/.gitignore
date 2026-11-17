@@ -1,0 +1,40 @@
+# --- Geheimen: nooit committen ---------------------------------------------
+ELEVENLABS_API_KEY.txt
+*.key
+.env
+.env.*
+
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# --- Podcast: gegenereerd of nog niet af ------------------------------------
+# De pagina in samples/ is de voorbeelduitvoer en wordt wel gevolgd; alleen
+# losse bouwkopieen niet.
+samples/groepsapp-waterlinie.html.bak
+
+# Losse casttest uit stap 02, geen onderdeel van de aflevering.
+cache/audio/_casttest.mp3
+
+# --- Archieven ---------------------------------------------------------------
+# Zips horen niet in de repo: de uitgepakte inhoud staat er al (RCM-Builder-demo/),
+# dus een zip is een tweede kopie die bij elke wijziging opnieuw wordt opgeslagen.
+# Ze blijven wel gewoon lokaal staan.
+*.zip
+
+# --- OS ---------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# --- Bestandsnamen met een carriage return ----------------------------------
+# Drie bestanden in RCM-Builder-demo/demo hebben een letterlijke \r aan het eind
+# van hun NAAM (gevolg van een CRLF-script). Zulke paden kunnen op Windows niet
+# worden uitgechecked, dus ze zouden een clone daar laten mislukken. Ze staan nog
+# op schijf en hun inhoud wijkt echt af van de gelijknamige bestanden zonder \r,
+# dus ze zijn NIET weggegooid — hernoem of verwijder ze bewust voor je ze opneemt.
+RCM-Builder-demo/demo/data/it_matrix_basis.json?
+RCM-Builder-demo/demo/data/it_matrix_whatif.json?
+RCM-Builder-demo/demo/outputs/vergelijking_basis_whatif.md?

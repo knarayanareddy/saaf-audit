@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAAF Living Map</title>
+<script src="theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Palettes are the SAAF portal's (saaf-portal src/app/globals.css): dark is the default,
+   light is set via data-theme="light" on <html>, chosen the same way as the portal. */
+:root{
+  color-scheme:dark;
+  --bg:#020617;--panel:#0F172A;--ink:#E2E8F0;--muted:#94A3B8;--line:#1E293B;
+  --accent:#818CF8;--button:#4F46E5;--warn:#FB923C;--warn-bg:rgba(251,146,60,.12);
+  --m0:#FBBF24;--m1:#818CF8;--m2:#4ADE80;--m3:#C084FC;
+  --ghost:rgba(255,255,255,.03);
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --bg:#F8FAFC;--panel:#FFFFFF;--ink:#0F172A;--muted:#64748B;--line:#E2E8F0;
+  --accent:#4F46E5;--button:#4F46E5;--warn:#EA580C;--warn-bg:#FFF7ED;
+  --m0:#B45309;--m1:#4F46E5;--m2:#16A34A;--m3:#9333EA;
+  --ghost:rgba(15,23,42,.03);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+header{padding:28px 24px 8px;max-width:1280px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+h1{margin:0;font-size:26px;letter-spacing:-.01em}
+.theme{width:32px;height:32px;flex:none;border:0;border-radius:8px;background:none;color:var(--muted);font-size:16px;cursor:pointer}
+.theme:hover{color:var(--ink);background:var(--ghost)}
+.sub{color:var(--muted);margin:4px 0 0}
+main{max-width:1280px;margin:auto;padding:8px 24px 48px}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:120px}
+.stat b{display:block;font-size:22px}
+.stat span{color:var(--muted);font-size:13px}
+.pipe{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--line);margin:4px 0 6px}
+.pipe i{display:block}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 14px}
+.controls input{flex:1 1 220px;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--button);color:#fff;border-color:var(--button)}
+.islands{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.island{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;min-height:120px}
+.island h2{font-size:15px;margin:0 0 10px;display:flex;justify-content:space-between}
+.island h2 small{color:var(--muted);font-weight:400}
+.island h2 a{color:inherit;text-decoration:none}
+.island h2 a:hover,.island h2 a:focus-visible{text-decoration:underline}
+.island.target{outline:2px solid var(--accent);outline-offset:1px}
+.empty{color:var(--muted);font-size:13px;font-style:italic}
+.card{display:block;width:100%;text-align:left;border:1px solid var(--line);border-left:4px solid var(--m0);background:var(--bg);color:var(--ink);border-radius:8px;padding:9px 11px;margin-bottom:8px;cursor:pointer;font:inherit}
+.card:hover,.card:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.card.dim{opacity:.3}
+.card.hl{outline:2px solid var(--accent)}
+.card .t{font-weight:600}
+.card .meta{font-size:12px;color:var(--muted);margin-top:2px}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:1px}
+.badge.w{background:var(--warn-bg);color:var(--warn)}
+.badge.s{background:var(--ghost);color:var(--muted)}
+.card.ghost{border-style:dashed;border-left-style:dashed;background:var(--ghost)}
+#detail{position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:var(--panel);border-left:1px solid var(--line);box-shadow:-8px 0 24px rgba(0,0,0,.12);padding:22px;overflow:auto;transform:translateX(100%);transition:transform .2s}
+#detail.open{transform:none}
+#detail h3{margin:0 0 4px;font-size:20px}
+#detail dl{display:grid;grid-template-columns:130px 1fr;gap:6px 10px;font-size:14px;margin:14px 0}
+#detail dt{color:var(--muted)}
+#detail dd{margin:0}
+#detail h4{margin:18px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.pill{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin:2px 4px 2px 0}
+.pill.no{border-color:var(--warn);color:var(--warn)}
+.warns{list-style:none;padding:0;margin:0}
+.warns li{background:var(--warn-bg);color:var(--warn);border-radius:6px;padding:5px 9px;margin-bottom:5px;font-size:13px}
+.link{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline}
+.close{float:right;border:0;background:none;font-size:22px;color:var(--muted);cursor:pointer}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+a{color:var(--accent)}
+@media (max-width:600px){header,main{padding-left:16px;padding-right:16px}#detail dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><h1>SAAF Living Map</h1><button class="theme" id="theme" type="button"></button></div>
+  <p class="sub">Every SAAF audit agent, built from the <code>agent.yaml</code> in its repo. Rebuilt on a schedule.</p>
+</header>
+<main>
+  <section class="stats" id="stats"></section>
+  <div class="pipe" id="pipe" aria-hidden="true"></div>
+  <div class="legend" id="legend"></div>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search agents, tags, repos…" aria-label="Search">
+    <span id="chips"></span>
+  </div>
+  <section class="islands" id="islands"></section>
+  <footer id="foot"></footer>
+</main>
+<aside id="detail" aria-live="polite"></aside>
+<script src="hash.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

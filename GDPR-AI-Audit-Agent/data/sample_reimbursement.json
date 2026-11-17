@@ -1,0 +1,26 @@
+[
+    {
+        "id": "RMB-001",
+        "employee_name": "Hans Mueller",
+        "email": "hans.mueller@example.com",
+        "iban": "DE89370400440532013000",
+        "date": "2026-01-15",
+        "amount": 245.50,
+        "category": "Travel",
+        "description": "Train ticket Berlin-Munich",
+        "department": "Engineering",
+        "ssn": "12 345678 A 123"
+    },
+    {
+        "id": "RMB-002",
+        "employee_name": "Maria Schmidt",
+        "email": "maria.schmidt@example.com",
+        "iban": "DE27100777770209299700",
+        "date": "2026-02-03",
+        "amount": 89.99,
+        "category": "Office Supplies",
+        "description": "Ergonomic keyboard",
+        "department": "Marketing",
+        "phone": "+49 170 1234567"
+    }
+]

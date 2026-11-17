@@ -1,0 +1,172 @@
+{
+  "fingerprint": "2b0bf567269be470",
+  "language": "en",
+  "model": "claude-sonnet-5-5",
+  "created_at": "20261102-114826",
+  "note": "Prepared fallback: a real live Claude Code result on the sample data.",
+  "draft": {
+    "summary": "The deterministic tests raised 15 exceptions across joiner, mover, leaver and baseline account controls for 2026-07-01 to 2026-09-30. Twelve are confirmed by the records and three need follow-up with management. The most significant matters are privileged ERP and AD access granted without a valid or matching approval, a segregation of duties conflict and unrevoked access for movers, and leaver access that remained active, including a login on 2026-09-03 after a termination on 2026-08-28. All findings are drafted with AI assistance and remain open for auditor review.",
+    "assessments": [
+      {
+        "exception_id": "EX-01",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-005 received AD_PROCUREMENT_SHARE, ERP_VENDOR_MASTER (privileged) and ERP_PO_REQUESTER on 2026-07-20 and the exception lists no Jira ticket. The control requiring an approved request failed on the records provided."
+      },
+      {
+        "exception_id": "EX-02",
+        "conclusion": "Confirmed exception",
+        "rationale": "IAM-1101 requested AD_IT_SUPPORT, but USER-030 was granted AD_IT_ADMINS (privileged, domain administrators) on 2026-07-06. No ticket covers the privileged group."
+      },
+      {
+        "exception_id": "EX-03",
+        "conclusion": "Confirmed exception",
+        "rationale": "ERP_AP_CLERK was granted to USER-006 on 2026-08-03. IAM-1104 was approved on 2026-08-12, 9 days later, so access was provisioned before approval."
+      },
+      {
+        "exception_id": "EX-04",
+        "conclusion": "Confirmed exception",
+        "rationale": "IAM-1106 was reported and approved by USER-011 for ERP_HR_PAYROLL (privileged), which was granted on 2026-08-17. Requester and approver are the same person."
+      },
+      {
+        "exception_id": "EX-05",
+        "conclusion": "Needs follow-up",
+        "rationale": "IAM-1108 has no requested_access value and asks for the same ERP access as USER-003. ERP_PAYMENT_RELEASE (privileged) was granted on 2026-09-07 after approval by USER-012. The approver may have been aware of the intended role, but the ticket does not document it.",
+        "follow_up": "Obtain evidence of what USER-012 approved, confirm the roles held by USER-003 at the time, and confirm that ERP_PAYMENT_RELEASE was intended for USER-022."
+      },
+      {
+        "exception_id": "EX-06",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-015 transferred on 2026-08-01 from Procurement Officer to Financial Controller and still held ERP_VENDOR_MASTER (privileged) on the extraction date, well beyond the 5-day SLA. No removal ticket is listed."
+      },
+      {
+        "exception_id": "EX-07",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-019 transferred on 2026-07-15 and still holds ERP_AP_CLERK from the previous role, beyond the 5-day SLA. No removal ticket is listed."
+      },
+      {
+        "exception_id": "EX-08",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-019 holds ERP_AP_CLERK and ERP_PAYMENT_RELEASE at the same time, which SOD-01 forbids. ERP_PAYMENT_RELEASE was granted on 2026-07-15, the transfer date, and no ticket is listed for it.",
+        "follow_up": "Establish whether any compensating control or documented risk acceptance exists, and review payments released by USER-019 since 2026-07-15."
+      },
+      {
+        "exception_id": "EX-09",
+        "conclusion": "Confirmed exception",
+        "rationale": "HR shows Finance / Financial Controller for USER-015 since 2026-08-01, while the directory still shows Procurement / Procurement Officer. The directory was not updated after the transfer."
+      },
+      {
+        "exception_id": "EX-10",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-029 was terminated on 2026-08-28. The directory account was still enabled on 2026-10-15 and removal ticket IAM-1117 is still Open."
+      },
+      {
+        "exception_id": "EX-11",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-002 left on 2026-07-31. The account and the AD_ALL_STAFF and AD_HR_SHARE memberships were removed on 2026-08-21, 21 days after the leaving date against a 1-day SLA. IAM-1116 is Done but has no resolved_at value."
+      },
+      {
+        "exception_id": "EX-12",
+        "conclusion": "Confirmed exception",
+        "rationale": "The directory account of USER-029 shows a last login of 2026-09-03, 6 days after termination, while the account was still enabled.",
+        "follow_up": "Review sign-in logs to determine who or what used the account and which data was accessed."
+      },
+      {
+        "exception_id": "EX-13",
+        "conclusion": "Confirmed exception",
+        "rationale": "USER-016 left on 2026-09-11 and the directory account was disabled that day, but ERP_GL_ACCOUNTANT (privileged) and ERP_REPORTING remain assigned. IAM-1118 is marked Done, but its system is AD only and it has no resolved_at value."
+      },
+      {
+        "exception_id": "EX-14",
+        "conclusion": "Needs follow-up",
+        "rationale": "The enabled account for USER-008 has no HR record and a last login of 2026-10-02. It may be a contractor, a service account or an HR record gap, but the records do not show which.",
+        "follow_up": "Ask management for the owner and business purpose of the account. If none is documented, disable it and review its activity and entitlements."
+      },
+      {
+        "exception_id": "EX-15",
+        "conclusion": "Needs follow-up",
+        "rationale": "USER-036 is Active in HR, but the last login was 2026-05-20, which is more than the 90-day threshold before 2026-10-15. Extended leave could explain this.",
+        "follow_up": "Confirm the employment and leave status with HR and decide whether the account should be disabled."
+      }
+    ],
+    "findings": [
+      {
+        "id": "F-01",
+        "title": "Joiner access granted without valid, matching or independent approval",
+        "risk_rating": "High",
+        "control_objective": "Every access right is granted only after an independent approval of a request that names the access (ISO/IEC 27001:2022 A.5.18, A.5.3, A.8.2; SOC 2 CC6.2).",
+        "observation": "Five joiner exceptions were found. USER-005 received three entitlements, including privileged ERP_VENDOR_MASTER, with no ticket (EX-01). USER-030 received privileged AD_IT_ADMINS although IAM-1101 requested AD_IT_SUPPORT (EX-02). USER-006 received ERP_AP_CLERK 9 days before IAM-1104 was approved (EX-03). IAM-1106 for privileged ERP_HR_PAYROLL was reported and approved by USER-011 (EX-04). IAM-1108 did not name the roles but ERP_PAYMENT_RELEASE was granted (EX-05, to be verified).",
+        "root_cause": "To be confirmed with management: provisioning may not be technically linked to ticket status and scope, and the workflow may not enforce separate requester and approver or a named role.",
+        "impact": "Privileged rights, including supplier master data, domain administration, payroll and payment release, may be held without documented business authorisation. This increases the risk of unauthorised or fraudulent activity.",
+        "recommendation": "Require provisioning to reference an approved ticket whose requested entitlements match the grant. Block self-approval in the workflow and require named roles on all requests. Review the access of USER-005, USER-030, USER-006, USER-024 and USER-022 and retrospectively approve or remove it.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-01",
+          "EX-02",
+          "EX-03",
+          "EX-04",
+          "EX-05",
+          "IAM-1101",
+          "IAM-1104",
+          "IAM-1106",
+          "IAM-1108"
+        ]
+      },
+      {
+        "id": "F-02",
+        "title": "Mover access not adjusted, creating segregation of duties conflict",
+        "risk_rating": "High",
+        "control_objective": "Access of the previous role is removed within the 5-day mover SLA, no forbidden entitlement combinations exist, and the directory reflects HR (ISO/IEC 27001:2022 A.5.18, A.5.3; SOC 2 CC6.3).",
+        "observation": "USER-015 still holds privileged ERP_VENDOR_MASTER after moving to Financial Controller on 2026-08-01 (EX-06), and the directory profile still shows the old department and role (EX-09). USER-019 still holds ERP_AP_CLERK after moving on 2026-07-15 (EX-07). USER-019 was also granted ERP_PAYMENT_RELEASE on 2026-07-15, which creates the SOD-01 conflict (EX-08). No tickets are listed for these changes.",
+        "root_cause": "To be confirmed with management: transfers may not trigger an access review or removal task, and new access may be added without removing old access.",
+        "impact": "Accumulated access allows one person to enter an invoice and release its payment, which exposes the organisation to undetected payment fraud or error. Outdated directory data weakens later access reviews.",
+        "recommendation": "Introduce a mandatory access review on each HR transfer, with removal within the SLA. Remove the conflicting entitlement from USER-019 or document a compensating control. Remove ERP_VENDOR_MASTER from USER-015 unless justified. Update the directory profile of USER-015. Review payments released by USER-019 since 2026-07-15.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-06",
+          "EX-07",
+          "EX-08",
+          "EX-09"
+        ]
+      },
+      {
+        "id": "F-03",
+        "title": "Leaver access not removed completely or on time",
+        "risk_rating": "High",
+        "control_objective": "Accounts are disabled on the last working day and all application roles are removed within the 1-day leaver SLA (ISO/IEC 27001:2022 A.5.18, A.8.2; SOC 2 CC6.2).",
+        "observation": "The account of USER-029, terminated on 2026-08-28, was still enabled on 2026-10-15 and was used on 2026-09-03; IAM-1117 is still Open (EX-10, EX-12). Access of USER-002 was removed 21 days after the leaving date (EX-11). USER-016's account was disabled on the leaving date, but privileged ERP_GL_ACCOUNTANT and ERP_REPORTING remain assigned (EX-13). IAM-1116 and IAM-1118 are Done but have no resolved_at value, and IAM-1118 covers AD only.",
+        "root_cause": "To be confirmed with management: the leaver process may depend on manual tickets, closure may not be checked against actual removal, and ERP roles may not be part of the removal scope.",
+        "impact": "Former employees or others using their credentials could access systems and data, and post journal entries in the case of privileged ERP access. Ticket status does not reliably show that access was removed.",
+        "recommendation": "Disable the account of USER-029 now and review its activity since 2026-08-28. Remove the remaining ERP roles of USER-016. Link HR termination events to automatic removal across AD and ERP. Do not close removal tickets until removal is verified, and monitor logins of terminated accounts.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-10",
+          "EX-11",
+          "EX-12",
+          "EX-13",
+          "IAM-1116",
+          "IAM-1117",
+          "IAM-1118"
+        ]
+      },
+      {
+        "id": "F-04",
+        "title": "Directory accounts without HR record or in long-term inactivity",
+        "risk_rating": "Medium",
+        "control_objective": "Directory accounts match HR records and are in use (ISO/IEC 27001:2022 A.5.18; SOC 2 CC6.2).",
+        "observation": "An enabled account for USER-008 has no HR record and a last login of 2026-10-02 (EX-14, engine rating High). The account of USER-036, Active in HR, had its last login on 2026-05-20, beyond the 90-day stale threshold (EX-15). Both need confirmation of whether a legitimate explanation exists.",
+        "root_cause": "To be confirmed with management: there may be no regular reconciliation of directory accounts to HR, or ownership of non-employee accounts may be undefined.",
+        "impact": "Unowned or unused enabled accounts can be misused without detection. The rating may be higher if EX-14 cannot be explained.",
+        "recommendation": "Obtain the owner and business purpose of the account of USER-008 and confirm the status of USER-036 with HR. Disable accounts without justification and perform periodic reconciliation of accounts to HR and last-login data.",
+        "status": "Open",
+        "ai_assisted": true,
+        "evidence_references": [
+          "EX-14",
+          "EX-15"
+        ]
+      }
+    ]
+  }
+}

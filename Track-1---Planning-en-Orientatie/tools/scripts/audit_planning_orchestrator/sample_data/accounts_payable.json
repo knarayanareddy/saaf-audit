@@ -1,0 +1,25 @@
+{
+  "engagement": "Accounts Payable",
+  "process_map": {
+    "process": "Accounts Payable",
+    "sub_processes": [
+      {"name": "Invoice Receipt", "business_objective": "Ensure all received invoices are captured completely and accurately"},
+      {"name": "Invoice Approval", "business_objective": "Ensure only valid, authorized invoices are approved for payment"},
+      {"name": "Payment", "business_objective": "Ensure only approved invoices are paid, once, to the correct beneficiary"}
+    ]
+  },
+  "risks": [
+    {"source": "UC2", "type": "historical", "description": "Duplicate payments", "recurrence": 3},
+    {"source": "UC2", "type": "historical", "description": "Unauthorized vendor approvals"},
+    {"source": "UC3", "type": "incident", "description": "Duplicate payment incidents", "count": 42},
+    {"source": "UC3", "type": "incident", "description": "Missing goods-receipt incidents", "count": 19},
+    {"source": "UC4", "type": "fraud", "description": "Ghost vendor scheme"},
+    {"source": "UC4", "type": "fraud", "description": "Invoice splitting below approval threshold"},
+    {"source": "UC5", "type": "regulatory", "description": "DORA — payment-integrity and ICT incident classification criteria"}
+  ],
+  "auditor_directory": [
+    {"role": "Data Specialist", "skills": ["Python", "SQL"], "available_hours": 80},
+    {"role": "Senior Auditor", "skills": ["process", "controls"], "available_hours": 80}
+  ],
+  "available_hours": 160
+}

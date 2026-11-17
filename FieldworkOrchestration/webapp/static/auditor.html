@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <h1 id="run-title">Auditor — review</h1>
+  <p class="project-line" id="run-sub"></p>
+  <p class="muted">
+    Only the role this page is meant for should record a decision here — this prototype
+    doesn't enforce that (the role picker in the header is a dropdown, not a login).
+  </p>
+  <p class="muted" id="waiting-note"></p>
+
+  <div id="board"></div>
+
+  <p><a href="#" id="dashboard-link">Open the full audit-trail dashboard →</a></p>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader("auditor");
+  const runId = getRunId();
+  document.getElementById("dashboard-link").href = `/api/runs/${runId}/dashboard`;
+
+  function qualityBadge(quality) {
+    if (!quality) return '<span class="pill pill-none">not yet reviewed</span>';
+    const issues = (quality.issues || []).map((i) => `<li>${escapeHtml(i)}</li>`).join("");
+    return `<span class="pill pill-${quality.verdict}">${quality.verdict}</span>
+      <span class="muted">(${escapeHtml(quality.confidence)})</span>
+      ${quality.rationale ? `<div class="muted" style="margin-top:4px">${escapeHtml(quality.rationale)}</div>` : ""}
+      ${issues ? `<ul class="issues">${issues}</ul>` : ""}`;
+  }
+
+  function approvalNote(approval) {
+    if (!approval) return "";
+    const role = approval.role ? ` (${escapeHtml(ROLE_LABELS[approval.role] || approval.role)})` : "";
+    const comment = approval.comment ? ` — "${escapeHtml(approval.comment)}"` : "";
+    return `<div class="muted" style="margin-top:6px">${escapeHtml(approval.decision)} by ${escapeHtml(approval.reviewer)}${role}${comment}</div>`;
+  }
+
+  function flagNote(flag) {
+    if (!flag) return "";
+    return `<div class="banner banner-flag" style="margin:8px 0 0;padding:8px 12px;font-size:13px">
+      Auditee overrode a delivery concern for "${escapeHtml(flag.filename)}": ${escapeHtml(flag.concern || "")}
+    </div>`;
+  }
+
+  // What this PBC item is actually *for* — the risk it mitigates, the
+  // control it evidences, and the planned audit work it's supposed to
+  // support — so an auditor reads the AI's verdict already knowing what to
+  // judge it against, instead of only after digging into item.html. Empty
+  // (renders nothing) for an engagement not linked to a UC8 work program,
+  // or an item traceability couldn't connect to a specific control.
+  function riskControlContext(ctx) {
+    if (!ctx || !ctx.risk) return "";
+    const steps = ctx.planned_work_steps || [];
+    return `<div class="risk-control-context">
+      <div class="rcc-label">Risk &amp; control context</div>
+      <div><b>Risk${ctx.risk_id ? ` (${escapeHtml(ctx.risk_id)})` : ""}:</b> ${escapeHtml(ctx.risk)}</div>
+      <div style="margin-top:4px"><b>Control${ctx.control_id ? ` (${escapeHtml(ctx.control_id)})` : ""}:</b> ${escapeHtml(ctx.control || "")}</div>
+      ${ctx.control_objective ? `<div class="muted" style="margin-top:2px">${escapeHtml(ctx.control_objective)}</div>` : ""}
+      ${
+        steps.length
+          ? `<div style="margin-top:6px"><b>Planned audit work:</b><ul class="issues" style="margin-top:2px">${steps.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul></div>`
+          : ""
+      }
+    </div>`;
+  }
+
+  async function load() {
+    if (!runId) {
+      document.getElementById("board").innerHTML = "<p class='muted'>No engagement selected.</p>";
+      return;
+    }
+    const run = await api(`/api/runs/${runId}`);
+    document.getElementById("run-title").textContent = "Auditor — review";
+    document.getElementById("run-sub").textContent = engagementContextText(run);
+
+    const board = await api(`/api/runs/${runId}/board`);
+    // Nothing to review until the auditee has actually delivered something
+    // for an item — a pending/overdue item with no file yet just clutters
+    // this queue. "insufficient" is a real pbc_document_check verdict (the
+    // delivered file didn't satisfy the request) and still needs the
+    // auditor's eyes — usually to send the auditee back for another go.
+    const reviewable = board.filter((row) => row.validation_status !== "pending" && row.validation_status !== "overdue");
+    const waiting = board.length - reviewable.length;
+
+    document.getElementById("waiting-note").textContent = waiting
+      ? `${waiting} item(s) still awaiting delivery from the auditee — not shown here yet.`
+      : "";
+
+    document.getElementById("board").innerHTML = reviewable
+      .map((row) => {
+        const canReview = row.entry_id != null;
+        const decided = row.approval_status !== "pending";
+        const proposeLabel = row.validation_status === "received" ? "Propose validation prompt" : "Re-run with a different prompt";
+        const notes = row.auditor_notes || [];
+        return `<div class="card" data-pbc="${row.pbc_id}">
+          <div style="display:flex;justify-content:space-between;gap:12px">
+            <div>
+              <b>${escapeHtml(row.pbc_id)}</b> — ${escapeHtml(row.description)}
+              <div>
+                ${row.matched_file ? `<a href="/api/runs/${encodeURIComponent(runId)}/items/${encodeURIComponent(row.pbc_id)}/document" target="_blank">Open original document →</a> · ` : ""}
+                <a href="item.html?run=${encodeURIComponent(runId)}&pbc=${encodeURIComponent(row.pbc_id)}">View full audit trail →</a>
+              </div>
+            </div>
+            <span class="pill pill-${row.display_status_class}">${row.display_status}</span>
+          </div>
+          ${riskControlContext(row.work_program_context)}
+          ${flagNote(row.flag)}
+          ${row.validation_notes ? `<p class="muted" style="margin-top:8px">AI: ${escapeHtml(row.validation_notes)}</p>` : ""}
+          <div style="margin-top:8px">${qualityBadge(row.quality)}</div>
+          ${approvalNote(row.approval)}
+
+          ${
+            decided
+              ? `<p class="muted closed-note" style="margin-top:12px">
+                  This item is closed. <a href="#" class="reconsider">Reconsider — re-run the check or change the decision</a>
+                </p>`
+              : ""
+          }
+
+          <div class="prompt-actions" ${decided ? "hidden" : ""}>
+            <button class="propose secondary">${proposeLabel}</button>
+            <div class="proposal" hidden>
+              <label>Validation prompt (review and edit before running)</label>
+              <textarea class="prompt-text"></textarea>
+              <p class="muted rationale"></p>
+              <button class="run-check">Run check with this prompt</button>
+            </div>
+          </div>
+
+          <div class="auditor-notes">
+            <label>Auditor notes — additional audit evidence or caveats for this item</label>
+            <div class="notes-list">
+              ${notes
+                .map(
+                  (n) => `<div class="muted" style="margin-top:4px">"${escapeHtml(n.text)}" — ${escapeHtml(n.author)}, ${escapeHtml(n.at)}</div>`
+                )
+                .join("") || `<p class="muted" style="margin:4px 0 0">No notes added yet.</p>`}
+            </div>
+            <textarea placeholder="e.g. confirmed the outstanding checks by phone with the bank on 4 April" class="note-text"></textarea>
+            <button class="secondary add-note">Add note</button>
+          </div>
+
+          <div class="review-actions-wrap" ${decided ? "hidden" : ""}>
+            ${
+              canReview
+                ? `<div class="review-actions" data-entry="${row.entry_id}">
+                    <textarea placeholder="Comment (optional)" class="comment"></textarea>
+                    <button class="approve">Approve</button>
+                    <button class="reject danger">Reject</button>
+                  </div>`
+                : `<p class="muted">No AI output to review for this item yet.</p>`
+            }
+          </div>
+        </div>`;
+      })
+      .join("") || "<p class='muted'>Nothing to review yet — waiting for the auditee to deliver evidence.</p>";
+
+    document.querySelectorAll(".review-actions").forEach((div) => {
+      const entryId = div.dataset.entry;
+      div.querySelector(".approve").addEventListener("click", () => decide(entryId, "approved", div));
+      div.querySelector(".reject").addEventListener("click", () => decide(entryId, "rejected", div));
+    });
+
+    document.querySelectorAll(".reconsider").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const card = link.closest(".card");
+        card.querySelector(".closed-note").hidden = true;
+        card.querySelector(".prompt-actions").hidden = false;
+        card.querySelector(".review-actions-wrap").hidden = false;
+      });
+    });
+
+    document.querySelectorAll(".card[data-pbc]").forEach((card) => {
+      const pbcId = card.dataset.pbc;
+      const proposalDiv = card.querySelector(".proposal");
+      const promptText = card.querySelector(".prompt-text");
+      const rationaleP = card.querySelector(".rationale");
+
+      card.querySelector(".propose").addEventListener("click", async (e) => {
+        const originalLabel = e.target.textContent;
+        e.target.disabled = true;
+        e.target.textContent = "Proposing…";
+        try {
+          const proposal = await apiPost(`/api/runs/${runId}/items/${encodeURIComponent(pbcId)}/propose-prompt`);
+          promptText.value = proposal.proposed_prompt;
+          promptText.dataset.original = proposal.proposed_prompt;
+          rationaleP.textContent = proposal.rationale ? `Rationale: ${proposal.rationale}` : "";
+          proposalDiv.hidden = false;
+        } catch (err) {
+          alert(err.message);
+        } finally {
+          e.target.disabled = false;
+          e.target.textContent = originalLabel;
+        }
+      });
+
+      card.querySelector(".run-check").addEventListener("click", async (e) => {
+        const originalPrompt = promptText.dataset.original;
+        const edited = originalPrompt != null && originalPrompt !== promptText.value;
+        promptText.dataset.original = promptText.value;
+        e.target.disabled = true;
+        e.target.textContent = "Running…";
+        try {
+          // No `approved_by` sent — the server resolves it from the
+          // engagement's own assigned auditor name, the same way
+          // /approve resolves `reviewer` (see webapp/README.md).
+          await apiPost(`/api/runs/${runId}/items/${encodeURIComponent(pbcId)}/process`, {
+            prompt: promptText.value,
+            edited,
+          });
+        } catch (err) {
+          alert(err.message);
+        } finally {
+          e.target.disabled = false;
+          e.target.textContent = "Run check with this prompt";
+        }
+        load();
+      });
+
+      card.querySelector(".add-note").addEventListener("click", async (e) => {
+        const textarea = card.querySelector(".note-text");
+        const text = textarea.value.trim();
+        if (!text) return;
+        e.target.disabled = true;
+        try {
+          await apiPost(`/api/runs/${runId}/items/${encodeURIComponent(pbcId)}/notes`, { text });
+        } catch (err) {
+          alert(err.message);
+          e.target.disabled = false;
+          return;
+        }
+        load();
+      });
+    });
+  }
+
+  async function decide(entryId, decision, div) {
+    const comment = div.querySelector(".comment").value || null;
+    // No `reviewer` sent — the server resolves it from the engagement's own
+    // assigned name for the current role (see webapp/README.md). It 400s
+    // with a clear message if this engagement has no name assigned for
+    // this role yet, which apiPost() surfaces as a thrown error below.
+    try {
+      await apiPost(`/api/runs/${runId}/approve`, {
+        entry_id: entryId,
+        decision,
+        role: getRole(),
+        comment,
+      });
+    } catch (err) {
+      alert(err.message);
+      return;
+    }
+    load();
+  }
+
+  load();
+</script>
+</body>
+</html>

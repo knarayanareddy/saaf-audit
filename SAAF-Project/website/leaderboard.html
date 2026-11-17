@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAAF Hackathon #3 — Leaderboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+body { overflow: hidden; height: 100vh; }
+.refresh-indicator { font-size: 11px; color: var(--muted); min-width: 160px; text-align: right; }
+
+.main { display: grid; grid-template-columns: 1fr 400px; gap: 0; height: calc(100vh - 56px - 40px); }
+
+/* Leaderboard panel */
+.lb-panel { padding: 20px 24px; overflow-y: auto; }
+.lb-panel h2 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+
+.lb-card {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 14px 20px; margin-bottom: 10px; transition: all 0.2s;
+}
+.lb-card:hover { border-color: rgba(129,140,248,0.3); transform: translateY(-1px); }
+.lb-card.rank-1 { background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.03)); border-color: rgba(251,191,36,0.3); box-shadow: 0 0 20px rgba(251,191,36,0.08); }
+.lb-card.rank-2 { background: linear-gradient(135deg, rgba(148,163,184,0.08), rgba(148,163,184,0.03)); border-color: rgba(148,163,184,0.25); }
+.lb-card.rank-3 { background: linear-gradient(135deg, rgba(251,146,60,0.08), rgba(251,146,60,0.03)); border-color: rgba(251,146,60,0.25); }
+
+.lb-rank { font-size: 24px; min-width: 40px; text-align: center; font-weight: 900; }
+.lb-rank.r1 { color: var(--yellow); text-shadow: 0 0 12px rgba(251,191,36,0.4); }
+.lb-rank.r2 { color: #c0c0c0; }
+.lb-rank.r3 { color: var(--orange); }
+.lb-rank.rn { color: rgba(148,163,184,0.3); font-size: 18px; }
+
+.lb-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--border); }
+.lb-card.rank-1 .lb-avatar { border-color: rgba(251,191,36,0.4); }
+.lb-card.rank-2 .lb-avatar { border-color: rgba(148,163,184,0.3); }
+.lb-card.rank-3 .lb-avatar { border-color: rgba(251,146,60,0.3); }
+
+.lb-info { flex: 1; }
+.lb-name { font-size: 16px; font-weight: 700; }
+.lb-breakdown { font-size: 12px; color: var(--muted); margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; }
+.lb-tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+.lb-tag-pr { background: rgba(74,222,128,0.12); color: var(--green); }
+.lb-tag-plan { background: rgba(129,140,248,0.15); color: var(--accent); }
+.lb-tag-update { background: rgba(192,132,252,0.12); color: var(--purple); }
+
+.lb-score-wrap { min-width: 100px; text-align: right; }
+.lb-score { font-size: 28px; font-weight: 900; }
+.lb-card.rank-1 .lb-score { color: var(--yellow); }
+.lb-score span { font-size: 13px; font-weight: 500; color: var(--muted); }
+.lb-progress { height: 4px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+.lb-progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--purple)); transition: width 0.6s ease; }
+.lb-card.rank-1 .lb-progress-fill { background: linear-gradient(90deg, var(--yellow), var(--orange)); }
+
+.lb-badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-left: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+.lb-badge-first { background: rgba(251,191,36,0.15); color: var(--yellow); }
+
+/* Activity panel */
+.act-panel { background: var(--surface); border-left: 1px solid var(--border); padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+.act-panel h2 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+
+.act-item { padding: 12px 14px; border-radius: 10px; margin-bottom: 8px; font-size: 13px; border-left: 3px solid var(--border); background: rgba(255,255,255,0.02); transition: background 0.15s; }
+.act-item:hover { background: rgba(255,255,255,0.04); }
+.act-item.pr-merged { border-left-color: var(--green); }
+.act-item.pr-open { border-left-color: var(--yellow); }
+.act-title { font-weight: 600; margin-bottom: 3px; line-height: 1.4; }
+.act-meta { font-size: 11px; color: var(--muted); }
+.act-files { font-size: 11px; color: var(--accent); margin-top: 4px; }
+
+/* Stats bar */
+.stats-bar {
+  padding: 8px 24px; background: var(--surface); border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--muted); display: flex; gap: 20px; align-items: center;
+  position: fixed; bottom: 0; left: 0; right: 0; height: 40px;
+}
+.stats-bar strong { color: var(--text); }
+
+/* Scoring rules — compact bar */
+.rules-bar {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  padding: 7px 14px; background: var(--surface); border: 1px solid rgba(129,140,248,0.12);
+  border-radius: 10px; margin-bottom: 14px; font-size: 12px;
+}
+.rules-bar-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-right: 4px; }
+.rule-chip { display: flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; }
+.rule-chip-pr  { background: rgba(74,222,128,0.12);  color: var(--green);  }
+.rule-chip-plan{ background: rgba(129,140,248,0.15); color: var(--accent); }
+.rule-chip-upd { background: rgba(192,132,252,0.12); color: var(--purple); }
+.rule-chip-clm { background: rgba(251,191,36,0.12);  color: var(--yellow); }
+.rules-help-btn { margin-left: auto; background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 6px; padding: 2px 8px; font-size: 11px; cursor: pointer; font-family: inherit; }
+.rules-help-btn:hover { color: var(--text); border-color: var(--accent); }
+
+/* Scoring rules — full detail overlay */
+.rules-overlay { position: fixed; inset: 0; background: rgba(2,6,23,0.85); z-index: 200; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.rules-overlay.active { display: flex; }
+.rules-box {
+  background: var(--surface); border: 1px solid rgba(129,140,248,0.2); border-radius: 16px;
+  width: min(720px, 92vw); max-height: 85vh; overflow-y: auto; padding: 28px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px 20px; position: relative;
+}
+.rules-box-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+.rules-box-close:hover { color: var(--text); }
+.rules-title { grid-column: 1 / -1; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.rule-item { display: flex; flex-direction: column; text-align: center; gap: 4px; }
+.rule-pts { display: inline-block; min-width: 48px; text-align: center; padding: 6px 14px; border-radius: 8px; font-weight: 900; font-size: 20px; }
+.rule-pts-pr { background: rgba(74,222,128,0.15); color: var(--green); }
+.rule-pts-plan { background: rgba(129,140,248,0.18); color: var(--accent); }
+.rule-pts-update { background: rgba(192,132,252,0.15); color: var(--purple); }
+.rule-pts-claim { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.rules-caps { grid-column: 1 / -1; font-size: 11px; color: rgba(148,163,184,0.5); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 6px; line-height: 1.7; }
+
+/* Score log overlay */
+.log-overlay { position: fixed; inset: 0; background: rgba(2,6,23,0.85); z-index: 100; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.log-overlay.active { display: flex; }
+.log-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; width: min(600px, 90vw); max-height: 80vh; overflow-y: auto; padding: 24px; position: relative; }
+.log-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+.log-close:hover { color: var(--text); }
+.log-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.log-header img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--border); }
+.log-header h3 { font-size: 18px; }
+.log-header .log-total { font-size: 28px; font-weight: 900; margin-left: auto; }
+.log-header .log-total span { font-size: 13px; color: var(--muted); font-weight: 500; }
+.log-entry { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+.log-entry:last-child { border-bottom: none; }
+.log-entry-pts { min-width: 40px; text-align: right; font-weight: 800; font-size: 14px; }
+.log-entry-pts.pos { color: var(--green); }
+.log-entry-desc { flex: 1; color: var(--muted); }
+.log-entry-desc a { color: var(--accent); }
+.log-entry-desc strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="./index.html" class="topbar-brand">
+    <img src="./saaf-logo-white.png" alt="SAAF" class="topbar-logo">
+    <div>
+      <div class="topbar-title">Hackathon #3</div>
+      <div class="topbar-subtitle">Leaderboard</div>
+    </div>
+  </a>
+  <nav class="topbar-nav">
+    <a href="./index.html">Home</a>
+    <a href="./leaderboard.html" class="active">Leaderboard</a>
+    <a href="./facilitator.html">Facilitator</a>
+  </nav>
+  <div class="topbar-right">
+    <select id="filter-select" style="width:150px">
+      <option value="all">All time</option>
+      <option value="h3">Since Hackathon #3</option>
+      <option value="h2">Since Hackathon #2</option>
+    </select>
+    <input type="password" id="token-input" placeholder="GitHub PAT" style="width:220px" onkeydown="if(event.key==='Enter')startPolling()">
+    <button class="btn btn-primary" style="padding:6px 16px;font-size:12px" onclick="startPolling()">Connect</button>
+    <span class="refresh-indicator" id="refresh-status">Not connected</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="lb-panel" id="lb-panel">
+    <h2>Rankings</h2>
+    <div class="rules-bar">
+      <span class="rules-bar-label">Score</span>
+      <span class="rule-chip rule-chip-pr">+10 Merged PR <small style="font-weight:400;opacity:.7">max 5</small></span>
+      <span class="rule-chip rule-chip-plan">+15 New plan <small style="font-weight:400;opacity:.7">max 3</small></span>
+      <span class="rule-chip rule-chip-upd">+5 Plan update <small style="font-weight:400;opacity:.7">no cap</small></span>
+      <span class="rule-chip rule-chip-clm">+5 Claim <small style="font-weight:400;opacity:.7">max 2</small></span>
+      <button class="rules-help-btn" onclick="document.getElementById('rules-overlay').classList.add('active')">How? ›</button>
+    </div>
+    <div id="leaderboard">
+      <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;line-height:1.8">
+        <h3 style="font-size:16px;margin-bottom:12px">Connect to see live rankings</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">You need a GitHub Personal Access Token (PAT) to load the leaderboard. Everyone can open this page — it's read-only.</p>
+        <div style="font-size:13px;color:var(--muted)">
+          <strong style="color:var(--text)">How to create a PAT:</strong>
+          <ol style="padding-left:18px;margin:8px 0">
+            <li>Go to <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens/new</a></li>
+            <li>Name: <code style="background:var(--surface2);padding:1px 6px;border-radius:4px;font-size:12px">SAAF Leaderboard</code></li>
+            <li>Expiration: 30 days</li>
+            <li>Repository access: select <strong style="color:var(--text)">SAAF-Project/SAAF-Project</strong></li>
+            <li>Permissions → Repository permissions:
+              <ul style="padding-left:16px;margin:4px 0">
+                <li><strong style="color:var(--green)">Pull requests</strong> → Read</li>
+                <li><strong style="color:var(--green)">Contents</strong> → Read</li>
+              </ul>
+            </li>
+            <li>Click <strong style="color:var(--text)">Generate token</strong> → copy → paste above → Connect</li>
+          </ol>
+        </div>
+        <p style="font-size:12px;color:rgba(148,163,184,0.5);margin-top:8px">Need help? See the <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token" target="_blank">GitHub docs on fine-grained PATs</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="act-panel" id="act-panel">
+    <h2>Recent Activity</h2>
+    <div id="activity"><p style="color:var(--muted);text-align:center;padding:24px">Waiting for connection...</p></div>
+  </div>
+</div>
+
+<div class="stats-bar" id="stats-bar">
+  <span>SAAF Hackathon Leaderboard</span>
+</div>
+
+<div class="rules-overlay" id="rules-overlay" onclick="if(event.target===this)this.classList.remove('active')">
+  <div class="rules-box">
+    <button class="rules-box-close" onclick="document.getElementById('rules-overlay').classList.remove('active')">&times;</button>
+    <div class="rules-title">How to score points</div>
+    <div class="rule-item">
+      <span class="rule-pts rule-pts-pr">+10</span>
+      <span style="font-size:13px;font-weight:600">Merged PR</span>
+      <span style="font-size:10px;color:var(--muted);line-height:1.6">
+        <code style="font-size:10px">gh repo fork SAAF-Project/SAAF-Project --clone</code><br>
+        Make changes → <code style="font-size:10px">git push</code> → <code style="font-size:10px">gh pr create</code><br>
+        Points scored when PR is merged by maintainer.
+      </span>
+      <span style="font-size:11px;color:var(--muted)">max 5 = <strong style="color:var(--text)">50 pts</strong></span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-pts rule-pts-plan">+15</span>
+      <span style="font-size:13px;font-weight:600">New plan file</span>
+      <span style="font-size:10px;color:var(--muted);line-height:1.6">
+        <code style="font-size:10px">cp docs/plans/plan-template.md plans/hackathon-4/your-slug.md</code><br>
+        Fill in sections 1–3 minimum.<br>
+        See <a href="https://github.com/SAAF-Project/SAAF-Project/blob/main/docs/plans/plan-template.md" target="_blank">template</a> &middot; <a href="https://github.com/SAAF-Project/SAAF-Project/blob/main/plans/overview.md" target="_blank">all plans</a>
+      </span>
+      <span style="font-size:11px;color:var(--muted)">max 3 = <strong style="color:var(--text)">45 pts</strong></span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-pts rule-pts-update">+5</span>
+      <span style="font-size:13px;font-weight:600">Plan update</span>
+      <span style="font-size:10px;color:var(--muted);line-height:1.6">
+        Edit any <code style="font-size:10px">plans/**/*.md</code> in your PR.<br>
+        E.g. update PDCA status, add sections, improve prompts.
+      </span>
+      <span style="font-size:11px;color:var(--muted)">1× per file, <strong style="color:var(--text)">no cap</strong></span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-pts rule-pts-claim">+5</span>
+      <span style="font-size:13px;font-weight:600">Claim a plan</span>
+      <span style="font-size:10px;color:var(--muted);line-height:1.6">
+        Open any plan → Section 1 Metadata → set:<br>
+        <code style="font-size:10px">| **Claimed By** | Your Name |</code>
+      </span>
+      <span style="font-size:11px;color:var(--muted)">max 2 = <strong style="color:var(--text)">10 pts</strong></span>
+    </div>
+    <div class="rules-caps" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span><strong style="color:var(--accent)">Group prize?</strong> Pick one engineer to own the fork &amp; submit PRs. Work together on the same fork using Claude Code.</span>
+      <span style="white-space:nowrap;font-size:12px;color:var(--text);font-weight:700;background:rgba(129,140,248,0.1);padding:4px 12px;border-radius:6px">Base max: 105 pts</span>
+    </div>
+  </div>
+</div>
+
+<div class="log-overlay" id="log-overlay" onclick="if(event.target===this)closeLog()">
+  <div class="log-box">
+    <button class="log-close" onclick="closeLog()">&times;</button>
+    <div id="log-content"></div>
+  </div>
+</div>
+
+<script>
+const REPO = 'SAAF-Project/SAAF-Project';
+const API = 'https://api.github.com';
+const LIMITS = { maxPRs: 5, maxNewPlans: 3, maxClaims: 2 };
+const SESSION_DATES = { h3: '2026-04-21T00:00:00Z', h2: '2026-03-24T00:00:00Z' };
+
+let token = '';
+
+function escapeHtml(t) { return t ? t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+let pollInterval = null;
+let prCache = {};    // number → { author, merged_at, title, files: [{filename, status}] }
+let plansData = [];  // from plans.json
+
+async function apiFetch(url) {
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const msg = body.message || res.statusText;
+    if (res.status === 403 && msg.includes('Resource not accessible')) {
+      throw new Error('PAT needs "Pull requests" read permission (Repository permissions → Pull requests → Read)');
+    }
+    throw new Error(`API ${res.status}: ${msg}`);
+  }
+  return res.json();
+}
+
+async function fetchMergedPRs() {
+  // Get all closed PRs (paginate if needed)
+  let page = 1;
+  let allPRs = [];
+  while (true) {
+    const prs = await apiFetch(`${API}/repos/${REPO}/pulls?state=closed&per_page=100&page=${page}`);
+    allPRs = allPRs.concat(prs);
+    if (prs.length < 100 || page > 50) break;
+    page++;
+  }
+
+  // Filter to merged only
+  const merged = allPRs.filter(pr => pr.merged_at);
+
+  // Fetch files for new PRs (parallel, cache hit = skip)
+  const newPRs = merged.filter(pr => !prCache[pr.number]);
+  const results = await Promise.allSettled(
+    newPRs.map(async pr => {
+      try {
+        const files = await apiFetch(`${API}/repos/${REPO}/pulls/${pr.number}/files`);
+        return { pr, files: files.map(f => ({ filename: f.filename, status: f.status, size: f.additions || 0 })) };
+      } catch (e) {
+        return { pr, files: [] };
+      }
+    })
+  );
+  for (const r of results) {
+    const { pr, files } = r.status === 'fulfilled' ? r.value : { pr: null, files: [] };
+    if (!pr) continue;
+    prCache[pr.number] = {
+      author: pr.user?.login || 'unknown',
+      merged_at: pr.merged_at,
+      title: pr.title,
+      url: pr.html_url,
+      files,
+    };
+  }
+}
+
+function isPlanFile(filename) {
+  return /^plans\/.*\.md$/.test(filename) && !filename.endsWith('README.md');
+}
+
+function calculateScores() {
+  const filter = document.getElementById('filter-select').value;
+  const sinceDate = SESSION_DATES[filter] || null;
+
+  const scores = {}; // login → { prs, newPlans, updates, claims, total, prList }
+
+  const ensure = (login) => {
+    if (!scores[login]) scores[login] = { prs: 0, newPlans: 0, planUpdates: new Set(), claims: 0, total: 0, prList: [], firstMergedAt: null };
+  };
+
+  // Score merged PRs
+  for (const [num, pr] of Object.entries(prCache)) {
+    if (sinceDate && pr.merged_at < sinceDate) continue;
+
+    const login = pr.author;
+    ensure(login);
+    const s = scores[login];
+
+    // PR base points (capped)
+    if (s.prs < LIMITS.maxPRs) {
+      s.prs++;
+      s.total += 10;
+    }
+    s.prList.push({ num: parseInt(num), title: pr.title, merged_at: pr.merged_at });
+    if (!s.firstMergedAt || pr.merged_at < s.firstMergedAt) s.firstMergedAt = pr.merged_at;
+
+    // Plan file bonuses
+    for (const f of pr.files) {
+      if (!isPlanFile(f.filename)) continue;
+
+      if (f.status === 'added') {
+        if (s.newPlans < LIMITS.maxNewPlans) {
+          s.newPlans++;
+          s.total += 15;
+        }
+      } else if (f.status === 'modified') {
+        if (!s.planUpdates.has(f.filename)) {
+          s.planUpdates.add(f.filename);
+          s.total += 5;
+        }
+      }
+    }
+  }
+
+  // Claim points from plans.json — match claimed_by to PR authors
+  // Build a name→login map from PR file changes (plan submitter names map to PR authors)
+  const nameToLogin = {};
+  for (const pr of Object.values(prCache)) {
+    for (const f of pr.files) {
+      if (isPlanFile(f.filename) && f.status === 'added') {
+        // The plan filename often contains the submitter name
+        nameToLogin[f.filename] = pr.author;
+      }
+    }
+  }
+  for (const plan of plansData) {
+    if (!plan.claimed_by) continue;
+    // Try to match: find a PR author who submitted this plan's file
+    const planPath = `plans/${plan.session}/${plan.slug}.md`;
+    const login = nameToLogin[planPath];
+    if (login) {
+      ensure(login);
+      const s = scores[login];
+      if (s.claims < LIMITS.maxClaims) {
+        s.claims++;
+        s.total += 5;
+      }
+    }
+  }
+
+  // Convert planUpdates Set to count for display
+  for (const s of Object.values(scores)) {
+    s.updateCount = s.planUpdates.size;
+    delete s.planUpdates;
+  }
+
+  // Sort by total descending, tiebreaker: earliest first PR wins
+  return Object.entries(scores)
+    .map(([login, s]) => ({ login, ...s }))
+    .sort((a, b) => b.total - a.total || (a.firstMergedAt || '').localeCompare(b.firstMergedAt || ''));
+}
+
+function rankIcon(i) {
+  if (i === 0) return '<span class="lb-rank r1">🥇</span>';
+  if (i === 1) return '<span class="lb-rank r2">🥈</span>';
+  if (i === 2) return '<span class="lb-rank r3">🥉</span>';
+  return `<span class="lb-rank rn">#${i + 1}</span>`;
+}
+
+function rankClass(i) {
+  if (i === 0) return 'rank-1';
+  if (i === 1) return 'rank-2';
+  if (i === 2) return 'rank-3';
+  return '';
+}
+
+function renderLeaderboard(scores) {
+  const el = document.getElementById('leaderboard');
+  if (scores.length === 0) {
+    el.innerHTML = '<p style="color:var(--muted);padding:24px;text-align:center">No contributions found yet. Merge a PR to score!</p>';
+    return;
+  }
+
+  // Find the earliest contributor across all scores
+  const firstContributor = scores.reduce((best, s) =>
+    !best || (s.firstMergedAt && s.firstMergedAt < best.firstMergedAt) ? s : best, null)?.login;
+
+  const MAX_SCORE = 105; // 5 PRs(50) + 3 plans(45) + 2 claims(10) — updates uncapped
+  el.innerHTML = scores.map((s, i) => {
+    const tags = [];
+    if (s.prs > 0) tags.push(`<span class="lb-tag lb-tag-pr">${s.prs} PR${s.prs !== 1 ? 's' : ''}</span>`);
+    if (s.newPlans > 0) tags.push(`<span class="lb-tag lb-tag-plan">${s.newPlans} plan${s.newPlans !== 1 ? 's' : ''}</span>`);
+    if (s.updateCount > 0) tags.push(`<span class="lb-tag lb-tag-update">${s.updateCount} update${s.updateCount !== 1 ? 's' : ''}</span>`);
+    if (s.claims > 0) tags.push(`<span class="lb-tag" style="background:rgba(251,191,36,0.12);color:var(--yellow)">${s.claims} claim${s.claims !== 1 ? 's' : ''}</span>`);
+    const firstBadge = s.login === firstContributor ? '<span class="lb-badge lb-badge-first">1st contributor</span>' : '';
+    const pct = Math.min(100, (s.total / MAX_SCORE) * 100);
+    return `<div class="lb-card ${rankClass(i)}" onclick="showLog('${s.login}')" style="cursor:pointer">
+      ${rankIcon(i)}
+      <img class="lb-avatar" src="https://github.com/${s.login}.png?size=96" alt="${s.login}" onerror="this.style.display='none'">
+      <div class="lb-info">
+        <div class="lb-name">@${s.login}${firstBadge}</div>
+        <div class="lb-breakdown">${tags.join('')}</div>
+      </div>
+      <div class="lb-score-wrap">
+        <div class="lb-score">${s.total} <span>/ ${MAX_SCORE}</span></div>
+        <div class="lb-progress"><div class="lb-progress-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function timeAgo(dateStr) {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return `${days}d ago`;
+}
+
+function renderActivity() {
+  const el = document.getElementById('activity');
+  const filter = document.getElementById('filter-select').value;
+  const sinceDate = SESSION_DATES[filter] || null;
+
+  // Collect all PRs sorted by merge date, newest first
+  const prs = Object.entries(prCache)
+    .map(([num, pr]) => ({ num: parseInt(num), ...pr }))
+    .filter(pr => !sinceDate || pr.merged_at >= sinceDate)
+    .sort((a, b) => new Date(b.merged_at) - new Date(a.merged_at))
+    .slice(0, 25);
+
+  if (prs.length === 0) {
+    el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:24px">No activity yet.</p>';
+    return;
+  }
+
+  el.innerHTML = prs.map(pr => {
+    const planFiles = pr.files.filter(f => isPlanFile(f.filename));
+    const filesHtml = planFiles.length > 0
+      ? `<div class="act-files">${planFiles.map(f => `${f.status === 'added' ? '+' : '~'} ${f.filename.split('/').pop()}`).join(' · ')}</div>`
+      : '';
+    return `<div class="act-item pr-merged">
+      <div class="act-title">🔀 <a href="${pr.url}" target="_blank" style="color:var(--text);text-decoration:none">${escapeHtml(pr.title)}</a></div>
+      <div class="act-meta">by @${pr.author} · ${timeAgo(pr.merged_at)} · PR #${pr.num}</div>
+      ${filesHtml}
+    </div>`;
+  }).join('');
+}
+
+function renderStats(scores) {
+  const totalPRs = Object.keys(prCache).length;
+  const totalContributors = scores.length;
+  const totalPlanFiles = new Set();
+  for (const pr of Object.values(prCache)) {
+    for (const f of pr.files) {
+      if (isPlanFile(f.filename)) totalPlanFiles.add(f.filename);
+    }
+  }
+
+  document.getElementById('stats-bar').innerHTML = `
+    <span><strong>${totalContributors}</strong> contributors</span>
+    <span><strong>${totalPRs}</strong> merged PRs</span>
+    <span><strong>${totalPlanFiles.size}</strong> plan files touched</span>
+    <span><strong>${plansData.length}</strong> plans in portfolio</span>
+    <span style="margin-left:auto;font-size:11px">Scoring: 5 PRs (50) + 3 plans (45) + updates (5/file) + 2 claims (10)</span>
+  `;
+}
+
+async function poll() {
+  try {
+    await fetchMergedPRs();
+    const scores = calculateScores();
+    renderLeaderboard(scores);
+    renderActivity();
+    renderStats(scores);
+    document.getElementById('refresh-status').textContent =
+      `Live · ${Object.keys(prCache).length} PRs · ${new Date().toLocaleTimeString()}`;
+  } catch (e) {
+    document.getElementById('refresh-status').textContent = `Error: ${e.message}`;
+    document.getElementById('leaderboard').innerHTML = `<div style="padding:24px;color:var(--red);font-size:14px;line-height:1.8">
+      <strong>Connection failed:</strong> ${e.message}<br><br>
+      <span style="color:var(--muted)">Your fine-grained PAT needs these <strong style="color:var(--text)">Repository permissions</strong>:<br>
+      &bull; <strong style="color:var(--text)">Pull requests</strong> → Read<br>
+      &bull; <strong style="color:var(--text)">Contents</strong> → Read<br><br>
+      Go to <a href="https://github.com/settings/personal-access-tokens" target="_blank">github.com/settings/personal-access-tokens</a> to update your token.</span>
+    </div>`;
+  }
+}
+
+async function startPolling() {
+  token = document.getElementById('token-input').value.trim();
+  if (!token) { alert('Enter a GitHub Personal Access Token'); return; }
+  sessionStorage.setItem('gh_pat', token);
+
+  // Load plans.json for claim data
+  try {
+    plansData = await fetch('./data/plans.json').then(r => r.json());
+  } catch (e) { plansData = []; }
+
+  document.getElementById('refresh-status').textContent = 'Connecting...';
+  await poll();
+  if (pollInterval) clearInterval(pollInterval);
+  pollInterval = setInterval(poll, 30000);
+}
+
+function showLog(login) {
+  const filter = document.getElementById('filter-select').value;
+  const sinceDate = SESSION_DATES[filter] || null;
+  const entries = [];
+  let total = 0;
+
+  // Walk through PRs for this user
+  const userPRs = Object.entries(prCache)
+    .filter(([_, pr]) => pr.author === login && (!sinceDate || pr.merged_at >= sinceDate))
+    .sort((a, b) => new Date(b[1].merged_at) - new Date(a[1].merged_at));
+
+  let prCount = 0, planCount = 0;
+  const updatedFiles = new Set();
+
+  for (const [num, pr] of userPRs) {
+    if (prCount < LIMITS.maxPRs) {
+      prCount++;
+      entries.push({ pts: 10, desc: `Merged <a href="${pr.url}" target="_blank">PR #${num}</a>: <strong>${escapeHtml(pr.title)}</strong>`, time: pr.merged_at });
+      total += 10;
+    } else {
+      entries.push({ pts: 0, desc: `PR #${num} (capped at ${LIMITS.maxPRs} PRs)`, time: pr.merged_at, capped: true });
+    }
+
+    for (const f of pr.files) {
+      if (!isPlanFile(f.filename)) continue;
+      const name = f.filename.split('/').pop();
+      if (f.status === 'added') {
+        if (planCount < LIMITS.maxNewPlans) {
+          planCount++;
+          entries.push({ pts: 15, desc: `New plan: <strong>${name}</strong>`, time: pr.merged_at });
+          total += 15;
+        } else {
+          entries.push({ pts: 0, desc: `New plan ${name} (capped at ${LIMITS.maxNewPlans})`, time: pr.merged_at, capped: true });
+        }
+      } else if (f.status === 'modified' && !updatedFiles.has(f.filename)) {
+        updatedFiles.add(f.filename);
+        entries.push({ pts: 5, desc: `Updated: <strong>${name}</strong>`, time: pr.merged_at });
+        total += 5;
+      }
+    }
+  }
+
+  const el = document.getElementById('log-content');
+  el.innerHTML = `
+    <div class="log-header">
+      <img src="https://github.com/${login}.png?size=96" alt="${login}" onerror="this.style.display='none'">
+      <h3>@${login}</h3>
+      <div class="log-total">${total} <span>pts</span></div>
+    </div>
+    ${entries.length === 0 ? '<p style="color:var(--muted)">No scored contributions yet.</p>' : ''}
+    ${entries.map(e => `<div class="log-entry">
+      <div class="log-entry-pts${e.pts > 0 ? ' pos' : ''}">${e.pts > 0 ? '+' + e.pts : e.capped ? 'cap' : '0'}</div>
+      <div class="log-entry-desc">${e.desc}</div>
+      <div style="font-size:10px;color:var(--muted);white-space:nowrap">${timeAgo(e.time)}</div>
+    </div>`).join('')}
+  `;
+  document.getElementById('log-overlay').classList.add('active');
+}
+
+function closeLog() {
+  document.getElementById('log-overlay').classList.remove('active');
+}
+
+// Re-render on filter change
+document.getElementById('filter-select').addEventListener('change', () => {
+  if (token) {
+    const scores = calculateScores();
+    renderLeaderboard(scores);
+    renderActivity();
+    renderStats(scores);
+  }
+});
+
+// Restore token from session
+const savedToken = sessionStorage.getItem('gh_pat');
+if (savedToken) {
+  document.getElementById('token-input').value = savedToken;
+  token = savedToken;
+  startPolling();
+}
+</script>
+</body>
+</html>

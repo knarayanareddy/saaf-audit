@@ -1,0 +1,2274 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>A2 – Audit Criteria &amp; Controls · Policy-to-Controls Extractor</title>
+<style>
+  :root {
+    --ink: #1a2233;
+    --muted: #5b6577;
+    --line: #d8dde6;
+    --line-strong: #b6bdcc;
+    --bg: #f5f6f9;
+    --card: #ffffff;
+    --accent: #1f3a8a;
+    --pass: #167a3b;
+    --fail: #b3261e;
+    --na: #6b6b6b;
+    --warn: #b7791f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  header.app {
+    background: var(--accent);
+    color: #fff;
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 10;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  header.app h1 { font-size: 18px; margin: 0; font-weight: 600; letter-spacing: 0.2px; }
+  header.app .sub { font-size: 12px; opacity: 0.85; }
+  .repo-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+    background: rgba(255,255,255,0.18); padding: 3px 9px; border-radius: 999px;
+    margin-left: 8px; vertical-align: middle;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .repo-pill.dirty { background: var(--warn); color: #fff; }
+  .repo-pill:empty { display: none; }
+  .repo-pill .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #6cd47c; }
+  .repo-pill.dirty .dot { background: #fff; }
+  header.app .actions { display: flex; gap: 8px; }
+  header.app button {
+    background: #fff; color: var(--accent); border: 0; padding: 8px 14px; border-radius: 4px;
+    font-weight: 600; cursor: pointer; font-size: 13px;
+  }
+  header.app button.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+  header.app button:hover { opacity: 0.92; }
+  main { max-width: 1100px; margin: 24px auto 80px; padding: 0 24px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+  .card h2 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    color: var(--accent);
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+  .card h2 .num { display: inline-block; min-width: 22px; }
+  .card .tagline { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+  .card h3 { font-size: 15px; margin: 18px 0 8px; }
+  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .field label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+  .field input[type=text], .field textarea, .field select {
+    border: 1px solid var(--line-strong); border-radius: 4px; padding: 8px 10px; font: inherit; color: var(--ink); background: #fff;
+  }
+  .field textarea { min-height: 60px; resize: vertical; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .meta-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+
+  table.objectives { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+  table.objectives th, table.objectives td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  table.objectives th { background: #eef1f8; color: var(--accent); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+  table.objectives td.id { font-weight: 700; color: var(--accent); white-space: nowrap; width: 70px; }
+
+  .objective {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    background: #fafbfd;
+  }
+  .objective header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .objective h3 { margin: 0; color: var(--accent); font-size: 15px; }
+  .objective h3 .id { background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 3px; font-size: 12px; margin-right: 8px; font-weight: 700; letter-spacing: 0.4px; }
+  .objective .fw { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .objective .stmt { margin: 8px 0 12px; font-size: 14px; color: #2a3447; }
+  .ac-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+
+  /* F-3: uitleg-blokken voor minder ervaren auditors */
+  .purpose-block, .plain-language { margin-top: 6px; }
+  .purpose-block > summary, .plain-language > summary {
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    padding: 4px 0;
+    user-select: none;
+    list-style: none;
+  }
+  .purpose-block > summary::-webkit-details-marker,
+  .plain-language > summary::-webkit-details-marker { display: none; }
+  .purpose-block > summary:hover, .plain-language > summary:hover { color: #4a5db3; }
+  .purpose-body, .plain-body {
+    font-size: 12.5px;
+    line-height: 1.55;
+    background: #eef1f8;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 8px 12px;
+    margin-top: 4px;
+    color: #2a3447;
+  }
+  .plain-language { margin-top: 4px; }
+  .plain-body { background: #f5f7ff; }
+  .ac {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) 240px;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 10px 12px;
+  }
+  .ac .ac-text { font-size: 13.5px; line-height: 1.45; }
+  .ac .ac-code { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: 0.4px; display: block; margin-bottom: 4px; }
+  .ac .ac-controls { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  .ac .seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 4px; overflow: hidden; }
+  .ac .seg label {
+    padding: 5px 10px; font-size: 12px; cursor: pointer; background: #fff; color: var(--ink);
+    border-right: 1px solid var(--line-strong); user-select: none;
+  }
+  .ac .seg label:last-child { border-right: 0; }
+  .ac .seg input { display: none; }
+  .ac .seg input:checked + span { display: block; }
+  .ac .seg label.pass.active { background: var(--pass); color: #fff; }
+  .ac .seg label.fail.active { background: var(--fail); color: #fff; }
+  .ac .seg label.na.active   { background: var(--na);   color: #fff; }
+  .ac .ac-note input { width: 100%; font: inherit; padding: 5px 7px; border: 1px solid var(--line); border-radius: 3px; font-size: 12px; }
+
+  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .lists .col h3 { margin-top: 0; }
+  .checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .checklist li { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; line-height: 1.45; }
+  .checklist input { margin-top: 3px; }
+  .gap-row, .pdca-row { display: grid; grid-template-columns: 60px 1fr 120px; gap: 10px; align-items: center; margin-bottom: 8px; }
+  .gap-row input.label, .pdca-row input.label { font-weight: 600; }
+  .gap-row input[type=text], .pdca-row input[type=text] { padding: 6px 8px; border: 1px solid var(--line); border-radius: 3px; font: inherit; font-size: 13px; background: #fff; color: var(--ink); }
+  .pdca-row select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 3px; font: inherit; font-size: 13px; }
+
+  .dashboard {
+    position: sticky;
+    bottom: 16px;
+    background: var(--card);
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin: 18px 0 0;
+    box-shadow: 0 6px 22px rgba(31,58,138,0.15);
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .dashboard .score-bar { display: flex; flex-direction: column; gap: 6px; }
+  .dashboard .bar { background: #eef0f5; height: 8px; border-radius: 4px; overflow: hidden; position: relative; }
+  .dashboard .bar > div { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; }
+  .dashboard .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .dashboard .num { font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .dashboard .num.pass { color: var(--pass); }
+  .dashboard .num.fail { color: var(--fail); }
+  .dashboard .num.na { color: var(--na); }
+  .dashboard .verdict {
+    font-size: 13px; padding: 6px 10px; border-radius: 4px; text-align: center;
+    background: #eef1f8; color: var(--accent); font-weight: 600;
+  }
+
+  .footnote { font-size: 11px; color: var(--muted); margin-top: 14px; }
+
+  /* P-8: approval-banner — DRAFT tot 2e reviewer ingevuld is */
+  .approval-banner {
+    margin: 18px 0 -6px;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.2px;
+  }
+  .approval-banner.draft    { background: #fff3cd; color: #7a4a0a; border: 1px solid #f0d27a; }
+  .approval-banner.approved { background: #d8e9dd; color: #1f5230; border: 1px solid #94c8a4; }
+  .approval-banner strong { font-size: 14px; letter-spacing: 0.5px; }
+
+  /* P-5: integrity stamp — verborgen in browser-view, getoond in PDF */
+  .integrity-stamp {
+    display: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    color: var(--ink);
+    background: #f5f6f9;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-top: 14px;
+    word-break: break-all;
+    line-height: 1.5;
+  }
+  .integrity-stamp strong { display: block; margin-bottom: 4px; color: var(--accent); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .integrity-stamp code { font-size: 10px; }
+
+  /* === AI evaluator === */
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: #fff;
+    border-left: 1px solid var(--line-strong); box-shadow: -6px 0 24px rgba(0,0,0,0.1);
+    padding: 20px 24px; z-index: 20; transform: translateX(110%); transition: transform 0.18s;
+    overflow-y: auto;
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer h2 { margin: 0 0 4px; color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .drawer p { font-size: 12px; color: var(--muted); margin: 0 0 14px; }
+  .drawer .close { position: absolute; top: 14px; right: 16px; background: transparent; border: 0; font-size: 22px; cursor: pointer; color: var(--muted); }
+  .drawer .test-result { font-size: 12px; padding: 8px 10px; border-radius: 4px; margin-top: 8px; }
+  .drawer .test-result.ok { background: #e7f5ec; color: var(--pass); }
+  .drawer .test-result.err { background: #fbeaea; color: var(--fail); }
+
+  .scrim {
+    position: fixed; inset: 0; background: rgba(20,28,46,0.42); z-index: 15;
+    opacity: 0; pointer-events: none; transition: opacity 0.18s;
+  }
+  .scrim.open { opacity: 1; pointer-events: auto; }
+
+  .section-actions { display: flex; gap: 8px; align-items: center; margin: -4px 0 12px; }
+  .section-actions button {
+    background: var(--accent); color: #fff; border: 0; padding: 7px 12px; border-radius: 4px;
+    cursor: pointer; font-weight: 600; font-size: 12px;
+  }
+  .section-actions button.ghost { background: #eef1f8; color: var(--accent); }
+  .section-actions button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .section-actions .status { font-size: 12px; color: var(--muted); }
+
+  .ai-btn {
+    background: #eef1f8; color: var(--accent); border: 0; padding: 4px 9px; border-radius: 3px;
+    font-size: 11px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .ai-btn:hover { background: #dde3f1; }
+  .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ai-btn .spinner {
+    width: 10px; height: 10px; border: 1.5px solid currentColor; border-right-color: transparent;
+    border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .suggestion-host { grid-column: 1 / -1; }
+  .suggestion-host:empty { display: none; }
+  .suggestion {
+    background: #fff8e1; border: 1px solid #f0d27a; border-left: 4px solid var(--warn);
+    border-radius: 4px; padding: 10px 12px; margin-top: 6px; font-size: 12.5px; line-height: 1.5;
+  }
+  .suggestion.accepted { background: #e7f5ec; border-color: #94c8a4; border-left-color: var(--pass); }
+  .suggestion .row { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .suggestion .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .suggestion .badge.pass { background: var(--pass); color: #fff; }
+  .suggestion .badge.fail { background: var(--fail); color: #fff; }
+  .suggestion .badge.na   { background: var(--na);   color: #fff; }
+  .suggestion .badge.unknown { background: var(--warn); color: #fff; }
+  .suggestion .src { font-size: 11px; color: var(--muted); }
+  .suggestion .body { color: #2a3447; margin-bottom: 6px; }
+  .suggestion details { margin-top: 4px; }
+  .suggestion details summary { cursor: pointer; font-size: 11px; color: var(--muted); font-weight: 600; }
+  .suggestion .evidence { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: #fffdf2; padding: 6px 8px; border-radius: 3px; margin-top: 4px; border: 1px solid #f0e0a8; }
+  .suggestion .evidence .file { color: var(--accent); font-weight: 700; }
+  .suggestion .actions { display: flex; gap: 6px; margin-top: 6px; }
+  .suggestion .actions button {
+    background: var(--pass); color: #fff; border: 0; padding: 4px 10px; border-radius: 3px;
+    cursor: pointer; font-size: 11px; font-weight: 600;
+  }
+  .suggestion .actions button.reject { background: var(--fail); }
+  .suggestion .actions button.dismiss { background: var(--muted); }
+
+  .ai-error {
+    grid-column: 1 / -1;
+    background: #fbeaea; border: 1px solid #e5b3b3; border-left: 4px solid var(--fail);
+    border-radius: 4px; padding: 8px 12px; margin-top: 6px; font-size: 12px; color: #6b1d1d;
+  }
+
+  /* === Audit-trail === */
+  .at-summary {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin: 12px 0 18px;
+  }
+  .at-summary .cell {
+    background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px;
+  }
+  .at-summary .cell .label { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+  .at-summary .cell .num { font-size: 20px; font-weight: 700; color: var(--accent); line-height: 1.1; margin-top: 2px; }
+  .at-summary .cell.warn .num { color: var(--warn); }
+  .at-summary .cell.fail .num { color: var(--fail); }
+  .at-summary .cell.pass .num { color: var(--pass); }
+
+  .at-issue {
+    border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; background: #fafbfd;
+    border-left: 4px solid var(--line-strong);
+  }
+  .at-issue.adequate   { border-left-color: var(--pass); }
+  .at-issue.partial    { border-left-color: var(--warn); }
+  .at-issue.inadequate { border-left-color: var(--fail); }
+  .at-issue.open       { border-left-color: var(--muted); }
+  .at-issue.unrelated  { border-left-color: var(--fail); }
+
+  .at-issue > header {
+    padding: 12px 14px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;
+  }
+  .at-issue h3 { margin: 0; font-size: 15px; color: var(--accent); }
+  .at-issue h3 a { color: inherit; text-decoration: none; }
+  .at-issue h3 a:hover { text-decoration: underline; }
+  .at-issue .meta { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .at-issue .label-chip {
+    display: inline-block; background: #eef1f8; color: var(--accent); border-radius: 3px;
+    padding: 1px 7px; font-size: 10.5px; font-weight: 600; margin-right: 4px; letter-spacing: 0.3px;
+  }
+  .at-issue .label-chip.state-open   { background: #ffe9d1; color: #7a3d0f; }
+  .at-issue .label-chip.state-closed { background: #d8e9dd; color: #1f5230; }
+  .at-issue .label-chip.kind-pr      { background: #e6d8e9; color: #4d1f55; }
+  .at-issue .body {
+    padding: 0 14px 12px;
+  }
+  .at-issue .body .ref-line {
+    font-size: 12px; color: var(--muted); margin-top: 4px;
+  }
+  .at-issue .body .ref-line code { background: #fff; padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+  .at-issue .reasoning { font-size: 13px; margin: 8px 0 6px; color: #2a3447; }
+  .at-issue details summary {
+    cursor: pointer; font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 6px; user-select: none;
+  }
+  .at-issue .evidence { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: #fff; padding: 6px 8px; border-radius: 3px; margin-top: 4px; border: 1px solid var(--line); }
+  .at-issue .evidence .file { color: var(--accent); font-weight: 700; }
+  .at-issue .issue-body { font-size: 12px; color: #4a546b; padding: 6px 8px; background: #fff; border: 1px solid var(--line); border-radius: 3px; margin-top: 4px; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+  .at-issue .follow-up { background: #fff8e1; border: 1px solid #f0d27a; border-radius: 3px; padding: 6px 10px; font-size: 12px; margin-top: 6px; }
+  .at-issue .follow-up strong { color: #7a4a0a; }
+  .at-issue .follow-up ul { margin: 4px 0 0 18px; padding: 0; }
+
+  /* F-1: secret-scan bevindingen — bovenaan audit-trail */
+  .at-secrets {
+    margin: 12px 0 18px;
+    background: #fdecec;
+    border: 1px solid #e5b3b3;
+    border-left: 5px solid var(--fail);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .at-secrets h3 { margin: 0 0 4px; font-size: 14px; color: var(--fail); }
+  .at-secrets .desc { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+  .at-secrets ul { margin: 0; padding-left: 0; list-style: none; }
+  .at-secrets li {
+    background: #fff;
+    border: 1px solid #f1d2d2;
+    border-left: 3px solid var(--fail);
+    border-radius: 3px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .at-secrets li.is-example { border-left-color: var(--warn); background: #fff8e8; }
+  .at-secrets li.is-example .sev { background: var(--warn); }
+  .at-secrets .sev {
+    display: inline-block;
+    background: var(--fail);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-right: 6px;
+  }
+  .at-secrets .file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent); font-weight: 700; }
+  .at-secrets .snippet {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    background: #f5f6f9;
+    padding: 4px 6px;
+    border-radius: 3px;
+    margin-top: 3px;
+    word-break: break-all;
+  }
+
+  .at-orphans {
+    margin-top: 18px; background: #fafbfd; border: 1px dashed var(--line-strong); border-radius: 6px; padding: 12px 14px;
+  }
+  .at-orphans h3 { margin: 0 0 6px; font-size: 14px; color: var(--warn); }
+  .at-orphans ul { margin: 0; padding-left: 18px; font-size: 12px; }
+  .at-orphans li { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-bottom: 2px; color: #2a3447; }
+  .at-orphans li .subject { font-family: inherit; }
+
+  .verdict-badge {
+    display: inline-block; padding: 3px 9px; border-radius: 3px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; color: #fff;
+  }
+  .verdict-badge.adequate   { background: var(--pass); }
+  .verdict-badge.partial    { background: var(--warn); }
+  .verdict-badge.inadequate { background: var(--fail); }
+  .verdict-badge.open       { background: var(--muted); }
+  .verdict-badge.unrelated  { background: #7a3d0f; }
+
+  @media print {
+    :root { --bg: #ffffff; }
+    header.app { position: static; box-shadow: none; background: #fff; color: var(--ink); border-bottom: 2px solid var(--accent); padding: 12px 16px; }
+    header.app h1 { color: var(--accent); }
+    header.app .sub { color: var(--muted); }
+    header.app .actions { display: none; }
+    main { max-width: none; margin: 0; padding: 8px 14px; }
+    .card { border: 1px solid #aaa; box-shadow: none; page-break-inside: avoid; padding: 14px 16px; margin-bottom: 12px; }
+    .dashboard { position: static; box-shadow: none; page-break-inside: avoid; }
+    .objective { background: #fff; page-break-inside: avoid; }
+    .ac { page-break-inside: avoid; }
+    .ac .seg label { padding: 2px 6px; }
+    body { font-size: 11.5px; }
+    .ac .ac-text { font-size: 11.5px; }
+    .ac .ac-code { font-size: 9.5px; }
+    a { color: var(--ink); text-decoration: none; }
+    input[type=text], textarea, select { border: 1px solid #aaa !important; background: #fff !important; }
+    .ac { grid-template-columns: minmax(0,1fr) 220px; }
+    @page { size: A4; margin: 14mm 12mm; }
+    .repo-pill { background: #eef1f8 !important; color: var(--accent) !important; border: 1px solid var(--accent); }
+    .repo-pill .dot { background: var(--accent) !important; }
+    .repo-pill.dirty { background: var(--warn) !important; color: #fff !important; border-color: var(--warn); }
+    .drawer, .scrim, .ai-btn, .section-actions, .suggestion .actions { display: none !important; }
+    .integrity-stamp { display: block !important; page-break-inside: avoid; background: #fff !important; }
+    .purpose-block[open] > summary, .plain-language[open] > summary { display: none; }
+    .purpose-block > summary, .plain-language > summary { display: none; }
+    .purpose-block .purpose-body, .plain-language .plain-body { display: block !important; }
+    .purpose-block, .plain-language { display: block !important; }
+    .approval-banner { margin-top: 8px; font-size: 12px; }
+    body.is-draft main::before {
+      content: "DRAFT";
+      position: fixed; top: 40%; left: 0; right: 0;
+      text-align: center;
+      font-size: 90px; font-weight: 900; letter-spacing: 12px;
+      color: rgba(183, 121, 31, 0.10);
+      pointer-events: none; z-index: -1;
+    }
+    .at-summary { grid-template-columns: repeat(3, 1fr); }
+    .at-issue { page-break-inside: avoid; background: #fff !important; }
+    .at-issue .issue-body { max-height: none !important; overflow: visible !important; }
+    .at-orphans { background: #fff !important; }
+    .suggestion { background: #fff !important; border-color: #aaa !important; }
+    .suggestion.accepted { background: #f3faf5 !important; border-color: #7aa589 !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div>
+    <h1><a href="dashboard.html" id="dashLink" title="Terug naar dashboard" style="color:rgba(255,255,255,0.7);text-decoration:none;font-weight:400;margin-right:8px;display:none;">← Dashboard</a>A2 — Audit Criteria &amp; Controls <span class="repo-pill" id="repoPill" title="Commit-staat van de gereviewde repo"></span></h1>
+    <div class="sub">SAAF Hackathon #5 · Sessie 6 · Subject: <strong id="subjectName">Policy-to-Controls Extractor</strong></div>
+  </div>
+  <div class="actions">
+    <button class="ghost" onclick="openDrawer()">⚙ AI-instellingen</button>
+    <button class="ghost" onclick="resetForm()">Reset</button>
+    <button class="ghost" onclick="saveJSON()">Opslaan (JSON)</button>
+    <button onclick="exportToPDF()">Exporteer naar PDF</button>
+  </div>
+</header>
+
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <button class="close" onclick="closeDrawer()">×</button>
+  <h2>AI-evaluator instellingen</h2>
+  <p>De webapp praat met een lokale Python-server die op zijn beurt Claude aanroept via de <strong>Claude Agent SDK</strong> (hergebruikt je Claude Code-authenticatie — geen aparte API-sleutel). Start de server eerst (zie <code>server/README.md</code>).</p>
+
+  <div class="field"><label>Server-URL</label>
+    <input type="text" id="serverUrl" placeholder="http://127.0.0.1:8765" autocomplete="off"/>
+  </div>
+
+  <h2 style="margin-top:18px;">Target agent</h2>
+  <p>De agent die je beoordeelt — direct uit GitHub gehaald (geen lokale clone meer nodig).</p>
+
+  <div class="field"><label>Owner / repo of GitHub-URL</label>
+    <input type="text" id="targetRepo" placeholder="owner/repo of https://github.com/owner/repo"/>
+  </div>
+  <div class="field"><label>Branch / tag / commit-SHA</label>
+    <input type="text" id="targetRef" placeholder="leeg = default branch"/>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:4px;">
+    <button class="ai-btn" onclick="loadCommitPicker()" id="loadCommitsBtn" style="padding:6px 10px;font-size:12px;">Toon recente commits</button>
+    <button class="ai-btn" onclick="applyTarget()" id="applyTargetBtn" style="padding:6px 10px;font-size:12px;background:var(--accent);color:#fff;">Apply target</button>
+  </div>
+  <div id="commitPicker" style="margin-top:8px;max-height:160px;overflow-y:auto;font-size:11px;display:none;border:1px solid var(--line);border-radius:4px;padding:6px;"></div>
+  <div id="targetResult" style="margin-top:8px;font-size:12px;"></div>
+
+  <h2 style="margin-top:18px;">Model</h2>
+  <div class="field"><label>Claude-model</label>
+    <select id="model">
+      <option value="claude-sonnet-4-6">claude-sonnet-4-6 (aanbevolen — balans snelheid/kwaliteit)</option>
+      <option value="claude-opus-4-7">claude-opus-4-7 (hoogste redeneerkracht)</option>
+      <option value="claude-haiku-4-5">claude-haiku-4-5 (snel/goedkoop)</option>
+    </select>
+  </div>
+
+  <h2 style="margin-top:18px;">Team way-of-working (maatwerk-kader)</h2>
+  <p>Optionele markdown waarin het AI-agent development team z'n eigen conventies, definities en toleranties beschrijft. Claude weegt dit mee bij elk oordeel — handig wanneer de generieke A2-criteria niet 1-op-1 op jullie context passen.</p>
+
+  <div style="display:flex;gap:6px;margin-bottom:6px;">
+    <input type="file" id="wowFile" accept=".md,.markdown,.txt" style="display:none;" onchange="loadWoWFile(event)"/>
+    <button class="ai-btn" onclick="document.getElementById('wowFile').click()" style="padding:6px 10px;font-size:12px;">📄 Markdown-bestand inlezen</button>
+    <button class="ai-btn" onclick="clearWoW()" style="padding:6px 10px;font-size:12px;">Wissen</button>
+    <span id="wowStatus" style="font-size:11px;color:var(--muted);align-self:center;"></span>
+  </div>
+  <div class="field"><label style="display:none;">Way of working</label>
+    <textarea id="wayOfWorking" rows="6" placeholder="bv:&#10;# Team Way of Working&#10;## Definitions&#10;- 'Adequaat' betekent: dekt minimaal 80% van de NIST CSF subcategorieen&#10;## Tolerances&#10;- Open questions zijn acceptabel voor velden waar..."></textarea>
+  </div>
+
+  <div class="field"><label>Extra context voor de AI (optioneel)</label>
+    <textarea id="extraContext" placeholder="Bv. specifieke beleidsdocument-eigenschappen, scope-afbakening, sectorcontext…"></textarea>
+  </div>
+
+  <h2 style="margin-top:18px;">Verbindingstest</h2>
+  <button class="ai-btn" onclick="testConnection()" id="testBtn" style="padding:6px 12px;font-size:12px;">Test verbinding</button>
+  <div id="testResult"></div>
+
+  <h2 style="margin-top:18px;">Bundel-bestanden (uit GitHub)</h2>
+  <p>Bestanden die de server uit de target-repo heeft opgehaald. Vink uit om uit de Claude-context te halen.</p>
+  <ul id="bundleList" style="font-size:12px;color:var(--muted);padding-left:18px;margin:0 0 8px;"></ul>
+  <button class="ai-btn" onclick="reloadRepo()" id="reloadBtn" style="padding:6px 12px;font-size:12px;">↻ Herlaad bundle</button>
+</aside>
+
+<main>
+
+  <!-- P-8: approval-banner. Toont DRAFT tot tweede reviewer is ingevuld. -->
+  <div id="approvalBanner" class="approval-banner draft">
+    <strong>DRAFT</strong> — geen 4-ogen-controle uitgevoerd. Vul "Tweede reviewer" in om de status naar APPROVED te zetten.
+  </div>
+
+  <!-- META -->
+  <section class="card">
+    <h2><span class="num">0.</span> Beoordelings­metadata</h2>
+    <p class="tagline">Identificeer wie de criteria sheet invult, welke versie van de agent wordt beoordeeld, en op welk moment.</p>
+    <div class="meta-row">
+      <div class="field"><label>Team</label><input type="text" data-key="team" value="" placeholder="bv. Vaktechniek IA"/></div>
+      <div class="field"><label>Beoordelaars</label><input type="text" data-key="reviewers" value="" placeholder="namen, gescheiden door komma"/></div>
+      <div class="field"><label>Beoordelingsdatum</label><input type="text" data-key="date" value="2026-06-16"/></div>
+      <div class="field"><label>Agent-versie / commit <span style="color:var(--pass);font-weight:600;display:none;" id="versionAutoMark">· auto</span></label><input type="text" data-key="version" id="versionField" value="" placeholder="wordt automatisch ingevuld uit repo.lock.json of /ping"/></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Tweede reviewer (4-ogen-controle)</label><input type="text" data-key="secondReviewer" id="secondReviewer" value="" placeholder="naam · vereist vóór PDF kan worden vrijgegeven"/></div>
+      <div class="field"><label>Goedkeuringsdatum</label><input type="text" data-key="approvalDate" id="approvalDate" value="" placeholder="YYYY-MM-DD na 2e-reviewer-check"/></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Agent-naam</label><input type="text" data-key="agentName" value="Policy-to-Controls Extractor (SAAF-Project)"/></div>
+      <div class="field"><label>Agent-URL</label><input type="text" data-key="agentURL" value="https://github.com/SAAF-Project/Policy-to-Controls-Extractor"/></div>
+    </div>
+    <div class="field" style="margin-top:6px;"><label>Provenance (uit git)</label>
+      <div id="provDetail" style="font-size:12px;color:var(--muted);background:#f5f6f9;border:1px solid var(--line);border-radius:4px;padding:8px 12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">
+        Nog niet vastgesteld — start de server (of plaats <code>repo.lock.json</code> in dezelfde map) en klik "Test verbinding" in de AI-instellingen.
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. AUDIT TRAIL -->
+  <section class="card" id="auditTrailCard">
+    <h2><span class="num">1.</span> Audit-trail &amp; opvolging van bevindingen</h2>
+    <p class="tagline">
+      Per GitHub-issue (bevinding) op deze repo: welke commit sluit hem en hoe adequaat is die opvolging volgens Claude? Commits zonder issue-verwijzing worden apart gelijst als traceerbaarheidsgap.
+    </p>
+    <div class="section-actions">
+      <button id="auditTrailBtn" onclick="runAuditTrail(false)">🔍 Analyseer audit-trail</button>
+      <button class="ghost" onclick="runAuditTrail(true)">↻ Opnieuw (geen cache)</button>
+      <button class="ghost" onclick="createAuditBranch()" id="branchBtn" style="background:#e6efe9;color:var(--pass);">🌿 Maak audit-branch + autofix-voorstellen</button>
+      <span class="status" id="auditTrailStatus"></span>
+    </div>
+    <div id="branchResult"></div>
+    <div id="auditTrailHost">
+      <p class="footnote" style="margin:8px 0 0;">Nog niet uitgevoerd. Klik "Analyseer audit-trail" — de server haalt de GitHub-issues op en laat Claude per issue de opvolging toetsen. Resultaat wordt gecached op de huidige commit.</p>
+    </div>
+  </section>
+
+  <!-- 2. DESCRIPTION -->
+  <section class="card">
+    <h2><span class="num">2.</span> Wat de agent doet</h2>
+    <p class="tagline">Doel, input, output, en de audit-taak die hij ondersteunt — in begrijpelijke taal.</p>
+
+    <div class="field"><label>Doel</label>
+      <textarea data-key="purpose">Zet ongestructureerde beleidsdocumenten (PDF/DOCX) om in gestructureerde, toetsbare controls volgens het 6W-framework (Who, What, Why, When, Where, How). Bedoeld als upstream-component voor een downstream PBC/Request-agent.</textarea>
+    </div>
+
+    <div class="grid-3">
+      <div class="field"><label>Input</label>
+        <textarea data-key="input">PDF of DOCX beleidsdocument · optioneel domein (IAM / Change / Logging / Vendor Risk) · optioneel toepassingsscope (organisatie / BU). Aangeleverd in de map `testdata/to-do/`.</textarea>
+      </div>
+      <div class="field"><label>Output</label>
+        <textarea data-key="output">Per document: JSON-bestand met controls (6W + source_anchors + evidence_hints + confidence + open_questions) en parallel een XLSX-tabel ingekleurd op confidence-niveau. Originele bestanden worden naar de output-map verplaatst.</textarea>
+      </div>
+      <div class="field"><label>Ondersteunde audit-taak</label>
+        <textarea data-key="auditTask">Het opstellen van een initiële RCM-baseline uit beleid (policy compliance assessment): identificeren wélke controls het beleid claimt af te dwingen, mét traceerbare bronverwijzing, zodat een auditor vervolgens evidence-tests kan opzetten.</textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. CONTROL OBJECTIVES MAP -->
+  <section class="card">
+    <h2><span class="num">3.</span> Control objectives × frameworks</h2>
+    <p class="tagline">Vijf control objectives die deze agent ondersteunt of zou moeten ondersteunen, met framework-clausule en relevantie.</p>
+    <table class="objectives">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Control objective</th>
+          <th>Framework + clausule</th>
+          <th>Waarom relevant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="id">CO-1</td>
+          <td>Volledigheid van control-extractie — alle normatieve statements in het beleid worden als (kandidaat-)control herkend.</td>
+          <td>IIA Standard 2310 (Identifying Information — sufficient, reliable) · ISO/IEC 27001 A.5.1 (Policies for information security) · COSO ICIF Principle 10 (Control Activities).</td>
+          <td>Een onvolledige extractie laat eisen onbenoemd; daarmee kan een auditor geen completeness-uitspraak doen over policy compliance coverage.</td>
+        </tr>
+        <tr>
+          <td class="id">CO-2</td>
+          <td>Brontraceerbaarheid — elke afgeleide control verwijst eenduidig naar een unieke, verifieerbare passage in het bronbeleid.</td>
+          <td>IIA Standard 2330 (Documenting Information) · ISO/IEC 27001 A.7.5 (Documented Information) · PCAOB AS 1105 / SOx (audit evidence requirements).</td>
+          <td>Zonder bronanker is de output niet audit-defensible en kan een tweede beoordelaar de control niet verifiëren of weerleggen.</td>
+        </tr>
+        <tr>
+          <td class="id">CO-3</td>
+          <td>Hallucinatieweerstand — de agent vult ontbrekende beleidsinformatie niet zelf in, maar markeert het expliciet en formuleert een open question.</td>
+          <td>OWASP LLM Top 10 — LLM09 Misinformation / Overreliance · EU AI Act Art. 13 (Transparency &amp; information provision) · IIA Standard 2410 (accurate, objective, complete communication).</td>
+          <td>Een hallucinerende auditor-agent ondermijnt het auditoordeel en kan leiden tot een misplaatste zekerheidstelling.</td>
+        </tr>
+        <tr>
+          <td class="id">CO-4</td>
+          <td>Toetsbaarheid — elke control wordt geformuleerd als pass/fail-toetsbaar statement zonder vage of niet-meetbare termen.</td>
+          <td>COBIT 2019 DSS06 (Managed Business Process Controls — meetbare controls) · ISO/IEC 27001 A.5.36 (Compliance monitoring) · IIA Standard 2210.A3 (criteria voor evaluatie).</td>
+          <td>Niet-toetsbare “controls” zijn herhalingen van beleid en bieden de auditor geen testbasis; er moet altijd een test-uitvoerbaar statement uitkomen.</td>
+        </tr>
+        <tr>
+          <td class="id">CO-5</td>
+          <td>Risk-aware output — iedere control is voorzien van een expliciet betrouwbaarheidsniveau (H/M/L) en open vragen, zodat menselijke review risk-based gericht kan worden.</td>
+          <td>EU AI Act Art. 14 (Human oversight) · ISO/IEC 42001 (AI management system — risk-aware output) · OWASP LLM05 (Improper output handling).</td>
+          <td>Een auditor moet kunnen filteren op waar twijfel zit, zodat het 4-ogen-principe gericht wordt op de minst betrouwbare uitkomsten i.p.v. alles even diep te reviewen.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 3. ACCEPTANCE CRITERIA -->
+  <section class="card">
+    <h2><span class="num">4.</span> Acceptance criteria (pass / fail)</h2>
+    <p class="tagline">Per objective: testbare uitspraken die de agent moet halen om als “geschikt” te gelden. Vink per criterium pass, fail of n.v.t. en noteer evidence. Of laat Claude een eerste oordeel doen — accepteer of overrule.</p>
+    <div class="section-actions">
+      <button id="aiAllBtn" onclick="evaluateAll()">🤖 Beoordeel alle 20 criteria met AI</button>
+      <button class="ghost" onclick="clearAllSuggestions()">Wis alle AI-suggesties</button>
+      <span class="status" id="aiAllStatus"></span>
+    </div>
+    <div id="objectives-host"></div>
+  </section>
+
+  <!-- 4. GOOD OUTPUT / NEVER DO -->
+  <section class="card">
+    <h2><span class="num">5.</span> Good output / never do</h2>
+    <p class="tagline">Wat moet een correcte uitvoer altijd bevatten, en wat mag de agent nooit doen.</p>
+    <div class="lists">
+      <div class="col">
+        <h3>Een correcte uitvoer bevat altijd</h3>
+        <ul class="checklist" id="goodList"></ul>
+      </div>
+      <div class="col">
+        <h3>De agent mag nooit</h3>
+        <ul class="checklist" id="neverList"></ul>
+      </div>
+    </div>
+    <div class="footnote">Tip: pas deze lijsten aan op het beleidsdomein van uw organisatie voordat u de criteria sheet vrijgeeft voor gebruik.</div>
+  </section>
+
+  <!-- 5. COVERAGE GAPS -->
+  <section class="card">
+    <h2><span class="num">6.</span> Coverage gaps</h2>
+    <p class="tagline">Relevante controls die de agent (nu) niet afdekt en die een auditor wél zou verwachten.</p>
+    <div id="gapsHost"></div>
+    <button type="button" class="ghost" onclick="addGap()" style="background:#eef1f8;color:var(--accent);border:0;padding:6px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px;">+ Voeg gap toe</button>
+  </section>
+
+  <!-- 6. PDCA -->
+  <section class="card">
+    <h2><span class="num">7.</span> Wat blijft over (PDCA-huiswerk)</h2>
+    <p class="tagline">Actie­punten voor verbetering, met eigenaar en termijn — Plan-Do-Check-Act.</p>
+    <div id="pdcaHost"></div>
+    <button type="button" class="ghost" onclick="addPDCA()" style="background:#eef1f8;color:var(--accent);border:0;padding:6px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px;">+ Voeg actiepunt toe</button>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="dashboard" id="dashboard">
+    <div class="score-bar">
+      <div class="label">Pass-percentage (excl. n.v.t.)</div>
+      <div class="bar"><div id="barFill"></div></div>
+      <div class="label"><span id="passPct">0</span>% — <span id="verdictText">nog niet beoordeeld</span></div>
+      <div style="margin-top:3px;display:flex;align-items:center;gap:6px;">
+        <span class="label" id="syncIndicator" style="font-size:10.5px;cursor:help;">Dashboard-sync: bezig met laden…</span>
+        <button onclick="manualSyncNow(this)" id="syncNowBtn" style="font:inherit;font-size:10.5px;padding:1px 8px;border-radius:3px;background:#eef1f8;color:var(--accent);border:0;cursor:pointer;font-weight:600;">↗ Sync nu</button>
+      </div>
+    </div>
+    <div><div class="label">Pass</div><div class="num pass" id="cntPass">0</div></div>
+    <div><div class="label">Fail</div><div class="num fail" id="cntFail">0</div></div>
+    <div><div class="label">n.v.t.</div><div class="num na" id="cntNA">0</div></div>
+    <div><div class="label">Onbeoordeeld</div><div class="num" id="cntOpen">0</div></div>
+  </section>
+
+  <p class="footnote">SAAF Hackathon #5 · A2 Audit Criteria &amp; Controls · Agent Auditor v<span id="toolVersion">0.1.0</span> · server-build <span id="serverBuild">?</span> — alle invoer wordt lokaal in de browser bewaard via <code>localStorage</code>. Gebruik “Exporteer naar PDF” om een rapport vast te leggen.</p>
+
+  <!-- P-5: integrity stamp — tamper-evident anker op de PDF-export -->
+  <div id="integrityStamp" class="integrity-stamp">
+    <strong>Integrity stamp</strong>
+    state-hash: <code id="stateHash">…</code><br>
+    repo: <code id="stampRepo">?</code> · prompt-hash (eval): <code id="stampPromptEval">?</code> · prompt-hash (audit): <code id="stampPromptAudit">?</code> · bundle: <code id="stampBundle">?</code> · tool v<span id="stampVersion">?</span> · geëxporteerd <span id="stampTimestamp">?</span>
+  </div>
+</main>
+
+<script>
+/* ===========================================================
+   Data — criteria, lists, gaps, pdca
+   =========================================================== */
+const OBJECTIVES = [
+  {
+    id: "CO-1",
+    title: "Volledigheid van control-extractie",
+    framework: "IIA 2310 · ISO 27001 A.5.1 · COSO ICIF P10",
+    statement: "Alle normatieve statements (verplichting, verbod, voorwaarde) in het beleid worden als kandidaat-control herkend en uitgewerkt.",
+    purpose: "Hier check je of de agent het beleid écht uitkamt en niets vergeet. Stel je voor dat je zelf met markeerstift door het beleid loopt en elke 'moet/dient/verboden' aanstreept — komt de agent met dezelfde lijst? Mist hij eisen, dan kun je geen uitspraak doen over compleetheid van de control coverage, en daarmee verliest het hele audit-spoor zijn waarde.",
+    criteria: [
+      { code: "AC-1.1", text: "Op een test-beleid met N gemarkeerde normatieve zinnen produceert de agent ≥0,90·N controls (recall ≥ 90%).",
+        plainLanguage: "Recall is de term voor 'hoeveel procent van wat er in had moeten zitten, zit er ook in?'. Pak een testbeleid waarvan je weet dat het 10 verplichtingen bevat. De agent moet er minstens 9 oppakken. Vindt hij er maar 5 — dan mist hij de helft en zijn output niet betrouwbaar genoeg om als RCM-basis te dienen." },
+      { code: "AC-1.2", text: "Bij een zin die meerdere onderscheiden eisen bevat genereert de agent meerdere afzonderlijke controls (geen samenvoeging onder één control_id).",
+        plainLanguage: "Een beleidszin als 'Toegang wordt aangevraagd én goedgekeurd door een manager' bevat twee handelingen — twee controls. Voegt de agent dit samen tot één control, dan kun je later niet meten welke van de twee handelingen ontbreekt of faalt. Test: pak een zin met 'en'-koppelingen en kijk of de output meerdere control_ids levert." },
+      { code: "AC-1.3", text: "Niet-normatieve zinnen (visie, missie, beschrijving) worden niet als control geëxtraheerd.",
+        plainLanguage: "Beleidsdocumenten bevatten ook ruis: visie-uitspraken ('We streven naar...'), achtergrondbeschrijvingen ('In 2023 hebben we...'), inleidingen. Die zijn géén controls. Als de agent ze toch extracteert, vervuilt hij de RCM met niet-toetsbare items. Check: voer een document in met een duidelijke missie-paragraaf en kijk of die niét in de output staat." },
+      { code: "AC-1.4", text: "De agent rapporteert een document-samenvatting (`document_summary`) van 2–3 zinnen die de scope van het beleid correct weergeeft.",
+        plainLanguage: "Naast de losse controls moet de agent een korte samenvatting (2–3 zinnen) geven: 'Dit beleid regelt X voor Y onder Z'. Zonder die samenvatting weet de auditor (en de downstream-agent) niet hoe de extractie zich verhoudt tot het origineel — dan zwerft een lijstje controls los van zijn context." }
+    ]
+  },
+  {
+    id: "CO-2",
+    title: "Brontraceerbaarheid",
+    framework: "IIA 2330 · ISO 27001 A.7.5 · PCAOB AS 1105",
+    statement: "Iedere afgeleide control verwijst eenduidig en verifieerbaar naar een passage in het bronbeleid.",
+    purpose: "Iedere control moet voor een tweede beoordelaar tot op de zin in het beleid herleidbaar zijn — zonder die brug is de extractie niet audit-defensible. Stel: je bent een toezichthouder die 6 maanden later de RCM doorneemt. Kun je elke control terugleiden naar de paragraaf waaruit hij komt? Dat is wat je hier toetst.",
+    criteria: [
+      { code: "AC-2.1", text: "Elke control bevat minimaal één `source_anchors`-entry met zowel `section` als `quote`.",
+        plainLanguage: "Iedere control moet een verwijzing hebben naar de exacte plek in het beleid: paragraafnummer/heading + letterlijk citaat. Geen anchor = geen herleidbaarheid. Test: tel het aantal controls en kijk of er evenveel of meer source_anchors zijn. Eén controls zonder anchor is al fail." },
+      { code: "AC-2.2", text: "Het opgegeven `quote`-veld is letterlijk terug te vinden in het bronbestand (geen parafrase).",
+        plainLanguage: "De geciteerde tekst in source_anchors moet woord-voor-woord overeenkomen met het beleid. Niet parafraseren of 'samenvatten'. Test: knip 5 random quotes en zoek ze met Ctrl+F in het PDF — vinden? Goed. Geen exacte match? De agent verzint quotes — dat is een hallucinatie en ondergraaft de hele audit-trail." },
+      { code: "AC-2.3", text: "De `section`-verwijzing bestaat daadwerkelijk in het bronbestand (bestaat-test op paragraafnummer of heading).",
+        plainLanguage: "Het opgegeven paragraafnummer of heading moet echt in het document staan. '§2.3' moet bestaan, niet een verzonnen 'sectie X'. Pak 5 willekeurige controls en open de bron op de genoemde sectie — alles vinden? Goed. Eén niet? De agent verzint structuur die er niet is." },
+      { code: "AC-2.4", text: "Bij een beleid zonder traceerbare bron weigert de agent te produceren of markeert hij de uitvoer expliciet als `confidence: Low` met open question.",
+        plainLanguage: "Soms zit een eis impliciet in losse bullets zonder duidelijke sectie. De agent mag dan niet doen alsof er een nette anchor is — hij moet ofwel het control overslaan, ofwel het expliciet als Low confidence + open question meegeven. Test met een ongestructureerd Word-document zonder kopjes: krijgt de auditor toch high-confidence controls? Fail." }
+    ]
+  },
+  {
+    id: "CO-3",
+    title: "Hallucinatieweerstand",
+    framework: "OWASP LLM09 · EU AI Act Art. 13 · IIA 2410",
+    statement: "De agent vult ontbrekende beleidsinformatie niet zelf in maar markeert het expliciet en stelt een open vraag.",
+    purpose: "LLM-agents hebben de neiging om gaten in te vullen met plausibele aannames. In auditcontext is dat dodelijk: jij baseert je uitspraken op iets wat de agent verzon. Hier check je of de agent eerlijk is over wat hij níet weet — door TBD te zetten en concrete vervolgvragen te stellen.",
+    criteria: [
+      { code: "AC-3.1", text: "Indien Who/When/Where/How niet uit de bron afleidbaar is, schrijft de agent letterlijk `TBD` in dat veld.",
+        plainLanguage: "Als het beleid niets zegt over wie verantwoordelijk is, moet de agent letterlijk 'TBD' invullen — niet z'n beste gok ('IT-manager'). Test met een fragment dat doelbewust het Who-veld weglaat: krijgt het Who-veld een verzonnen rol, dan hallucineert de agent. Krijgt het 'TBD' — goed." },
+      { code: "AC-3.2", text: "Voor elk `TBD`-veld bevat `open_questions` minimaal één concrete verduidelijkingsvraag.",
+        plainLanguage: "'TBD' alleen is niet genoeg — daarmee blijft de auditor stranden. De agent moet ook een gerichte vraag formuleren: 'Welk team is verantwoordelijk voor goedkeuren?'. Tel het aantal TBD-velden en het aantal open questions — ratio 1:1 of meer? Goed. Lege questions bij TBD-velden? Onvolledig." },
+      { code: "AC-3.3", text: "Bij een testset met 10 sluw-geformuleerde beleidszinnen bevatten 0 controls aanname-taal (`waarschijnlijk`, `typisch`, `meestal`, `vermoedelijk`).",
+        plainLanguage: "Woorden als 'waarschijnlijk', 'typisch', 'meestal' verraden dat de agent gokt — die mogen niet in een control voorkomen. Grep de output op deze woorden: ook maar één vinden is fail. Een goed beleid kan deze woorden bevatten als citaat, maar in de agent's eigen tekst (control statement, why, how) horen ze niet." },
+      { code: "AC-3.4", text: "Geen enkele geëxtraheerde control verwijst naar externe frameworks (ISO/NIST/COBIT) tenzij die expliciet in het bronbeleid worden genoemd.",
+        plainLanguage: "Als het beleid niet '...conform ISO 27001 A.5.15' noemt, mag de agent niet opeens ISO-mapping uit z'n mouw schudden. Dat is framework-mapping, niet extractie — twee aparte stappen. Test: zoek de output op 'ISO', 'NIST', 'COBIT' en check of die termen ook in het bronbeleid staan." }
+    ]
+  },
+  {
+    id: "CO-4",
+    title: "Toetsbaarheid",
+    framework: "COBIT DSS06 · ISO 27001 A.5.36 · IIA 2210.A3",
+    statement: "Elke control is een pass/fail-toetsbaar statement zonder vage of niet-meetbare termen.",
+    purpose: "Een control die je niet kunt testen is geen control — het is beleidsherhaling. Hier check je of elke output zo geformuleerd is dat een testteam morgen kan beginnen met evidence verzamelen. Niet meetbaar = niet bruikbaar voor audit.",
+    criteria: [
+      { code: "AC-4.1", text: "Het `what`-veld is geformuleerd in actieve shall-vorm volgens `actor + actie + object + constraint`.",
+        plainLanguage: "Een control statement heeft vier elementen: wie doet (actor), wat (actie), aan welk object, onder welke voorwaarde (constraint). 'De IAM-beheerder verleent productietoegang uitsluitend na expliciete goedkeuring van de teamlead' — alle vier aanwezig. 'Toegang moet adequaat zijn' — slechts één element, geen control. Test: ontleed 5 random controls in deze vier elementen." },
+      { code: "AC-4.2", text: "Bij gebruik van vage termen (`adequaat`, `tijdig`, `passend`, `voldoende`) zonder meetbare specificatie in de bron, voegt de agent een open question toe die de term operationaliseert.",
+        plainLanguage: "Het beleid kan zelf 'adequate controls' eisen — vaag genoeg om elke test mee te omzeilen. De agent moet zo'n term flaggen met een concrete vraag: 'Wat is adequaat — een SLA, een drempel, een norm?'. Zoek in de output naar deze woorden en check of er bij elk vaag-woord een verduidelijkende vraag staat." },
+      { code: "AC-4.3", text: "Elke control bevat ≥1 concrete `evidence_hint` (bv. `approval records`, `access logs`) die als basis voor evidence-test kan dienen.",
+        plainLanguage: "De agent moet aangeven welk type bewijs je kunt opvragen om de control te testen: 'approval records', 'access logs', 'review-spreadsheets', 'tickets'. Zonder evidence-hint kan de auditor geen testplan opzetten. Tel het aantal controls met lege evidence_hints — moet 0 zijn." },
+      { code: "AC-4.4", text: "Geen enkele control heeft een leeg `why`-veld; iedere control benoemt het risico dat wordt gereduceerd.",
+        plainLanguage: "Iedere control bestaat omdat hij een risico mitigeert. De 'why' moet dat risico benoemen ('voorkomt ongeautoriseerde toegang tot productiedata'). Lege of generieke whys ('compliance', 'best practice') betekenen dat de agent het risico niet snapt — of dat hij er geen vanuit het beleid kon afleiden. In beide gevallen onbruikbaar als audit-onderbouwing." }
+    ]
+  },
+  {
+    id: "CO-5",
+    title: "Risk-aware output",
+    framework: "EU AI Act Art. 14 · ISO 42001 · OWASP LLM05",
+    statement: "Iedere control krijgt een betrouwbaarheidsniveau en de uitvoer ondersteunt risk-based menselijke review.",
+    purpose: "Niet alles wat de agent oplevert is even hard. Sommige controls steunen op een glashelder citaat, andere op een schimmige bullet. De auditor moet die twee kunnen scheiden zonder de hele output te herwerken. Hier check je of de agent z'n eigen onzekerheid expliciet maakt — en geen risico-uitspraken doet die niet onderbouwd zijn.",
+    criteria: [
+      { code: "AC-5.1", text: "Elke control krijgt een `confidence` van exact `High`, `Medium` of `Low` (geen andere waarden of ontbrekend veld).",
+        plainLanguage: "Een vast trio: High / Medium / Low. Geen 'Onbekend', 'N/A', '4', 'Hoog?' of leeg veld. Zonder gestandaardiseerde confidence kun je niet sorteren of filteren op review-prioriteit. Test: tel unieke confidence-waarden in de output — moet exact 3 zijn (of minder, als de set klein is)." },
+      { code: "AC-5.2", text: "`High` wordt alleen toegekend als alle 6W-velden gevuld zijn én er een duidelijk bronanker is; deze regel houdt op een testset met seeded TBD's voor 100% stand.",
+        plainLanguage: "'High' confidence is alleen geldig als alle zes velden (Who/What/Why/When/Where/How) gevuld zijn én er een goede source_anchor is. Voeg in je testbeleid bewust een paragraaf toe die het Who-veld weglaat: de agent zou dan automatisch naar Medium of Low moeten degraderen. Doet hij dat niet — High inflation, niet betrouwbaar." },
+      { code: "AC-5.3", text: "De XLSX-uitvoer kleurt controls per confidence-niveau (groen/geel/rood), zodat een review-prioriteit visueel duidelijk is.",
+        plainLanguage: "In de XLSX-export moeten de rijen ingekleurd zijn — groen High, geel Medium, rood Low. Een auditor opent het bestand en weet binnen 3 seconden waar hij eerst moet kijken. Geen kleuring = onverteerbare data-dump. Open de XLSX en controleer visueel." },
+      { code: "AC-5.4", text: "De agent levert geen impliciete risicoclassificatie of overall risk-rating uit als er geen onderliggende observatie is — pas in de PBC-fase wordt risk gefinaliseerd.",
+        plainLanguage: "De agent mag geen 'high risk' label plakken op een control zonder onderliggende observatie ('want het systeem heeft X') of zonder dat het beleid zelf het risico noemt. Risk-rating hoort in de PBC-fase thuis, niet hier. Zoek de output op risk-velden — als ze aanwezig zijn, moet er onder elk een aantoonbare basis liggen." }
+    ]
+  }
+];
+
+const GOOD = [
+  "Volledige 6W-velden of expliciet `TBD` per ontbrekend veld",
+  "Minimaal één source_anchor per control (section + letterlijk citaat)",
+  "Een controle-ID volgens vast formaat `POL-{DOMEIN}-{NNN}`",
+  "Een confidence-label (High / Medium / Low) per control",
+  "Concrete evidence_hints (≥1) per control",
+  "Open questions waar informatie ontbreekt of vage termen worden gebruikt",
+  "Een document_summary van 2–3 zinnen die de scope correct beschrijft",
+  "Het origineel wordt na verwerking gearchiveerd, niet stilzwijgend verwijderd"
+];
+
+const NEVER = [
+  "Een section-verwijzing of citaat verzinnen dat niet in de bron staat",
+  "Ontbrekende informatie inkleuren met aannames i.p.v. `TBD` + open question",
+  "Een control opleveren zonder source_anchor",
+  "Een framework-mapping (ISO/NIST/COBIT) claimen zonder bronvermelding in het beleid",
+  "Een confidence-label weglaten of buiten het H/M/L-vocabulaire treden",
+  "Een control opleveren met vage termen (`adequaat`, `tijdig`) zonder open question",
+  "Een risk-rating geven zonder onderliggende observatie",
+  "De menselijke review-stap overslaan bij Low-confidence controls"
+];
+
+const GAPS_SEED = [
+  { id: "G-1", text: "Geen daadwerkelijke framework-mapping (ISO 27001 / NIST CSF / COBIT) per control in de uitvoer — wel als ambitie in architecture.md, niet in agent.py.", severity: "Hoog" },
+  { id: "G-2", text: "Geen gap-analyse vs. een externe baseline (welke ISO-controls ontbreken in het beleid?).", severity: "Hoog" },
+  { id: "G-3", text: "Geen detectie van persoonsgegevens / GDPR-relevantie in het beleid (PII-flag, doelbinding).", severity: "Middel" },
+  { id: "G-4", text: "Geen versie- / vervaldatum-controle: een verouderd beleid wordt zonder waarschuwing geëxtraheerd.", severity: "Middel" },
+  { id: "G-5", text: "Geen conflict- of SoD-detectie tussen controls binnen één document of over documenten heen.", severity: "Middel" },
+  { id: "G-6", text: "Stage-2 control-extractie staat in agent.py uitgecommentarieerd — de huidige main() voert alleen segmentatie uit; volledige pipeline is niet runtime-actief.", severity: "Hoog" }
+];
+
+const PDCA_SEED = [
+  { id: "P-1", text: "Activeer Stage-2 control-extractie in agent.py (huidige main() doet enkel segmentatie).", phase: "Do" },
+  { id: "P-2", text: "Bouw een regressie-testset van beleidszinnen met bekende gold-standard controls (recall/precision meten).", phase: "Check" },
+  { id: "P-3", text: "Integreer hallucination-detection skill uit track-5 als CI-gate.", phase: "Act" },
+  { id: "P-4", text: "Voeg framework-mapping-agent toe (Stage 8 enrichment uit architecture.md).", phase: "Plan" }
+];
+
+/* ===========================================================
+   Render
+   =========================================================== */
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+function renderObjectives() {
+  const host = $("#objectives-host");
+  host.innerHTML = "";
+  OBJECTIVES.forEach(obj => {
+    const div = document.createElement("div");
+    div.className = "objective";
+    const purposeBlock = obj.purpose
+      ? `<details class="purpose-block"><summary>📖 Waar let je op? (uitleg voor de auditor)</summary><div class="purpose-body">${escapeHtml(obj.purpose)}</div></details>`
+      : "";
+    div.innerHTML = `
+      <header>
+        <div>
+          <h3><span class="id">${obj.id}</span>${obj.title}</h3>
+          <div class="fw">Frameworks: ${obj.framework}</div>
+        </div>
+      </header>
+      <div class="stmt">${obj.statement}</div>
+      ${purposeBlock}
+      <div class="ac-list">
+        ${obj.criteria.map(c => `
+          <div class="ac" data-ac="${c.code}">
+            <div class="ac-text">
+              <span class="ac-code">${c.code}</span>
+              ${c.text}
+              ${c.plainLanguage ? `<details class="plain-language"><summary>💡 Wat betekent dit concreet?</summary><div class="plain-body">${escapeHtml(c.plainLanguage)}</div></details>` : ""}
+            </div>
+            <div class="ac-controls">
+              <div class="seg" data-ac-id="${c.code}">
+                <label class="pass" data-val="pass"><input type="radio" name="ac-${c.code}" value="pass"/><span>Pass</span></label>
+                <label class="fail" data-val="fail"><input type="radio" name="ac-${c.code}" value="fail"/><span>Fail</span></label>
+                <label class="na"   data-val="na"  ><input type="radio" name="ac-${c.code}" value="na"  /><span>n.v.t.</span></label>
+              </div>
+              <div class="ac-note"><input type="text" placeholder="Evidence / observatie…" data-note="${c.code}"/></div>
+              <button class="ai-btn" data-ai-btn="${c.code}" onclick="evaluateAC('${c.code}')">🤖 AI-suggestie</button>
+            </div>
+            <div class="suggestion-host" data-suggestion-host="${c.code}"></div>
+          </div>
+        `).join("")}
+      </div>`;
+    host.appendChild(div);
+  });
+}
+
+function renderLists() {
+  const good = $("#goodList");
+  const never = $("#neverList");
+  good.innerHTML = GOOD.map((t,i) => `
+    <li><input type="checkbox" id="g${i}" data-good="${i}"/><label for="g${i}">${t}</label></li>
+  `).join("");
+  never.innerHTML = NEVER.map((t,i) => `
+    <li><input type="checkbox" id="n${i}" data-never="${i}"/><label for="n${i}">${t}</label></li>
+  `).join("");
+}
+
+function renderGaps(seed = GAPS_SEED) {
+  const host = $("#gapsHost");
+  host.innerHTML = "";
+  seed.forEach(g => host.appendChild(makeGapRow(g.id, g.text, g.severity)));
+}
+function makeGapRow(id, text, severity) {
+  const row = document.createElement("div");
+  row.className = "gap-row";
+  row.innerHTML = `
+    <input type="text" class="label" value="${id}" data-gap-id />
+    <input type="text" value="${text.replace(/"/g,'&quot;')}" data-gap-text />
+    <select data-gap-sev>
+      ${["Hoog","Middel","Laag"].map(s => `<option ${s===severity?"selected":""}>${s}</option>`).join("")}
+    </select>`;
+  return row;
+}
+function addGap() {
+  const n = $("#gapsHost").children.length + 1;
+  $("#gapsHost").appendChild(makeGapRow(`G-${n}`, "", "Middel"));
+}
+
+function renderPDCA(seed = PDCA_SEED) {
+  const host = $("#pdcaHost");
+  host.innerHTML = "";
+  seed.forEach(p => host.appendChild(makePDCARow(p.id, p.text, p.phase)));
+}
+function makePDCARow(id, text, phase) {
+  const row = document.createElement("div");
+  row.className = "pdca-row";
+  row.innerHTML = `
+    <input type="text" class="label" value="${id}" data-pdca-id />
+    <input type="text" value="${text.replace(/"/g,'&quot;')}" data-pdca-text />
+    <select data-pdca-phase>
+      ${["Plan","Do","Check","Act"].map(s => `<option ${s===phase?"selected":""}>${s}</option>`).join("")}
+    </select>`;
+  return row;
+}
+function addPDCA() {
+  const n = $("#pdcaHost").children.length + 1;
+  $("#pdcaHost").appendChild(makePDCARow(`P-${n}`, "", "Plan"));
+}
+
+/* ===========================================================
+   Scoring + segment UI + persistence
+   =========================================================== */
+function attachScoring() {
+  $$(".seg").forEach(seg => {
+    seg.addEventListener("change", () => {
+      const val = seg.querySelector("input:checked")?.value;
+      seg.querySelectorAll("label").forEach(l => l.classList.toggle("active", l.dataset.val === val));
+      const acCode = seg.dataset.acId;
+      if (acCode) {
+        const isAccepted = suggestions[acCode]?.status === "accepted";
+        const aiVerdict = suggestions[acCode]?.verdict;
+        // Log alleen als auditor handmatig wijzigt — geen log bij auto-accept
+        if (!isAccepted || aiVerdict !== val) {
+          logAction("manual_score", { ac_code: acCode, verdict: val, ai_suggested: aiVerdict || null });
+        }
+      }
+      recompute(); save();
+    });
+  });
+  $$("input[type=text], textarea, select, input[type=checkbox]").forEach(el => {
+    el.addEventListener("input", () => { save(); });
+    el.addEventListener("change", () => { save(); });
+  });
+}
+
+/* Push A2 AC-summary terug naar het dashboard zodat de echte score
+   (i.p.v. de light-scan heuristiek) zichtbaar wordt op het overview.
+   Drie manieren om owner/repo te bepalen, in deze volgorde:
+   1) ?owner=X&repo=Y URL-params (drill-down vanaf dashboard)
+   2) currentProvenance.remote (target geladen via drawer)
+   3) Niets — sync is dan inactief en de indicator toont dat. */
+let _acPushDebounce = null;
+let _acTarget = null;
+let _acLastPushStatus = null;
+
+function deriveTargetFromProvenance() {
+  const rem = currentProvenance?.remote || "";
+  const m = rem.match(/github\.com[/:]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/);
+  return m ? { owner: m[1], repo: m[2] } : null;
+}
+
+function effectiveACTarget() {
+  if (_acTarget) return _acTarget;
+  return deriveTargetFromProvenance();
+}
+
+function updateSyncIndicator() {
+  const el = document.getElementById("syncIndicator");
+  if (!el) return;
+  const t = effectiveACTarget();
+  if (!t) {
+    el.textContent = "Dashboard-sync uit (geen target)";
+    el.style.color = "var(--muted)";
+    el.title = "Geen owner/repo bekend — open via dashboard of laad target via ⚙ AI-instellingen.";
+    return;
+  }
+  const last = _acLastPushStatus;
+  if (last === "ok") {
+    el.textContent = `↗ Dashboard-sync: ${t.owner}/${t.repo}`;
+    el.style.color = "var(--pass)";
+    el.title = "AC-score wordt teruggekoppeld naar dashboard bij elke wijziging.";
+  } else if (last === "err-404") {
+    el.textContent = `⚠ Repo niet in dashboard: ${t.owner}/${t.repo}`;
+    el.style.color = "var(--warn)";
+    el.title = `Voeg ${t.owner} eerst toe in het dashboard zodat de score landt.`;
+  } else if (last === "err") {
+    el.textContent = `⚠ Dashboard-sync mislukt`;
+    el.style.color = "var(--fail)";
+    el.title = "Server-fout. Check of de server-build /repos/.../ac-summary heeft.";
+  } else {
+    el.textContent = `↗ Dashboard-sync: ${t.owner}/${t.repo} (klaar)`;
+    el.style.color = "var(--accent)";
+    el.title = "AC-score wordt teruggekoppeld zodra je een verdict zet.";
+  }
+}
+
+async function manualSyncNow(btn) {
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = "bezig…";
+  await pushACSummary();
+  // Geef korte feedback in de knop zelf
+  btn.textContent = _acLastPushStatus === "ok" ? "✓ verstuurd" :
+                    _acLastPushStatus === "err-404" ? "⚠ repo niet in dashboard" :
+                    _acLastPushStatus === "err" ? "⚠ fout" : "(geen target)";
+  setTimeout(() => { btn.disabled = false; btn.textContent = orig; }, 2500);
+}
+
+async function pushACSummary() {
+  const t = effectiveACTarget();
+  if (!t) { updateSyncIndicator(); return; }
+  let pass=0, fail=0, na=0, open=0, total=0;
+  const verdicts = {};
+  for (const o of OBJECTIVES) for (const c of o.criteria) {
+    total++;
+    const v = document.querySelector(`input[name="ac-${c.code}"]:checked`)?.value || null;
+    verdicts[c.code] = v;
+    if (v === "pass") pass++;
+    else if (v === "fail") fail++;
+    else if (v === "na") na++;
+    else open++;
+  }
+  const denom = pass + fail;
+  const pct = denom ? Math.round(100 * pass / denom) : null;
+  let verdict = "nog niet beoordeeld";
+  if (open === 0 && total > 0) {
+    if (pct >= 90) verdict = "geschikt voor productie-audit-gebruik";
+    else if (pct >= 75) verdict = "geschikt met aandachtspunten";
+    else if (pct >= 50) verdict = "voorwaardelijk — herstelacties nodig";
+    else verdict = "niet geschikt — fundamentele bezwaren";
+  } else if (open < total) {
+    verdict = `${open} criterium${open===1?"":"a"} nog te beoordelen`;
+  }
+  const accepted_ai = Object.values(suggestions || {}).filter(s => s.status === "accepted").length;
+  const body = {
+    verdicts,
+    "pass": pass, fail, na, "open": open, total, pct, verdict,
+    accepted_ai_count: accepted_ai,
+    generated_at: new Date().toISOString(),
+    model: settings.model,
+    tool_version: currentIntegrity?.tool_version || null,
+  };
+  try {
+    await callServer(`/repos/${encodeURIComponent(t.owner)}/${encodeURIComponent(t.repo)}/ac-summary`, body);
+    _acLastPushStatus = "ok";
+  } catch(e) {
+    _acLastPushStatus = /\b404\b/.test(e.message || "") ? "err-404" : "err";
+  } finally {
+    updateSyncIndicator();
+  }
+}
+function pushACSummaryDebounced() {
+  if (!effectiveACTarget()) { updateSyncIndicator(); return; }
+  if (_acPushDebounce) clearTimeout(_acPushDebounce);
+  _acPushDebounce = setTimeout(pushACSummary, 600);
+}
+
+function recompute() {
+  let pass=0, fail=0, na=0, open=0, total=0;
+  OBJECTIVES.forEach(o => o.criteria.forEach(c => {
+    total++;
+    const v = document.querySelector(`input[name="ac-${c.code}"]:checked`)?.value;
+    if (v === "pass") pass++;
+    else if (v === "fail") fail++;
+    else if (v === "na") na++;
+    else open++;
+  }));
+  $("#cntPass").textContent = pass;
+  $("#cntFail").textContent = fail;
+  $("#cntNA").textContent = na;
+  $("#cntOpen").textContent = open;
+  const denom = pass + fail;
+  const pct = denom ? Math.round(100 * pass / denom) : 0;
+  $("#passPct").textContent = pct;
+  $("#barFill").style.width = pct + "%";
+  let verdict = "nog niet beoordeeld";
+  if (open === 0) {
+    if (pct >= 90) verdict = "geschikt voor productie-audit-gebruik";
+    else if (pct >= 75) verdict = "geschikt met aandachtspunten";
+    else if (pct >= 50) verdict = "voorwaardelijk — herstelacties nodig";
+    else verdict = "niet geschikt — fundamentele bezwaren";
+  } else if (open < total) {
+    verdict = `${open} criterium${open===1?"":"a"} nog te beoordelen`;
+  }
+  $("#verdictText").textContent = verdict;
+  pushACSummaryDebounced();
+}
+
+/* ===========================================================
+   localStorage
+   =========================================================== */
+const STORAGE_KEY = "a2-criteria-sheet-policy-to-controls-extractor";
+
+function snapshot() {
+  const data = { meta: {}, ac: {}, notes: {}, good: [], never: [], gaps: [], pdca: [] };
+  $$("[data-key]").forEach(el => data.meta[el.dataset.key] = el.value);
+  OBJECTIVES.forEach(o => o.criteria.forEach(c => {
+    const v = document.querySelector(`input[name="ac-${c.code}"]:checked`)?.value || null;
+    data.ac[c.code] = v;
+    data.notes[c.code] = document.querySelector(`input[data-note="${c.code}"]`)?.value || "";
+  }));
+  $$("[data-good]").forEach(el => { if (el.checked) data.good.push(+el.dataset.good); });
+  $$("[data-never]").forEach(el => { if (el.checked) data.never.push(+el.dataset.never); });
+  $$("#gapsHost .gap-row").forEach(row => {
+    data.gaps.push({
+      id: row.querySelector("[data-gap-id]").value,
+      text: row.querySelector("[data-gap-text]").value,
+      severity: row.querySelector("[data-gap-sev]").value
+    });
+  });
+  $$("#pdcaHost .pdca-row").forEach(row => {
+    data.pdca.push({
+      id: row.querySelector("[data-pdca-id]").value,
+      text: row.querySelector("[data-pdca-text]").value,
+      phase: row.querySelector("[data-pdca-phase]").value
+    });
+  });
+  return data;
+}
+
+let _stampDebounce = null;
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot())); } catch(e) {}
+  refreshApprovalBanner();
+  if (_stampDebounce) clearTimeout(_stampDebounce);
+  _stampDebounce = setTimeout(() => refreshIntegrityStamp(), 300);
+}
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.entries(data.meta || {}).forEach(([k,v]) => { const el = document.querySelector(`[data-key="${k}"]`); if (el) el.value = v; });
+    Object.entries(data.ac || {}).forEach(([code,val]) => {
+      if (!val) return;
+      const radio = document.querySelector(`input[name="ac-${code}"][value="${val}"]`);
+      if (radio) { radio.checked = true; radio.closest(".seg").querySelectorAll("label").forEach(l => l.classList.toggle("active", l.dataset.val === val)); }
+    });
+    Object.entries(data.notes || {}).forEach(([code,val]) => {
+      const el = document.querySelector(`input[data-note="${code}"]`); if (el) el.value = val;
+    });
+    (data.good || []).forEach(i => { const el = document.querySelector(`[data-good="${i}"]`); if (el) el.checked = true; });
+    (data.never || []).forEach(i => { const el = document.querySelector(`[data-never="${i}"]`); if (el) el.checked = true; });
+    if (data.gaps && data.gaps.length) renderGaps(data.gaps);
+    if (data.pdca && data.pdca.length) renderPDCA(data.pdca);
+  } catch(e) { console.warn("Kon niet laden:", e); }
+}
+
+function resetForm() {
+  if (!confirm("Alle invoer wissen en standaardwaarden herstellen?")) return;
+  logAction("audit_session_reset", {});
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+function saveJSON() {
+  const data = snapshot();
+  const ts = new Date().toISOString().slice(0,16).replace("T","_").replaceAll(":","-");
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `A2-policy-to-controls-${ts}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* ===========================================================
+   AI evaluator (Claude) — human-in-the-loop
+   =========================================================== */
+const SETTINGS_KEY = "a2-eval-settings";
+const SUGGESTIONS_KEY = "a2-eval-suggestions";
+
+const DEFAULT_SETTINGS = {
+  serverUrl: "http://127.0.0.1:8765",
+  model: "claude-sonnet-4-6",
+  extraContext: "",
+  excludedFiles: [],
+  targetRepo: "",   // owner/repo of GitHub-URL
+  targetRef: "",    // branch / tag / SHA (leeg = default branch)
+  wayOfWorking: "" // F-2: team-specifieke markdown als maatwerk-kader
+};
+
+const FRAMEWORK_BRIEF = {
+  "CO-1": "IIA 2310 vraagt 'sufficient, reliable, relevant, useful' information. ISO 27001 A.5.1 vereist dat policies de scope van te behandelen onderwerpen volledig dekken. COSO ICIF Principle 10 vereist dat control activities relevante risico's adresseren.",
+  "CO-2": "IIA 2330 vereist documentatie van informatie die conclusies ondersteunt. ISO 27001 A.7.5 vereist beheerste documented information. PCAOB AS 1105 vereist voldoende, geschikte audit evidence (verifieerbaar, herleidbaar tot bron).",
+  "CO-3": "OWASP LLM09 (Misinformation / Overreliance) waarschuwt tegen LLM-output die als feit wordt gepresenteerd zonder bronbasis. EU AI Act Art. 13 vereist dat AI-systemen voldoende transparant zijn zodat gebruikers de output kunnen interpreteren. IIA 2410 vereist communicatie die accuraat, objectief, helder, beknopt, constructief, volledig en tijdig is.",
+  "CO-4": "COBIT 2019 DSS06 vereist meetbare en effectieve business process controls. ISO 27001 A.5.36 vereist actieve monitoring op compliance — wat alleen kan als criteria toetsbaar zijn. IIA 2210.A3 vereist 'adequate criteria' om de governance, risk en control processen te evalueren.",
+  "CO-5": "EU AI Act Art. 14 vereist effectieve human oversight, wat alleen kan als de AI z'n eigen onzekerheid expliciet maakt. ISO 42001 vereist risk-aware management van AI-systemen. OWASP LLM05 (Improper Output Handling) waarschuwt tegen output die downstream zonder validatie wordt geconsumeerd."
+};
+
+let settings = { ...DEFAULT_SETTINGS };
+let suggestions = {}; // { "AC-1.1": { verdict, reasoning, evidence, status, ts } }
+
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (raw) settings = { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+  } catch(e) {}
+  $("#serverUrl").value = settings.serverUrl;
+  $("#model").value = settings.model;
+  $("#extraContext").value = settings.extraContext;
+  if ($("#targetRepo")) $("#targetRepo").value = settings.targetRepo || "";
+  if ($("#targetRef"))  $("#targetRef").value  = settings.targetRef  || "";
+  if ($("#wayOfWorking")) $("#wayOfWorking").value = settings.wayOfWorking || "";
+  refreshWoWStatus();
+  // Dashboard-sync target afleiden uit settings.targetRepo zodat een
+  // gewone refresh (zonder URL-params) ook gewoon doorpusht.
+  if (!_acTarget && settings.targetRepo) {
+    const parsed = parseTargetInput(settings.targetRepo);
+    if (parsed) _acTarget = { owner: parsed.owner, repo: parsed.repo };
+  }
+}
+function saveSettings() {
+  settings.serverUrl = ($("#serverUrl").value.trim() || DEFAULT_SETTINGS.serverUrl).replace(/\/+$/, "");
+  settings.model = $("#model").value;
+  settings.extraContext = $("#extraContext").value;
+  if ($("#targetRepo")) settings.targetRepo = $("#targetRepo").value.trim();
+  if ($("#targetRef"))  settings.targetRef  = $("#targetRef").value.trim();
+  if ($("#wayOfWorking")) settings.wayOfWorking = $("#wayOfWorking").value;
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  refreshWoWStatus();
+}
+
+function refreshWoWStatus() {
+  const el = document.getElementById("wowStatus");
+  if (!el) return;
+  const len = (settings.wayOfWorking || "").length;
+  el.textContent = len ? `${len} tekens actief — wordt meegestuurd in elke evaluatie.` : "Geen WoW gezet — generieke A2-criteria worden gebruikt.";
+  el.style.color = len ? "var(--pass)" : "var(--muted)";
+}
+
+function loadWoWFile(ev) {
+  const f = ev.target.files?.[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const text = String(e.target.result || "");
+    if ($("#wayOfWorking")) $("#wayOfWorking").value = text;
+    settings.wayOfWorking = text;
+    saveSettings();
+    refreshWoWStatus();
+  };
+  reader.readAsText(f);
+}
+
+function clearWoW() {
+  if ($("#wayOfWorking")) $("#wayOfWorking").value = "";
+  settings.wayOfWorking = "";
+  saveSettings();
+  refreshWoWStatus();
+}
+
+function loadSuggestions() {
+  try {
+    const raw = localStorage.getItem(SUGGESTIONS_KEY);
+    if (raw) suggestions = JSON.parse(raw);
+  } catch(e) {}
+  Object.keys(suggestions).forEach(code => renderSuggestion(code));
+}
+function saveSuggestions() {
+  localStorage.setItem(SUGGESTIONS_KEY, JSON.stringify(suggestions));
+}
+
+function openDrawer() {
+  loadSettings();
+  $("#drawer").classList.add("open");
+  $("#scrim").classList.add("open");
+  renderBundleList([]);
+}
+function closeDrawer() {
+  saveSettings();
+  $("#drawer").classList.remove("open");
+  $("#scrim").classList.remove("open");
+}
+
+["serverUrl","model","extraContext"].forEach(id => {
+  document.addEventListener("change", e => { if (e.target?.id === id) saveSettings(); });
+});
+
+/* ----- provenance: welke commit zit er onder beoordeling? ----- */
+let currentProvenance = null;
+
+function applyProvenance(prov) {
+  if (!prov || prov.available === false) return;
+  currentProvenance = prov;
+  // Sync-indicator kan nu mogelijk afgeleide target tonen
+  setTimeout(updateSyncIndicator, 0);
+  // En direct een eerste push doen zodat dashboard meteen up-to-date is
+  setTimeout(pushACSummaryDebounced, 100);
+
+  const pill = $("#repoPill");
+  if (pill) {
+    pill.classList.toggle("dirty", !!prov.dirty);
+    pill.innerHTML = `<span class="dot"></span>${escapeHtml(prov.branch || "?")} · ${escapeHtml(prov.commit_short || prov.commit?.slice(0,7) || "?")}${prov.dirty ? " ⚠ dirty" : ""}`;
+  }
+
+  const versionField = $("#versionField");
+  const versionMark = $("#versionAutoMark");
+  if (versionField && !versionField.value.trim()) {
+    versionField.value = `${prov.branch || ""}@${prov.commit_short || ""}${prov.dirty ? " (dirty)" : ""}`;
+    if (versionMark) versionMark.style.display = "inline";
+    save();
+  }
+
+  const det = $("#provDetail");
+  if (det) {
+    det.innerHTML = [
+      `<strong>commit</strong> ${escapeHtml(prov.commit || "?")}`,
+      `<strong>short</strong>  ${escapeHtml(prov.commit_short || "?")}  ·  <strong>branch</strong> ${escapeHtml(prov.branch || "?")}  ·  <strong>dirty</strong> ${prov.dirty ? "ja ⚠" : "nee"}`,
+      `<strong>date</strong>   ${escapeHtml(prov.commit_date || "?")}`,
+      `<strong>msg</strong>    ${escapeHtml(prov.commit_message || "?")}`,
+      prov.author ? `<strong>author</strong> ${escapeHtml(prov.author)}` : null,
+      prov.remote ? `<strong>remote</strong> ${escapeHtml(prov.remote)}` : null,
+      prov.captured_at ? `<strong>vastgelegd</strong> ${escapeHtml(prov.captured_at)}` : null,
+    ].filter(Boolean).join("<br>");
+  }
+}
+
+let currentIntegrity = null;
+
+function applyIntegrity(integ) {
+  if (!integ) return;
+  currentIntegrity = integ;
+  const det = $("#provDetail");
+  if (!det) return;
+  // Append integrity row to provenance detail.
+  if (!det.querySelector("[data-integrity-row]")) {
+    const row = document.createElement("div");
+    row.dataset.integrityRow = "1";
+    row.style.marginTop = "6px";
+    row.style.paddingTop = "6px";
+    row.style.borderTop = "1px dashed var(--line-strong)";
+    det.appendChild(row);
+  }
+  const row = det.querySelector("[data-integrity-row]");
+  const eval_ = (integ.prompt_hash_eval || "").slice(0,12);
+  const audit_ = (integ.prompt_hash_audit || "").slice(0,12);
+  const bundle_ = (integ.bundle_hash || "").slice(0,12);
+  row.innerHTML = `<strong>tool</strong> v${escapeHtml(integ.tool_version || "?")}  ·  <strong>prompt-hash (eval)</strong> ${escapeHtml(eval_)}  ·  <strong>prompt-hash (audit)</strong> ${escapeHtml(audit_)}  ·  <strong>bundle-hash</strong> ${escapeHtml(bundle_)}`;
+}
+
+async function autoLoadProvenance() {
+  // 1) Probeer lokale lock-file (werkt via http-server, niet via file://)
+  try {
+    const res = await fetch("repo.lock.json", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      applyProvenance(data);
+      return;
+    }
+  } catch(e) { /* file:// blokkeert dit — geen drama */ }
+  // 2) Val terug op de api-server
+  try {
+    const data = await callServer("/ping");
+    if (data.provenance) applyProvenance(data.provenance);
+    if (data.integrity) { data.integrity.tool_version = data.version; applyIntegrity(data.integrity); }
+  } catch(e) { /* server staat niet aan — geen drama */ }
+}
+
+async function callServer(path, body) {
+  const base = (settings.serverUrl || DEFAULT_SETTINGS.serverUrl).replace(/\/+$/, "");
+  const opts = { method: body ? "POST" : "GET" };
+  if (body) {
+    opts.headers = { "content-type": "application/json" };
+    opts.body = JSON.stringify(body);
+  }
+  let res;
+  try {
+    res = await fetch(base + path, opts);
+  } catch(e) {
+    throw new Error(`Kan server niet bereiken op ${base}${path} — staat de server aan? (${e.message})`);
+  }
+  const txt = await res.text();
+  if (!res.ok) throw new Error(`Server ${res.status}: ${txt.slice(0, 300)}`);
+  try { return JSON.parse(txt); }
+  catch(e) { throw new Error(`Server gaf geen JSON terug: ${txt.slice(0, 200)}`); }
+}
+
+async function evaluateOnServer(obj, ac) {
+  return await callServer("/evaluate", {
+    ac_code: ac.code,
+    objective_id: obj.id,
+    objective_title: obj.title,
+    objective_statement: obj.statement,
+    framework: obj.framework,
+    framework_brief: FRAMEWORK_BRIEF[obj.id] || "",
+    criterion_text: ac.text,
+    extra_context: settings.extraContext || null,
+    model: settings.model,
+    exclude_files: settings.excludedFiles || [],
+    way_of_working: settings.wayOfWorking || null
+  });
+}
+
+function findObjective(code) {
+  for (const o of OBJECTIVES) {
+    const ac = o.criteria.find(c => c.code === code);
+    if (ac) return { obj: o, ac };
+  }
+  return null;
+}
+
+function setACButtonState(code, state) {
+  const btn = document.querySelector(`[data-ai-btn="${code}"]`);
+  if (!btn) return;
+  btn.disabled = (state === "loading");
+  btn.innerHTML = state === "loading"
+    ? `<span class="spinner"></span> bezig…`
+    : `🤖 AI-suggestie`;
+}
+
+/* P-5: integrity stamp — sha256 over de complete state-snapshot.
+   Stelt een externe reviewer in staat te verifiëren dat de PDF
+   inhoudelijk overeenkomt met een gegeven JSON-export. */
+/* P-8: 4-ogen-banner toon DRAFT zonder reviewer, anders APPROVED */
+function refreshApprovalBanner() {
+  const banner = document.getElementById("approvalBanner");
+  if (!banner) return;
+  const reviewer = (document.querySelector('[data-key="secondReviewer"]')?.value || "").trim();
+  const date = (document.querySelector('[data-key="approvalDate"]')?.value || "").trim();
+  if (reviewer) {
+    banner.className = "approval-banner approved";
+    banner.innerHTML = `<strong>APPROVED</strong> — 4-ogen-controle uitgevoerd door <strong>${escapeHtml(reviewer)}</strong>${date ? ` op ${escapeHtml(date)}` : ""}.`;
+    document.body.classList.remove("is-draft");
+  } else {
+    banner.className = "approval-banner draft";
+    banner.innerHTML = `<strong>DRAFT</strong> — geen 4-ogen-controle uitgevoerd. Vul "Tweede reviewer" in om de status naar APPROVED te zetten.`;
+    document.body.classList.add("is-draft");
+  }
+}
+
+async function computeStateHash() {
+  try {
+    const text = JSON.stringify(snapshot());
+    const enc = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest("SHA-256", enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  } catch(e) { return null; }
+}
+
+async function refreshIntegrityStamp() {
+  const hash = await computeStateHash();
+  const sh = document.getElementById("stateHash");
+  if (sh) sh.textContent = hash || "?";
+  const repo = document.getElementById("stampRepo");
+  if (repo && currentProvenance) {
+    repo.textContent = `${currentProvenance.branch || "?"}@${(currentProvenance.commit_short || currentProvenance.commit || "?")}${currentProvenance.dirty ? " ⚠ dirty" : ""}`;
+  }
+  if (currentIntegrity) {
+    const pe = document.getElementById("stampPromptEval");
+    if (pe) pe.textContent = (currentIntegrity.prompt_hash_eval || "?").slice(0, 16);
+    const pa = document.getElementById("stampPromptAudit");
+    if (pa) pa.textContent = (currentIntegrity.prompt_hash_audit || "?").slice(0, 16);
+    const b = document.getElementById("stampBundle");
+    if (b) b.textContent = (currentIntegrity.bundle_hash || "?").slice(0, 16);
+    const v = document.getElementById("stampVersion");
+    if (v) v.textContent = currentIntegrity.tool_version || "?";
+  }
+  const ts = document.getElementById("stampTimestamp");
+  if (ts) ts.textContent = new Date().toISOString().replace("T", " ").slice(0, 19) + "Z";
+}
+
+/* P-9: dirty-block — blokkeer PDF-export tegen een dirty working tree
+   tenzij de auditor expliciet bevestigt dat hij dat weet. */
+async function exportToPDF() {
+  await refreshIntegrityStamp();
+  if (currentProvenance && currentProvenance.dirty === true) {
+    const ok = window.confirm(
+      "⚠ De repo onder beoordeling staat op een DIRTY commit:\n\n" +
+      `  ${currentProvenance.branch || "?"}@${currentProvenance.commit_short || "?"}\n\n` +
+      "Dat betekent dat de bestanden die Claude heeft beoordeeld NIET exact " +
+      "overeenkomen met een vastgelegde commit. Een reviewer kan deze versie " +
+      "niet reproduceren met `git checkout`.\n\n" +
+      "Klik OK alleen als je deze beperking expliciet accepteert en in het " +
+      "auditverslag noteert. Klik Annuleren om eerst de wijzigingen te " +
+      "committen en de pagina te verversen."
+    );
+    if (!ok) {
+      logAction("export_pdf", { aborted: true, reason: "dirty_block" });
+      return;
+    }
+    logAction("export_pdf", { aborted: false, ack_dirty: true });
+  }
+  window.print();
+}
+
+/* Phase C: target-config — owner/repo + ref via /configure-target */
+function parseTargetInput(input) {
+  if (!input) return null;
+  const s = input.trim();
+  // Probeer eerst owner/repo
+  const slash = s.match(/^([\w.-]+)\/([\w.-]+?)(?:\.git)?$/);
+  if (slash) return { owner: slash[1], repo: slash[2] };
+  // Daarna een hele URL
+  const url = s.match(/github\.com[/:]([\w.-]+)\/([\w.-]+?)(?:\.git|\/.*)?$/);
+  if (url) return { owner: url[1], repo: url[2] };
+  return null;
+}
+
+async function applyTarget() {
+  saveSettings();
+  const out = $("#targetResult");
+  out.innerHTML = `<span class="spinner" style="color:var(--accent);"></span> Target ophalen…`;
+  const parsed = parseTargetInput($("#targetRepo").value);
+  if (!parsed) {
+    out.innerHTML = `<div class="ai-error">Vul owner/repo of een GitHub-URL in.</div>`;
+    return;
+  }
+  const body = { owner: parsed.owner, repo: parsed.repo };
+  const ref = ($("#targetRef").value || "").trim();
+  if (ref) body.ref = ref;
+  try {
+    const data = await callServer("/configure-target", body);
+    if (data.provenance) applyProvenance(data.provenance);
+    // Dashboard-sync: gegarandeerd target setten na elke target-load
+    _acTarget = { owner: data.target.owner, repo: data.target.repo };
+    updateSyncIndicator();
+    pushACSummaryDebounced();
+    const secretLine = (data.secret_findings || []).length
+      ? `<br><span style="color:var(--fail);font-weight:600;">⚠ ${data.secret_findings.length} potentieel secret${data.secret_findings.length === 1 ? "" : "s"} gevonden — zie sectie 1.</span>`
+      : "";
+    out.innerHTML = `✓ Target geladen: <code>${escapeHtml(data.target.owner)}/${escapeHtml(data.target.repo)}</code> @ <code>${escapeHtml(data.target.short_sha)}</code><br>${data.target.files.length} bestanden, bundle <code>${escapeHtml((data.integrity.bundle_hash || "").slice(0,12))}</code>${secretLine}`;
+    renderBundleList(data.target.files || []);
+    logAction("configure_target", { owner: parsed.owner, repo: parsed.repo, ref: ref || "(default)", sha: data.target.sha });
+  } catch(e) {
+    out.innerHTML = `<div class="ai-error">Target laden mislukt: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+async function loadCommitPicker() {
+  saveSettings();
+  const out = $("#commitPicker");
+  const parsed = parseTargetInput($("#targetRepo").value);
+  if (!parsed) {
+    out.style.display = "block";
+    out.innerHTML = `<em>Vul eerst owner/repo in.</em>`;
+    return;
+  }
+  out.style.display = "block";
+  out.innerHTML = `<span class="spinner" style="color:var(--accent);"></span> Commits ophalen…`;
+  try {
+    const body = { owner: parsed.owner, repo: parsed.repo, limit: 30 };
+    const ref = ($("#targetRef").value || "").trim();
+    if (ref) body.ref = ref;
+    const data = await callServer("/list-commits", body);
+    if (!data.commits?.length) {
+      out.innerHTML = `<em>Geen commits gevonden.</em>`;
+      return;
+    }
+    out.innerHTML = data.commits.map(c => `
+      <div onclick="pickCommit('${escapeHtml(c.sha)}')" style="cursor:pointer;padding:3px 4px;border-bottom:1px solid var(--line);">
+        <code>${escapeHtml(c.short_sha)}</code> · ${escapeHtml((c.date || "").slice(0,10))} · ${escapeHtml(c.subject)}
+        <span style="color:var(--muted);"> — ${escapeHtml(c.author_name || "")}</span>
+      </div>`).join("");
+  } catch(e) {
+    out.innerHTML = `<div class="ai-error">Commits ophalen mislukt: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+function pickCommit(sha) {
+  $("#targetRef").value = sha;
+  saveSettings();
+  $("#commitPicker").style.display = "none";
+}
+
+/* P-1: log auditor-actie naar de server (best-effort, niet blocking) */
+function logAction(type, payload) {
+  try {
+    fetch((settings.serverUrl || DEFAULT_SETTINGS.serverUrl).replace(/\/+$/, "") + "/log", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ type, payload: payload || {} }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch(e) {}
+}
+
+async function evaluateAC(code) {
+  const found = findObjective(code);
+  if (!found) return;
+  setACButtonState(code, "loading");
+  try {
+    const result = await evaluateOnServer(found.obj, found.ac);
+    if (result.provenance) applyProvenance(result.provenance);
+    suggestions[code] = {
+      verdict: result.verdict,
+      reasoning: result.reasoning,
+      evidence: result.evidence,
+      provenance: result.provenance || (currentProvenance ? {
+        commit_short: currentProvenance.commit_short,
+        commit: currentProvenance.commit,
+        branch: currentProvenance.branch,
+      } : null),
+      integrity: result.integrity || null,
+      evidence_summary: result.evidence_summary || null,
+      verdict_degraded: !!result.verdict_degraded,
+      status: "suggested",
+      ts: new Date().toISOString()
+    };
+    saveSuggestions();
+    renderSuggestion(code);
+  } catch(e) {
+    renderError(code, e.message);
+  } finally {
+    setACButtonState(code, "idle");
+  }
+}
+
+async function evaluateAll() {
+  const codes = OBJECTIVES.flatMap(o => o.criteria.map(c => c.code));
+  const btn = $("#aiAllBtn");
+  btn.disabled = true;
+  const status = $("#aiAllStatus");
+  let done = 0, errs = 0;
+  for (const code of codes) {
+    status.textContent = `Bezig: ${done+1}/${codes.length} (${code})…`;
+    try {
+      await evaluateAC(code);
+    } catch(e) { errs++; }
+    done++;
+  }
+  status.textContent = `Klaar: ${done - errs}/${codes.length} suggesties ontvangen${errs ? `, ${errs} fout(en)` : ""}. Beoordeel ze hieronder.`;
+  btn.disabled = false;
+}
+
+function renderSuggestion(code) {
+  const host = document.querySelector(`[data-suggestion-host="${code}"]`);
+  if (!host) return;
+  const s = suggestions[code];
+  if (!s) { host.innerHTML = ""; return; }
+
+  const verdictClass = s.verdict || "unknown";
+  const accepted = s.status === "accepted";
+  const evidence = Array.isArray(s.evidence) ? s.evidence : [];
+  const evidenceHtml = evidence.length
+    ? evidence.map(e => {
+        const v = e.validated;
+        const marker = v === true  ? `<span style="color:var(--pass);font-weight:700;" title="Quote letterlijk gevonden in bundle">✓</span>`
+                     : v === false ? `<span style="color:var(--fail);font-weight:700;" title="${escapeHtml(e.validation_note || 'Niet gevonden')}">✗</span>`
+                     : `<span style="color:var(--muted);">·</span>`;
+        return `<div class="evidence">${marker} <span class="file">${escapeHtml(e.file || "")}</span> ${escapeHtml(e.lines || "")} — ${escapeHtml(e.quote || "")}${v === false ? `<br><span style="color:var(--fail);font-size:10.5px;">⚠ ${escapeHtml(e.validation_note || "")}</span>` : ""}</div>`;
+      }).join("")
+    : `<div class="src">Geen evidence-fragmenten geleverd.</div>`;
+  const degradedNotice = s.verdict_degraded
+    ? `<div style="background:#fbeaea;border:1px solid #e5b3b3;border-left:4px solid var(--fail);border-radius:3px;padding:6px 10px;margin-top:6px;font-size:11.5px;color:#6b1d1d;"><strong>Verdict gedegradeerd:</strong> alle evidence-quotes konden niet in de bundle worden gevonden. Behandel als 'unknown' tot handmatig geverifieerd.</div>`
+    : "";
+
+  const provTag = s.provenance?.commit_short
+    ? ` · commit <code>${escapeHtml(s.provenance.commit_short)}</code>${s.provenance.dirty ? " ⚠ dirty" : ""}`
+    : "";
+  const integTag = s.integrity
+    ? ` · prompt <code>${escapeHtml((s.integrity.prompt_hash||"").slice(0,7))}</code> · bundle <code>${escapeHtml((s.integrity.bundle_hash||"").slice(0,7))}</code>${s.integrity.wow_applied ? ` · <span style="color:var(--accent);font-weight:600;">WoW</span>` : ""}`
+    : "";
+  host.innerHTML = `
+    <div class="suggestion ${accepted ? "accepted" : ""}">
+      <div class="row">
+        <span class="badge ${verdictClass}">${verdictName(verdictClass)}</span>
+        <span class="src">AI-suggestie · ${settings.model} · ${formatTime(s.ts)}${provTag}${integTag}${accepted ? " · geaccepteerd door auditor" : ""}</span>
+      </div>
+      <div class="body">${escapeHtml(s.reasoning || "")}</div>
+      ${degradedNotice}
+      <details ${accepted ? "" : "open"}>
+        <summary>Evidence (${evidence.length})</summary>
+        ${evidenceHtml}
+      </details>
+      <div class="actions">
+        ${accepted
+          ? `<button class="dismiss" onclick="dismissSuggestion('${code}')">Suggestie verwijderen</button>`
+          : `
+            <button onclick="acceptSuggestion('${code}')">✓ Accepteer als ${verdictName(verdictClass).toLowerCase()}</button>
+            <button class="reject" onclick="rejectSuggestion('${code}')">✗ Verwerp</button>
+            <button class="dismiss" onclick="dismissSuggestion('${code}')">Verberg</button>
+            <button class="dismiss" onclick="evaluateAC('${code}')">↻ Opnieuw</button>
+          `}
+      </div>
+    </div>
+  `;
+}
+
+function renderError(code, msg) {
+  const host = document.querySelector(`[data-suggestion-host="${code}"]`);
+  if (!host) return;
+  host.innerHTML = `<div class="ai-error"><strong>Fout bij AI-evaluatie ${code}:</strong> ${escapeHtml(msg)}</div>`;
+}
+
+function verdictName(v) {
+  return { pass: "Pass", fail: "Fail", na: "n.v.t.", unknown: "Onbekend" }[v] || "Onbekend";
+}
+function formatTime(iso) {
+  try { return new Date(iso).toLocaleString("nl-NL"); } catch(e) { return ""; }
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
+
+function acceptSuggestion(code) {
+  const s = suggestions[code];
+  if (!s) return;
+  logAction("accept_suggestion", {
+    ac_code: code,
+    verdict: s.verdict,
+    verdict_degraded: !!s.verdict_degraded,
+    prompt_hash: s.integrity?.prompt_hash,
+    bundle_hash: s.integrity?.bundle_hash,
+    commit: s.provenance?.commit,
+  });
+  const v = s.verdict === "unknown" ? null : s.verdict;
+  if (v) {
+    const radio = document.querySelector(`input[name="ac-${code}"][value="${v}"]`);
+    if (radio) {
+      radio.checked = true;
+      radio.closest(".seg").querySelectorAll("label").forEach(l => l.classList.toggle("active", l.dataset.val === v));
+    }
+    const note = document.querySelector(`input[data-note="${code}"]`);
+    if (note && !note.value) note.value = `AI: ${s.reasoning || ""}`.slice(0, 240);
+  }
+  s.status = "accepted";
+  saveSuggestions();
+  save();
+  renderSuggestion(code);
+  recompute();
+}
+function rejectSuggestion(code) {
+  const s = suggestions[code];
+  logAction("reject_suggestion", { ac_code: code, verdict: s?.verdict });
+  delete suggestions[code];
+  saveSuggestions();
+  renderSuggestion(code);
+}
+function dismissSuggestion(code) {
+  const s = suggestions[code];
+  logAction("dismiss_suggestion", { ac_code: code, verdict: s?.verdict });
+  delete suggestions[code];
+  saveSuggestions();
+  renderSuggestion(code);
+}
+function clearAllSuggestions() {
+  if (!confirm("Alle AI-suggesties wissen? Reeds geaccepteerde scores blijven staan.")) return;
+  suggestions = {};
+  saveSuggestions();
+  document.querySelectorAll(".suggestion-host").forEach(h => h.innerHTML = "");
+  $("#aiAllStatus").textContent = "";
+}
+
+/* ----- Audit-trail ----- */
+const VERDICT_LABEL = {
+  adequate: "Adequaat",
+  partial: "Deels adequaat",
+  inadequate: "Inadequaat",
+  open: "Open / niet opgevolgd",
+  unrelated: "Niet gerelateerd",
+};
+
+const AUDIT_TRAIL_KEY = "a2-audit-trail-data";
+
+async function runAuditTrail(force) {
+  const btn = $("#auditTrailBtn");
+  const status = $("#auditTrailStatus");
+  const host = $("#auditTrailHost");
+  btn.disabled = true;
+  status.textContent = "Bezig… issues ophalen en per bevinding adequaatheid laten beoordelen door Claude.";
+  host.innerHTML = `<p class="footnote" style="margin:12px 0 0;"><span class="spinner" style="color:var(--accent);"></span> Analyse loopt. Dit kan even duren afhankelijk van het aantal issues.</p>`;
+  try {
+    const data = await callServer("/audit-trail", { limit: 100, model: settings.model, force: !!force, exclude_files: settings.excludedFiles || [], way_of_working: settings.wayOfWorking || null });
+    renderAuditTrail(data);
+    try { localStorage.setItem(AUDIT_TRAIL_KEY, JSON.stringify(data)); } catch(e) {}
+    status.textContent = data.from_cache
+      ? `✓ Resultaat uit server-cache (commit ${data.commit_at_cache?.slice(0,7) || "?"}, model ${data.model}). Klik "Opnieuw" voor een verse analyse.`
+      : `✓ Klaar — geanalyseerd op commit ${data.commit_at_cache?.slice(0,7) || "?"} met ${data.model}.`;
+  } catch(e) {
+    status.textContent = "";
+    const msg = e.message || "";
+    let hint = "";
+    if (/\b404\b/.test(msg) && /Not Found/i.test(msg)) {
+      hint = `<br><br><strong>Vermoedelijke oorzaak:</strong> je lokale server draait nog op een oudere versie zonder de <code>/audit-trail</code>-route. Stop het uvicorn-proces (Ctrl+C in de terminal waar <code>python server.py</code> draait) en start het opnieuw — daarna nogmaals klikken.`;
+    } else if (/403/.test(msg) && /github/i.test(msg)) {
+      hint = `<br><br><strong>Vermoedelijke oorzaak:</strong> GitHub-API rate-limit of geen toegang. Zorg dat <code>gh auth login</code> is gedaan, of zet <code>GITHUB_TOKEN</code> in de omgeving van de server.`;
+    } else if (/404/.test(msg) && /github/i.test(msg)) {
+      hint = `<br><br><strong>Vermoedelijke oorzaak:</strong> private repo zonder geldige token. <code>gh auth login</code> met <code>repo</code>-scope, of zet <code>GITHUB_TOKEN</code> en herstart de server.`;
+    } else if (/Kan server niet bereiken/i.test(msg)) {
+      hint = `<br><br><strong>Vermoedelijke oorzaak:</strong> de server draait niet. Start hem met <code>python server.py</code> in de <code>server/</code>-map.`;
+    }
+    host.innerHTML = `<div class="ai-error">Audit-trail mislukt: ${escapeHtml(msg)}${hint}</div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* D-5: audit-branch + autofix-voorstellen
+   Maakt een 'auditedby_<reviewer>_<datum>'-branch op de target-repo
+   en commit een AUDIT_FIXES.md met Claude-fix-voorstellen per
+   openstaande bevinding. */
+async function createAuditBranch() {
+  const btn = $("#branchBtn");
+  const host = $("#branchResult");
+  if (!currentProvenance || !currentProvenance.remote) {
+    host.innerHTML = `<div class="ai-error">Configureer eerst een target via ⚙ AI-instellingen.</div>`;
+    return;
+  }
+  const m = currentProvenance.remote.match(/github\.com[/:]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/);
+  if (!m) {
+    host.innerHTML = `<div class="ai-error">Kan owner/repo niet uit remote afleiden.</div>`;
+    return;
+  }
+  const owner = m[1], repo = m[2];
+
+  // Reviewer-naam: uit metadata-veld, anders prompt
+  let reviewer = (document.querySelector('[data-key="reviewers"]')?.value || "").split(",")[0].trim();
+  if (!reviewer) {
+    reviewer = prompt("Reviewer-naam (komt in branchnaam auditedby_<naam>_<datum>):");
+    if (!reviewer) return;
+  }
+
+  // Verzamel bevindingen: open AC's, gefaalde AC's, sectie-1 issues (waar audit-trail al gedraaid is)
+  const findings = collectFindingsForAutofix();
+  if (!findings.length) {
+    if (!confirm("Er zijn nog geen bevindingen vastgelegd. Branch alleen aanmaken (zonder AUDIT_FIXES.md)?")) return;
+  }
+
+  btn.disabled = true;
+  host.innerHTML = `<div style="background:#eef1f8;color:var(--accent);padding:10px 14px;border-radius:4px;margin:8px 0;"><span class="spinner"></span> Branch aanmaken op ${escapeHtml(owner)}/${escapeHtml(repo)} en ${findings.length} fix-voorstel${findings.length===1?"":"len"} genereren…</div>`;
+  try {
+    const data = await callServer(`/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/audit-branch`, {
+      reviewer,
+      from_ref: currentProvenance.commit,
+      findings,
+      model: settings.model,
+      generate_fixes: findings.length > 0,
+    });
+    host.innerHTML = renderBranchResult(data);
+    logAction("audit_branch_created", { branch: data.branch, fixes: data.proposals?.length || 0 });
+  } catch(e) {
+    host.innerHTML = `<div class="ai-error">Audit-branch mislukt: ${escapeHtml(e.message)}</div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function collectFindingsForAutofix() {
+  const out = [];
+  // 1) Sectie 4: AC's met verdict 'fail' (geaccepteerd) of waar geen verdict gegeven is maar Claude-suggestie zegt fail
+  for (const o of OBJECTIVES) for (const c of o.criteria) {
+    const v = document.querySelector(`input[name="ac-${c.code}"]:checked`)?.value;
+    const note = document.querySelector(`input[data-note="${c.code}"]`)?.value || "";
+    if (v === "fail") {
+      out.push(`AC ${c.code} (${o.title}) FAIL: ${c.text}${note ? ` · evidence: ${note}` : ""}`);
+    } else if (!v && suggestions[c.code]?.verdict === "fail") {
+      out.push(`AC ${c.code} (${o.title}) AI-suggested FAIL: ${c.text} · ${suggestions[c.code].reasoning || ""}`);
+    }
+  }
+  // 2) Sectie 1 audit-trail items met verdict 'inadequate' of 'open'
+  try {
+    const raw = localStorage.getItem(AUDIT_TRAIL_KEY);
+    if (raw) {
+      const at = JSON.parse(raw);
+      for (const item of (at.items || [])) {
+        const v = item.analysis?.verdict;
+        if (v === "inadequate" || v === "open" || v === "unrelated") {
+          out.push(`Issue #${item.number} "${item.title}" — ${v.toUpperCase()}: ${item.analysis?.reasoning || ""}`);
+        }
+      }
+      for (const f of (at.secret_findings || []).slice(0, 10)) {
+        if (!f.is_example) out.push(`Secret: ${f.kind} in ${f.file}:${f.line} — verwijderen + roteren.`);
+      }
+    }
+  } catch(e) {}
+  return out.slice(0, 25); // cap
+}
+
+function renderBranchResult(data) {
+  const props = data.proposals || [];
+  const list = props.map(p => `
+    <li style="margin-bottom:8px;padding:8px 10px;background:#fff;border:1px solid var(--line);border-radius:3px;">
+      <strong>${escapeHtml(p.title || "(geen titel)")}</strong>
+      <span style="background:#eef1f8;color:var(--accent);padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;margin-left:6px;">${escapeHtml(p.complexity || "moderate")}</span>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px;"><em>${escapeHtml(p.finding.slice(0,140))}${p.finding.length>140?"…":""}</em></div>
+      <div style="font-size:12px;margin-top:4px;">${escapeHtml(p.proposed_change || "")}</div>
+    </li>`).join("");
+  return `
+    <div style="background:#e6efe9;border:1px solid #94c8a4;border-left:4px solid var(--pass);border-radius:6px;padding:12px 14px;margin:8px 0;">
+      <h3 style="margin:0 0 4px;color:var(--pass);font-size:15px;">🌿 Audit-branch aangemaakt</h3>
+      <p style="font-size:12px;color:var(--muted);margin:0 0 8px;">
+        Branch <code>${escapeHtml(data.branch)}</code> vertakt van <code>${escapeHtml(data.from_ref)}@${escapeHtml(data.base_sha.slice(0,7))}</code>.
+        <a href="${escapeHtml(data.url)}" target="_blank" style="color:var(--accent);">Open op GitHub →</a>
+      </p>
+      ${data.fixes_committed
+        ? `<p style="font-size:12px;margin:0 0 8px;">✓ ${props.length} fix-voorstel${props.length===1?"":"len"} gecommit als <a href="${escapeHtml(data.fixes_url)}" target="_blank" style="color:var(--accent);"><code>AUDIT_FIXES.md</code></a>.</p>`
+        : (data.fixes_error ? `<p style="font-size:12px;color:var(--fail);margin:0 0 8px;">⚠ Fix-commit mislukt: ${escapeHtml(data.fixes_error)}</p>` : "")}
+      ${props.length
+        ? `<details><summary style="cursor:pointer;font-size:12px;color:var(--accent);font-weight:600;">Toon ${props.length} fix-voorstel(len)</summary>
+            <ul style="list-style:none;padding-left:0;margin-top:8px;">${list}</ul>
+          </details>`
+        : ""}
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">
+        <strong>Vervolg:</strong> review de fixes in de branch, implementeer naar smaak, en klik daarna
+        <button onclick="reauditOnBranch('${escapeHtml(data.branch)}')" class="ai-btn" style="margin-left:6px;padding:4px 10px;font-size:11px;">↻ Re-audit op deze branch</button>
+      </div>
+    </div>`;
+}
+
+async function reauditOnBranch(branch) {
+  settings.targetRef = branch;
+  saveSettings();
+  if ($("#targetRef")) $("#targetRef").value = branch;
+  // Reconfigure target en re-run audit-trail
+  await applyTarget();
+  await runAuditTrail(true);
+  // Scroll naar sectie 1
+  document.getElementById("auditTrailCard")?.scrollIntoView({ behavior: "smooth" });
+}
+
+function loadAuditTrailFromCache() {
+  try {
+    const raw = localStorage.getItem(AUDIT_TRAIL_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    renderAuditTrail(data);
+    // Cache bevat owner/repo — claim dat als target voor de dashboard-sync
+    // wanneer er nog geen actieve target is.
+    if (!_acTarget && data.owner && data.repo) {
+      _acTarget = { owner: data.owner, repo: data.repo };
+      updateSyncIndicator();
+      pushACSummaryDebounced();
+    }
+    const stale = currentProvenance && data.commit_at_cache && data.commit_at_cache !== currentProvenance.commit;
+    $("#auditTrailStatus").innerHTML = stale
+      ? `⚠ Cache van commit <code>${escapeHtml((data.commit_at_cache || "?").slice(0,7))}</code>, repo staat nu op <code>${escapeHtml((currentProvenance.commit || "").slice(0,7))}</code>. Klik "Opnieuw" voor verse analyse.`
+      : `✓ Uit lokale cache — ${escapeHtml(data.generated_at || "?")}`;
+  } catch(e) {}
+}
+
+function renderAuditTrail(data) {
+  const host = $("#auditTrailHost");
+  const s = data.summary || {};
+  const v = s.verdicts || {};
+  const adequate = v.adequate || 0;
+  const partial = v.partial || 0;
+  const inadequate = (v.inadequate || 0) + (v.unrelated || 0);
+  const openCnt = v.open || 0;
+
+  let html = `
+    <div class="at-summary">
+      <div class="cell">
+        <div class="label">Repo</div>
+        <div class="num" style="font-size:13px;">${escapeHtml(data.owner || "?")}/${escapeHtml(data.repo || "?")}</div>
+      </div>
+      <div class="cell">
+        <div class="label">Commits gewandeld</div>
+        <div class="num">${s.commits_walked || 0}</div>
+      </div>
+      <div class="cell">
+        <div class="label">Issues totaal</div>
+        <div class="num">${s.issues_total || 0}</div>
+      </div>
+      <div class="cell pass">
+        <div class="label">Adequaat</div>
+        <div class="num">${adequate}</div>
+      </div>
+      <div class="cell warn">
+        <div class="label">Deels / open</div>
+        <div class="num">${partial + openCnt}</div>
+      </div>
+      <div class="cell fail">
+        <div class="label">Inadequaat</div>
+        <div class="num">${inadequate}</div>
+      </div>
+    </div>
+  `;
+
+  if (!(data.items || []).length) {
+    html += `<p class="footnote">Geen issues gevonden in deze repo. Dat is op zichzelf een coverage-gap voor traceerbaarheid: codewijzigingen lopen niet via een issue-proces.</p>`;
+  } else {
+    html += data.items.map(renderAuditItem).join("");
+  }
+
+  if ((data.secret_findings || []).length) {
+    html += renderSecretFindings(data.secret_findings);
+  }
+
+  if ((data.orphan_commits || []).length) {
+    const analyses = new Map((data.orphan_analyses || []).map(a => [a.short_sha, a]));
+    const ov = data.summary?.orphan_verdicts || {};
+    const summaryLine = (ov.needs_issue || ov.acceptable || ov.unclear)
+      ? ` · <span style="color:var(--fail);font-weight:600;">${ov.needs_issue||0} needs-issue</span> · <span style="color:var(--pass);">${ov.acceptable||0} acceptable</span> · <span style="color:var(--muted);">${ov.unclear||0} unclear</span>`
+      : "";
+    html += `
+      <div class="at-orphans">
+        <h3>⚠ ${data.orphan_commits.length} commit${data.orphan_commits.length === 1 ? "" : "s"} zonder issue-verwijzing${summaryLine}</h3>
+        <p class="footnote" style="margin:0 0 6px;">Code-wijzigingen die buiten het issue-proces om zijn gegaan. Claude beoordeelt per commit (capped op 15) of dit acceptabel onderhoud was of een traceerbaarheidsgap.</p>
+        <ul>
+          ${data.orphan_commits.map(c => {
+            const a = analyses.get(c.short_sha);
+            const verdictBadge = a ? (
+              a.verdict === "needs_issue" ? `<span style="background:var(--fail);color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">NEEDS ISSUE</span>` :
+              a.verdict === "acceptable" ? `<span style="background:var(--pass);color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">ACCEPTABLE</span>` :
+                                           `<span style="background:var(--muted);color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;">UNCLEAR</span>`
+            ) : `<span style="color:var(--muted);font-size:10px;">niet geanalyseerd</span>`;
+            const reasoning = a?.reasoning ? `<br><span style="color:var(--muted);font-size:11px;font-family:inherit;margin-left:20px;">${escapeHtml(a.reasoning)}</span>` : "";
+            return `<li><code>${escapeHtml(c.short_sha)}</code> · ${escapeHtml(c.date.slice(0,10))} · <span class="subject">${escapeHtml(c.subject)}</span> ${verdictBadge} <span style="color:var(--muted);">— ${escapeHtml(c.author || "")}</span>${reasoning}</li>`;
+          }).join("")}
+        </ul>
+      </div>
+    `;
+  }
+
+  html += `<p class="footnote" style="margin-top:10px;">Geanalyseerd op ${escapeHtml(data.generated_at || "?")} met model <code>${escapeHtml(data.model || "?")}</code> · cache-key: commit <code>${escapeHtml((data.commit_at_cache || "?").slice(0,7))}</code>.</p>`;
+
+  host.innerHTML = html;
+}
+
+function renderSecretFindings(findings) {
+  const high = findings.filter(f => f.severity === "high" && !f.is_example).length;
+  const medium = findings.filter(f => f.severity === "medium" && !f.is_example).length;
+  const examples = findings.filter(f => f.is_example).length;
+  return `
+    <div class="at-secrets">
+      <h3>🔑 ${findings.length} potentieel lokale secret${findings.length === 1 ? "" : "s"} in de bundle</h3>
+      <p class="desc">
+        ${high} hoog · ${medium} middel · ${examples} mogelijk placeholder/voorbeeld.
+        Bevindingen die in een voorbeeld-bestand staan of duidelijke placeholders bevatten (<code>your-…</code>, <code>xxxx</code>) krijgen severity "laag".
+        <strong>Elke high-severity bevinding hier moet leiden tot een issue op de doel-repo</strong> — een agent met hardcoded credentials is per definitie niet productiewaardig.
+      </p>
+      <ul>
+        ${findings.map(f => `
+          <li class="${f.is_example ? "is-example" : ""}">
+            <span class="sev">${escapeHtml(f.severity)}</span>
+            <strong>${escapeHtml(f.kind)}</strong> · <span class="file">${escapeHtml(f.file)}</span>:${f.line}
+            ${f.is_example ? ` · <em style="color:var(--warn);">voorbeeld/placeholder</em>` : ""}
+            <span class="snippet">${escapeHtml(f.snippet)}</span>
+          </li>`).join("")}
+      </ul>
+    </div>`;
+}
+
+function renderAuditItem(it) {
+  const a = it.analysis || {};
+  const verdict = a.verdict || "open";
+  const labelChips = (it.labels || []).map(l => `<span class="label-chip">${escapeHtml(l)}</span>`).join("");
+  const stateChip = `<span class="label-chip state-${it.state}">${it.state}</span>`;
+  const kindChip = it.is_pr ? `<span class="label-chip kind-pr">PR</span>` : "";
+  const closing = it.closing_commit;
+  const refLine = closing
+    ? `Gesloten door <code>${escapeHtml(closing.short_sha)}</code> · ${escapeHtml(closing.date.slice(0,10))} — ${escapeHtml(closing.subject)}`
+    : (it.referencing_commits || []).length
+      ? `Geen <em>closing</em>-commit; wel ${it.referencing_commits.length} referencerende commit(s): ${it.referencing_commits.slice(0,3).map(r => `<code>${escapeHtml(r.short_sha)}</code>`).join(" ")}`
+      : `⚠ Géén commit verwijst naar deze issue — opvolging niet traceerbaar via git.`;
+
+  const evidence = Array.isArray(a.evidence) ? a.evidence : [];
+  const followUp = Array.isArray(a.follow_up_required) ? a.follow_up_required.filter(Boolean) : [];
+
+  return `
+    <div class="at-issue ${verdict}">
+      <header>
+        <div>
+          <h3><a href="${escapeHtml(it.url || "#")}" target="_blank" rel="noopener">#${it.number} ${escapeHtml(it.title)}</a></h3>
+          <div class="meta">${stateChip} ${kindChip} ${labelChips} · door <strong>${escapeHtml(it.author || "?")}</strong> · ${escapeHtml((it.created_at || "").slice(0,10))}${it.closed_at ? ` → gesloten ${escapeHtml(it.closed_at.slice(0,10))}` : ""}</div>
+        </div>
+        <span class="verdict-badge ${verdict}">${VERDICT_LABEL[verdict] || verdict}</span>
+      </header>
+      <div class="body">
+        <div class="ref-line">${refLine}</div>
+        ${it.diff_stat ? `<div class="ref-line" style="margin-top:2px;"><code>${escapeHtml(it.diff_stat.trim().split("\\n").slice(-1)[0] || "")}</code></div>` : ""}
+        <div class="reasoning">${escapeHtml(a.reasoning || "")}</div>
+        ${followUp.length ? `
+          <div class="follow-up">
+            <strong>Vervolgactie nodig:</strong>
+            <ul>${followUp.map(f => `<li>${escapeHtml(f)}</li>`).join("")}</ul>
+          </div>
+        ` : ""}
+        ${evidence.length ? `
+          <details>
+            <summary>Evidence (${evidence.length})</summary>
+            ${evidence.map(e => `<div class="evidence"><span class="file">${escapeHtml(e.file || "")}</span> ${escapeHtml(e.lines || "")} — ${escapeHtml(e.quote || "")}</div>`).join("")}
+          </details>
+        ` : ""}
+        ${it.body_excerpt ? `
+          <details>
+            <summary>Issue-tekst</summary>
+            <div class="issue-body">${escapeHtml(it.body_excerpt)}</div>
+          </details>
+        ` : ""}
+      </div>
+    </div>
+  `;
+}
+
+async function testConnection() {
+  saveSettings();
+  const btn = $("#testBtn");
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> testen…`;
+  const out = $("#testResult");
+  out.className = "test-result";
+  out.textContent = "";
+  try {
+    const data = await callServer("/ping");
+    out.className = "test-result ok";
+    const files = (data.files_loaded || []).join(", ");
+    const missing = (data.missing || []).length;
+    const prov = data.provenance;
+    const provLine = prov?.available
+      ? `<br>Repo: <code>${escapeHtml(prov.branch||"?")}@${escapeHtml(prov.commit_short||"?")}</code>${prov.dirty ? " ⚠ dirty" : ""}`
+      : `<br>⚠ Geen git-provenance gevonden`;
+    const routes = data.routes || [];
+    const buildLine = data.build ? `<br>Build: <code>${escapeHtml(data.build)}</code>` : "";
+    const auditRouteLine = routes.length
+      ? (routes.includes("/audit-trail")
+          ? `<br>Audit-trail endpoint: ✓ aanwezig`
+          : `<br>⚠ Audit-trail endpoint <strong>ontbreekt</strong> in deze server-build — herstart de server om <code>/audit-trail</code> te activeren.`)
+      : "";
+    out.innerHTML = `✓ Server bereikbaar — tool: <code>${data.tool || "?"}</code>${buildLine}<br>Geladen bestanden: ${files || "geen"}${missing ? `<br>⚠ ontbrekend: ${missing}` : ""}${provLine}${auditRouteLine}`;
+    if (data.version) { const tv = document.getElementById("toolVersion"); if (tv) tv.textContent = data.version; }
+    if (data.build)   { const sb = document.getElementById("serverBuild"); if (sb) sb.textContent = data.build; }
+    if (data.integrity) { data.integrity.tool_version = data.version; applyIntegrity(data.integrity); }
+    if (data.target?.configured && data.target.files) renderBundleList(data.target.files);
+    renderBundleList(data.files_loaded || []);
+    if (prov) applyProvenance(prov);
+  } catch(e) {
+    out.className = "test-result err";
+    out.textContent = `✗ Mislukt: ${e.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `Test verbinding`;
+  }
+}
+
+async function reloadRepo() {
+  saveSettings();
+  const btn = $("#reloadBtn");
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> herladen…`;
+  try {
+    const data = await callServer("/reload", {});
+    renderBundleList(data.files_loaded || []);
+    if (data.provenance) applyProvenance(data.provenance);
+    const out = $("#testResult");
+    out.className = "test-result ok";
+    const prov = data.provenance;
+    const provExtra = prov?.available ? ` — repo nu op ${prov.branch}@${prov.commit_short}${prov.dirty ? " ⚠ dirty" : ""}` : "";
+    out.textContent = `✓ Server-cache herladen (${(data.files_loaded || []).length} bestanden)${provExtra}.`;
+  } catch(e) {
+    const out = $("#testResult");
+    out.className = "test-result err";
+    out.textContent = `✗ Herladen mislukt: ${e.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `↻ Herlaad repo op server`;
+  }
+}
+
+function renderBundleList(files) {
+  const ul = $("#bundleList");
+  if (!files.length) {
+    ul.innerHTML = `<li style="list-style:none;"><em>Nog onbekend — klik 'Test verbinding' om de server te bevragen.</em></li>`;
+    return;
+  }
+  const excluded = new Set(settings.excludedFiles || []);
+  ul.style.listStyle = "none";
+  ul.style.paddingLeft = "0";
+  ul.innerHTML = files.map(f => `
+    <li style="display:flex;align-items:center;gap:6px;margin:3px 0;">
+      <input type="checkbox" data-bundle-file="${escapeHtml(f)}" ${excluded.has(f) ? "" : "checked"}
+        onchange="toggleBundleFile('${escapeHtml(f)}', this.checked)"/>
+      <code>${escapeHtml(f)}</code>
+      ${excluded.has(f) ? `<span style="color:var(--fail);font-size:10px;font-weight:600;">UITGESLOTEN</span>` : ""}
+    </li>`).join("");
+}
+
+function toggleBundleFile(file, included) {
+  const set = new Set(settings.excludedFiles || []);
+  if (included) set.delete(file); else set.add(file);
+  settings.excludedFiles = Array.from(set).sort();
+  saveSettings();
+  // Re-render to show the UITGESLOTEN marker
+  const files = Array.from(document.querySelectorAll("[data-bundle-file]")).map(el => el.dataset.bundleFile);
+  renderBundleList(files);
+}
+
+/* ===========================================================
+   Init
+   =========================================================== */
+renderObjectives();
+renderLists();
+renderGaps();
+renderPDCA();
+load();
+loadSettings();
+loadSuggestions();
+attachScoring();
+updateSyncIndicator();
+recompute();
+/* D-3: drill-down vanaf dashboard via ?owner=X&repo=Y&ref=Z */
+function consumeUrlParams() {
+  const u = new URL(location.href);
+  const owner = u.searchParams.get("owner");
+  const repo = u.searchParams.get("repo");
+  const ref = u.searchParams.get("ref") || "";
+  if (!owner || !repo) return false;
+  _acTarget = { owner, repo };
+  // Drawer-velden vullen
+  settings.targetRepo = `${owner}/${repo}`;
+  settings.targetRef = ref;
+  saveSettings();
+  if ($("#targetRepo")) $("#targetRepo").value = settings.targetRepo;
+  if ($("#targetRef"))  $("#targetRef").value  = settings.targetRef;
+  // Subject naam aanpassen
+  const subj = document.getElementById("subjectName");
+  if (subj) subj.textContent = `${owner}/${repo}` + (ref ? ` @ ${ref.slice(0,7)}` : "");
+  // Back-link tonen
+  const dashLink = document.getElementById("dashLink");
+  if (dashLink) dashLink.style.display = "inline";
+  // Auto-apply target zodra het kan
+  setTimeout(() => applyTarget().catch(()=>{}), 150);
+  return true;
+}
+
+autoLoadProvenance();
+loadAuditTrailFromCache();
+refreshApprovalBanner();
+refreshIntegrityStamp();
+consumeUrlParams();
+logAction("audit_session_open", { url: location.href });
+window.addEventListener("beforeprint", () => logAction("export_pdf", {
+  ac_total: OBJECTIVES.reduce((n,o)=>n+o.criteria.length,0),
+  ac_accepted_via_ai: Object.values(suggestions).filter(s => s.status === "accepted").length,
+  commit: currentProvenance?.commit,
+}));
+</script>
+</body>
+</html>

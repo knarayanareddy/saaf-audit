@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "audit_findings",
+  "info": {
+    "singularName": "audit-finding",
+    "pluralName": "audit-findings",
+    "displayName": "Audit Finding"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "id_code": { "type": "string", "required": true, "unique": true },
+    "title": { "type": "string", "required": true },
+    "risk_rating": { "type": "enumeration", "enum": ["High", "Medium", "Low", "Informational"], "required": true },
+    "control_objective": { "type": "string" },
+    "observation": { "type": "text", "required": true },
+    "root_cause": { "type": "text" },
+    "impact": { "type": "text" },
+    "recommendation": { "type": "text", "required": true },
+    "management_response": { "type": "text" },
+    "target_date": { "type": "date" },
+    "owner": { "type": "string" },
+    "status": { "type": "enumeration", "enum": ["Open", "In Progress", "Closed"], "default": "Open" },
+    "ai_assisted": { "type": "boolean", "default": false },
+    "evidence_references": { "type": "json" }
+  }
+}

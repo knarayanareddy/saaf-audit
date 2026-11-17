@@ -1,0 +1,2 @@
+# The Claude pass needs the Anthropic SDK; --simulate and --no-llm use only the standard library.
+anthropic>=0.70

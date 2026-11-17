@@ -1,0 +1,32 @@
+[
+  {
+    "key": "from_topic_intelligence",
+    "step": "topic_intelligence",
+    "label": "Topic Intelligence"
+  },
+  {
+    "key": "from_process_understanding",
+    "step": "process_understanding",
+    "label": "Process Understanding"
+  },
+  {
+    "key": "from_frameworks",
+    "step": "frameworks",
+    "label": "Frameworks & Requirements"
+  },
+  {
+    "key": "from_kickoff",
+    "step": "kickoff",
+    "label": "Kick-off"
+  },
+  {
+    "key": "from_bra",
+    "step": "bra",
+    "label": "Background Risk Assessment"
+  },
+  {
+    "key": "manual",
+    "step": "",
+    "label": "Entered by the auditor"
+  }
+]

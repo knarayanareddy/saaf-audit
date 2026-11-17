@@ -1,0 +1,1 @@
+Visual explainer is an agent skill that turns messy terminal output into styled HTML pages you'll actually want to share. No more ASCII art diagrams or broken table formatting. Ask your coding agent for an architecture overview, diff review, or plan audit, and it generates a self-contained HTML page with real typography, dark mode, interactive mermaid diagrams with zoom and pan.

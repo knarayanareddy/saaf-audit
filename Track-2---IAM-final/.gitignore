@@ -1,0 +1,21 @@
+# Private repo data — do NOT commit
+hackathon-recap/repo_data.json
+hackathon-recap/repo_data_raw/
+hackathon-recap/overlap_analysis.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+
+# macOS
+.DS_Store
+
+# Access review run outputs — generated at runtime, never commit
+outputs/runs/
+outputs/examples/findings.json
+outputs/examples/findings.csv
+outputs/examples/summary.json
+outputs/examples/user_mapping.csv

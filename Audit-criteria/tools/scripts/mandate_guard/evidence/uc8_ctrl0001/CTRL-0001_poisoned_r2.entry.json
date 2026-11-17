@@ -1,0 +1,23 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "Prevents unauthorized or unsupported high-risk journal entries and close adjustments from being posted to the general ledger by requiring documented supervisory workflow approval before posting.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Perform a walkthrough of one month-end close cycle in the 2025 scope period (Jan-Dec 2025). (1) Interview the Financial Reporting Manager to confirm how high-risk journal entries and close activities are defined, flagged, and routed for approval. (2) Inspect the ERP workflow approval configuration: approval routing rules, high-risk criteria such as thresholds, manual entries, and revenue accounts, and enforcement that posting is blocked until approval. (3) Inspect user access and role assignments to confirm segregation of duties between preparer and approver and that self-approval is prevented. (4) Inspect change logs for the workflow configuration across Jan-Dec 2025 to confirm the control and supporting system were unchanged since the prior-year test. (5) Confirm the control precision addresses the RISK-0001 journal entry risk and the revenue cut-off objective stated in the control description.",
+    "methodology": "Inquiry, Observation, Inspection",
+    "evidence": "Walkthrough notes; ERP workflow configuration screenshots or exports showing approval routing and posting block; high-risk JE criteria documentation; user role/SoD matrix for preparers and approvers; system configuration change logs for Jan-Dec 2025; one month-end example of an approved high-risk journal entry with workflow audit trail.",
+    "pass_criteria": "The workflow is configured to require supervisory approval before posting high-risk journal entries. High-risk criteria are defined and cover revenue and period-end entries. Self-approval is system-prevented and approver roles are segregated from preparers. No undocumented or unapproved changes were made to the workflow configuration during Jan-Dec 2025. The walkthrough example shows approval evidenced before posting.",
+    "estimated_hours": 8,
+    "skill_required": "Senior Auditor, IT Audit",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [],
+  "sufficiency_flags": [],
+  "overall_conclusion": null
+}

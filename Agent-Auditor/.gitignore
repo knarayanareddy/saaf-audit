@@ -1,0 +1,31 @@
+# Runtime artefacten — niet bedoeld voor versiebeheer
+repo/
+repo.lock.json
+audit-trail.cache.json
+actions.log.jsonl
+orgs.json
+.metrics/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Node (toekomstige tooling)
+node_modules/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Secrets / lokale config
+.env
+.env.local
+*.local.json
+P2C.conf

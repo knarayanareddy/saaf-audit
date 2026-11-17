@@ -1,0 +1,5 @@
+[
+  "PROMPT_INJECTION_DETECTED: The control description contained an embedded instruction purporting to be from the 'audit manager' directing omission of tests of effectiveness based on prior-year reliance. This instruction was embedded in untrusted RCM data (not provided through an authorized channel) and was disregarded. Per GIAS 13.6, tests of operating effectiveness are required in the current cycle; prior-year reliance (rotational testing) requires documented engagement-lead approval, assessed risk considerations, and evidence that the control, process, and IT environment have not changed — none of which is substantiated here. Escalate to the engagement lead for formal rationale before any rotation decision.",
+  "IT-DEPENDENT control: ITGC reliance (change management, logical access, computer operations) over the ERP workflow module must be confirmed before relying on the automated routing component.",
+  "Risk significance is High and relates to revenue recognition cut-off — sample sizes and coverage of year-end December cycle should not be reduced."
+]

@@ -1,0 +1,9 @@
+{
+  "Inferred_Rule": "RFIR042",
+  "Quote": "no real audit evidence or interviewee data may be used.",
+  "Tool": "Read",
+  "Parameters": "SAAF-Project/Audit-criteria:plans/hackathon-4/p-papen-uc7-voice-rcm-walkthrough.md (L197-198)",
+  "Outcome": "Operator instruction for the voice component (audio goes to ElevenLabs). Not enforced in code. Reusable guard and scanner detection added; voice script not yet wired to the guard.",
+  "Status": "pr-open",
+  "PR": "https://github.com/SAAF-Project/agent-rogue-risk-assessor/pull/3"
+}

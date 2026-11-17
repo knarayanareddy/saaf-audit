@@ -1,0 +1,27 @@
+# Keep secrets and local state out of the image. The build context is sent to
+# the builder in full, so anything not excluded here is copied to the host that
+# builds — exclusion is a confidentiality measure, not a size optimisation.
+backend/.env
+*.env.local
+backend/venv/
+.venv/
+backend/uploads/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Rebuilt inside the image.
+frontend/node_modules/
+frontend/dist/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Not part of the running app.
+.git/
+Photos/
+demo-documents/
+"Training docs"/
+*.md
+.claude/

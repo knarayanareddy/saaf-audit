@@ -1,0 +1,209 @@
+{
+  "organisation": "Harbourline Services (fictional)",
+  "audit_period": {
+    "start": "2026-07-01",
+    "end": "2026-09-30"
+  },
+  "extraction_date": "2026-10-15",
+  "leaver_revocation_sla_days": 1,
+  "mover_revocation_sla_days": 5,
+  "stale_days": 90,
+  "approved_ticket_statuses": [
+    "Done",
+    "Closed"
+  ],
+  "birthright_entitlements": [
+    "AD_ALL_STAFF"
+  ],
+  "privileged_entitlements": [
+    "AD_IT_ADMINS",
+    "ERP_PAYMENT_RELEASE",
+    "ERP_VENDOR_MASTER",
+    "ERP_HR_PAYROLL",
+    "ERP_GL_ACCOUNTANT"
+  ],
+  "sod_rules": [
+    {
+      "rule_id": "SOD-01",
+      "entitlements": [
+        "ERP_AP_CLERK",
+        "ERP_PAYMENT_RELEASE"
+      ],
+      "risk": "High",
+      "description": "One person can enter a supplier invoice and release its payment."
+    },
+    {
+      "rule_id": "SOD-02",
+      "entitlements": [
+        "ERP_VENDOR_MASTER",
+        "ERP_PAYMENT_RELEASE"
+      ],
+      "risk": "High",
+      "description": "One person can change supplier bank details and release payments."
+    }
+  ],
+  "role_matrix": {
+    "Managing Director": {
+      "department": "Management",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_BOARD_SHARE"
+      ],
+      "ERP": [
+        "ERP_REPORTING"
+      ]
+    },
+    "Financial Controller": {
+      "department": "Finance",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_FINANCE_SHARE"
+      ],
+      "ERP": [
+        "ERP_GL_ACCOUNTANT",
+        "ERP_REPORTING"
+      ]
+    },
+    "Accounts Payable Clerk": {
+      "department": "Finance",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_FINANCE_SHARE"
+      ],
+      "ERP": [
+        "ERP_AP_CLERK"
+      ]
+    },
+    "Treasury Officer": {
+      "department": "Finance",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_FINANCE_SHARE"
+      ],
+      "ERP": [
+        "ERP_PAYMENT_RELEASE"
+      ]
+    },
+    "Procurement Officer": {
+      "department": "Procurement",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_PROCUREMENT_SHARE"
+      ],
+      "ERP": [
+        "ERP_VENDOR_MASTER",
+        "ERP_PO_REQUESTER"
+      ]
+    },
+    "HR Advisor": {
+      "department": "HR",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_HR_SHARE"
+      ],
+      "ERP": [
+        "ERP_HR_PAYROLL"
+      ]
+    },
+    "Sales Representative": {
+      "department": "Sales",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_SALES_CRM"
+      ],
+      "ERP": []
+    },
+    "IT Support Engineer": {
+      "department": "IT",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_IT_SUPPORT"
+      ],
+      "ERP": []
+    },
+    "System Administrator": {
+      "department": "IT",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_IT_ADMINS"
+      ],
+      "ERP": []
+    },
+    "Operations Coordinator": {
+      "department": "Operations",
+      "AD": [
+        "AD_ALL_STAFF",
+        "AD_OPS_SHARE"
+      ],
+      "ERP": [
+        "ERP_PO_REQUESTER"
+      ]
+    }
+  },
+  "entitlement_catalog": {
+    "AD_ALL_STAFF": {
+      "system": "AD",
+      "description": "Default staff group (birthright)"
+    },
+    "AD_BOARD_SHARE": {
+      "system": "AD",
+      "description": "Board documents share"
+    },
+    "AD_FINANCE_SHARE": {
+      "system": "AD",
+      "description": "Finance department share"
+    },
+    "AD_PROCUREMENT_SHARE": {
+      "system": "AD",
+      "description": "Procurement department share"
+    },
+    "AD_HR_SHARE": {
+      "system": "AD",
+      "description": "HR department share (personnel files)"
+    },
+    "AD_SALES_CRM": {
+      "system": "AD",
+      "description": "CRM access group"
+    },
+    "AD_IT_SUPPORT": {
+      "system": "AD",
+      "description": "Service desk tooling"
+    },
+    "AD_IT_ADMINS": {
+      "system": "AD",
+      "description": "Domain administrators"
+    },
+    "AD_OPS_SHARE": {
+      "system": "AD",
+      "description": "Operations share"
+    },
+    "ERP_REPORTING": {
+      "system": "ERP",
+      "description": "Read-only financial reporting"
+    },
+    "ERP_GL_ACCOUNTANT": {
+      "system": "ERP",
+      "description": "Post and approve journal entries"
+    },
+    "ERP_AP_CLERK": {
+      "system": "ERP",
+      "description": "Enter and change supplier invoices"
+    },
+    "ERP_PAYMENT_RELEASE": {
+      "system": "ERP",
+      "description": "Release payment runs to the bank"
+    },
+    "ERP_VENDOR_MASTER": {
+      "system": "ERP",
+      "description": "Create and change supplier master data (incl. bank accounts)"
+    },
+    "ERP_PO_REQUESTER": {
+      "system": "ERP",
+      "description": "Create purchase requisitions"
+    },
+    "ERP_HR_PAYROLL": {
+      "system": "ERP",
+      "description": "Maintain payroll and salary data"
+    }
+  }
+}

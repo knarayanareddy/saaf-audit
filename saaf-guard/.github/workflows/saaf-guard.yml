@@ -1,0 +1,28 @@
+# Herbruikbare CI-check. Kopieer naar .github/workflows/ in een SAAF-repo,
+# of roep hem aan met: uses: SAAF-Project/saaf-guard/.github/workflows/saaf-guard.yml@main
+name: SAAF Guard
+
+on:
+  push:
+  pull_request:          # bewust geen pull_request_target: PR-code draait zonder secrets
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4   # officiele GitHub-action; pin op SHA in je eigen repo
+        with:
+          fetch-depth: 0   # volledige geschiedenis voor de sleutelscan
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: SAAF Guard ophalen
+        run: |
+          git clone --depth 1 https://github.com/SAAF-Project/saaf-guard.git "$RUNNER_TEMP/saaf-guard"
+      - name: Check (faalt op high)
+        run: |
+          PYTHONPATH="$RUNNER_TEMP/saaf-guard" python -m saaf_guard.check . --history --fail-on high

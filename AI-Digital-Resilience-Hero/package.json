@@ -1,0 +1,20 @@
+{
+  "name": "ai-digital-resilience-hero",
+  "version": "0.1.0",
+  "description": "Scans GitHub repositories for AI-enabled cyber threats such as prompt injection",
+  "type": "module",
+  "bin": {
+    "drh": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "tsx src/cli.ts",
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

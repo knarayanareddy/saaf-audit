@@ -1,0 +1,67 @@
+{
+  "thread": {
+    "title": "Waterlinie — even kort",
+    "locale": "nl-NL",
+    "source_artifact": "https://claude.ai/code/artifact/8c651199-28b5-4446-9e17-2266aa40a5d5",
+    "fictional": true,
+    "disclaimer": "Stichting Zorggroep Waterlinie bestaat niet. Namen, gesprekken en incidenten zijn verzonnen voor een fraude-risicoanalyse."
+  },
+  "participants": [
+    { "id": "SK", "name": "Sander Kuijpers",      "role": "Crediteurenadministrateur · FinCore",   "persona": "nuchter, kortaf, licht cynisch; zegt de dingen plat zoals ze zijn" },
+    { "id": "BW", "name": "Bart Wieringa",        "role": "Controller · Financiën",                "persona": "beheerst, bestuurlijk, praat in afgeronde zinnen; nooit gehaast" },
+    { "id": "DE", "name": "Diederik van Emmerik", "role": "Lid Raad van Bestuur",                  "persona": "ouder, traag, vriendelijk-autoritair; formuleert alles als voorstel" },
+    { "id": "MD", "name": "Marieke van Dongen",   "role": "Salarisadministrateur · LoonLink",      "persona": "praktisch, gehaast, licht verontschuldigend" },
+    { "id": "MV", "name": "Marloes Verkerk",      "role": "Teamleider thuiszorg · ZorgDossier",    "persona": "warm, informeel, vraagt dingen half als grap" },
+    { "id": "RV", "name": "Ronald Verheggen",     "role": "Inkoper facilitair",                    "persona": "zakelijk, direct, zonder omhaal" },
+    { "id": "EK", "name": "Ed Kloosterboer",      "role": "Directeur leverancier · extern",        "persona": "joviaal, gladjes, altijd behulpzaam klinkend" },
+    { "id": "MH", "name": "Marnix Verheul",       "role": "Applicatiebeheerder ECD/ERP",           "persona": "laconiek, zelfspottend, klaagt zonder verwachting" }
+  ],
+  "messages": [
+    { "id": "m01", "from": "MD", "ts": "2026-01-26T08:41", "replyTo": null,  "text": "Weer een correctie buiten het systeem om, gewoon zoals altijd tegenwoordig." },
+    { "id": "m02", "from": "MD", "ts": "2026-01-26T08:42", "replyTo": null,  "text": "Rooster klopt toch nooit met LoonLink, dus regel ik het zelf wel even." },
+    { "id": "m03", "from": "MV", "ts": "2026-01-26T09:07", "replyTo": "m02", "text": "Ik lever hem gewoon aan zoals altijd, jij kijkt toch niet naar de einddatum." },
+    { "id": "m04", "from": "MD", "ts": "2026-01-26T09:11", "replyTo": null,  "text": "Account laten staan hoeft niemand op te vallen, dat doet iedereen zo." },
+    { "id": "m05", "from": "MH", "ts": "2026-01-26T09:14", "replyTo": null,  "text": "Die 112 oude accounts ruim ik weer eens \"volgende sprint\" op, beloofd." },
+    { "id": "m06", "from": "MD", "ts": "2026-01-26T11:58", "replyTo": null,  "text": "Nabetaling loopt gewoon mee in de batch, daar kijkt toch niemand apart naar." },
+
+    { "id": "m07", "from": "BW", "ts": "2026-02-12T07:52", "replyTo": null,  "text": "Laten we de laatste boekingen dit kwartaal even sneller afronden, het bestuur wil strakke cijfers voor vrijdag." },
+    { "id": "m08", "from": "DE", "ts": "2026-02-12T08:03", "replyTo": null,  "text": "Laten we de jaarcijfers nog even netjes afronden voor de audit, dan hoeven we straks niets meer te herzien." },
+    { "id": "m09", "from": "BW", "ts": "2026-02-12T08:19", "replyTo": null,  "text": "Het top-side overzicht neem ik zelf wel door, hoeft niet apart op de agenda.", "attachments": [{ "type": "xlsx", "name": "Topside_Q1_definitief_v4.xlsx", "size": "412 kB" }] },
+    { "id": "m10", "from": "BW", "ts": "2026-02-12T08:20", "replyTo": null,  "text": "Die Excel met de journaalpost-uitzonderingen stuur ik zelf wel door, scheelt weer een rondje." },
+    { "id": "m11", "from": "BW", "ts": "2026-02-12T08:24", "replyTo": null,  "text": "Een checklist voor de afsluiting hebben we toch niet, we doen het zoals altijd op gevoel." },
+    { "id": "m12", "from": "MV", "ts": "2026-02-12T10:36", "replyTo": null,  "text": "Kijk je dit kwartaal niet te scherp naar ons declaratielogje? We hebben nog een inhaalslag na de storing." },
+    { "id": "m13", "from": "BW", "ts": "2026-02-12T10:44", "replyTo": "m12", "text": "Die afgekeurde declaraties van januari schuiven we gewoon mee, is toch maar tijdelijk." },
+    { "id": "m14", "from": "MV", "ts": "2026-02-12T10:51", "replyTo": null,  "text": "Zorgplan-toets komt dit jaar toch weer maar steekproefsgewijs? Dan zit het wel goed." },
+    { "id": "m15", "from": "MV", "ts": "2026-02-12T10:53", "replyTo": null,  "text": "Dat papieren spul van de storing verwerk ik zelf wel, hoeft niet allemaal digitaal getraceerd te worden toch?" },
+    { "id": "m16", "from": "DE", "ts": "2026-02-12T16:12", "replyTo": null,  "text": "Zullen we het auditjaarplan compact houden dit kwartaal, gezien de certificering eraan komt?" },
+    { "id": "m17", "from": "DE", "ts": "2026-02-12T16:15", "replyTo": null,  "text": "De inhuurkosten van de bureaus goed labelen scheelt discussie bij de eerstvolgende WNT-toets." },
+    { "id": "m18", "from": "MD", "ts": "2026-02-12T16:41", "replyTo": null,  "text": "Stamdata is prima in orde, dat rapport ziet dit soort dingen sowieso niet." },
+
+    { "id": "m19", "from": "RV", "ts": "2026-03-18T11:02", "replyTo": null,  "text": "Kun je die schoonmaakfactuur in drie delen splitsen, elk net onder de drempel? Scheelt gedoe met goedkeuring." },
+    { "id": "m20", "from": "EK", "ts": "2026-03-18T11:09", "replyTo": "m19", "text": "Even bellen in plaats van appen over die drie deelfacturen graag, makkelijker uitleggen dan typen 👍" },
+    { "id": "m21", "from": "EK", "ts": "2026-03-18T11:24", "replyTo": null,  "text": null, "voiceNote": { "duration": "0:47" } },
+    { "id": "m22", "from": "RV", "ts": "2026-03-18T11:31", "replyTo": null,  "text": "Laat die nieuwe teamleider in Zaltbommel deze maar goedkeuren, die weet nog niet beter na de reorganisatie." },
+    { "id": "m23", "from": "EK", "ts": "2026-03-18T11:38", "replyTo": null,  "text": "Kun je die factuur zelf even aftekenen? Scheelt weer een schakel, jij kent de locatie toch het best.", "attachments": [{ "type": "pdf", "name": "Werkbon_maart_locatie_Vianen.pdf", "size": "1,2 MB" }] },
+    { "id": "m24", "from": "RV", "ts": "2026-03-18T13:47", "replyTo": null,  "text": "Check je die 3-way-match Excel nog handmatig of trekt iemand dat automatisch?" },
+    { "id": "m25", "from": "SK", "ts": "2026-03-18T13:52", "replyTo": "m24", "text": "Handmatig. En per periode, niet per leverancier. Dus over locaties heen ziet niemand iets." },
+    { "id": "m26", "from": "EK", "ts": "2026-03-18T14:05", "replyTo": null,  "text": "Laat die andere bv maar factureren voor het extra stuk, is administratief simpeler voor iedereen." },
+    { "id": "m27", "from": "SK", "ts": "2026-03-18T15:20", "replyTo": null,  "text": "Gewoon zelf even afgerond, scheelt weer een dag wachten op Treasury." },
+    { "id": "m28", "from": "SK", "ts": "2026-03-18T15:22", "replyTo": null,  "text": "Batch klopt weer mooi met de run, dus verder geen gedoe." },
+    { "id": "m29", "from": "EK", "ts": "2026-03-18T15:31", "replyTo": null,  "text": null, "deleted": true },
+    { "id": "m30", "from": "RV", "ts": "2026-03-18T15:44", "replyTo": null,  "text": "Volgende maand liever een andere locatie, niet twee keer achter elkaar Culemborg." },
+    { "id": "m31", "from": "DE", "ts": "2026-03-18T17:02", "replyTo": null,  "text": "Laten we dit onderling afstemmen voordat het naar de commissie gaat, scheelt vragen achteraf." },
+
+    { "id": "m32", "from": "MH", "ts": "2026-04-03T08:12", "replyTo": null,  "text": "IAM-koppeling hapert weer, toegang gaat vandaag maar via het oude Excelbestand." },
+    { "id": "m33", "from": "MH", "ts": "2026-04-03T08:15", "replyTo": null,  "text": "Release ging vrijdag toch de deur uit, iemand tekent maandag wel af." },
+    { "id": "m34", "from": "MH", "ts": "2026-04-03T08:16", "replyTo": null,  "text": "ChangeFlow weer plat, tickets komen later wel. We weten toch wat we deden." },
+    { "id": "m35", "from": "BW", "ts": "2026-04-03T09:40", "replyTo": "m33", "text": "Is de goedkeuringslog van de journaalposten er nog? Die zag ik niet in de export." },
+    { "id": "m36", "from": "MH", "ts": "2026-04-03T09:44", "replyTo": "m35", "text": "Logs staan aan hoor, alleen kijkt er nooit iemand naar. Klassiek." },
+    { "id": "m37", "from": "MH", "ts": "2026-04-03T09:47", "replyTo": null,  "text": "DLP-Exceloverzicht weer bijgewerkt, hopelijk klopt het deze keer een beetje." },
+    { "id": "m38", "from": "MH", "ts": "2026-04-03T09:49", "replyTo": null,  "text": "PrivacyPortaal loopt achter, register vul ik in als het regent." },
+    { "id": "m39", "from": "SK", "ts": "2026-04-03T10:03", "replyTo": "m32", "text": "IAM ligt er weer uit, toegang loopt nu gewoon via het Excelletje. Handig eigenlijk." },
+    { "id": "m40", "from": "SK", "ts": "2026-04-03T10:05", "replyTo": null,  "text": "Niemand kijkt hier echt naar wie iets goedkeurt, alleen of het klopt." },
+    { "id": "m41", "from": "MV", "ts": "2026-04-03T10:22", "replyTo": null,  "text": "Mijn account-rechten zijn nog van voor de reorganisatie, laat dat zo, scheelt gedoe." },
+    { "id": "m42", "from": "SK", "ts": "2026-04-03T14:38", "replyTo": null,  "text": "Die IT-check op de betaalrun komt toch pas over weken langs." },
+    { "id": "m43", "from": "DE", "ts": "2026-04-03T16:55", "replyTo": null,  "text": "Rapportage over de bezoldiging kan best wachten tot na Q4, geen prioriteit op dit moment." }
+  ]
+}

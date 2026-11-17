@@ -1,0 +1,2898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary meta -->
+  <title>SAAF Project: Shared Audit Agents Framework</title>
+  <meta name="description" content="65+ organizations co-building AI audit agents together. SAAF (Shared Audit Agents Framework) is a vendor-agnostic, open-source initiative for IT and internal auditors: 10 hackathons in 2026.">
+  <meta name="author" content="SAAF Project">
+  <meta name="keywords" content="AI audit agents, internal audit AI, IT audit, hackathon, shared audit framework, AI auditing Netherlands, SAAF">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://saafproject.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://saafproject.com/">
+  <meta property="og:title" content="SAAF Project: Shared Audit Agents Framework">
+  <meta property="og:description" content="65+ organizations co-building AI audit agents together. A vendor-agnostic, open-source initiative for IT and internal auditors: 10 hackathons across 2026.">
+  <meta property="og:locale" content="en_NL">
+  <meta property="og:site_name" content="SAAF Project">
+  <meta property="og:image" content="https://saafproject.com/assets/logos/saaf-project.png">
+  <meta property="og:image:alt" content="SAAF Project: Shared Audit Agents Framework">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="https://saafproject.com/assets/logos/saaf-project.png">
+  <meta name="twitter:title" content="SAAF Project: Shared Audit Agents Framework">
+  <meta name="twitter:description" content="65+ organizations co-building AI audit agents together. A vendor-agnostic, open-source initiative for IT and internal auditors: 10 hackathons across 2026.">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SAAF Project",
+    "alternateName": "Shared Audit Agents Framework",
+    "url": "https://saafproject.com",
+    "description": "A co-creative initiative where IT and internal auditors from 65+ organizations build AI audit agents together through a series of hackathons.",
+    "foundingDate": "2026",
+    "knowsAbout": ["AI audit agents", "internal audit", "IT audit", "AI governance", "EU AI Act"],
+    "member": [
+      { "@type": "OrganizationRole", "roleName": "Organizer", "member": { "@type": "Person", "name": "Eduward van de Kamp" } },
+      { "@type": "OrganizationRole", "roleName": "Organizer", "member": { "@type": "Person", "name": "Mathijs Schouten" } }
+    ]
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .gradient-text {
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="#" class="flex items-center">
+          <img src="assets/logos/saaf-project.png" alt="SAAF Project" class="h-[60px] w-auto object-contain">
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#about" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">About</a>
+          <a href="#story" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Our Story</a>
+          <a href="#how-it-works" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Approach</a>
+          <a href="#framework" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Framework</a>
+          <a href="#schedule" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Schedule</a>
+          <a href="#organizations" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Partners</a>
+          <a href="#updates" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Updates</a>
+          <a href="#downloads" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors font-medium">Downloads</a>
+          <a href="#join" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">
+            Waitlist
+          </a>
+          <a href="https://saaf-portal.vercel.app/" target="_blank" class="inline-flex items-center px-4 py-2 border border-indigo-200 text-indigo-600 text-sm font-semibold rounded-lg hover:bg-indigo-50 transition-colors">
+            Portal Login
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors" aria-label="Toggle menu">
+          <svg id="icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+      <div class="px-4 py-3 space-y-1">
+        <a href="#about" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">About</a>
+        <a href="#story" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Our Story</a>
+        <a href="#how-it-works" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Approach</a>
+        <a href="#framework" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Framework</a>
+        <a href="#schedule" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Schedule</a>
+        <a href="#organizations" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Partners</a>
+        <a href="#updates" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Updates</a>
+        <a href="#downloads" class="block px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 font-medium">Downloads</a>
+        <div class="pt-2 pb-1 space-y-2">
+          <a href="#join" class="block px-3 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg text-center hover:bg-indigo-700">Waitlist</a>
+          <a href="https://saaf-portal.vercel.app/" target="_blank" class="block px-3 py-2 border border-indigo-200 text-indigo-600 text-sm font-semibold rounded-lg text-center hover:bg-indigo-50">Portal Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="relative min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 pt-16 overflow-hidden">
+
+    <!-- Subtle grid background -->
+    <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+    <!-- Glow accents -->
+    <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-sm font-medium mb-8">
+        <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse flex-shrink-0"></span>
+        10 Hackathons · 2 Alignment Sessions · 2026
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-6">
+        Building AI Audit<br>
+        <span class="gradient-text">Agents Together</span>
+      </h1>
+
+      <p class="text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        SAAF (Shared Audit Agents Framework) unites internal auditors across organizations to co-create AI-powered audit automation skills: collaborative, open-source, and vendor-agnostic.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#join" class="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-500/30 group">
+          Join the Waitlist
+          <svg class="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a href="#about" class="inline-flex items-center justify-center px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl transition-all border border-white/20">
+          Learn More
+        </a>
+      </div>
+
+      <!-- Slogan -->
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <span class="px-4 py-1.5 bg-white/8 border border-white/15 text-white/70 rounded-full text-sm font-medium tracking-wide">Think Big</span>
+        <span class="text-white/25 text-lg font-light">·</span>
+        <span class="px-4 py-1.5 bg-white/8 border border-white/15 text-white/70 rounded-full text-sm font-medium tracking-wide">Start Small</span>
+        <span class="text-white/25 text-lg font-light">·</span>
+        <span class="px-4 py-1.5 bg-white/8 border border-white/15 text-white/70 rounded-full text-sm font-medium tracking-wide">Move Fast</span>
+      </div>
+
+      <!-- Stats row -->
+      <div class="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-8">
+        <div>
+          <div class="text-4xl font-extrabold text-white">12</div>
+          <div class="text-slate-400 text-sm mt-1">Sessions in 2026</div>
+        </div>
+        <div>
+          <div class="text-4xl font-extrabold text-white">65+</div>
+          <div class="text-slate-400 text-sm mt-1">Organizations</div>
+        </div>
+        <div>
+          <div class="text-4xl font-extrabold text-white">Free</div>
+          <div class="text-slate-400 text-sm mt-1">Participation</div>
+        </div>
+        <div>
+          <div class="text-4xl font-extrabold text-white">CPE</div>
+          <div class="text-slate-400 text-sm mt-1">Credits Eligible</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section id="about" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left: text -->
+        <div>
+          <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">About SAAF</div>
+          <h2 class="text-4xl font-bold text-gray-900 mb-6 leading-tight">Stop reinventing the wheel.<br>Start building together.</h2>
+          <p class="text-gray-600 text-lg leading-relaxed mb-5">
+            Auditors are overwhelmed with AI tools but often lack the in-depth understanding of how these systems can be deployed safely, reliably, and in line with legislation such as the EU AI Act. It leads to the frustration of <em>"not seeing the forest for the trees"</em>, which means we still end up doing the same manual work as before.
+          </p>
+          <p class="text-gray-600 text-lg leading-relaxed mb-8">
+            SAAF opts for a hands-on approach: <strong class="text-gray-900">"Learning by building."</strong> Participants collaboratively design and build AI audit automation skills at a series of hackathons, gaining deep understanding and direct applicability within their own organizations.
+          </p>
+
+          <!-- Core principles -->
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">AI-Agnostic</div>
+                <div class="text-gray-600 text-sm mt-0.5">Works with Copilot, Gemini, Claude, or any local LLM. No vendor lock-in, integrates into your existing IT stack.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">Co-Creation</div>
+                <div class="text-gray-600 text-sm mt-0.5">Shared GIT repository of scripts, prompts, policies, and lessons learned. Access to a validated, open-source knowledge base.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">Shared Standards</div>
+                <div class="text-gray-600 text-sm mt-0.5">Uniform output formats ensure interoperability and traceability, crucial for compliance and cross-organization comparability.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: vision card -->
+        <div class="bg-gradient-to-br from-indigo-50 via-purple-50 to-indigo-50 rounded-3xl p-8 border border-indigo-100">
+          <div class="text-5xl mb-5">🚀</div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">The Vision</h3>
+          <p class="text-gray-700 leading-relaxed mb-4">
+            The SAAF project is a joint framework that enables organizations to make AI-powered audit processes <strong>manageable, explainable and reproducible</strong>, without depending on one specific supplier technology.
+          </p>
+          <p class="text-gray-600 text-sm leading-relaxed mb-6">
+            The mission is co-creation, not competition. Everything is stored in a shared GIT repository: scripts, prompts, policies, lessons learned. Collaboration is the engine.
+          </p>
+          <div class="grid grid-cols-3 gap-4 text-center">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-indigo-100">
+              <div class="text-2xl font-bold text-indigo-600">5</div>
+              <div class="text-xs text-gray-500 mt-1">Professional Partners</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-indigo-100">
+              <div class="text-2xl font-bold text-indigo-600">65+</div>
+              <div class="text-xs text-gray-500 mt-1">Organizations</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-indigo-100">
+              <div class="text-2xl font-bold text-indigo-600">2026</div>
+              <div class="text-xs text-gray-500 mt-1">Program Year</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target audience -->
+      <div class="mt-16 bg-gray-50 rounded-3xl p-8 border border-gray-100">
+        <div class="text-center mb-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Who is SAAF for?</h3>
+          <p class="text-gray-600">Designed for organizations that want to apply AI in audit and risk, without compromising on governance, control, and compliance.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+          <div class="flex flex-col items-center">
+            <div class="text-3xl mb-3">🏦</div>
+            <div class="font-semibold text-gray-900 text-sm">Heads of Internal Audit &amp; Risk</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-3xl mb-3">🔍</div>
+            <div class="font-semibold text-gray-900 text-sm">IT Auditors, Technology Risk &amp; Operational Auditors</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-3xl mb-3">💻</div>
+            <div class="font-semibold text-gray-900 text-sm">Data, AI &amp; Innovation Teams</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       OUR STORY
+  ============================================================ -->
+  <section id="story" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">Our Story</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4 leading-tight">How SAAF came to be</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">From a single roundtable to a Foundation in the making, built by auditors, for auditors.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-8">
+        <!-- Origin -->
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Eduward van de Kamp and Mathijs Schouten both work at Mollie. From there, together with Frank van Dissel, they organized a roundtable with audit leaders from banks, insurers, and tech companies like Booking.com. The conclusion: a tech revolution is underway, but practical AI knowledge is missing. SAAF was born to fix that, and is being set up as a non-profit Foundation (Stichting).
+        </p>
+
+        <hr class="border-gray-200">
+
+        <!-- Mission -->
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Build, not just use</h3>
+          <p class="text-gray-600 text-lg leading-relaxed">
+            We teach auditors to build their own AI agents, hands-on and open source. Two directions: agents that execute audit processes, and agents that help developers achieve audit, security, and governance by design.
+          </p>
+        </div>
+
+        <hr class="border-gray-200">
+
+        <!-- Support -->
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Mollie is where it all started: hosting the founding roundtable and the first two SAAF sessions. SAAF has since grown into an independent initiative, supported by IIA, NOREA, ISACA, NBA, and ForHumanity.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       HOW IT WORKS
+  ============================================================ -->
+  <section id="how-it-works" class="py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">The Process</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">How Co-Creation Works</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">A structured five-step cycle that repeats across hackathons, building shared knowledge and better agents with every iteration.</p>
+      </div>
+
+      <div class="relative">
+        <!-- Connecting line (desktop) -->
+        <div class="hidden lg:block absolute top-10 left-[calc(10%+2.5rem)] right-[calc(10%+2.5rem)] h-0.5 bg-gradient-to-r from-indigo-200 via-purple-200 to-green-200 z-0"></div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10">
+
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-white shadow-md border-2 border-indigo-200 flex items-center justify-center mb-4">
+              <span class="text-3xl">🎯</span>
+            </div>
+            <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Step 1</div>
+            <h3 class="font-semibold text-gray-900 mb-2">Identify Needs</h3>
+            <p class="text-sm text-gray-600">Jointly determine which audit challenges AI can address</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-white shadow-md border-2 border-purple-200 flex items-center justify-center mb-4">
+              <span class="text-3xl">📐</span>
+            </div>
+            <div class="text-xs font-bold text-purple-500 uppercase tracking-wider mb-1">Step 2</div>
+            <h3 class="font-semibold text-gray-900 mb-2">Define Patterns</h3>
+            <p class="text-sm text-gray-600">Translate requirements into simple, reusable patterns and prompts</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-white shadow-md border-2 border-violet-200 flex items-center justify-center mb-4">
+              <span class="text-3xl">🔨</span>
+            </div>
+            <div class="text-xs font-bold text-violet-500 uppercase tracking-wider mb-1">Step 3</div>
+            <h3 class="font-semibold text-gray-900 mb-2">Build Agents</h3>
+            <p class="text-sm text-gray-600">Hands-on hackathon development using AI coding tools and shared GitHub workflows</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-white shadow-md border-2 border-blue-200 flex items-center justify-center mb-4">
+              <span class="text-3xl">🏢</span>
+            </div>
+            <div class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1">Step 4</div>
+            <h3 class="font-semibold text-gray-900 mb-2">Implement Privately</h3>
+            <p class="text-sm text-gray-600">Deploy within your own organization's environment and AI stack</p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-white shadow-md border-2 border-green-200 flex items-center justify-center mb-4">
+              <span class="text-3xl">🔄</span>
+            </div>
+            <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Step 5</div>
+            <h3 class="font-semibold text-gray-900 mb-2">Reflect &amp; Improve</h3>
+            <p class="text-sm text-gray-600">Share lessons learned and refine together at the next session</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- What participants actually do -->
+      <div class="mt-14 bg-white rounded-2xl border border-indigo-100 p-8 shadow-sm">
+        <div class="grid sm:grid-cols-3 gap-6 text-center">
+          <div>
+            <div class="text-2xl mb-2">🛠️</div>
+            <div class="font-semibold text-gray-900 text-sm mb-1">Tools and Techniques</div>
+            <div class="text-gray-500 text-xs leading-relaxed">Python scripts, GitHub CLI, API connections, MCP servers, and file automation</div>
+          </div>
+          <div>
+            <div class="text-2xl mb-2">💬</div>
+            <div class="font-semibold text-gray-900 text-sm mb-1">Prompts and Instructions</div>
+            <div class="text-gray-500 text-xs leading-relaxed">Domain-specific audit prompts, coding conventions, and reusable instruction configurations for any AI system</div>
+          </div>
+          <div>
+            <div class="text-2xl mb-2">🔒</div>
+            <div class="font-semibold text-gray-900 text-sm mb-1">Policies and Guardrails</div>
+            <div class="text-gray-500 text-xs leading-relaxed">Whitelisted commands, restricted file access, security guardrails, and AI permission boundaries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FRAMEWORK
+  ============================================================ -->
+  <section id="framework" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">The Framework</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Four Building Blocks</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">SAAF agents are assembled from four standardized components, ensuring interoperability and traceability across all participating organizations.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Prompts -->
+        <div class="group rounded-2xl p-6 bg-gradient-to-br from-blue-50 to-blue-100/70 border border-blue-200 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center mb-4 text-white shadow-sm group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-blue-900 mb-2">Prompts</h3>
+          <p class="text-blue-800 text-sm leading-relaxed">Domain-specific audit prompts and system instruction files, crafted for internal audit use cases to ensure consistent and reliable AI behavior, regardless of which AI system you use.</p>
+          <div class="mt-5 pt-4 border-t border-blue-200">
+            <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">Prompt Library</span>
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="group rounded-2xl p-6 bg-gradient-to-br from-orange-50 to-orange-100/70 border border-orange-200 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center mb-4 text-white shadow-sm group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-orange-900 mb-2">Tools</h3>
+          <p class="text-orange-800 text-sm leading-relaxed">Scripts, API connections, version control integrations, and file automation utilities that power agent capabilities across audit workflows, built to work with any tech stack.</p>
+          <div class="mt-5 pt-4 border-t border-orange-200">
+            <span class="text-xs font-semibold text-orange-600 uppercase tracking-wider">Scripts · APIs · Integrations</span>
+          </div>
+        </div>
+
+        <!-- Regulatory -->
+        <div class="group rounded-2xl p-6 bg-gradient-to-br from-green-50 to-green-100/70 border border-green-200 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-green-600 flex items-center justify-center mb-4 text-white shadow-sm group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-green-900 mb-2">Regulatory</h3>
+          <p class="text-green-800 text-sm leading-relaxed">Control mappings for the regulatory frameworks applicable to your organization, ensuring audit agents operate within the right compliance and security boundaries.</p>
+          <div class="mt-5 pt-4 border-t border-green-200">
+            <span class="text-xs font-semibold text-green-600 uppercase tracking-wider">Standards &amp; Controls</span>
+          </div>
+        </div>
+
+        <!-- Outputs -->
+        <div class="group rounded-2xl p-6 bg-gradient-to-br from-purple-50 to-purple-100/70 border border-purple-200 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-purple-600 flex items-center justify-center mb-4 text-white shadow-sm group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-purple-900 mb-2">Outputs</h3>
+          <p class="text-purple-800 text-sm leading-relaxed">Standardized report formats enabling cross-organization comparability, auditability, and traceability. Output format depends on the use case: structured data, documents, or dashboards.</p>
+          <div class="mt-5 pt-4 border-t border-purple-200">
+            <span class="text-xs font-semibold text-purple-600 uppercase tracking-wider">Structured · Readable · Traceable</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SCHEDULE
+  ============================================================ -->
+  <section id="schedule" class="py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">2026 Program</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Hackathon Schedule</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">12 sessions across 2026, from alignment kick-off to final retrospective. Bring your laptop; this is a work session.</p>
+      </div>
+
+      <!-- Registration deadline callout -->
+      <div class="max-w-4xl mx-auto mb-6">
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-5 py-4 flex items-start gap-3">
+          <svg class="w-5 h-5 text-indigo-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+          </svg>
+          <p class="text-indigo-800 text-sm">
+            <strong>Registrations closed:</strong> New registrations for the hackathon series are closed. Interested in joining as a late entrant? <a href="#join" class="underline font-semibold hover:text-indigo-600">Sign up for our waitlist</a> and we will reach out once our onboarding track for new participants is ready.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-indigo-600 text-white">
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider">#</th>
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider">Session</th>
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider">Date</th>
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider hidden sm:table-cell">Time</th>
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider hidden lg:table-cell">Host / Sponsor of the Day</th>
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider hidden md:table-cell">Location</th>
+                  <th class="text-left py-4 px-4 text-xs font-semibold uppercase tracking-wider">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+
+                <!-- Session 1 -->
+                <tr class="bg-green-50/50 hover:bg-green-50 transition-colors" data-date="2026-01-20">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">1</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Alignment Session</div>
+                    <div class="text-xs text-gray-500 mt-0.5">Kick-off &amp; needs identification</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">20 January</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">14:30 – 17:30</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">Mollie</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Amsterdam (Mollie)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                      Done
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- Session 2 -->
+                <tr class="bg-green-50/50 hover:bg-green-50 transition-colors" data-date="2026-03-10">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">2</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">10 March</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">Mollie</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Amsterdam (Mollie)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                      Done
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- Session 3 -->
+                <tr class="bg-indigo-50/60 hover:bg-indigo-50 transition-colors" data-date="2026-03-24">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">3</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm font-bold text-indigo-700">24 March</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">Schuberg Philis</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Schiphol-Rijk (Schuberg Philis)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">
+                      <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+                      Upcoming
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- Session 4 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-04-21">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">4</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                    <div class="text-xs text-gray-500 mt-0.5">Registrations now closed</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">21 April</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">Wolters Kluwer</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Alphen aan den Rijn</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 5 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-05-19">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">5</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">19 May</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">AI Advies en Training</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Hoofddorp (NOREA)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 6 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-06-16">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">6</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">16 June</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">KPMG</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Breukelen (IIA)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 7 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-09-08">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">7</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">8 September</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">KPN</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Rotterdam</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 8 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-09-15">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">8</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">15 September</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">ASML</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Veldhoven (ASML)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 9 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-10-06">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">9</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">6 October</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">Just Eat Takeaway</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Amsterdam (Just Eat Takeaway)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 10 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-11-10">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">10</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">10 November</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">Mollie</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Amsterdam (Mollie)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 11 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-11-17">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">11</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Hackathon</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">17 November</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden lg:table-cell">BDO</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Utrecht (BDO)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+                <!-- Session 12 -->
+                <tr class="hover:bg-gray-50 transition-colors" data-date="2026-12-08">
+                  <td class="py-4 px-4 text-sm font-bold text-gray-400">12</td>
+                  <td class="py-4 px-4">
+                    <div class="text-sm font-semibold text-gray-800">Alignment Session</div>
+                    <div class="text-xs text-gray-500 mt-0.5">Closing &amp; retrospective</div>
+                  </td>
+                  <td class="py-4 px-4 text-sm text-gray-600">8 December</td>
+                  <td class="py-4 px-4 text-sm text-gray-500 hidden sm:table-cell">09:00 – 17:00</td>
+                  <td class="py-4 px-4 text-sm text-gray-400 hidden lg:table-cell italic">TBD</td>
+                  <td class="py-4 px-4 text-sm text-gray-600 hidden md:table-cell">Hoofddorp (NOREA)</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="text-center text-xs text-gray-400 mt-4">Host and location data is indicative. Confirmed details are communicated via calendar invitation.</p>
+        <p class="sm:hidden text-center text-xs text-gray-400 mt-2 flex items-center justify-center gap-1">
+          <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+          Some columns are hidden on smaller screens. Open on a desktop for the full schedule.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       QUOTES
+  ============================================================ -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">Voices from the community</div>
+        <h2 class="text-3xl font-bold text-gray-900">What participants say</h2>
+      </div>
+
+      <!-- Slider wrapper -->
+      <div class="relative">
+        <!-- Slides container -->
+        <div id="quotes-track" class="overflow-hidden">
+          <div id="quotes-slider" class="flex transition-transform duration-500 ease-in-out">
+
+            <!-- Quote 1: Vincent Damen -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">Wrote a functioning AI audit agent in under 2 hours yesterday at the SAAF project hackathon at Mollie. For reference, last time I coded was in 1999... You cannot protect what you do not understand.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Vincent Damen</div>
+                    <div class="text-gray-500 text-xs mt-0.5">Participant, Hackathon #1</div>
+                  </div>
+                  <a href="https://www.linkedin.com/posts/damen-vincent_ai-audit-agents-activity-7437407469330427904-ITWD" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote 2: Dwayne Valkenburg (Hackathon #2) -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">Instead of debating AI's potential, participants are building real audit agents together.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Dwayne Valkenburg</div>
+                    <div class="text-gray-500 text-xs mt-0.5">ISACA NL, Hackathon #2</div>
+                  </div>
+                  <a href="https://www.linkedin.com/feed/update/urn:li:activity:7442311737732820992/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote 3: Ilona Hofland -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">Je hoeft geen programmeur te zijn om bij te dragen. Juist onze domeinkennis als auditors en GRC-professionals is cruciaal om AI-agents te bouwen die daadwerkelijk betrouwbaar, controleerbaar en waardevol zijn.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Ilona Hofland MSc. RA CIA</div>
+                    <div class="text-gray-500 text-xs mt-0.5">Participant, Hackathon #2</div>
+                  </div>
+                  <a href="https://www.linkedin.com/feed/update/urn:li:activity:7442835366434365441/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote 4: Dwayne Valkenburg (Hackathon #3) -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">SAAF sold out for the fourth time, and that tells you everything about the energy in our profession right now.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Dwayne Valkenburg</div>
+                    <div class="text-gray-500 text-xs mt-0.5">ISACA NL, Hackathon #3</div>
+                  </div>
+                  <a href="https://www.linkedin.com/feed/update/urn:li:activity:7452406628341182465/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote 5: Edwin Lodder -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">The SAAF initiative beautifully demonstrates market development: not from a single vendor, but through co-creation and open standards.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Edwin Lodder</div>
+                    <div class="text-gray-500 text-xs mt-0.5">Participant, Hackathon #3</div>
+                  </div>
+                  <a href="https://www.linkedin.com/feed/update/urn:li:activity:7452443629098491904/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote 6: Jeroen Slobbe -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">Great to see how the audit community collaborates on a future where AI can be deployed safely.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Jeroen Slobbe</div>
+                    <div class="text-gray-500 text-xs mt-0.5">BDO, Hackathon #3</div>
+                  </div>
+                  <a href="https://www.linkedin.com/feed/update/urn:li:activity:7452325146473877504/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote 7: Violeta Verbraak-Kolevska -->
+            <div class="w-full flex-shrink-0 px-2 md:w-1/3">
+              <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 flex flex-col h-full">
+                <div class="text-4xl text-indigo-200 font-serif leading-none mb-4">"</div>
+                <p class="text-gray-700 text-lg leading-relaxed flex-1">We managed to do the audit planning and produce the work program in half an hour. Normally without the AI tools we do that in at least two weeks.</p>
+                <div class="mt-6 pt-6 border-t border-gray-100 flex items-end justify-between gap-2">
+                  <div>
+                    <div class="font-semibold text-gray-900 text-sm">Violeta Verbraak-Kolevska PhD</div>
+                    <div class="text-gray-500 text-xs mt-0.5">Participant, Hackathon #3</div>
+                  </div>
+                  <a href="https://www.linkedin.com/feed/update/urn:li:activity:7452466900967514112/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 inline-flex items-center gap-1 text-[#0A66C2] hover:opacity-75 transition-opacity text-xs font-medium" aria-label="View source post on LinkedIn">
+                    <span>Source post</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Navigation arrows -->
+        <button id="quotes-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 w-10 h-10 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center text-gray-400 hover:text-indigo-600 hover:border-indigo-300 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 hidden md:flex" aria-label="Previous quotes">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="quotes-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 w-10 h-10 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center text-gray-400 hover:text-indigo-600 hover:border-indigo-300 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 hidden md:flex" aria-label="Next quotes">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- Dot indicators -->
+      <div id="quotes-dots" class="flex justify-center gap-2 mt-8"></div>
+
+    </div>
+  </section>
+
+  <!-- Quotes slider script -->
+  <script>
+  (function() {
+    const slider = document.getElementById('quotes-slider');
+    const track = document.getElementById('quotes-track');
+    const slides = Array.from(slider.children);
+    const prevBtn = document.getElementById('quotes-prev');
+    const nextBtn = document.getElementById('quotes-next');
+    const dotsWrap = document.getElementById('quotes-dots');
+    let current = 0;
+
+    function getSlidesPerView() {
+      if (window.innerWidth >= 768) return 3;
+      return 1;
+    }
+
+    function getMaxPage() {
+      return Math.max(0, slides.length - getSlidesPerView());
+    }
+
+    function update() {
+      const perView = getSlidesPerView();
+      const slideWidth = 100 / perView;
+      slides.forEach(s => { s.style.width = slideWidth + '%'; s.style.flexShrink = '0'; });
+      const offset = -(current * slideWidth);
+      slider.style.transform = 'translateX(' + offset + '%)';
+
+      // Update dots
+      const totalPages = getMaxPage() + 1;
+      dotsWrap.innerHTML = '';
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'w-2.5 h-2.5 rounded-full transition-all focus:outline-none ' +
+          (i === current ? 'bg-indigo-600 scale-110' : 'bg-gray-300 hover:bg-gray-400');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', function() { current = i; update(); });
+        dotsWrap.appendChild(dot);
+      }
+
+      // Arrow visibility
+      prevBtn.style.opacity = current === 0 ? '0.3' : '1';
+      prevBtn.style.pointerEvents = current === 0 ? 'none' : 'auto';
+      nextBtn.style.opacity = current >= getMaxPage() ? '0.3' : '1';
+      nextBtn.style.pointerEvents = current >= getMaxPage() ? 'none' : 'auto';
+    }
+
+    prevBtn.addEventListener('click', function() {
+      if (current > 0) { current--; update(); }
+    });
+    nextBtn.addEventListener('click', function() {
+      if (current < getMaxPage()) { current++; update(); }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    track.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && current < getMaxPage()) { current++; update(); }
+        else if (diff < 0 && current > 0) { current--; update(); }
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function() {
+      if (current > getMaxPage()) current = getMaxPage();
+      update();
+    });
+
+    update();
+  })();
+  </script>
+
+
+  <!-- ============================================================
+       VIDEO
+  ============================================================ -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">See it in action</div>
+        <h2 class="text-3xl font-bold text-gray-900 mb-3">A Day at the SAAF Hackathon</h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">Watch what happens when 100+ auditors come together to build AI agents.</p>
+      </div>
+      <a href="https://www.youtube.com/watch?v=17Biu5Frc9Y" target="_blank" rel="noopener noreferrer" class="group block relative rounded-2xl overflow-hidden shadow-xl border border-gray-200 aspect-video bg-gray-900">
+        <img src="https://img.youtube.com/vi/17Biu5Frc9Y/maxresdefault.jpg" alt="SAAF Hackathon impression" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full bg-white/90 group-hover:bg-white group-hover:scale-110 transition-all flex items-center justify-center shadow-lg">
+            <svg class="w-8 h-8 text-red-600 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </a>
+      <p class="text-center text-sm text-gray-400 mt-4">Video by NOREA, filmed at Wolters Kluwer, 21 April 2026</p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ORGANIZATIONS
+  ============================================================ -->
+  <section id="organizations" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">Community</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Participating Organizations</h2>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">Leading organizations from finance, technology, government, and professional services co-building the future of AI-driven auditing.</p>
+      </div>
+
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+
+        <!-- ABN AMRO -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/abnamro.png" alt="ABN AMRO" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">ABN AMRO</span>
+        </div>
+
+        <!-- Achmea -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/achmea.png" alt="Achmea" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Achmea</span>
+        </div>
+
+        <!-- Adidas -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/adidas.png" alt="Adidas" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Adidas</span>
+        </div>
+
+        <!-- ADR -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/adr.png" alt="ADR" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">ADR</span>
+        </div>
+
+        <!-- AFM -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/afm.jpeg" alt="AFM" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">AFM</span>
+        </div>
+
+        <!-- Ahold Delhaize -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/ahold.png" alt="Ahold Delhaize" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Ahold Delhaize</span>
+        </div>
+
+        <!-- AI Advies en Training -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/ai-advies.png" alt="AI Advies en Training" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">AI Advies en Training</span>
+        </div>
+
+        <!-- Algemene Rekenkamer -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/rekenkamer.svg" alt="Algemene Rekenkamer" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Algemene Rekenkamer</span>
+        </div>
+
+        <!-- Allianz -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/allianz.png" alt="Allianz" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Allianz</span>
+        </div>
+
+        <!-- ANWB -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/anwb.png" alt="ANWB" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">ANWB</span>
+        </div>
+
+        <!-- ASML -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/asml.svg" alt="ASML" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">ASML</span>
+        </div>
+
+        <!-- A.S.R. -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/asr.png" alt="a.s.r." class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">a.s.r.</span>
+        </div>
+
+        <!-- AuditAgent -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/auditagent.png" alt="AuditAgent" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">AuditAgent</span>
+        </div>
+
+        <!-- BDO -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/bdo.png" alt="BDO" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">BDO</span>
+        </div>
+
+        <!-- BNG Bank -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/bng-bank.png" alt="BNG Bank" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">BNG Bank</span>
+        </div>
+
+        <!-- Booking.com -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/booking.png" alt="Booking.com" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Booking.com</span>
+        </div>
+
+        <!-- Br1ght -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/br1ght.jpg" alt="Br1ght" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Br1ght</span>
+        </div>
+
+        <!-- Brightlyn -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/brightlyn.png" alt="Brightlyn" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Brightlyn</span>
+        </div>
+
+        <!-- Capgemini -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/capgemini.svg" alt="Capgemini" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Capgemini</span>
+        </div>
+
+        <!-- Cyberup -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/cyberup.jpg" alt="Cyberup" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Cyberup</span>
+        </div>
+
+        <!-- CZ -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/cz.png" alt="CZ" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">CZ</span>
+        </div>
+
+        <!-- Deloitte -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/deloitte.png" alt="Deloitte" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Deloitte</span>
+        </div>
+
+        <!-- Diligius -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/diligius.png" alt="Diligius" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Diligius</span>
+        </div>
+
+        <!-- DLL Financial Solution Partner -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/dll-financial.png" alt="DLL Financial Solution Partner" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">DLL Financial</span>
+        </div>
+
+        <!-- Eminence Ways -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/eminence-ways.png" alt="Eminence Ways" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Eminence Ways</span>
+        </div>
+
+        <!-- EuroClear -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/euroclear.png" alt="EuroClear" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">EuroClear</span>
+        </div>
+
+        <!-- Exact -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/exact.png" alt="Exact" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Exact</span>
+        </div>
+
+        <!-- Ferocia -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/ferocia.png" alt="Ferocia" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Ferocia</span>
+        </div>
+
+
+        <!-- Forvis Mazars -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/forvis-mazars.png" alt="Forvis Mazars" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Forvis Mazars</span>
+        </div>
+
+        <!-- FrieslandCampina -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/frieslandcampina.png" alt="FrieslandCampina" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">FrieslandCampina</span>
+        </div>
+
+        <!-- Gasunie -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/gasunie.jpeg" alt="Gasunie" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Gasunie</span>
+        </div>
+
+        <!-- de Goudse verzekeringen -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/de-goudse-verzekeringen.png" alt="de Goudse verzekeringen" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">de Goudse</span>
+        </div>
+
+        <!-- Grant Thornton -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/grant-thornton.png" alt="Grant Thornton" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Grant Thornton</span>
+        </div>
+
+        <!-- Heineken -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/heineken.png" alt="Heineken" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Heineken</span>
+        </div>
+
+        <!-- InAudit -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/inaudit.svg" alt="InAudit" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">InAudit</span>
+        </div>
+
+        <!-- ING -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/ing.png" alt="ING" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">ING</span>
+        </div>
+
+        <!-- Joanknecht -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/joanknecht.webp" alt="Joanknecht" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Joanknecht</span>
+        </div>
+
+        <!-- JTI -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/jti.png" alt="JTI" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">JTI</span>
+        </div>
+
+        <!-- Just Eat Takeaway -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/just-eat-takeaway.png" alt="Just Eat Takeaway" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Just Eat Takeaway</span>
+        </div>
+
+        <!-- KLM -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/klm.svg" alt="KLM" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">KLM</span>
+        </div>
+
+        <!-- Kouters van der Meer -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/kouters.jpeg" alt="Kouters van der Meer" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Kouters van der Meer</span>
+        </div>
+
+        <!-- KPMG -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/kpmg.png" alt="KPMG" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">KPMG</span>
+        </div>
+
+        <!-- KPN -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/kpn.png" alt="KPN" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">KPN</span>
+        </div>
+
+        <!-- Kriton -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/kriton.png" alt="Kriton" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Kriton</span>
+        </div>
+
+        <!-- Kutxabank -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/kutxabank.webp" alt="Kutxabank" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Kutxabank</span>
+        </div>
+
+        <!-- Mollie -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/mollie.png" alt="Mollie" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Mollie</span>
+        </div>
+
+        <!-- Nationale Nederlanden -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/nationale-nederlanden.png" alt="Nationale Nederlanden" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Nationale Nederlanden</span>
+        </div>
+
+        <!-- NS -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/ns.svg" alt="NS" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">NS</span>
+        </div>
+
+        <!-- One Risk Advisory -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/one-risk-advisory.jpg" alt="One Risk Advisory" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">One Risk Advisory</span>
+        </div>
+
+        <!-- Nexsure Security -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/nexsure-security.png" alt="Nexsure Security" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Nexsure Security</span>
+        </div>
+
+        <!-- Philips -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/philips.png" alt="Philips" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Philips</span>
+        </div>
+
+        <!-- Provincie Noord-Holland -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/provincie-noord-holland.svg" alt="Provincie Noord-Holland" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Provincie Noord-Holland</span>
+        </div>
+
+        <!-- PwC -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/pwc.png" alt="PwC" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">PwC</span>
+        </div>
+
+        <!-- RVO -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/rvo.png" alt="RVO" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">RVO</span>
+        </div>
+
+        <!-- SAP -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/sap.png" alt="SAP" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">SAP</span>
+        </div>
+
+        <!-- Schuberg Philis -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/schuberg-philis.png" alt="Schuberg Philis" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Schuberg Philis</span>
+        </div>
+
+        <!-- SHV -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/shv.png" alt="SHV" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">SHV</span>
+        </div>
+
+        <!-- Smartshore Ability -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/smartshore-ability.png" alt="Smartshore Ability" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Smartshore Ability</span>
+        </div>
+
+        <!-- Stedin -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/stedin.jpeg" alt="Stedin" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Stedin</span>
+        </div>
+
+        <!-- Traton -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/traton.jpg" alt="Traton" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Traton</span>
+        </div>
+
+        <!-- Triodos Bank -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/triodos-bank.png" alt="Triodos Bank" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Triodos Bank</span>
+        </div>
+
+        <!-- Uber -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/uber.png" alt="Uber" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Uber</span>
+        </div>
+
+        <!-- Universiteit Leiden -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/universiteit-leiden.png" alt="Universiteit Leiden" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Universiteit Leiden</span>
+        </div>
+
+        <!-- Van Lanschot Kempen -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/van-lanschot-kempen.png" alt="Van Lanschot Kempen" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Van Lanschot Kempen</span>
+        </div>
+
+        <!-- Veritas -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/veritas.png" alt="Veritas" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Veritas</span>
+        </div>
+
+        <!-- Wolters Kluwer -->
+        <div class="flex flex-col items-center text-center gap-1">
+          <div class="w-full h-14 px-3 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/logos/wolters-kluwer.png" alt="Wolters Kluwer" class="max-h-8 w-auto max-w-full object-contain">
+          </div>
+          <span class="text-xs text-gray-500 leading-tight">Wolters Kluwer</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       COMMUNITY & PRESS (POSTS DATA)
+  ============================================================ -->
+  <script>
+    const POSTS = [
+      {
+        session: "Hackathon #7",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Recap of the SAAF hackathon at ASML: Fleur Koster on AI in the audit process, Harm Tanis on MCP, Arnaud Hubaux on root cause analysis in machine design, and a new standard where every agent repository gets an AUDIT-CRITERIA.md next to its README.",
+        hashtags: ["#SAAF", "#MCP", "#skill", "#SaafProject", "#SharedAuditAgentsFramework", "#AI", "#Audit", "#AgenticAI", "#RootCauseAnalysis", "#EUAIAct"],
+        likes: 69,
+        date: "2026-09-17",
+        url: "https://www.linkedin.com/posts/imathijs_saaf-mcp-skill-activity-7506251707765596164-RNLl",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #7",
+        category: "Innovation",
+        author: "Harm Tanis",
+        authorRole: "Presenter",
+        text: "Balancing flexibility and control with MCP: enforce the boundary outside the model, not inside the prompt. Least-privilege credentials, bounded operations, and a human in the loop for sensitive writes.",
+        hashtags: ["#SAAF"],
+        likes: 23,
+        date: "2026-09-16",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7508790361742303233/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #6",
+        category: "AI Audit",
+        author: "Kim van Lavieren",
+        authorRole: "Presenter",
+        text: "Every company already has an AI harness, whether you built it or not. Auditability should emerge from the harness itself, git hooks that refuse the push, action logs that are hashed and stored remotely, not bolted on afterwards.",
+        hashtags: ["#SAAFProject"],
+        likes: 68,
+        comments: 4,
+        date: "2026-09-09",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7508208741138305024/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #6",
+        category: "Community",
+        author: "Imran Nashir",
+        authorRole: "Participant",
+        text: "At the KPN SAAF hackathon, teams built live AI agent demos instead of presenting concepts: the challenge was to build an army of agents. Two teams took prizes, a fraud-risk simulation and a voice-scheduling agent called Audrey.",
+        hashtags: ["#SAAF", "#SAAFProject", "#InternalAudit", "#AIAgents", "#Hackathon"],
+        likes: 71,
+        comments: 4,
+        date: "2026-09-10",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7503436054239121408/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #6",
+        category: "AI Audit",
+        author: "Erik Hessels",
+        authorRole: "Participant",
+        text: "AI is shifting from a tool for the auditor to technology that can perform parts of the audit process itself. How much autonomy should an agent get, and when should auditors only step in by exception?",
+        likes: 25,
+        comments: 3,
+        date: "2026-09-10",
+        url: "https://www.linkedin.com/posts/erikhessels_wanneer-kunnen-we-als-auditor-eigenlijk-vertrouwen-activity-7503538114976665602-1i4G",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #5",
+        category: "Community",
+        author: "SAAF Project",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Dank aan alle sprekers en deelnemers van de IIA hackathon: Danny Francken, Eduward van de Kamp, Erik Hessels, Mathijs Schouten, Ruben de Wolf, Violeta Verbraak-Kolevska en Frank van Dissel. Samen bouwen aan een Shared Audit Agents Framework, met ROI als thema van de dag.",
+        hashtags: ["#SAAF", "#SharedAuditAgentsFramework", "#AI", "#Innovation", "#Agents", "#Audit", "#IT", "#QualityOverQuantity", "#Collaboration", "#NonCompetitive"],
+        likes: 37,
+        date: "2026-06-17",
+        url: "https://www.linkedin.com/posts/saaf-project_saaf-sharedauditagentsframework-ai-activity-7473688044013850624-QLk_",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #5",
+        category: "AI Audit",
+        author: "Erik Hessels",
+        authorRole: "Presenter",
+        text: "AI raises the bar. Professional judgement remains the differentiator. Reflecting on the IIA SAAF hackathon and the CAE Forum: collaboration but also independence, innovation but also discipline, curiosity but also professional scepticism.",
+        likes: 29,
+        date: "2026-06-18",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7473082590779043841",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #5",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Weer een hackathon achter de rug. ROI-thema bij Het Instituut van Internal Auditors in Breukelen, samen met Eduward van de Kamp. Volg de SAAF-Project pagina of stuur een bericht voor de slides of om aan te haken.",
+        hashtags: ["#SAAF", "#Audit", "#Innovation", "#AI", "#SharedAuditAgentsFramework", "#AgenticAi", "#Agents", "#Framework"],
+        likes: 66,
+        comments: 2,
+        date: "2026-06-16",
+        url: "https://www.linkedin.com/posts/imathijs_saaf-audit-innovation-activity-7473118080085360640-nT7-",
+        lang: "nl"
+      },
+      {
+        category: "Community",
+        author: "Paul van Egmond",
+        authorRole: "Partner",
+        text: "Recorded a podcast on the SAAF Project journey, from a first idea to an initiative that spans multiple professional bodies. AI only delivers real value when professionals experiment and learn by doing, so start now instead of waiting for it to be perfect.",
+        hashtags: ["#SAAF", "#NOREA", "#ISACA", "#IIA", "#NBA", "#AI", "#Innovatie"],
+        likes: 27,
+        date: "2026-07-24",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7477743679001067520/",
+        lang: "en"
+      },
+      {
+        category: "AI Audit",
+        author: "Patrick Chu",
+        authorRole: "Participant",
+        text: "Everyone talks about AI, but few talk about trust, and even fewer organizations know how to build it. How do you innovate with AI without losing control over governance, risk, and security?",
+        hashtags: ["#AI", "#vertrouwen", "#SAAF", "#bestuurders", "#toezichthouders", "#auditors", "#risk", "#security", "#NOREA"],
+        date: "2026-07-25",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7486419390515744768",
+        lang: "en"
+      },
+      {
+        category: "Community",
+        author: "NOREA",
+        authorRole: "Partner",
+        text: "The SAAF Project has moved into the Do/Check phase of the PDCA cycle: prototypes are now being tested in the real world, including sessions with regulators and open-source pentesting.",
+        hashtags: ["#SAAF", "#InnovationManagement", "#ITAudit", "#CyberSecurity", "#AILiteracy", "#NOREA"],
+        likes: 33,
+        comments: 2,
+        date: "2026-07-23",
+        url: "https://www.linkedin.com/posts/norea_saaf-innovationmanagement-itaudit-activity-7485611044577595392-5xw_",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #4",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "COSO blijft, alleen het gedachtegoed eromheen verandert. Terugblik op Hackathon #4: KPMG over COSO en AI-auditing, AI-Advies & Training over observability van agentic AI, en ForHumanity live vanuit de VS.",
+        hashtags: ["#SAAF", "#AI", "#SAAFProject", "#AgenticAI", "#Observability", "#AuditInnovation"],
+        likes: 81,
+        comments: 6,
+        date: "2026-05-19",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7462847285970862081/",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #4",
+        category: "AI Audit",
+        author: "Manon van Rietschoten",
+        authorRole: "Presenter",
+        text: "Presented on auditing autonomous AI agents at the SAAF Hackathon: covering data changes, model drift, and hallucination risks. How do we audit autonomous AI?",
+        hashtags: ["#AI", "#Audit", "#AgenticAI", "#NOREA", "#SAAF", "#KPMG"],
+        likes: 114,
+        comments: 1,
+        date: "2026-05-19",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7462505535720910849/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #4",
+        category: "Community",
+        author: "Dana Vuijk",
+        authorRole: "Participant",
+        text: "voor simpele AI-assistents is het vaak slimmer en goedkoper om mensen zelf te trainen dan direct iets extern te kopen",
+        hashtags: ["#AI", "#AIAgents", "#Copilot", "#ClaudeCode", "#Hackathon"],
+        likes: 20,
+        date: "2026-05-19",
+        url: "https://nl.linkedin.com/posts/danavuijk_ai-aiagents-copilot-activity-7462516820047044610-0hJ4",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #4",
+        category: "AI Audit",
+        author: "Xavier Fung-A-Jou",
+        authorRole: "Presenter",
+        text: "Presented on observability in auditing agentic AI: what agents should log, accountability when agents act, and how to keep systems controllable. A combination of deterministic and stochastic systems that check each other.",
+        hashtags: ["#AI", "#SAAF", "#Audit", "#AgenticAI", "#Observability", "#ITAudit"],
+        likes: 46,
+        comments: 1,
+        date: "2026-05-19",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7462788446353391616/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #4",
+        category: "Innovation",
+        author: "Machiel Kapiteijn",
+        authorRole: "Presenter",
+        text: "Presented on observability of agentic systems at the SAAF Hackathon: live traces showing tool calls, approvals, timing, costs, and policies. Once agentic AI gets a role within your processes, you need to know what happened along the way.",
+        hashtags: ["#AI", "#SAAF", "#Audit", "#AgenticAI", "#NOREA", "#Observability", "#ITAudit"],
+        likes: 34,
+        comments: 3,
+        date: "2026-05-19",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7462789067739668481/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "De groep wordt steeds groter. De repository raakt steeds voller. De structuur wordt steeds duidelijker. Voor Hackathon #3 kiezen we bewust: meer bouwen, minder zenden.",
+        hashtags: ["#SharedAuditAgentsFramework", "#SAAF", "#AI", "#Audit", "#OpenSource", "#AuditInnovation"],
+        likes: 69,
+        comments: 2,
+        date: "2026-03-26",
+        likes: 77,
+        comments: 2,
+        url: "https://www.linkedin.com/posts/activity-7443174979849981952-_New",
+        lang: "nl"
+      },
+      {
+        session: "Alignment #1",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "SAAF Project launch: announcing a co-creative initiative where auditors build AI agents together across 10 hackathons.",
+        hashtags: ["#SAAF", "#AIAudit", "#InternalAudit"],
+        likes: 147,
+        comments: 18,
+        date: "2026-01-09",
+        likes: 66,
+        comments: 3,
+        url: "https://www.linkedin.com/posts/activity-7406955078286319617-4akz",
+        lang: "en"
+      },
+      {
+        session: "Alignment #1",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Session 1 recap: 50+ auditors from leading organisations came together for the first alignment session at Mollie in Amsterdam.",
+        hashtags: ["#SAAF", "#Hackathon", "#AIAgents"],
+        likes: 203,
+        comments: 27,
+        date: "2026-01-21",
+        likes: 66,
+        comments: 4,
+        url: "https://www.linkedin.com/posts/activity-7419708175916113920-_Hnt",
+        lang: "en"
+      },
+      {
+        session: "Alignment #1",
+        category: "AI Audit",
+        author: "Eduward van de Kamp",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Internal audit meets AI agents: reflections on Session 1 and what it means for the profession when auditors start building their own tools.",
+        hashtags: ["#InternalAudit", "#ArtificialIntelligence", "#AIAgents"],
+        likes: 184,
+        comments: 22,
+        date: "2026-01-22",
+        likes: 48,
+        comments: 1,
+        url: "https://www.linkedin.com/posts/eduward-van-de-kamp-56b3565b_internalaudit-artificialintelligence-aiagents-activity-7420092321481891840-oRTZ",
+        lang: "en"
+      },
+      {
+        session: "Alignment #1",
+        category: "AI Audit",
+        author: "D. Valkenburg",
+        authorRole: "Participant",
+        text: "AI audit agents: a practitioner's view on what we built and learned during the first SAAF session.",
+        hashtags: ["#AI", "#Audit", "#Agents"],
+        likes: 91,
+        comments: 9,
+        date: "2026-01-22",
+        likes: 61,
+        comments: 3,
+        url: "https://www.linkedin.com/posts/dvalkenburg_ai-audit-agents-activity-7420047027025121280-mtgB",
+        lang: "en"
+      },
+      {
+        session: "Alignment #1",
+        category: "AI Audit",
+        author: "ISACA NL",
+        authorRole: "Partner",
+        text: "ISACA NL on audit and AI: why initiatives like SAAF matter for the future of the profession and what members should know.",
+        hashtags: ["#ISACANL", "#Audit", "#AI"],
+        likes: 76,
+        comments: 5,
+        date: "2026-01-29",
+        likes: 37,
+        url: "https://www.linkedin.com/posts/isaca-nl_isacanl-audit-ai-activity-7429094722985652224-KJJJ",
+        lang: "nl"
+      },
+      {
+        session: "Alignment #1",
+        category: "Media",
+        author: "ISACA NL",
+        authorRole: "Partner",
+        text: "SAAF: Shared Audit Agents Framework. Article on the ISACA NL website covering the project's goals, approach, and first outcomes.",
+        date: "2026-01-15",
+        url: "https://isaca.nl/event/saaf-project-shared-audit-agents-framework/",
+        lang: "nl"
+      },
+      {
+        session: "Alignment #1",
+        category: "Media",
+        author: "IIA",
+        authorRole: "Partner",
+        text: "Building Trusted AI for Internal Audit: the IIA covers the SAAF hackathon initiative and what it means for the profession.",
+        date: "2026-01-28",
+        url: "https://www.iia.nl/nieuws/saaf-hackathons-building-trusted-ai-for-internal-audit",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "I dreamed of building agents. I dreamed of a room full of sharp people. Last Wednesday, during the first SAAF Hackathon at Mollie in Amsterdam, that dream became real.",
+        hashtags: ["#SharedAuditAgentsFramework", "#AI", "#InternalAudit"],
+        likes: 83,
+        comments: 7,
+        date: "2026-03-13",
+        likes: 85,
+        comments: 7,
+        url: "https://www.linkedin.com/posts/activity-7438125437379153920-mFH-",
+        lang: "en"
+      },
+      // ── Hackathon #1 — 10 March 2026, Mollie, Amsterdam ─────────────
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Dwayne Valkenburg",
+        authorRole: "ISACA NL",
+        text: "80 experts joined the SAAF Project event at Mollie to build open-source AI agents for the IT Audit and GRC industry. Not closed technology, but open-source software anyone in the industry can download, explore, and improve.",
+        hashtags: ["#AIAudit", "#GRC", "#Innovation"],
+        likes: 102,
+        comments: 5,
+        date: "2026-03-10",
+        likes: 125,
+        comments: 6,
+        url: "https://www.linkedin.com/posts/dvalkenburg_aiaudit-automation-compliance-activity-7437155838504538112-bHMv",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Vincent Damen",
+        authorRole: "Participant",
+        text: "Built a functioning AI audit agent in under 2 hours at the SAAF hackathon. For reference, last time I coded was in 1999. You cannot protect what you do not understand.",
+        hashtags: ["#AI", "#Audit", "#Agents"],
+        likes: 97,
+        comments: 9,
+        date: "2026-03-11",
+        likes: 141,
+        comments: 9,
+        url: "https://www.linkedin.com/posts/damen-vincent_ai-audit-agents-activity-7437407469330427904-ITWD",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Linda Nyvelius",
+        authorRole: "Participant",
+        text: "Participated in my first official hackathon and ended up winning a prize: a beautiful golden flute. My team built an AI-powered Internal Audit Agent with Claude Code.",
+        hashtags: ["#SAAF", "#Hackathon", "#AIAudit"],
+        likes: 27,
+        comments: 1,
+        date: "2026-03-11",
+        likes: 41,
+        comments: 1,
+        url: "https://www.linkedin.com/posts/linda-nyvelius_yesterday-i-participated-in-my-first-official-activity-7437423933357895681-7isO",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #1",
+        category: "AI Audit",
+        author: "Alex Zwijnenburg",
+        authorRole: "Participant",
+        text: "AI in de audit voelt vaak nog als een belofte. Gisteren bouwden we het. De echte uitdaging zit in het herontwerpen van processen: als je niet scherp hebt wat je toetst, automatiseer je vooral onduidelijkheid.",
+        likes: 54,
+        comments: 2,
+        date: "2026-03-11",
+        likes: 71,
+        comments: 2,
+        url: "https://www.linkedin.com/posts/alex-zwijnenburg-b0aba598_ai-in-de-audit-voelt-vaak-nog-als-een-belofte-activity-7437425890785091584-XOoZ",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Innovation",
+        author: "FlowOpt",
+        authorRole: "Participant",
+        text: "Dubbel succes op de Keizersgracht: FlowOpt valt in de prijzen bij de SAAF Hackathon met de Vendor Risk Audit Agent, die third-party audits automatiseert tegen EU- en Nederlandse regelgeving.",
+        hashtags: ["#Flowopt", "#AI", "#SAAFProject"],
+        likes: 23,
+        comments: 3,
+        date: "2026-03-11",
+        likes: 31,
+        comments: 3,
+        url: "https://www.linkedin.com/posts/flowoptnl_flowopt-ai-saafproject-activity-7437456933869178880-yZEP",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Eduward van de Kamp",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "AI in Audit is no longer just a promise. Yesterday, we built 10 working AI agents in less than two hours — from EU AI Act risk assessments to TeamMate plugins.",
+        hashtags: ["#InternalAudit", "#Hackathon", "#SAAF"],
+        likes: 66,
+        comments: 4,
+        date: "2026-03-11",
+        likes: 102,
+        comments: 5,
+        url: "https://www.linkedin.com/posts/eduward-van-de-kamp-56b3565b_internalaudit-itaudit-artificialintelligence-activity-7437488684339257344-53xQ",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Innovation",
+        author: "Lennard Kruseman",
+        authorRole: "Participant",
+        text: "Demonstrated building a complex multi-agent AI workflow at the SAAF hackathon at Mollie, with guardrails, data security, and JIRA integration. Within two hours, participants built 10 working AI audit agents together.",
+        hashtags: ["#AI", "#MultiAgentSystems", "#SAAF"],
+        likes: 42,
+        comments: 3,
+        date: "2026-03-11",
+        likes: 50,
+        comments: 3,
+        url: "https://www.linkedin.com/posts/lennardkruseman_ai-artificialintelligence-audit-activity-7437494055174934529-AQ5a",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Jaclyn Moon",
+        authorRole: "Participant",
+        text: "Built my first AI Audit Agent at the SAAF Hackathon in under 2 hours. Key insight: AI agents will transform the auditing profession.",
+        hashtags: ["#AI", "#AIAgents", "#AuditInnovation"],
+        likes: 13,
+        comments: 2,
+        date: "2026-03-11",
+        likes: 21,
+        comments: 4,
+        url: "https://www.linkedin.com/posts/jaclyn-moon-030442b9_ai-aiagents-auditinnovation-activity-7437516702835339264-yo0f",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #1",
+        category: "Community",
+        author: "Imane Akhyar",
+        authorRole: "Participant",
+        text: "Meedoen aan de SAAF Hackathon en een Assurance Agent bouwen met Claude Code. Mijn eerste keer werken met Claude! Van concept naar werkende agent.",
+        likes: 22,
+        comments: 0,
+        date: "2026-03-12",
+        likes: 37,
+        url: "https://www.linkedin.com/posts/imane-akhyar-4b6313206_afgelopen-dinsdag-deed-ik-mee-aan-de-saaf-activity-7437782057457516544-lkNZ",
+        lang: "nl"
+      },
+      // ── Hackathon #2 — 24 March 2026, Schuberg Philis, Amsterdam ─────
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Dwayne Valkenburg",
+        authorRole: "Participant",
+        text: "Teams at the SAAF event at Schuberg Philis identified audit challenges, designed reusable patterns, built AI audit agents, and deployed solutions. Think big. Start small. Move fast.",
+        hashtags: ["#AIAudit", "#Automation", "#Compliance", "#InternalAudit", "#Innovation"],
+        likes: 118,
+        comments: 2,
+        date: "2026-03-24",
+        likes: 175,
+        comments: 2,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442311737732820992/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Heidi Molijn",
+        authorRole: "Participant",
+        text: "We welcomed 70 colorful participants to the SAAF Hackathon at Schuberg Philis — an inspiring day full of collaboration, creativity, and hands-on innovation.",
+        hashtags: ["#hackathon", "#schubergphilis"],
+        likes: 48,
+        date: "2026-03-24",
+        likes: 63,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442321089914953728/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Patrick Chu",
+        authorRole: "Participant",
+        text: "What happens when you put 70+ auditors, engineers and innovators in one room at Schuberg Philis? A day of experimentation, collaboration, and working AI audit agents from 45+ organisations.",
+        hashtags: ["#ITAudit", "#ITRisk", "#SAAF"],
+        likes: 65,
+        comments: 1,
+        date: "2026-03-24",
+        likes: 113,
+        comments: 3,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442465374211715072/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "AI Audit",
+        author: "Rishi Djairam",
+        authorRole: "Participant",
+        text: "Our team built an AI agent for automatically detecting and masking PII within hours at the SAAF Hackathon. AI in Internal Audit only becomes truly relevant when you start applying it.",
+        hashtags: ["#InternalAudit", "#AI", "#SAAF", "#AuditInnovation"],
+        likes: 10,
+        date: "2026-03-25",
+        likes: 18,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442516117585219584/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Jaclyn Moon",
+        authorRole: "Participant",
+        text: "Great to be part of the SAAF Hackathon — an inspiring day of collaboration, innovation, and hands-on building of AI audit agents together.",
+        hashtags: ["#SAAF", "#SharedAuditAgentsFramework"],
+        likes: 16,
+        date: "2026-03-25",
+        likes: 39,
+        comments: 1,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442540288285376512/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Innovation",
+        author: "Lennard Kruseman",
+        authorRole: "Participant",
+        text: "Met team ICE – Identity Compliance Engine – gebouwd bij de SAAF Hackathon: een multi-agent app die checkt of Microsoft Entra ID binnen ITGC-kaders valt. Trots op de 2e prijs.",
+        hashtags: ["#AI", "#MultiAgent", "#IdentityAccessManagement", "#ITGC", "#Hackathon"],
+        likes: 17,
+        comments: 4,
+        date: "2026-03-25",
+        likes: 48,
+        comments: 5,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442582134336393216/",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Innovation",
+        author: "FlowOpt",
+        authorRole: "Participant",
+        text: "3e plek op de SAAF Hackathon bij Schuberg Philis! FlowOpt elimineert handmatig werk door complexe problemen te vertalen naar werkende, schaalbare AI-oplossingen.",
+        hashtags: ["#FlowOpt", "#SAAFHackathon", "#AI", "#Innovation"],
+        likes: 3,
+        date: "2026-03-25",
+        likes: 9,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442602669510324224/",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Emil van Werven",
+        authorRole: "Participant",
+        text: "Another inspiring SAAF Hackathon at Schuberg Philis — one agent was built in just 30 minutes. AI agents will play a key role in taking auditing to the next level.",
+        hashtags: ["#SAAF"],
+        likes: 5,
+        date: "2026-03-25",
+        likes: 47,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442605099450798080/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Innovation",
+        author: "Rohan Sobha",
+        authorRole: "Participant",
+        text: "Tweede prijs op de SAAF Hackathon met ICE — Identity Compliance Engine: een multi-agent systeem dat policies in Microsoft Entra ID koppelt aan het ITGC-kader van de Auditdienst Rijk. Super trots op ons team!",
+        hashtags: ["#SAAF", "#AI", "#AgenticAI", "#ITGC", "#IAM"],
+        likes: 26,
+        comments: 3,
+        date: "2026-03-26",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442843194247053312/",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Innovation",
+        author: "Machiel Kapiteijn",
+        authorRole: "Participant",
+        text: "Ons team won de eerste prijs op de SAAF Hackathon met een agent voor OWASP GenAI security-uitdagingen: prompt injection en improper output handling. Waardevolle dag vol discussies over het bouwen van Agentic AI-systemen.",
+        hashtags: ["#AI", "#Agents", "#SAAF", "#OWASP", "#Hackathon"],
+        likes: 21,
+        comments: 1,
+        date: "2026-03-25",
+        likes: 34,
+        comments: 1,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442643819323416577/",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #2",
+        category: "AI Audit",
+        author: "Ilona Hofland",
+        authorRole: "Participant",
+        text: "Domeinexpertise van auditors en GRC-professionals is essentieel voor het bouwen van betrouwbare AI-agents — je hoeft geen programmeur te zijn om bij te dragen. Meld je aan voor de volgende hackathon op 21 april.",
+        hashtags: ["#SharedAuditAgentsFramework", "#AI", "#InternalAudit", "#GRC", "#SAAF"],
+        likes: 39,
+        comments: 1,
+        date: "2026-03-26",
+        likes: 56,
+        comments: 3,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442835366434365441/",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #2",
+        category: "Community",
+        author: "Bart van den Broek",
+        authorRole: "Participant",
+        text: "Met Claude Code bouw je in 2 uur een werkend product zonder zelf een regel code te typen. Iets bouwen lukt prima, maar het ook echt goed en beheerst laten werken in de praktijk? Dat is de échte uitdaging.",
+        hashtags: [],
+        likes: 20,
+        date: "2026-03-26",
+        likes: 33,
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7442842807192453120/",
+        lang: "nl"
+      },
+      {
+        category: "Media",
+        author: "NOREA",
+        authorRole: "Partner",
+        text: "Een impressie van een SAAF-dag: NOREA deelt een video van de hackathon van 21 april bij Wolters Kluwer, waar auditors samen AI-gestuurde audit-agents bouwen.",
+        date: "2026-04-30",
+        url: "https://www.youtube.com/watch?v=17Biu5Frc9Y",
+        lang: "nl"
+      },
+      {
+        category: "Media",
+        author: "Eduward van de Kamp & Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Van shadow AI naar slimme AI: hoe organisaties de stap kunnen maken van onbeheerst AI-gebruik naar verantwoorde inzet. Over AI-geletterdheid, de risico's van shadow AI en het belang van veilige kaders.",
+        date: "2026-04-27",
+        url: "https://auditmagazine.nl/artikelen/van-shadow-ai-naar-slimme-ai-deel-1/",
+        lang: "nl"
+      },
+      // ── Hackathon #3 — 21 April 2026, Wolters Kluwer, Alphen aan den Rijn ──
+      {
+        session: "Hackathon #3",
+        category: "Community",
+        author: "Mathijs Schouten",
+        authorRole: "Co-organizer, SAAF Project",
+        text: "Het begint te draaien. 100 deelnemers van 50+ organisaties bij Wolters Kluwer. Zes tracks, zestig plannen, en voor het eerst werkten teams samen aan een gedeeld framework. Aan het eind van de dag: 18 merged pull requests, werkende prototypes in elke track, en een leaderboard vol eerste GitHub-bijdragers.",
+        hashtags: ["#SAAF", "#SharedAuditAgentsFramework", "#AI", "#Audit", "#OpenSource", "#AuditInnovation"],
+        date: "2026-05-01",
+        url: "https://www.linkedin.com/posts/activity-7455960250173620224-6_3i",
+        lang: "nl"
+      },
+      {
+        session: "Hackathon #3",
+        category: "Community",
+        author: "Dwayne Valkenburg",
+        authorRole: "ISACA NL",
+        text: "SAAF sold out for the fourth time, and that tells you everything about the energy in our profession right now. AI outpaces us on speed, computing power, and pattern recognition. But AI has no heart. No ethical compass. That is what we bring. And today, we turned that into working AI audit agents.",
+        hashtags: ["#ISACA", "#ISACANederland", "#AIAuditAgents"],
+        likes: 135,
+        date: "2026-04-21",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7452406628341182465/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #3",
+        category: "Community",
+        author: "Jeroen Slobbe",
+        authorRole: "Participant",
+        text: "Today we were present at the SAAF Hackathon as BDO: an energetic group of internal auditors reshaping the audit profession with AI. Our AI-hackers walked participants through what secure-by-design means for AI-agents, concluding with a demo showing the impact of prompt-injection and RAG-poisoning.",
+        hashtags: ["#BDO", "#SAAF", "#prompt", "#RAG"],
+        likes: 62,
+        comments: 2,
+        date: "2026-04-21",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7452325146473877504/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #3",
+        category: "AI Audit",
+        author: "Edwin Lodder",
+        authorRole: "Participant",
+        text: "We're in the midst of a fundamental shift. AI is becoming not just a tool, but will play an increasingly significant role in executing audit and compliance activities. The SAAF initiative beautifully demonstrates market development: not from a single vendor, but through co-creation and open standards.",
+        hashtags: ["#audit", "#risicomanagement", "#AI", "#GRC", "#SAAF"],
+        likes: 40,
+        date: "2026-04-21",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7452443629098491904/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #3",
+        category: "Community",
+        author: "Violeta Verbraak-Kolevska",
+        authorRole: "Participant",
+        text: "The group I was part of managed to do the audit planning and produce the work program in half an hour (normally without the AI tools we do that in at least two weeks). I am inspired very much to join the next sessions and see how we grow as a profession!",
+        date: "2026-04-21",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7452466900967514112/",
+        lang: "en"
+      },
+      {
+        session: "Hackathon #3",
+        category: "Community",
+        author: "Imane Akhyar",
+        authorRole: "Participant",
+        text: "Afgelopen dinsdag alweer de vierde SAAF hackathon bijgewoond, dit keer bij Wolters Kluwer. Samen met Bart van den Broek aan de slag gegaan met het bouwen van een Evidence Extraction agent en daarnaast veel interessante presentaties bijgewoond.",
+        hashtags: ["#SAAF"],
+        likes: 38,
+        comments: 1,
+        date: "2026-04-23",
+        url: "https://www.linkedin.com/feed/update/urn:li:activity:7452976389701627904/",
+        lang: "nl"
+      },
+    ];
+  </script>
+
+  <!-- ============================================================
+       COMMUNITY & PRESS (SECTION)
+  ============================================================ -->
+  <section id="updates" class="py-24 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">Community</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Community &amp; Press</h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">Posts from SAAF participants and coverage in the broader audit and AI community.</p>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="flex flex-wrap items-center gap-3 mb-8">
+        <select id="filter-session" class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+          <option value="">All sessions</option>
+        </select>
+        <select id="filter-category" class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+          <option value="">All categories</option>
+        </select>
+        <select id="filter-author" class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+          <option value="">All authors</option>
+        </select>
+        <select id="sort-select" class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="most-likes">Most likes</option>
+          <option value="fewest-likes">Fewest likes</option>
+          <option value="name-az">Name A–Z</option>
+        </select>
+        <!-- Sort pill (shown only for non-default sorts) -->
+        <span id="sort-pill" class="hidden items-center gap-1 bg-indigo-100 text-indigo-700 rounded-full px-3 py-1 text-xs font-semibold">
+          <span id="sort-pill-label"></span>
+          <button id="sort-pill-reset" class="ml-1 text-indigo-500 hover:text-indigo-800 font-bold leading-none" aria-label="Reset sort">&times;</button>
+        </span>
+        <span class="ml-auto text-sm text-gray-400" id="posts-count"></span>
+      </div>
+
+      <!-- Card grid -->
+      <div id="posts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Show more -->
+      <div id="show-more-wrap" class="hidden mt-10 text-center">
+        <button id="show-more-btn" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-all shadow-sm">
+          Show more <span id="show-more-remaining" class="text-gray-400"></span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COMMUNITY & PRESS (RENDER SCRIPT)
+  ============================================================ -->
+  <script>
+    (function () {
+      const GRADIENTS = [
+        "from-indigo-500 to-indigo-700",
+        "from-purple-500 to-purple-700",
+        "from-violet-500 to-indigo-600",
+        "from-indigo-400 to-purple-600",
+        "from-blue-500 to-indigo-600",
+        "from-purple-400 to-violet-600"
+      ];
+
+      // Stable avatar color per author
+      const authorIndex = {};
+      let authorCounter = 0;
+      function gradientFor(author) {
+        if (!(author in authorIndex)) {
+          authorIndex[author] = authorCounter++ % GRADIENTS.length;
+        }
+        return GRADIENTS[authorIndex[author]];
+      }
+
+      const LI_SVG = '<svg class="w-4 h-4 flex-shrink-0" fill="#0A66C2" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
+      const LINK_SVG = '<svg class="w-4 h-4 flex-shrink-0 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>';
+
+      function formatDate(iso) {
+        const d = new Date(iso + "T00:00:00");
+        return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+      }
+
+      function buildCard(post) {
+        const isLinkedIn = post.url.includes("linkedin.com");
+        const initial = post.author.charAt(0).toUpperCase();
+        const gradient = gradientFor(post.author);
+        const sourceIcon = isLinkedIn ? LI_SVG : LINK_SVG;
+        const flag = post.lang === "nl" ? "🇳🇱 " : post.lang === "en" ? "🇬🇧 " : "";
+        const hashtagsHtml = (post.hashtags || []).map(h =>
+          `<span class="text-indigo-600 text-xs">${h}</span>`
+        ).join(" ");
+        const engagementHtml = (post.likes !== undefined || post.comments !== undefined) ?
+          `<span class="flex items-center gap-3 text-xs text-gray-400">
+            ${post.likes !== undefined ? `<span>&#9825; ${post.likes}</span>` : ""}
+            ${post.comments !== undefined ? `<span>&#9679; ${post.comments}</span>` : ""}
+          </span>` : "";
+
+        return `<a href="${post.url}" target="_blank" rel="noopener noreferrer"
+            class="flex flex-col bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <!-- Top row: badges + source icon -->
+          <div class="flex items-start justify-between gap-2 mb-3">
+            <div class="flex flex-wrap gap-1.5">
+              ${post.session ? `<span class="bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold px-2.5 py-0.5">${post.session}</span>` : ""}
+              <span class="bg-gray-100 text-gray-600 rounded-full text-xs px-2.5 py-0.5">${post.category}</span>
+            </div>
+            ${sourceIcon}
+          </div>
+          <!-- Post text -->
+          <p class="text-gray-800 text-sm leading-relaxed flex-1 mb-3">${post.text}</p>
+          <!-- Hashtags -->
+          ${hashtagsHtml ? `<div class="flex flex-wrap gap-1.5 mb-4">${hashtagsHtml}</div>` : ""}
+          <!-- Author row -->
+          <div class="flex items-center gap-2.5 mt-auto pt-3 border-t border-gray-100">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white text-sm font-bold flex-shrink-0">${initial}</div>
+            <div class="min-w-0 flex-1">
+              <div class="text-sm font-semibold text-gray-800 truncate">${post.author}</div>
+              ${post.authorRole ? `<div class="text-xs text-gray-400 truncate">${post.authorRole}</div>` : ""}
+            </div>
+          </div>
+          <!-- Footer: date + engagement -->
+          <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-50">
+            <span class="text-xs text-gray-400">${flag}${formatDate(post.date)}</span>
+            ${engagementHtml}
+          </div>
+        </a>`;
+      }
+
+      function populateSelect(id, values) {
+        const sel = document.getElementById(id);
+        const current = sel.value;
+        // keep first "All …" option, rebuild the rest
+        while (sel.options.length > 1) sel.remove(1);
+        values.forEach(v => {
+          const opt = document.createElement("option");
+          opt.value = v;
+          opt.textContent = v;
+          sel.appendChild(opt);
+        });
+        if (current) sel.value = current;
+      }
+
+      const DEFAULT_SORT = "newest";
+      const PAGE_SIZE = 6;
+      const SORT_LABELS = {
+        newest: "Newest first",
+        oldest: "Oldest first",
+        "most-likes": "Most likes",
+        "fewest-likes": "Fewest likes",
+        "name-az": "Name A–Z"
+      };
+
+      let visibleCount = PAGE_SIZE;
+
+      function render(resetPaging) {
+        if (resetPaging !== false) visibleCount = PAGE_SIZE;
+
+        const session = document.getElementById("filter-session").value;
+        const category = document.getElementById("filter-category").value;
+        const author = document.getElementById("filter-author").value;
+        const sort = document.getElementById("sort-select").value;
+
+        let posts = POSTS.filter(p =>
+          (!session || p.session === session) &&
+          (!category || p.category === category) &&
+          (!author || p.author === author)
+        );
+
+        posts = posts.slice().sort((a, b) => {
+          if (sort === "newest") return new Date(b.date) - new Date(a.date);
+          if (sort === "oldest") return new Date(a.date) - new Date(b.date);
+          if (sort === "most-likes") return (b.likes || 0) - (a.likes || 0);
+          if (sort === "fewest-likes") return (a.likes || 0) - (b.likes || 0);
+          if (sort === "name-az") return a.text.localeCompare(b.text);
+          return 0;
+        });
+
+        const visible = posts.slice(0, visibleCount);
+        document.getElementById("posts-grid").innerHTML = visible.map(buildCard).join("");
+        document.getElementById("posts-count").textContent =
+          posts.length === 1 ? "1 post" : `${posts.length} posts`;
+
+        // Show more button
+        const wrap = document.getElementById("show-more-wrap");
+        const remaining = posts.length - visibleCount;
+        if (remaining > 0) {
+          wrap.classList.remove("hidden");
+          document.getElementById("show-more-remaining").textContent = `(${remaining} more)`;
+        } else {
+          wrap.classList.add("hidden");
+        }
+
+        // Sort pill
+        const pill = document.getElementById("sort-pill");
+        const pillLabel = document.getElementById("sort-pill-label");
+        if (sort === DEFAULT_SORT) {
+          pill.classList.add("hidden");
+          pill.classList.remove("inline-flex");
+        } else {
+          pill.classList.remove("hidden");
+          pill.classList.add("inline-flex");
+          pillLabel.textContent = SORT_LABELS[sort];
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Populate dropdowns with unique values
+        const sessions = [...new Set(POSTS.map(p => p.session).filter(Boolean))];
+        const categories = [...new Set(POSTS.map(p => p.category))];
+        const authors = [...new Set(POSTS.map(p => p.author))];
+        populateSelect("filter-session", sessions);
+        populateSelect("filter-category", categories);
+        populateSelect("filter-author", authors);
+
+        ["filter-session", "filter-category", "filter-author", "sort-select"].forEach(id => {
+          document.getElementById(id).addEventListener("change", function () { render(true); });
+        });
+
+        document.getElementById("sort-pill-reset").addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("sort-select").value = DEFAULT_SORT;
+          render(true);
+        });
+
+        document.getElementById("show-more-btn").addEventListener("click", function () {
+          visibleCount += PAGE_SIZE;
+          render(false);
+        });
+
+        render();
+      });
+    })();
+  </script>
+
+
+  <!-- ============================================================
+       DOWNLOADS
+  ============================================================ -->
+  <section id="downloads" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-3">Resources</div>
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Downloads</h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">Project materials and session communications available for download.</p>
+      </div>
+
+      <div class="max-w-md mx-auto space-y-4">
+
+        <!-- Brochure -->
+        <a href="assets/saaf-brochure.pdf" target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md hover:border-indigo-200 transition-all group">
+          <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-gray-900 text-sm group-hover:text-indigo-700 transition-colors">SAAF Project Brochure</div>
+            <div class="text-xs text-gray-400 mt-0.5">PDF · 629 KB</div>
+          </div>
+          <svg class="w-4 h-4 text-gray-400 group-hover:text-indigo-600 flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        </a>
+
+        <!-- Setup Guide -->
+        <a href="assets/saaf-setup-guide.pdf" target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md hover:border-indigo-200 transition-all group">
+          <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-gray-900 text-sm group-hover:text-indigo-700 transition-colors">Participant Setup Guide</div>
+            <div class="text-xs text-gray-400 mt-0.5">PDF · 146 KB</div>
+          </div>
+          <svg class="w-4 h-4 text-gray-400 group-hover:text-indigo-600 flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       JOIN
+  ============================================================ -->
+  <section id="join" class="py-24 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden">
+
+    <!-- Background accents -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="text-sm font-semibold text-indigo-400 uppercase tracking-wider mb-3">Get Involved</div>
+        <h2 class="text-4xl font-bold text-white mb-4">Join the SAAF Initiative</h2>
+        <p class="text-slate-300 text-lg max-w-2xl mx-auto">Three ways to participate, from hands-on hacking to strategic partnership. All free, all CPE-eligible.</p>
+      </div>
+
+      <!-- Participation tiers -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+        <!-- User -->
+        <div class="bg-white/8 backdrop-blur rounded-2xl p-8 border border-white/15 hover:bg-white/12 hover:-translate-y-0.5 transition-all">
+          <div class="text-4xl mb-5">👤</div>
+          <h3 class="text-xl font-bold text-white mb-3">User</h3>
+          <p class="text-slate-300 text-sm leading-relaxed mb-5">Access the shared SAAF repository and implement agents within your own organization's environment. Use what others build.</p>
+          <ul class="space-y-2.5 text-sm text-slate-400">
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Access to shared repository
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              CPE credits eligible
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Free participation
+            </li>
+          </ul>
+        </div>
+
+        <!-- Co-developer -->
+        <div class="bg-indigo-600/25 backdrop-blur rounded-2xl p-8 border border-indigo-400/40 hover:-translate-y-0.5 transition-all ring-1 ring-indigo-400/30">
+          <div class="flex items-center justify-between mb-5">
+            <div class="text-4xl">👩‍💻</div>
+            <span class="px-2.5 py-1 bg-indigo-500/50 text-indigo-200 text-xs font-bold rounded-full uppercase tracking-wider">Popular</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Co-Developer</h3>
+          <p class="text-slate-300 text-sm leading-relaxed mb-5">Hands-on participation in hackathons. Contribute to building agents, share your expertise, and directly shape the SAAF framework.</p>
+          <ul class="space-y-2.5 text-sm text-slate-300">
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Active hackathon participation
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Contribute to shared codebase
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              CPE credits eligible
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Free participation
+            </li>
+          </ul>
+        </div>
+
+        <!-- Strategic Partner -->
+        <div class="bg-white/8 backdrop-blur rounded-2xl p-8 border border-white/15 hover:bg-white/12 hover:-translate-y-0.5 transition-all">
+          <div class="text-4xl mb-5">🏛️</div>
+          <h3 class="text-xl font-bold text-white mb-3">Strategic Partner</h3>
+          <p class="text-slate-300 text-sm leading-relaxed mb-5">Host a session at your office and shape the strategic direction of the initiative. Ideal for organizations wanting deeper involvement.</p>
+          <ul class="space-y-2.5 text-sm text-slate-400">
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Host a hackathon session
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Strategic input on roadmap
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              CPE credits eligible
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Free participation
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center">
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-5 py-3 mb-8">
+          <svg class="w-4 h-4 text-slate-300 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+          <p class="text-slate-300 text-sm font-medium">New registrations for the hackathon series are closed. Interested in joining as a late entrant? Sign up for our waitlist and we will reach out once our onboarding track for new participants is ready.</p>
+        </div>
+
+        <div>
+          <a href="https://forms.gle/tyCmXaP4zvGnY5fG9" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-indigo-500 hover:bg-indigo-400 text-white font-bold text-lg rounded-xl transition-all shadow-xl shadow-indigo-500/20 group">
+            Join the Waitlist
+            <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <p class="text-slate-400 text-sm mt-4">Participation is free of charge and eligible for CPE credits</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       IN COLLABORATION WITH
+  ============================================================ -->
+  <section class="py-16 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">In collaboration with</div>
+        <p class="text-gray-600 text-sm">Professional audit and governance organizations supporting the initiative</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-8 items-center">
+        <a href="https://www.norea.nl" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/norea-logo.png" alt="NOREA" class="max-h-8 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">Dutch IT Auditors</div>
+        </a>
+        <a href="https://isaca.nl/event/saaf-project-hackathon-shared-audit-agents-framework/" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/isaca-logo.png" alt="ISACA" class="max-h-8 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">IT Governance</div>
+        </a>
+        <a href="https://www.iia.nl" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/iia-logo.png" alt="IIA" class="max-h-12 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">Internal Auditors</div>
+        </a>
+        <a href="https://forhumanity.center" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/forhumanity-logo.png" alt="ForHumanity" class="max-h-8 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">AI Governance</div>
+        </a>
+        <a href="https://www.nba.nl" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all">
+            <img src="assets/nba-logo.png" alt="NBA" class="max-h-8 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">Dutch Accountants</div>
+        </a>
+      </div>
+
+      <div class="text-center mt-14 mb-8">
+        <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Technical support &amp; community partners</div>
+        <p class="text-gray-600 text-sm">Organizations supporting SAAF with technical expertise and community building</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-8 items-center">
+        <a href="https://flowopt.nl" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all overflow-hidden">
+            <img src="assets/flowopt-logo.png" alt="FlowOpt" class="max-h-8 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">Technical support</div>
+        </a>
+        <a href="https://kaizen-innovations.nl/" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 mx-auto rounded-xl shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all overflow-hidden">
+            <img src="assets/kaizen-logo.png" alt="Kaizen Innovations" class="h-full w-auto object-cover">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">Technical support</div>
+        </a>
+        <a href="https://www.tag.space" target="_blank" rel="noopener noreferrer" class="text-center group">
+          <div class="h-16 px-6 mx-auto rounded-xl bg-[#121212] shadow-sm border border-gray-200 flex items-center justify-center mb-2 hover:border-indigo-200 hover:shadow-md transition-all overflow-hidden">
+            <img src="assets/tag-space-logo.png" alt="TAG.SPACE" class="max-h-12 w-auto object-contain">
+          </div>
+          <div class="text-xs text-gray-500 group-hover:text-indigo-600 transition-colors">Community partner</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="bg-slate-950 text-slate-400 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-10">
+
+        <!-- Brand -->
+        <div>
+          <div class="mb-4">
+            <img src="assets/saaf-logo-white.png" alt="SAAF Project" class="h-10 w-auto">
+          </div>
+          <p class="text-sm leading-relaxed mb-4">Shared Audit Agents Framework: building AI audit agents together. Collaborative and non-competitive.</p>
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-500 rounded-full text-xs font-medium tracking-wide">Think Big</span>
+            <span class="text-slate-700 font-light">·</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-500 rounded-full text-xs font-medium tracking-wide">Start Small</span>
+            <span class="text-slate-700 font-light">·</span>
+            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-500 rounded-full text-xs font-medium tracking-wide">Move Fast</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">In collaboration with <a href="https://www.norea.nl" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">NOREA</a>, <a href="https://www.isaca.org" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">ISACA</a>, <a href="https://www.iia.nl" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">IIA</a>, <a href="https://forhumanity.center" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">ForHumanity</a> &amp; <a href="https://www.nba.nl" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">NBA</a></p>
+          <p class="text-xs text-slate-500">Questions? <a href="mailto:info@saafproject.com" class="text-slate-400 hover:text-indigo-400 transition-colors">info@saafproject.com</a></p>
+        </div>
+
+        <!-- Navigation -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-wider">Navigation</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#about" class="hover:text-indigo-400 transition-colors">About SAAF</a></li>
+            <li><a href="#how-it-works" class="hover:text-indigo-400 transition-colors">How It Works</a></li>
+            <li><a href="#framework" class="hover:text-indigo-400 transition-colors">The Framework</a></li>
+            <li><a href="#schedule" class="hover:text-indigo-400 transition-colors">Schedule 2026</a></li>
+            <li><a href="#organizations" class="hover:text-indigo-400 transition-colors">Organizations</a></li>
+            <li><a href="#updates" class="hover:text-indigo-400 transition-colors">Updates</a></li>
+            <li><a href="#downloads" class="hover:text-indigo-400 transition-colors">Downloads</a></li>
+            <li><a href="#join" class="hover:text-indigo-400 transition-colors">Waitlist</a></li>
+          </ul>
+        </div>
+
+        <!-- Organizers -->
+        <div>
+          <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-wider">Organized by</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="https://www.linkedin.com/in/eduward-van-de-kamp-56b3565b/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Eduward van de Kamp</a></li>
+            <li><a href="https://www.linkedin.com/in/imathijs/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Mathijs Schouten</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-600">
+        <p>© 2026 SAAF Project. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/SAAF-Project" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-indigo-400 transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <p>Free to participate · CPE credits eligible</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    // Auto-update schedule row statuses based on today's date.
+    // Each <tr data-date="YYYY-MM-DD"> is classified as Done, Upcoming (next), or Scheduled.
+    (function () {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      var DONE_ROW      = 'bg-green-50/50 hover:bg-green-50 transition-colors';
+      var UPCOMING_ROW  = 'bg-indigo-50/60 hover:bg-indigo-50 transition-colors';
+      var SCHEDULED_ROW = 'hover:bg-gray-50 transition-colors';
+
+      var DONE_BADGE     = '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Done</span>';
+      var UPCOMING_BADGE = '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700"><span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>Upcoming</span>';
+      var SCHEDULED_BADGE = '<span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">Scheduled</span>';
+
+      var rows = Array.from(document.querySelectorAll('tbody tr[data-date]'));
+      var nextFound = false;
+
+      rows.forEach(function (row) {
+        var sessionDate = new Date(row.dataset.date);
+        var tds = row.querySelectorAll(':scope > td');
+        var sessionTd = tds[1];
+        var dateTd    = tds[2];
+        var statusTd  = tds[tds.length - 1];
+
+        // Manage the dynamic "Next session" label inside the session cell
+        var nextLabel = sessionTd.querySelector('.js-next-label');
+        if (!nextLabel) {
+          nextLabel = document.createElement('div');
+          nextLabel.className = 'text-xs text-indigo-600 font-semibold mt-0.5 js-next-label';
+          nextLabel.textContent = 'Next session';
+          sessionTd.appendChild(nextLabel);
+        }
+
+        if (sessionDate < today) {
+          row.className = DONE_ROW;
+          dateTd.className = 'py-4 px-4 text-sm text-gray-600';
+          nextLabel.hidden = true;
+          statusTd.innerHTML = DONE_BADGE;
+        } else if (!nextFound) {
+          nextFound = true;
+          row.className = UPCOMING_ROW;
+          dateTd.className = 'py-4 px-4 text-sm font-bold text-indigo-700';
+          nextLabel.hidden = false;
+          statusTd.innerHTML = UPCOMING_BADGE;
+        } else {
+          row.className = SCHEDULED_ROW;
+          dateTd.className = 'py-4 px-4 text-sm text-gray-600';
+          nextLabel.hidden = true;
+          statusTd.innerHTML = SCHEDULED_BADGE;
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Mobile menu toggle
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+
+    btn.addEventListener('click', () => {
+      const isHidden = menu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden', !isHidden);
+      iconClose.classList.toggle('hidden', isHidden);
+    });
+
+    // Close mobile menu when a link is clicked
+    menu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      });
+    });
+  </script>
+
+</body>
+</html>

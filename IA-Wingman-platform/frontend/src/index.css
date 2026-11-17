@@ -1,0 +1,326 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens (channel triplets so Tailwind opacity modifiers work) ────────
+   Light is the default; [data-theme="dark"] flips the whole app. Everything in
+   the UI reads these semantic tokens — never raw grays or hex — so both themes
+   stay consistent from one place. --brand can be overridden at runtime from the
+   organization profile (white-label). */
+:root {
+  --font-display: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, system-ui, sans-serif;
+
+  --canvas: 246 247 245;
+  --surface: 255 255 255;
+  --surface-2: 251 252 251;
+  --surface-3: 241 244 241;
+  --fg: 26 36 32;
+  --fg-muted: 88 102 97;
+  --fg-subtle: 102 114 107;
+  --line: 227 231 228;
+  --line-strong: 206 214 208;
+  /* Separator inside a section — must read as a hairline, not as a border. */
+  --line-subtle: 236 239 236;
+  /* Only for what genuinely floats above the page. */
+  --surface-raised: 255 255 255;
+
+  --brand: 30 107 79;
+  --brand-hover: 24 88 64;
+  --brand-fg: 255 255 255;
+  --brand-subtle: 231 241 236;
+  --brand-faint: 241 247 244;
+
+  /* Sidebar: a deep brand anchor, consistent across themes */
+  --sidebar: 18 68 48;
+  --sidebar-2: 13 52 37;
+
+  /* One ordered ramp for categorical charts (most contrast -> least) plus a
+     neutral for "not started". Overwritten at runtime by BrandProvider when the
+     organisation has its own brand colour. */
+  --chart-1: 21 75 55;
+  --chart-2: 30 107 79;
+  --chart-3: 89 145 125;
+  --chart-4: 138 178 163;
+  --chart-5: 183 208 199;
+  --chart-neutral: 148 158 153;
+
+  /* Who made an item (the AI-share panel): the platform or a person. Fixed, not
+     brand-derived — the two must stay apart whatever the organisation's colour,
+     and the pair is validated for colour-blind separation in both modes. */
+  --share-ai: 25 138 92;
+  --share-person: 42 120 214;
+  --share-unknown: 148 158 153;
+
+  /* Risk severity — the only place where hue itself carries meaning. */
+  --sev-high: 190 43 60;
+  --sev-med: 158 102 12;
+  --sev-low: 26 122 86;
+
+  /* Audit status — the one categorical dimension worth a spectrum. Soft,
+     desaturated tones: they carry meaning without shouting, and five of them
+     side by side in a donut stay calm. Each has a deeper "ink" of the same hue,
+     because a pastel that works as a fill is unreadable as text. */
+  --status-scheduled: 168 174 169;
+  --status-scheduled-ink: 92 101 96;
+  --status-planning: 224 184 119;
+  --status-planning-ink: 133 98 26;
+  --status-fieldwork: 143 179 217;
+  --status-fieldwork-ink: 56 92 133;
+  --status-reporting: 182 168 216;
+  --status-reporting-ink: 96 80 145;
+  --status-closed: 140 191 163;
+  --status-closed-ink: 47 109 78;
+
+  --shadow-rgb: 16 24 40;
+  --skeleton: 236 239 236;
+  --skeleton-sheen: 255 255 255;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --canvas: 14 21 18;
+  --surface: 22 32 27;
+  --surface-2: 28 40 34;
+  --surface-3: 34 48 42;
+  --fg: 236 242 238;
+  --fg-muted: 167 180 173;
+  --fg-subtle: 124 138 131;
+  --line: 38 50 43;
+  --line-strong: 52 67 59;
+  --line-subtle: 31 42 36;
+  --surface-raised: 28 40 34;
+
+  --brand: 63 155 114;
+  --brand-hover: 79 177 132;
+  --brand-fg: 8 17 13;
+  --brand-subtle: 20 39 30;
+  --brand-faint: 16 32 26;
+
+  --sidebar: 13 46 33;
+  --sidebar-2: 9 34 24;
+
+  --chart-1: 157 190 178;
+  --chart-2: 107 157 139;
+  --chart-3: 85 124 110;
+  --chart-4: 66 97 86;
+  --chart-5: 51 75 66;
+  --chart-neutral: 104 116 110;
+
+  --share-ai: 47 167 116;
+  --share-person: 57 135 229;
+  --share-unknown: 104 116 110;
+
+  --sev-high: 240 138 148;
+  --sev-med: 227 176 92;
+  --sev-low: 106 197 156;
+
+  --status-scheduled: 138 147 141;
+  --status-scheduled-ink: 186 195 189;
+  --status-planning: 217 184 124;
+  --status-planning-ink: 224 192 138;
+  --status-fieldwork: 150 186 224;
+  --status-fieldwork-ink: 164 197 231;
+  --status-reporting: 190 177 224;
+  --status-reporting-ink: 199 187 230;
+  --status-closed: 150 199 172;
+  --status-closed-ink: 162 207 182;
+
+  --shadow-rgb: 0 0 0;
+  --skeleton: 34 48 42;
+  --skeleton-sheen: 255 255 255;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: rgb(var(--canvas));
+  color: rgb(var(--fg));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.011em;
+}
+
+/* ── Type scale ────────────────────────────────────────────────────────────── */
+@layer components {
+  /* Hierarchy comes from the steps between these sizes, not from weight. Every
+     level is one notch smaller than the usual Tailwind default: editorial
+     software keeps a page title around 22px, not 28px. */
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+    letter-spacing: -0.02em;
+  }
+  .text-h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  .text-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .text-h3 {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: -0.006em;
+  }
+  /* Section label. Quiet by default — it orients, it does not shout. */
+  .text-caption {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    color: rgb(var(--fg-subtle));
+  }
+  /* A number that carries a whole tile. Tabular so columns of them line up. */
+  .text-metric {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Supporting detail: dates, codes, leads, counts. */
+  .text-meta {
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    color: rgb(var(--fg-subtle));
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Editable text affordance */
+.editable {
+  border-radius: 6px;
+  transition: background 0.12s ease;
+  cursor: text;
+}
+.editable:hover {
+  background: rgb(var(--surface-3));
+}
+
+/* Refined scrollbars (theme-aware) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--line-strong)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--line-strong));
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--fg-subtle));
+  background-clip: padding-box;
+}
+
+::selection {
+  background: rgb(var(--brand) / 0.16);
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--skeleton));
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(var(--skeleton-sheen) / 0.35), transparent);
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* Staggered list entrance */
+.stagger > * {
+  animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger > *:nth-child(3) { animation-delay: 0.10s; }
+.stagger > *:nth-child(4) { animation-delay: 0.14s; }
+.stagger > *:nth-child(5) { animation-delay: 0.18s; }
+.stagger > *:nth-child(6) { animation-delay: 0.22s; }
+.stagger > *:nth-child(7) { animation-delay: 0.26s; }
+.stagger > *:nth-child(8) { animation-delay: 0.30s; }
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Workflow map ──────────────────────────────────────────────────────────── */
+.wf-edge-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: wf-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes wf-draw {
+  to { stroke-dashoffset: 0; }
+}
+.wf-pulse {
+  animation: wf-pulse 2.4s ease-in-out infinite;
+}
+@keyframes wf-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--brand) / 0.32); }
+  50% { box-shadow: 0 0 0 7px rgb(var(--brand) / 0); }
+}
+.wf-glow {
+  box-shadow: 0 0 0 2px rgb(var(--sev-med) / 0.35);
+}
+/* `translate`, not `transform`: the entrance animation keeps its final transform. */
+.wf-focus {
+  box-shadow: 0 0 0 3px rgb(var(--brand) / 0.38), 0 14px 34px rgb(var(--brand) / 0.22);
+  translate: 0 -2px;
+}
+.wf-unlock {
+  animation: wf-unlock 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes wf-unlock {
+  from { transform: scale(0.6) rotate(-14deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes wf-progress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

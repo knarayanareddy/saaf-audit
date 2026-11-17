@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "execsummary-grc-agent"
+version = "0.1.0"
+description = "Auditable GRC reporting agent for tactical and executive risk summaries."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Kouters Van der Meer" }
+]
+dependencies = []
+
+[project.scripts]
+grc-board-reporting-agent = "execsummary_grc.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

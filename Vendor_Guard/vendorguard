@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+# Vendor Guard launcher.
+#
+#   vendorguard                      run the pipeline on the bundled sample documents
+#   vendorguard --questionnaire Q [--docs D ...] [--output-dir DIR]
+#                                    run on your own documents (arguments go to main.py)
+#   vendorguard --backend claude-code   sign in with your own Claude account (Claude Code)
+#   vendorguard --backend api        use ANTHROPIC_API_KEY
+#   vendorguard web [--port 8765]    open the local web UI: upload, start, watch progress
+#   vendorguard test                 run the offline test suite (no API key, no network)
+#   vendorguard help                 show this help
+set -euo pipefail
+
+# Resolve the repo directory, following symlinks (e.g. ~/.local/bin/vendorguard).
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+    DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+REPO="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+PYTHON="$REPO/.venv/bin/python"
+
+usage() {
+    sed -n '2,11p' "$REPO/vendorguard" | sed 's/^# \{0,1\}//'
+}
+
+if [ ! -x "$PYTHON" ]; then
+    echo "vendorguard: no virtual environment found at $REPO/.venv" >&2
+    echo "Set it up once with:" >&2
+    echo "  cd \"$REPO\" && python3 -m venv .venv && .venv/bin/pip install --only-binary :all: -r requirements.txt" >&2
+    exit 1
+fi
+
+case "${1:-}" in
+    help|-h|--help)
+        usage
+        exit 0
+        ;;
+    test)
+        shift
+        cd "$REPO"
+        exec "$PYTHON" -m pytest tests/ -p no:cacheprovider "$@"
+        ;;
+    web)
+        shift
+        exec "$PYTHON" "$REPO/webui/server.py" "$@"
+        ;;
+esac
+
+# Which backend? --backend on the command line wins, then $VENDORGUARD_BACKEND.
+BACKEND="${VENDORGUARD_BACKEND:-}"
+HAS_QUESTIONNAIRE=0
+prev=""
+for arg in "$@"; do
+    case "$arg" in
+        --backend=*) BACKEND="${arg#--backend=}" ;;
+        --questionnaire|--questionnaire=*) HAS_QUESTIONNAIRE=1 ;;
+    esac
+    [ "$prev" = "--backend" ] && BACKEND="$arg"
+    prev="$arg"
+done
+
+# Neither chosen: use the API key if one is set, otherwise ask.
+if [ -z "$BACKEND" ]; then
+    if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+        BACKEND="api"
+    elif [ -t 0 ]; then
+        echo "How should Vendor Guard reach Claude?"
+        echo "  1) Sign in with your own Claude account (via Claude Code)  [default]"
+        echo "  2) Use an Anthropic API key"
+        read -r -p "Choice [1]: " choice
+        case "${choice:-1}" in
+            1) BACKEND="claude-code" ;;
+            2) BACKEND="api" ;;
+            *) echo "vendorguard: invalid choice." >&2; exit 1 ;;
+        esac
+    else
+        echo "vendorguard: set ANTHROPIC_API_KEY, or pass --backend claude-code to use your Claude login." >&2
+        exit 1
+    fi
+fi
+export VENDORGUARD_BACKEND="$BACKEND"
+
+case "$BACKEND" in
+    claude-code)
+        if ! "$PYTHON" -c "import claude_agent_sdk" 2>/dev/null; then
+            echo "vendorguard: the claude-code backend needs the Claude Agent SDK. Install it once with:" >&2
+            echo "  cd \"$REPO\" && .venv/bin/pip install --only-binary :all: -r requirements-claude-code.txt" >&2
+            exit 1
+        fi
+        echo "Using your own Claude account via Claude Code."
+        echo "Not signed in yet? Run 'claude' once and log in, or set ANTHROPIC_API_KEY."
+        ;;
+    api)
+        if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            if [ ! -t 0 ]; then
+                echo "vendorguard: ANTHROPIC_API_KEY is not set." >&2
+                exit 1
+            fi
+            read -r -s -p "Anthropic API key (used for this run only, not saved): " ANTHROPIC_API_KEY
+            echo
+            if [ -z "$ANTHROPIC_API_KEY" ]; then
+                echo "vendorguard: no key entered, aborting." >&2
+                exit 1
+            fi
+            export ANTHROPIC_API_KEY
+        fi
+        ;;
+    *)
+        echo "vendorguard: unknown backend '$BACKEND' (use 'api' or 'claude-code')." >&2
+        exit 1
+        ;;
+esac
+
+if [ "$HAS_QUESTIONNAIRE" -eq 0 ]; then
+    set -- "$@" \
+        --questionnaire "$REPO/sample_vendor_q.txt" \
+        --docs "$REPO/sample_soc2_report.txt" "$REPO/sample_iso_certificate.txt" "$REPO/sample_dora_questionnaire.txt" \
+        --output-dir "$REPO/output"
+    echo "Running Vendor Guard on the bundled sample documents (fictional vendor)."
+    echo "Note: the document text is sent to Claude; this run uses your account's usage."
+    echo
+fi
+
+# Run from the caller's directory so relative paths in arguments keep working.
+exec "$PYTHON" "$REPO/main.py" "$@"

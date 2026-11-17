@@ -1,0 +1,28 @@
+{
+  "it_dependency_matrix": [
+    {
+      "control_id": "CTRL-0001",
+      "system_name": "ERP General Ledger Module",
+      "itgc_dependency_types": ["Access", "Change"],
+      "ipe_details": {
+        "report_name": "Journal Entry Exception Report",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true,
+        "ipe_reliability": "Strong"
+      }
+    },
+    {
+      "control_id": "CTRL-0002",
+      "system_name": "Identity Management System",
+      "itgc_dependency_types": ["Access", "Operations"],
+      "ipe_details": {
+        "report_name": "Active User Access Report",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": false,
+        "ipe_reliability": "Weak"
+      }
+    }
+  ]
+}

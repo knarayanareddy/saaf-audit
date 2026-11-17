@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "change_tickets",
+  "info": {
+    "singularName": "change-ticket",
+    "pluralName": "change-tickets",
+    "displayName": "Change Ticket"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "change_id": { "type": "string", "required": true, "unique": true },
+    "summary": { "type": "string", "required": true },
+    "requested_at": { "type": "datetime", "required": true },
+    "approved_at": { "type": "datetime" },
+    "implemented_at": { "type": "datetime", "required": true },
+    "tested_at": { "type": "datetime" },
+    "requested_by": { "type": "string", "required": true },
+    "approved_by": { "type": "string" },
+    "implemented_by": { "type": "string", "required": true },
+    "system": { "type": "string", "required": true },
+    "change_type": { "type": "enumeration", "enum": ["Standard", "Normal", "Emergency"], "required": true },
+    "status": { "type": "enumeration", "enum": ["Planned", "Implemented", "Backed Out", "Closed"], "required": true },
+    "emergency_flag": { "type": "boolean", "default": false },
+    "testing_evidence": { "type": "text" },
+    "is_exception": { "type": "boolean", "default": false },
+    "exception_type": { "type": "string" }
+  }
+}

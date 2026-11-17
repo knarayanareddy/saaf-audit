@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# Local demo runs: contain usernames, timestamps and generated output
+demo/esw-run/
+demo/live/

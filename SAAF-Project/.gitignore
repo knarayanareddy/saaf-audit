@@ -1,0 +1,20 @@
+# Private repo data — do NOT commit
+hackathon-recap/repo_data.json
+hackathon-recap/repo_data_raw/
+hackathon-recap/overlap_analysis.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+
+# macOS
+.DS_Store
+
+# Local Claude Code agent state
+.claude/
+
+# Portal is maintained in SAAF-Project/saaf-portal repo
+public-harness-website/

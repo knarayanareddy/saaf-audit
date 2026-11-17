@@ -1,0 +1,24 @@
+seed: 42
+n_purchase_orders: 200
+n_invoices: 200
+
+invoice_split:
+  correct: 0.70
+  price_error: 0.15
+  quantity_error: 0.08
+  contract_expired: 0.04
+  combo_error: 0.03
+
+price_tolerance_pct: 0.5
+payment_late_days_threshold: 0
+
+error_magnitude:
+  price_min_pct: 1.0
+  price_max_pct: 12.0
+  price_direction: both          # both | over | under
+  quantity_delta_min: 1
+  quantity_delta_max: 3
+
+output_dir: data/synthetic
+invoice_dir: data/synthetic/invoices
+label_dir: data/synthetic/labels

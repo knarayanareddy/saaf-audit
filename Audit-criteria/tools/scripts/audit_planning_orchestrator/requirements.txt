@@ -1,0 +1,3 @@
+# Only needed for real / --mock-subagents runs (the LLM orchestrator path).
+# The --simulate path is pure standard library and needs nothing here.
+anthropic>=0.70

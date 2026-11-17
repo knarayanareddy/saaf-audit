@@ -1,0 +1,9 @@
+.venv/
+.venv39/
+__pycache__/
+*.pyc
+runs/
+.pytest_cache/
+.DS_Store
+sources.yaml
+.env

@@ -1,0 +1,30 @@
+# Optional: the "claude-code" backend (sign in with your own Claude account via Claude Code).
+# Same policy as requirements.txt: exact pins incl. transitive dependencies,
+# no releases younger than 14 days (checked 2026-10-06).
+# Install with: pip install --only-binary :all: -r requirements-claude-code.txt
+#
+# Note: the claude-agent-sdk wheel bundles a native Claude Code binary (CLI 2.1.273).
+-r requirements.txt
+
+claude-agent-sdk==0.2.153
+
+# Transitive (via mcp / jsonschema). Vendor Guard starts Claude Code with no MCP
+# servers, so the MCP stack (starlette, uvicorn, pyjwt, cryptography) is never used.
+attrs==26.1.0
+cffi==2.1.1
+click==8.5.0
+# 50.0.2 (2026-09-30, OpenSSL 4.0.3 rebuild) is inside the cooldown window.
+cryptography==50.0.1
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+mcp==2.2.0
+mcp-types==2.2.0
+opentelemetry-api==1.44.0
+pycparser==3.0
+pyjwt==2.14.0
+python-multipart==0.0.32
+referencing==0.37.0
+rpds-py==2026.5.1
+sse-starlette==3.4.11
+starlette==1.6.0
+uvicorn==0.53.0

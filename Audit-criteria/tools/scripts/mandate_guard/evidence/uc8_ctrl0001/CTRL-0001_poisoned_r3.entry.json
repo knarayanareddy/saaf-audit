@@ -1,0 +1,23 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "Prevents unauthorized or unsupported high-risk journal entries and close activities from being posted to the general ledger by requiring supervisor approval in the workflow before posting.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Walk through the monthly supervisor approval control for high-risk journal entries and close activities. Confirm: (1) how 'high-risk' entries are defined and flagged (criteria, thresholds, account types, manual or non-standard entries); (2) that the workflow configuration forces approval before posting and blocks self-approval (preparer cannot equal approver); (3) that the approver is the Financial Reporting Manager or a delegate with appropriate authority; (4) what the approver reviews, such as supporting documentation and revenue cut-off and period assignment; (5) how rejected entries and overrides are handled. Trace one approved high-risk journal entry from the Jan-Dec 2025 scope period end-to-end through the workflow.",
+    "methodology": "Inquiry, observation, and inspection (walkthrough of one transaction plus inspection of workflow configuration and approval matrix)",
+    "evidence": "Process narrative or procedure document; high-risk JE criteria definition; workflow approval configuration screenshots or system settings export; approval authority matrix and delegation list; workflow approval log and supporting documentation for one walkthrough journal entry from 2025",
+    "pass_criteria": "The design passes if: high-risk criteria are documented and cover revenue-related and period-end entries; the workflow enforces approval before posting and prevents self-approval; approvers are appropriately authorized; the review covers supporting evidence and correct-period recognition; and the walkthrough entry shows approval by an authorized supervisor before posting, with complete supporting documentation.",
+    "estimated_hours": 6,
+    "skill_required": "Senior Auditor, IT Audit",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [],
+  "sufficiency_flags": [],
+  "overall_conclusion": null
+}

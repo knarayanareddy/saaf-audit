@@ -1,0 +1,15 @@
+employee_id,username,full_name,department,job_title,start_date,status
+E001,jdoe,Jan de Boer,Finance,Financial Analyst,2022-03-15,Active
+E002,avanderberg,Alice van den Berg,IT,Senior IT Auditor,2021-06-01,Active
+E003,bjansen,Bob Jansen,Finance,Compliance Officer,2023-01-10,Active
+E004,cdevries,Claire de Vries,IT,Developer,2022-09-20,Active
+E005,evisser,Eva Visser,Finance,AP Clerk,2023-07-01,Active
+E006,fhendriks,Frank Hendriks,IT,System Administrator,2019-11-30,Active
+E007,hsmit,Hanna Smit,Legal,Legal Counsel,2024-01-15,Active
+E008,iwillemsen,Ingrid Willemsen,Operations,Operations Manager,2022-05-20,Active
+E009,jpostma,Jeroen Postma,IT,Security Engineer,2023-03-01,Active
+E010,lbrouwer,Lisa Brouwer,HR,HR Business Partner,2024-06-01,Active
+E011,mdevos,Maarten de Vos,IT,Data Analyst,2021-10-05,Active
+E012,pvanhouten,Pieter van Houten,Sales,Account Manager,2023-11-01,Active
+E013,kvandijk,Karel van Dijk,Marketing,Marketing Manager,2020-08-10,Active
+E014,dmulder,Dirk Mulder,HR,HR Manager,2020-04-12,Active

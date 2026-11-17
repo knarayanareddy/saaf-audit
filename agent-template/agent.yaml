@@ -1,0 +1,20 @@
+# The Living Map manifest. Guide: SAAF-Project docs/conventions/agent-yaml.md
+# After your first merge, add this repo to repos.txt in SAAF-Project/saaf-living-map.
+name: "[Agent name]"
+repo: SAAF-Project/[repo-name]
+island: planning          # planning | collection | reporting | monitoring | governance | foundation | quarry
+maturity: building        # building | ready | tested | improving
+description: "[One sentence: what the agent does and for whom.]"
+
+# The approved mandate. Changing this requires a pull request.
+mandate:
+  purpose: "[One sentence. What the agent exists to do.]"
+  allowed_tools: [read_input_file, write_findings]
+  forbidden_actions:
+    - action: change_own_config
+      rationale: Changes to this mandate go through a pull request.
+    - action: modify_source_data
+      rationale: Inputs are audit evidence and must stay unchanged.
+  trusted_inputs: [input_file]
+  human_approval_required_for: [using the findings in an audit report]
+  evidence_policy: cite_only_given_context

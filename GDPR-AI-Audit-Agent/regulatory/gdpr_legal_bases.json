@@ -1,0 +1,64 @@
+{
+    "articles": {
+        "art_5_1_c": {
+            "title": "Data Minimization",
+            "description": "Personal data shall be adequate, relevant and limited to what is necessary.",
+            "applies_to": ["all_processing"]
+        },
+        "art_6_1_f": {
+            "title": "Legitimate Interest",
+            "description": "Processing is necessary for legitimate interests pursued by the controller.",
+            "applies_to": ["audit_review", "compliance_check"]
+        },
+        "art_15": {
+            "title": "Right of Access",
+            "description": "The data subject shall have the right to obtain confirmation of processing.",
+            "applies_to": ["data_access_request"]
+        },
+        "art_17": {
+            "title": "Right to Erasure",
+            "description": "The data subject shall have the right to obtain erasure.",
+            "applies_to": ["deletion_request"]
+        },
+        "art_22": {
+            "title": "Automated Decision-Making",
+            "description": "The data subject shall have the right not to be subject to automated decisions.",
+            "applies_to": ["automated_processing"]
+        },
+        "art_28": {
+            "title": "Processor Obligations",
+            "description": "Processing by a processor shall be governed by a contract.",
+            "applies_to": ["third_party_sharing"]
+        },
+        "art_32": {
+            "title": "Security of Processing",
+            "description": "Implement appropriate technical and organisational measures.",
+            "applies_to": ["access_control", "encryption"]
+        },
+        "art_33": {
+            "title": "Breach Notification to Authority",
+            "description": "Notify the supervisory authority within 72 hours.",
+            "applies_to": ["breach_investigation"]
+        },
+        "art_5_1_e": {
+            "title": "Data Retention",
+            "description": "Personal data shall be kept for no longer than is necessary for the purposes.",
+            "applies_to": ["retention_review"]
+        },
+        "chapter_v": {
+            "title": "Cross-Border Transfers",
+            "description": "Transfers of personal data to third countries require appropriate safeguards.",
+            "applies_to": ["cross_border_audit"]
+        }
+    },
+    "purpose_to_legal_basis": {
+        "reimbursement_review": "art_6_1_f",
+        "compliance_check": "art_6_1_f",
+        "breach_investigation": "art_33",
+        "deletion_verification": "art_17",
+        "data_access_request": "art_15",
+        "third_party_audit": "art_28",
+        "retention_review": "art_5_1_e",
+        "cross_border_audit": "chapter_v"
+    }
+}

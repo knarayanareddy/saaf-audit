@@ -1,0 +1,5 @@
+{"timestamp": "2026-04-21T13:22:42Z", "finding_id": "F-0001", "claims_checked": 5, "overall_risk": "HIGH", "blocked": false, "warning": true}
+{"timestamp": "2026-04-21T13:23:26Z", "finding_id": "F-0002", "claims_checked": 6, "overall_risk": "HIGH", "blocked": false, "warning": true}
+{"timestamp": "2026-04-21T13:23:39Z", "finding_id": "F-0003", "claims_checked": 5, "overall_risk": "MEDIUM", "blocked": false, "warning": true}
+{"timestamp": "2026-04-21T13:23:50Z", "finding_id": "F-0004", "claims_checked": 5, "overall_risk": "MEDIUM", "blocked": false, "warning": true}
+{"timestamp": "2026-04-21T13:23:59Z", "finding_id": "F-0005", "claims_checked": 5, "overall_risk": "MEDIUM", "blocked": false, "warning": true}

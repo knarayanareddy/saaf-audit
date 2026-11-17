@@ -1,0 +1,11 @@
+{
+  "id": "F-0102",
+  "title": "Critical patch SLA exceeded — ISO 27001 clause 8.8 non-compliance",
+  "risk_rating": "High",
+  "control_objective": "ISO 27001:2022 clause 8.8 — Management of technical vulnerabilities",
+  "observation": "ISO 27001:2022 clause 8.8 requires organisations to obtain timely information about technical vulnerabilities and take appropriate measures within a defined timeframe. The organisation's patch policy mandates critical patches within 14 days of disclosure. Analysis of 312 patch records shows that 47 critical patches (15%) exceeded this threshold, with a mean overrun of 22 days. Three patches related to CVE-2025-44831 remain unpatched after 63 days, exceeding both the internal SLA and the 30-day maximum recommended by ISO 27002:2022 clause 8.8.",
+  "recommendation": "Remediate the three outstanding critical CVE-2025-44831 patches immediately. Review the patch management process to reduce cycle times. Note: ISO 27001 clause 8.2.3 requires regular review of information security risk treatment plans — ensure patching outcomes are fed back into the risk register.",
+  "ai_assisted": true,
+  "source_track": "Control Testing Copilot (IA-Fieldwork-Preparation)",
+  "status": "Open"
+}

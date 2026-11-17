@@ -1,0 +1,41 @@
+name: Work Program
+repo: SAAF-Project/Audit-Work-Program-Agent-UC-8-
+island: planning       # foundation | planning | collection | reporting | monitoring | governance | quarry
+maturity: ready        # building | ready | tested | improving
+category: Compliance
+language: Python
+depends_on:
+  - SAAF-Project/RCM-Builder
+tags: [audit, work-program, anthropic]
+open_slots: 0
+description: Create audit work program based on the delivered risk-control matrix from UC 7.
+# Proposed, not read by the build yet: the plan this repo implements (its slug in
+# SAAF-Project's plans/) and who answers for this agent and its mandate (GitHub
+# usernames). Uncomment to try them; the map ignores them for now, and owners will
+# never be published in map.json.
+# plan: audit-work-program
+# owners: [your-github-username]
+# true when the owners have confirmed island and maturity. Defaults to true for an
+# agent.yaml in the agent repo and to false for a seed manifest in manifests/.
+confirmed: true
+
+# The approved mandate. Changing this requires a pull request.
+# The build checks it but never publishes it: map.json only carries
+# has_mandate (true when this block is present and passes every check).
+mandate:
+  purpose: Turn an approved UC7 risk-control matrix into a GIAS-compliant audit work program.
+  allowed_tools: [read_rcm, write_workprogram, claude_api]
+  forbidden_actions:
+    - action: send_email
+      rationale: Communication with auditees goes through the auditor, not the agent.
+    - action: modify_source_data
+      rationale: Evidence must stay unchanged so the audit trail holds.
+    - action: change_own_config
+      rationale: Changes to this mandate go through a pull request.
+    - action: scrape_whole_population
+      rationale: Too large for the context window; work from the sample in the RCM.
+  trusted_inputs: [rcm_from_uc7]        # anything else is untrusted
+  max_runtime_minutes: 30
+  human_approval_required_for: [publishing final work program]
+  evidence_policy: cite_only_given_context   # every finding must cite a trusted input
+  sharing: standard_is_shared_mandate_is_private

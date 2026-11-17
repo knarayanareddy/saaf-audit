@@ -1,0 +1,83 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities to ensure revenue is recognized accurately and in the correct period.",
+  "control_objective": "Prevent unauthorized or unsupported high-risk journal entries from being posted to the general ledger by requiring documented supervisor review and approval prior to posting, thereby mitigating the risk of material misstatement of revenue.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Walk through the end-to-end journal entry workflow in the ERP: identify how high-risk journals are flagged, how the system routes them to the supervisor queue, how approval is captured (electronic signature / workflow state), and how posting is blocked absent approval. Inspect the system configuration, approval matrix, and segregation-of-duties rules to confirm the control as designed addresses the risk of unauthorized or unsupported journals.",
+    "methodology": "Inquiry, observation, and inspection of system configuration and process documentation",
+    "evidence": "Process narrative, workflow configuration screenshots, approval matrix, delegation of authority policy, system role-mapping report, walkthrough memo signed by control owner",
+    "pass_criteria": "Workflow enforces supervisor approval for all high-risk journal categories prior to posting; approver cannot be the preparer; configuration aligns with the documented approval matrix and DoA; no design gaps identified",
+    "estimated_hours": 4,
+    "skill_required": "Senior Auditor with IT Audit skills",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [
+    {
+      "population": "All high-risk journal entries posted to the general ledger in the ERP system during the audit scope period (Jan-Dec 2025), including month-end close and top-side adjustments affecting revenue accounts",
+      "sampling_approach": {
+        "method": "stratified",
+        "sample_size": 25,
+        "rationale": "12 monthly occurrences of the control plus stratification over revenue-impacting high-risk journal categories; sample sized per IIA attribute sampling guidance for monthly controls with high significance and strong design"
+      },
+      "step": "For each sampled high-risk journal, verify that (a) the journal was flagged as high-risk per the approval matrix, (b) supervisor approval was captured in the workflow prior to posting, (c) the approver was authorized per the DoA and independent of the preparer, (d) supporting documentation existed and was reviewed, and (e) the posting date is after the approval timestamp.",
+      "methodology": "Inspection and re-performance",
+      "caat_tool": "SQL",
+      "caat_pseudocode": "SELECT je.journal_id, je.preparer_id, je.posted_by, je.post_timestamp, wf.approver_id, wf.approval_timestamp, je.amount, je.account FROM journal_entries je LEFT JOIN approval_workflow wf ON je.journal_id = wf.journal_id WHERE je.post_date BETWEEN '2025-01-01' AND '2025-12-31' AND je.risk_flag = 'HIGH' AND je.account IN (revenue_accounts); -- Then: identify entries with (wf.approver_id IS NULL) OR (wf.approver_id = je.preparer_id) OR (wf.approval_timestamp > je.post_timestamp); draw stratified sample from remaining population.",
+      "evidence": "Journal entry extract, workflow approval log, supporting documentation (contracts, invoices, calculations), DoA matrix, user role report",
+      "pass_criteria": "100% of sampled journals have documented supervisor approval by an authorized, independent approver prior to posting with adequate supporting documentation; zero exceptions or exceptions within tolerable deviation rate (<=1)",
+      "estimated_hours": 10,
+      "skill_required": "Data Analyst with SQL skills",
+      "assigned_to": "Sara Li",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "Full population of high-risk journal entries posted during Jan-Dec 2025 (completeness and SoD analytic over the entire population)",
+      "sampling_approach": {
+        "method": "full population",
+        "sample_size": null,
+        "rationale": "CAAT-enabled 100% population analytic is more efficient and provides stronger assurance than sampling for detecting segregation-of-duties violations and post-without-approval exceptions"
+      },
+      "step": "Run a full-population analytic to identify: (1) high-risk journals posted without a corresponding approval record, (2) journals where preparer = approver, (3) approvals timestamped after posting, (4) approvers outside the authorized approver list per the DoA, and (5) revenue journals posted in a closed period.",
+      "methodology": "Analytical procedure / re-performance via CAAT",
+      "caat_tool": "Python",
+      "caat_pseudocode": "import pandas as pd\nje = pd.read_sql('SELECT * FROM journal_entries WHERE post_date BETWEEN 2025-01-01 AND 2025-12-31 AND risk_flag=HIGH', conn)\nwf = pd.read_sql('SELECT * FROM approval_workflow', conn)\ndoa = pd.read_csv('authorized_approvers.csv')\nmerged = je.merge(wf, on='journal_id', how='left')\nex1 = merged[merged.approver_id.isna()]\nex2 = merged[merged.approver_id == merged.preparer_id]\nex3 = merged[merged.approval_timestamp > merged.post_timestamp]\nex4 = merged[~merged.approver_id.isin(doa.authorized_user_id)]\nex5 = merged[merged.period_status == 'CLOSED']\nexport(ex1, ex2, ex3, ex4, ex5)",
+      "evidence": "CAAT output logs, exception listings, reconciliation of total population to GL control totals, authorized approver list",
+      "pass_criteria": "Zero unresolved exceptions; any identified exceptions are supported with management explanation and corrective action evidence",
+      "estimated_hours": 8,
+      "skill_required": "Data Analyst with Python skills",
+      "assigned_to": "Sara Li",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "Monthly close checklists and sign-offs for the 12 months in the scope period evidencing the Financial Reporting Manager's supervisory review of close activities impacting revenue",
+      "sampling_approach": {
+        "method": "judgmental",
+        "sample_size": 4,
+        "rationale": "Quarterly judgmental sample covering Q1-Q4 close cycles, including year-end, to corroborate the supervisory review element of the control"
+      },
+      "step": "Inspect the monthly close package for the selected months and verify that the Financial Reporting Manager reviewed and signed off on high-risk journal activity, revenue cut-off procedures, and manual adjustments. Corroborate with the control owner through inquiry.",
+      "methodology": "Inspection and inquiry",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "Signed close checklists, review notes, meeting minutes, email approvals, revenue cut-off memos",
+      "pass_criteria": "All sampled months contain documented, timely, and complete supervisor sign-off by the Financial Reporting Manager over revenue-impacting high-risk journals",
+      "estimated_hours": 6,
+      "skill_required": "Senior Auditor with Financial Audit skills",
+      "assigned_to": "Priya Nair",
+      "observed_exceptions": [],
+      "conclusion": null
+    }
+  ],
+  "sufficiency_flags": [
+    "PERIOD_INCOMPLETE"
+  ],
+  "overall_conclusion": null
+}

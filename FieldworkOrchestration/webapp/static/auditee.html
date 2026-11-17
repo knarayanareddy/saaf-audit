@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <h1 id="run-title">Auditee — deliver evidence</h1>
+  <p class="project-line" id="run-sub"></p>
+
+  <div id="items"></div>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader("auditee");
+  const runId = getRunId();
+
+  async function load() {
+    if (!runId) {
+      document.getElementById("items").innerHTML = "<p class='muted'>No engagement selected — go back to Engagements.</p>";
+      return;
+    }
+    const run = await api(`/api/runs/${runId}`);
+    document.getElementById("run-title").textContent = "Auditee — deliver evidence";
+    document.getElementById("run-sub").textContent = `${engagementContextText(run)} · delivering as ${run.auditee_contact.name}`;
+
+    const board = await api(`/api/runs/${runId}/board`);
+    const receivedByPbc = {};
+    for (const doc of run.received_documents) {
+      (receivedByPbc[doc.pbc_id] = receivedByPbc[doc.pbc_id] || []).push(doc.filename);
+    }
+
+    document.getElementById("items").innerHTML = board
+      .map((row) => {
+        const files = (receivedByPbc[row.pbc_id] || []).map((f) => `<div class="muted">✓ ${escapeHtml(f)}</div>`).join("");
+        const flag = row.flag
+          ? `<div class="banner banner-flag" style="margin-top:8px;padding:8px 12px;font-size:13px">
+               You confirmed "${escapeHtml(row.flag.filename)}" is correct despite our concern — the auditor has been
+               told and will look at it flagged.
+             </div>`
+          : "";
+        return `<div class="card">
+          <div style="display:flex;justify-content:space-between;gap:12px">
+            <div>
+              <b>${escapeHtml(row.pbc_id)}</b> — ${escapeHtml(row.description)}
+              <div class="muted">Deadline: ${escapeHtml(row.deadline)}</div>
+            </div>
+            <span class="pill pill-${row.display_status_class}">${row.display_status}</span>
+          </div>
+          ${files}
+          ${flag}
+          <form class="upload-form" data-pbc="${row.pbc_id}">
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+          </form>
+          <div class="concern" data-pbc="${row.pbc_id}" hidden>
+            <div class="banner banner-flag" style="margin-top:8px;padding:8px 12px;font-size:13px">
+              <div class="concern-text"></div>
+              <div style="margin-top:8px">
+                <button type="button" class="secondary retry">Upload a different file</button>
+                <button type="button" class="danger confirm">This is correct — send anyway</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      })
+      .join("");
+
+    // Holds the last file picked per PBC id so "This is correct — send
+    // anyway" can re-POST it with force=true without asking the auditee to
+    // pick the file again.
+    const pendingFiles = {};
+
+    async function doUpload(pbcId, file, force) {
+      // A successful upload now also runs the sanity check plus the full
+      // AI evaluation (propose + document check) before responding — up to
+      // three sequential Claude calls, see webapp/README.md — so this can
+      // take a while; say so rather than leaving the button looking stuck.
+      const submitBtn = document.querySelector(`.upload-form[data-pbc="${pbcId}"] button[type=submit]`);
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Uploading & checking…";
+      }
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+        const url = `/api/runs/${runId}/upload?pbc_id=${encodeURIComponent(pbcId)}${force ? "&force=true" : ""}`;
+        const res = await fetch(url, { method: "POST", body: fd });
+        if (!res.ok) {
+          alert("Upload failed: " + (await res.text()));
+          return;
+        }
+        const body = await res.json();
+        const concernDiv = document.querySelector(`.concern[data-pbc="${pbcId}"]`);
+        if (body.ok === false) {
+          pendingFiles[pbcId] = file;
+          concernDiv.querySelector(".concern-text").textContent =
+            `This doesn't look like the right document: ${body.concern || "please double-check."}`;
+          concernDiv.hidden = false;
+          return;
+        }
+        delete pendingFiles[pbcId];
+        load();
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Upload";
+        }
+      }
+    }
+
+    document.querySelectorAll(".upload-form").forEach((form) => {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const pbcId = form.dataset.pbc;
+        const file = form.querySelector("input[type=file]").files[0];
+        if (!file) return;
+        await doUpload(pbcId, file, false);
+      });
+    });
+
+    document.querySelectorAll(".concern").forEach((div) => {
+      const pbcId = div.dataset.pbc;
+      div.querySelector(".retry").addEventListener("click", () => {
+        delete pendingFiles[pbcId];
+        div.hidden = true;
+      });
+      div.querySelector(".confirm").addEventListener("click", () => {
+        const file = pendingFiles[pbcId];
+        if (file) doUpload(pbcId, file, true);
+      });
+    });
+  }
+  load();
+</script>
+</body>
+</html>

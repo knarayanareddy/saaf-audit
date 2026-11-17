@@ -1,0 +1,51 @@
+employee_id,username,full_name,department,job_title,start_date,status
+E001,alice.johnson,Alice Johnson,Finance,Finance Analyst,2022-01-15,Active
+E002,bob.martinez,Bob Martinez,IT,Systems Engineer,2021-06-20,Active
+E003,carol.smith,Carol Smith,HR,HR Business Partner,2020-09-01,Active
+E004,david.lee,David Lee,Sales,Account Executive,2023-03-10,Active
+E005,emma.wilson,Emma Wilson,Marketing,Marketing Manager,2019-11-05,Active
+E006,frank.brown,Frank Brown,Legal,Legal Counsel,2021-02-28,Active
+E007,grace.taylor,Grace Taylor,Finance,Finance Analyst,2022-07-19,Active
+E008,henry.anderson,Henry Anderson,IT,DevOps Engineer,2023-05-01,Active
+E009,iris.thomas,Iris Thomas,Operations,Operations Analyst,2020-04-14,Active
+E010,james.jackson,James Jackson,Compliance,Compliance Officer,2018-08-22,Active
+E011,kate.white,Kate White,Finance,Senior Accountant,2019-03-30,Active
+E012,liam.harris,Liam Harris,IT,Security Analyst,2024-01-08,Active
+E013,mia.martin,Mia Martin,HR,Recruiter,2022-11-15,Active
+E014,noah.garcia,Noah Garcia,Sales,Sales Manager,2020-06-01,Active
+E015,olivia.davis,Olivia Davis,Marketing,Content Strategist,2021-09-20,Active
+E016,peter.rodriguez,Peter Rodriguez,Operations,Project Manager,2019-07-11,Active
+E017,quinn.lewis,Quinn Lewis,Legal,Paralegal,2023-02-14,Active
+E018,rachel.walker,Rachel Walker,Compliance,Risk Analyst,2020-12-01,Active
+E019,sam.hall,Sam Hall,Finance,Budget Analyst,2021-04-05,Active
+E020,tina.allen,Tina Allen,IT,Network Engineer,2022-08-18,Active
+E021,cformer,Carl Former,Operations,Operations User,2019-09-01,Terminated
+E022,d.resigned,Dana Resigned,Sales,Account Executive,2021-03-15,Terminated
+E023,e.dismissed,Eric Dismissed,Finance,Finance Analyst,2020-11-01,Terminated
+E024,f.retired,Fiona Retired,HR,HR Director,2015-04-01,Terminated
+E025,g.resigned2,Gary Resigned,IT,Junior Developer,2023-07-01,Terminated
+E026,asmith,Alice Smith,IT,IT Support,2021-06-01,Active
+E027,h.mismatch1,Helen Mismatch,Finance,Finance Analyst,2022-05-20,Active
+E028,i.mismatch2,Ivan Mismatch,Sales,Sales Manager,2023-01-10,Active
+E029,j.mismatch3,Julia Mismatch,Operations,Logistics Coordinator,2022-09-05,Active
+E030,k.mismatch4,Karl Mismatch,IT,Junior Developer,2024-02-20,Active
+E031,l.mismatch5,Lisa Mismatch,Marketing,Content Manager,2021-10-30,Active
+E032,m.mismatch6,Mark Mismatch,Compliance,Compliance Officer,2020-07-14,Active
+E033,n.mismatch7,Nina Mismatch,Legal,Legal Assistant,2022-03-01,Active
+E034,o.stale1,Oscar Stale,Finance,Finance Analyst,2019-06-15,Active
+E035,p.stale2,Paula Stale,IT,Systems Admin,2020-02-28,Active
+E036,q.stale3,Quinn Stale,HR,HR Coordinator,2018-11-05,Active
+E037,r.stale4,Ryan Stale,Sales,Sales Representative,2021-08-20,Active
+E038,s.stale5,Sara Stale,Operations,Operations User,2020-05-10,Active
+E039,t.stale6,Tom Stale,Legal,Legal Advisor,2019-01-20,Active
+E040,u.stale7,Uma Stale,Finance,Accounts Payable,2022-06-30,Active
+E041,v.stale8,Victor Stale,IT,IT Support,2023-04-01,Active
+E042,w.duplicate1,Wendy Duplicate,Finance,Finance Analyst,2021-07-15,Active
+E043,x.duplicate2,Xavier Duplicate,IT,IT Admin,2022-10-01,Active
+E044,y.newjoin1,Yara Newjoin,Finance,Junior Analyst,2026-04-01,Active
+E045,z.newjoin2,Zach Newjoin,IT,Graduate Engineer,2026-04-15,Active
+E046,a.newjoin3,Amy Newjoin,Sales,Business Development,2026-05-01,Active
+E047,b.newjoin4,Ben Newjoin,Marketing,Digital Marketing Specialist,2026-05-05,Active
+E048,c.newjoin5,Cara Newjoin,Operations,Operations Trainee,2026-04-20,Active
+E049,d.newjoin6,Dan Newjoin,Legal,Legal Intern,2026-05-10,Active
+E050,e.newjoin7,Eva Newjoin,HR,HR Intern,2026-05-12,Active

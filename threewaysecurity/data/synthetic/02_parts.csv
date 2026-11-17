@@ -1,0 +1,55 @@
+part_id,description,category,unit_price,unit,preferred_supplier_id
+LNS-0001,EUV projection lens element,Optics,185000.0,stuk,SUP-001
+LNS-0002,DUV illumination mirror assembly,Optics,142000.0,stuk,SUP-001
+LNS-0003,Wafer stage alignment lens,Optics,67500.0,stuk,SUP-001
+LNS-0004,Pellicle frame optical window,Optics,28000.0,stuk,SUP-001
+LNS-0005,Reticle inspection objective,Optics,95000.0,stuk,SUP-001
+LNS-0006,Beam splitter cube assembly,Optics,34000.0,set,SUP-001
+LNS-0007,Focus sensor prism array,Optics,19500.0,set,SUP-001
+LNS-0008,Collector mirror substrate,Optics,156000.0,stuk,SUP-001
+LSR-0001,CO2 drive laser module,Laser,450000.0,stuk,SUP-002
+LSR-0002,Pre-pulse laser unit,Laser,320000.0,stuk,SUP-002
+LSR-0003,Beam delivery optical fiber,Laser,18500.0,stuk,SUP-002
+LSR-0004,Laser pulse timing controller,Laser,42000.0,stuk,SUP-002
+LSR-0005,High-power laser diode array,Laser,87000.0,set,SUP-002
+LSR-0006,Laser cavity alignment tool,Laser,12000.0,kit,SUP-002
+LSR-0007,Seed laser oscillator,Laser,195000.0,stuk,SUP-002
+CHM-0001,Ultra-pure hydrogen peroxide,Chemicals,850.0,drum,SUP-003
+CHM-0002,EUV resist solvent blend,Chemicals,2400.0,drum,SUP-003
+CHM-0003,Tin target material pellets,Chemicals,4800.0,cylinder,SUP-003
+CHM-0004,Cleanroom-grade isopropanol,Chemicals,320.0,drum,SUP-003
+CHM-0005,Nitrogen purge gas (6N purity),Chemicals,1200.0,cylinder,SUP-003
+CHM-0006,Argon buffer gas supply,Chemicals,680.0,cylinder,SUP-003
+CMP-0001,CMP slurry oxide formulation,CMP,3200.0,drum,SUP-004
+CMP-0002,Polishing pad IC1010 stack,CMP,8500.0,set,SUP-004
+CMP-0003,Diamond conditioning disc,CMP,4200.0,stuk,SUP-004
+CMP-0004,Retaining ring assembly,CMP,1800.0,set,SUP-004
+CMP-0005,Endpoint detection sensor,CMP,12500.0,stuk,SUP-004
+SRC-0001,EUV tin droplet generator,Source,780000.0,stuk,SUP-005
+SRC-0002,Collector mirror module,Source,520000.0,stuk,SUP-005
+SRC-0003,Debris mitigation system,Source,245000.0,stuk,SUP-005
+SRC-0004,Vacuum vessel liner kit,Source,68000.0,kit,SUP-005
+SRC-0005,Plasma diagnostic probe,Source,35000.0,stuk,SUP-005
+MTL-0001,Silicon carbide substrate blank,Materials,8500.0,stuk,SUP-006
+MTL-0002,Zerodur glass ceramic block,Materials,11200.0,stuk,SUP-006
+MTL-0003,Invar 36 alloy plate,Materials,2800.0,stuk,SUP-006
+MTL-0004,Molybdenum-silicon multilayer,Materials,6400.0,set,SUP-006
+MTL-0005,Titanium vacuum chamber flange,Materials,950.0,stuk,SUP-006
+MTL-0006,Copper heat sink block,Materials,540.0,stuk,SUP-006
+SEN-0001,Wafer alignment interferometer,Sensors,7200.0,stuk,SUP-007
+SEN-0002,Level sensor photodiode array,Sensors,3800.0,set,SUP-007
+SEN-0003,Temperature probe PT1000 kit,Sensors,1200.0,kit,SUP-007
+SEN-0004,Vibration isolation accelerometer,Sensors,5600.0,stuk,SUP-007
+SEN-0005,Dose uniformity detector,Sensors,4500.0,stuk,SUP-007
+OPT-0001,Mo/Si multilayer coating service,Optical coatings,38000.0,stuk,SUP-008
+OPT-0002,Anti-reflective DUV coating,Optical coatings,12500.0,stuk,SUP-008
+OPT-0003,High-reflectivity mirror coating,Optical coatings,24000.0,stuk,SUP-008
+OPT-0004,Spectral purity filter coating,Optical coatings,5800.0,stuk,SUP-008
+PWR-0001,High-voltage pulse generator,Power systems,55000.0,stuk,SUP-009
+PWR-0002,UPS battery module rack,Power systems,18000.0,set,SUP-009
+PWR-0003,RF power amplifier unit,Power systems,32000.0,stuk,SUP-009
+PWR-0004,DC-DC converter board,Power systems,7500.0,stuk,SUP-009
+ROB-0001,Wafer handling robot arm,Robotics,135000.0,stuk,SUP-010
+ROB-0002,Reticle stage linear motor,Robotics,82000.0,stuk,SUP-010
+ROB-0003,Wafer stage planar motor,Robotics,148000.0,stuk,SUP-010
+ROB-0004,FOUP loader mechanism,Robotics,45000.0,stuk,SUP-010

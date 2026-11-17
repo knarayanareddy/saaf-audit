@@ -1,0 +1,148 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - uses: actions/cache@v4
+        id: cache-venv
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-3.11-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
+      - name: Install dependencies
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt -r requirements-dev.txt
+      - run: .venv/bin/python -c "import anthropic, pdfplumber; print('imports OK')"
+
+  run-agent:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-3.11-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
+      - name: Generate sample policy PDF
+        run: .venv/bin/python tests/create_sample_pdf.py
+      - name: Run agent with mocked API
+        run: .venv/bin/python tests/run_agent_mocked.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: judge-verdicts
+          path: judge_verdicts.json
+
+  validate-output:
+    needs: run-agent
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v4
+        with:
+          name: judge-verdicts
+      - name: Validate verdict structure
+        run: python tests/validate_output.py
+
+  test-error-handling:
+    needs: validate-output
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-3.11-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
+      - name: Generate sample policy PDF
+        run: .venv/bin/python tests/create_sample_pdf.py
+      - name: Test error handling
+        run: .venv/bin/python tests/test_error_handling.py
+
+  report:
+    needs: [install, run-agent, validate-output, test-error-handling]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and post test report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const results = {
+              install:               '${{ needs.install.result }}',
+              'run-agent':           '${{ needs.run-agent.result }}',
+              'validate-output':     '${{ needs.validate-output.result }}',
+              'test-error-handling': '${{ needs.test-error-handling.result }}',
+            };
+
+            const icon  = r => r === 'success' ? '✅' : r === 'failure' ? '❌' : '⏭️';
+            const label = r => r === 'success' ? 'Passed'
+                             : r === 'failure' ? 'Failed'
+                             : r.charAt(0).toUpperCase() + r.slice(1);
+
+            const items = [
+              ['`pip install -r requirements.txt` completes without errors',               results['install']],
+              ['`python agent.py --controls … --policy …` produces `judge_verdicts.json`', results['run-agent']],
+              ['Verdicts contain `control_id`, `found`, `page_no`, `paragraph`',           results['validate-output']],
+              ['Malformed model response → `found: "error"`, no crash',                    results['test-error-handling']],
+            ];
+
+            const table = [
+              '| # | Test Plan Item | Status |',
+              '|---|---|---|',
+              ...items.map(([item, r], i) => `| ${i + 1} | ${item} | ${icon(r)} ${label(r)} |`),
+            ].join('\n');
+
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `## CI Test Plan Results\n\n${table}\n\n_Run: [${context.runId}](${runUrl})_`;
+
+            await core.summary.addRaw(body).write();
+
+            if (context.eventName !== 'pull_request') return;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c => c.body.startsWith('## CI Test Plan Results'));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner:      context.repo.owner,
+                repo:       context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner:        context.repo.owner,
+                repo:         context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }

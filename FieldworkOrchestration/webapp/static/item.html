@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <p class="muted"><a id="back-link" href="#">← Back</a></p>
+  <h1 id="item-title">Audit trail</h1>
+  <p class="project-line" id="engagement-context"></p>
+  <p class="muted" id="item-sub"></p>
+
+  <div id="flag-banner"></div>
+  <div id="risk-control-context"></div>
+
+  <h2>Delivered by the auditee</h2>
+  <div id="uploads"></div>
+
+  <h2>Validation prompts</h2>
+  <p class="muted">Every prompt proposed for this item, and which one was approved (and by whom) before it was
+    used to actually check the document — see webapp/README.md for why this is a separate log from the LLM
+    calls below.</p>
+  <div id="prompt-history"></div>
+
+  <h2>LLM calls</h2>
+  <div id="calls" class="timeline"></div>
+
+  <h2>Auditor notes</h2>
+  <p class="muted">Additional audit evidence or caveats the auditor added themselves, independent of any
+    approve/reject decision.</p>
+  <div id="notes"></div>
+
+  <h2>Sign-off</h2>
+  <div id="approvals"></div>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader();
+  const runId = getRunId();
+  const pbcId = new URLSearchParams(location.search).get("pbc");
+  document.getElementById("back-link").href = runLink("auditor");
+
+  function renderPromptBlock(value) {
+    if (value == null) return "";
+    const text = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+    return `<pre class="call-block">${escapeHtml(text)}</pre>`;
+  }
+
+  function riskControlContext(ctx) {
+    if (!ctx || !ctx.risk) return "";
+    const steps = ctx.planned_work_steps || [];
+    return `<div class="risk-control-context">
+      <div class="rcc-label">Risk &amp; control context</div>
+      <div><b>Risk${ctx.risk_id ? ` (${escapeHtml(ctx.risk_id)})` : ""}:</b> ${escapeHtml(ctx.risk)}</div>
+      <div style="margin-top:4px"><b>Control${ctx.control_id ? ` (${escapeHtml(ctx.control_id)})` : ""}:</b> ${escapeHtml(ctx.control || "")}</div>
+      ${ctx.control_objective ? `<div class="muted" style="margin-top:2px">${escapeHtml(ctx.control_objective)}</div>` : ""}
+      ${
+        steps.length
+          ? `<div style="margin-top:6px"><b>Planned audit work:</b><ul class="issues" style="margin-top:2px">${steps.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ul></div>`
+          : ""
+      }
+    </div>`;
+  }
+
+  function qualityBadge(quality) {
+    if (!quality) return "";
+    const issues = (quality.issues || []).map((i) => `<li>${escapeHtml(i)}</li>`).join("");
+    return `<div style="margin-top:8px">
+      <span class="pill pill-${quality.verdict}">${quality.verdict}</span>
+      <span class="muted">(${escapeHtml(quality.confidence)})</span>
+      ${quality.rationale ? `<div class="muted" style="margin-top:4px">${escapeHtml(quality.rationale)}</div>` : ""}
+      ${issues ? `<ul class="issues">${issues}</ul>` : ""}
+    </div>`;
+  }
+
+  async function load() {
+    if (!runId || !pbcId) {
+      document.getElementById("item-title").textContent = "No item selected.";
+      return;
+    }
+    const [run, h] = await Promise.all([
+      api(`/api/runs/${runId}`),
+      api(`/api/runs/${runId}/items/${encodeURIComponent(pbcId)}/history`),
+    ]);
+    document.getElementById("engagement-context").textContent = engagementContextText(run);
+
+    document.getElementById("item-title").textContent = `Audit trail — ${h.pbc_id}`;
+    document.getElementById("item-sub").textContent = `${h.description} · deadline ${h.deadline}`;
+    document.getElementById("risk-control-context").innerHTML = riskControlContext(h.work_program_context);
+
+    document.getElementById("flag-banner").innerHTML = h.flag
+      ? `<div class="banner banner-flag">
+           Auditee overrode a delivery concern for "${escapeHtml(h.flag.filename)}":
+           ${escapeHtml(h.flag.concern || "")} (${escapeHtml(h.flag.at)})
+         </div>`
+      : "";
+
+    document.getElementById("uploads").innerHTML = h.uploads.length
+      ? h.uploads
+          .map(
+            (u) => `<div class="card">
+              <b>${escapeHtml(u.filename)}</b>
+              — <a href="/api/runs/${encodeURIComponent(runId)}/items/${encodeURIComponent(pbcId)}/document/${encodeURIComponent(u.filename)}" target="_blank">Open →</a>
+              <div class="muted">uploaded ${escapeHtml(u.uploaded_at)}</div>
+            </div>`
+          )
+          .join("")
+      : "<p class='muted'>Nothing delivered yet.</p>";
+
+    document.getElementById("prompt-history").innerHTML = h.prompt_history.length
+      ? h.prompt_history
+          .map((p) => {
+            if (p.type === "proposed") {
+              return `<div class="card">
+                <span class="pill pill-none">proposed</span>
+                <div class="muted" style="margin-top:6px">${escapeHtml(p.at)}</div>
+                ${renderPromptBlock(p.proposed_prompt)}
+                ${p.rationale ? `<div class="muted" style="margin-top:6px"><b>Rationale:</b> ${escapeHtml(p.rationale)}</div>` : ""}
+              </div>`;
+            }
+            return `<div class="card">
+              <span class="pill pill-${p.auto ? "ai_approved" : "approved"}">${p.auto ? "automatic first pass" : "approved"}${p.edited ? " (edited)" : ""}</span>
+              <div class="muted" style="margin-top:6px">by ${escapeHtml(p.approved_by || "unknown")} · ${escapeHtml(p.at)}</div>
+              ${renderPromptBlock(p.prompt)}
+            </div>`;
+          })
+          .join("")
+      : "<p class='muted'>No prompt has been proposed for this item yet.</p>";
+
+    document.getElementById("calls").innerHTML = h.calls.length
+      ? h.calls
+          .map(
+            (c) => `<div class="card">
+              <div style="display:flex;justify-content:space-between;gap:12px">
+                <div><b>${escapeHtml(c.agent)}</b></div>
+                <div class="muted">${escapeHtml(c.model)} · ${escapeHtml(c.timestamp)}</div>
+              </div>
+              <details class="call-detail">
+                <summary>Input</summary>
+                ${c.system_prompt ? `<div class="muted">System prompt:</div>${renderPromptBlock(c.system_prompt)}` : ""}
+                <div class="muted" style="margin-top:6px">User prompt:</div>
+                ${renderPromptBlock(c.user_prompt)}
+              </details>
+              <details class="call-detail">
+                <summary>Output</summary>
+                ${renderPromptBlock(c.response_text)}
+              </details>
+              ${
+                c.reasoning_text
+                  ? `<details class="call-detail">
+                      <summary>Reasoning (extended thinking)</summary>
+                      ${renderPromptBlock(c.reasoning_text)}
+                    </details>`
+                  : ""
+              }
+              ${qualityBadge(c.quality)}
+            </div>`
+          )
+          .join("")
+      : "<p class='muted'>No LLM calls recorded for this item yet.</p>";
+
+    document.getElementById("notes").innerHTML = h.auditor_notes.length
+      ? h.auditor_notes
+          .map(
+            (n) => `<div class="card">
+              <div>"${escapeHtml(n.text)}"</div>
+              <div class="muted" style="margin-top:6px">${escapeHtml(n.author)} · ${escapeHtml(n.at)}</div>
+            </div>`
+          )
+          .join("")
+      : "<p class='muted'>No notes added yet.</p>";
+
+    document.getElementById("approvals").innerHTML = h.approvals.length
+      ? h.approvals
+          .map(
+            (a) => `<div class="card">
+              <span class="pill pill-${a.decision}">${a.decision}</span>
+              <span class="muted">by ${escapeHtml(a.reviewer)}${a.role ? ` (${escapeHtml(ROLE_LABELS[a.role] || a.role)})` : ""} · ${escapeHtml(a.reviewed_at)}</span>
+              ${a.comment ? `<div class="muted" style="margin-top:6px">"${escapeHtml(a.comment)}"</div>` : ""}
+            </div>`
+          )
+          .join("")
+      : "<p class='muted'>No sign-off recorded for this item yet.</p>";
+  }
+
+  load();
+</script>
+</body>
+</html>

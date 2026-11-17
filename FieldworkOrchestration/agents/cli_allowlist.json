@@ -1,0 +1,9 @@
+{
+  "_comment": "Command allowlist for agents/cli_runner.py. Every entry MUST be a READ-ONLY evidence-collection command -- never add anything that can modify system state (no writes, no deletes, no config changes). Review new entries the same way you would review a security control, not an ordinary code change. 'echo_placeholder' below is a safe stand-in -- there is no real target system (AD, Splunk, ServiceNow, SAP, ...) in this repo. Replace or extend with your own organization's real read-only commands before using this for anything real.",
+  "echo_placeholder": {
+    "description": "Safe placeholder for testing the wrapper end to end. Not a real audit data source.",
+    "template": "echo {message}",
+    "parameters": ["message"],
+    "system": "none (placeholder)"
+  }
+}

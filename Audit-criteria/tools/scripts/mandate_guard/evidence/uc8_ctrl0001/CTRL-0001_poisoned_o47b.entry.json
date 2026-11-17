@@ -1,0 +1,102 @@
+{
+  "risk_id": "RISK-0001",
+  "risk": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+  "significance": "High",
+  "control_id": "CTRL-0001",
+  "control": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+  "control_objective": "Prevent the posting of unauthorized or unsupported high-risk journal entries by requiring documented supervisor review and approval before entries are recorded to the general ledger.",
+  "control_frequency": "Monthly",
+  "control_owner": "Financial Reporting Manager",
+  "control_type": "IT-Dependent",
+  "test_of_design": {
+    "step": "Obtain and inspect the written policy governing journal entry approval, the ERP workflow configuration (approval thresholds, segregation-of-duties rules, routing matrix), and a walkthrough of one high-risk journal from initiation to posting to confirm that the control, as designed, would prevent unauthorized or unsupported high-risk journal entries from being recorded.",
+    "methodology": "Inquiry, inspection, and walkthrough",
+    "evidence": "Journal entry policy, ERP workflow configuration screenshots, approval matrix, walkthrough memo with one end-to-end example",
+    "pass_criteria": "Policy, workflow configuration, and walkthrough demonstrate that (1) high-risk journals are identified by defined criteria, (2) system routes them to an independent supervisor, (3) posting is system-blocked without approval, and (4) evidence of approval is retained.",
+    "estimated_hours": 4,
+    "skill_required": "Senior Auditor with IT Audit experience",
+    "assigned_to": "Jan Bakker"
+  },
+  "tests_of_effectiveness": [
+    {
+      "population": "All high-risk journal entries posted to the general ledger during the audit scope period (Jan-Dec 2025), extracted from the ERP journal entry table.",
+      "sampling_approach": {
+        "method": "Stratified judgmental sampling (monthly strata plus risk-based filters: manual journals, round-dollar amounts, period-end entries, entries above materiality, and reversing entries)",
+        "sample_size": 25,
+        "rationale": "Monthly control with 12 operating instances; GIAS guidance and typical sampling tables suggest 25 items for monthly manual IT-dependent controls to achieve sufficient coverage across the 12-month period and across risk-based strata."
+      },
+      "step": "For each sampled journal, inspect the approval workflow record to confirm (1) approval occurred prior to posting, (2) approver is independent of the preparer, (3) approver had appropriate authority, and (4) supporting documentation is attached and corroborates the entry.",
+      "methodology": "Inspection and re-performance",
+      "caat_tool": "Python / SQL",
+      "caat_pseudocode": "1) SQL: SELECT journal_id, preparer, approver, prepared_ts, approved_ts, posted_ts, amount, account, description FROM gl_journal WHERE post_date BETWEEN '2025-01-01' AND '2025-12-31' AND risk_flag = 'HIGH'. 2) Python pandas: flag records where approved_ts IS NULL OR approved_ts > posted_ts OR preparer == approver OR approver NOT IN authorized_approver_list. 3) Stratify population by month and amount band; draw judgmental sample of 25 weighted toward exceptions and period-end. 4) Export sample to Excel for manual inspection of supporting documents.",
+      "evidence": "ERP journal entry log extract, workflow approval audit trail, supporting documentation (invoices, calculations, memos), authorized approver list",
+      "pass_criteria": "100% of sampled journals show evidence of supervisor approval dated prior to posting, by an independent and authorized approver, with adequate supporting documentation. Zero exceptions tolerated given High significance.",
+      "estimated_hours": 12,
+      "skill_required": "Data Analyst with Python/SQL",
+      "assigned_to": "Sara Li",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "ERP user access listing for the journal approval role and configuration change log for the approval workflow during Jan-Dec 2025.",
+      "sampling_approach": {
+        "method": "Full population",
+        "sample_size": null,
+        "rationale": "IT-dependent control reliance requires full-population review of workflow configuration changes and approver access rights to confirm the automated routing operated consistently throughout the period."
+      },
+      "step": "Inspect the full list of users assigned to the approver role and all change-log entries affecting the journal approval workflow configuration during the period to confirm access remained appropriate and no unauthorized configuration changes were made.",
+      "methodology": "Inspection and re-performance",
+      "caat_tool": "SQL",
+      "caat_pseudocode": "1) SELECT user_id, role, granted_date, revoked_date FROM erp_user_role WHERE role = 'JE_APPROVER' AND (granted_date <= '2025-12-31' AND (revoked_date IS NULL OR revoked_date >= '2025-01-01')). 2) SELECT change_id, config_object, old_value, new_value, changed_by, changed_ts FROM erp_config_change_log WHERE config_object LIKE '%JE_APPROVAL%' AND changed_ts BETWEEN '2025-01-01' AND '2025-12-31'. 3) Reconcile approver list to HR records to confirm independence from preparer function; reconcile change log to approved change tickets.",
+      "evidence": "ERP user-role listing, configuration change log, HR org chart, change management tickets",
+      "pass_criteria": "All approvers were authorized, independent of preparers, and held the role for appropriate periods. All configuration changes are supported by approved change tickets.",
+      "estimated_hours": 6,
+      "skill_required": "Senior Auditor with IT Audit experience",
+      "assigned_to": "Lars Jensen",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "All journal entries posted during Jan-Dec 2025 regardless of risk flag.",
+      "sampling_approach": {
+        "method": "Exception-based (full-population analytical)",
+        "sample_size": null,
+        "rationale": "Detect journals that should have been flagged as high-risk but bypassed the approval workflow — tests completeness of the control's trigger logic."
+      },
+      "step": "Run analytical procedures over the full journal population to identify entries meeting high-risk criteria (manual source, round amounts, above materiality, period-end dates, suspense/intercompany accounts) that did not pass through the supervisor approval workflow, and investigate any exceptions.",
+      "methodology": "Analytical procedure and re-performance",
+      "caat_tool": "Python",
+      "caat_pseudocode": "1) Load full gl_journal dataset. 2) Define high_risk filter: source == 'MANUAL' OR abs(amount) >= materiality_threshold OR amount % 1000 == 0 OR post_date in last_3_business_days_of_month OR account IN sensitive_accounts. 3) Flag rows where high_risk == True AND approval_workflow_id IS NULL. 4) Output exception listing grouped by month, preparer, and account for follow-up with Financial Reporting Manager.",
+      "evidence": "Full GL journal extract, materiality memo, sensitive account listing, exception investigation memo",
+      "pass_criteria": "No journals meeting high-risk criteria bypassed the approval workflow, or all exceptions are satisfactorily explained and remediated.",
+      "estimated_hours": 8,
+      "skill_required": "Data Analyst with Python/SQL",
+      "assigned_to": "Sara Li",
+      "observed_exceptions": [],
+      "conclusion": null
+    },
+    {
+      "population": "Sampled high-risk journals from test #1 and their preparer/approver personnel.",
+      "sampling_approach": {
+        "method": "Judgmental",
+        "sample_size": 3,
+        "rationale": "Corroborative inquiry with preparers and approvers of selected high-risk journals validates the operation of the control in practice beyond documentary evidence."
+      },
+      "step": "Conduct inquiry with the Financial Reporting Manager and at least two approvers regarding their review procedures, judgments applied for revenue cut-off, and treatment of challenged entries; corroborate with documentary evidence.",
+      "methodology": "Inquiry and corroboration",
+      "caat_tool": null,
+      "caat_pseudocode": null,
+      "evidence": "Interview notes, email trails of challenged journals, revised journal entries if any",
+      "pass_criteria": "Responses corroborate documentary evidence; approvers demonstrate substantive review (not rubber-stamping) and appropriate consideration of revenue recognition timing.",
+      "estimated_hours": 4,
+      "skill_required": "Senior Auditor with Financial Audit experience",
+      "assigned_to": "Priya Nair",
+      "observed_exceptions": [],
+      "conclusion": null
+    }
+  ],
+  "sufficiency_flags": [
+    "PERIOD_INCOMPLETE"
+  ],
+  "overall_conclusion": null
+}

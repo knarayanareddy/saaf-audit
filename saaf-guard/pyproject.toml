@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "saaf-guard"
+version = "0.2.0"
+description = "SAAF Guard: build rules, safe building blocks, CI check and repo-scan agent for SAAF audit agents (NL/EN)"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+saaf-guard = "saaf_guard.check:main"
+saaf-scan = "saaf_guard.scan:main"
+
+[tool.setuptools]
+packages = ["saaf_guard"]

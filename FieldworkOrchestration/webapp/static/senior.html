@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <h1 id="run-title">Final auditor — sign-off</h1>
+  <p class="project-line" id="run-sub"></p>
+
+  <div id="banner"></div>
+  <p class="muted" id="waiting-note"></p>
+  <table id="board-table">
+    <thead><tr><th>PBC</th><th>Description</th><th>Status</th><th>Quality</th><th></th></tr></thead>
+    <tbody id="board-body"></tbody>
+  </table>
+
+  <button id="finalize-btn">Finalize engagement</button>
+  <p id="finalize-status" class="muted"></p>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader("senior");
+  const runId = getRunId();
+
+  async function load() {
+    if (!runId) return;
+    const run = await api(`/api/runs/${runId}`);
+    document.getElementById("run-title").textContent = "Final auditor — sign-off";
+    document.getElementById("run-sub").textContent = engagementContextText(run);
+
+    const board = await api(`/api/runs/${runId}/board`);
+    const approved = board.filter((r) => r.approval_status === "approved").length;
+    const rejected = board.filter((r) => r.approval_status === "rejected").length;
+    const total = board.length;
+
+    let bannerClass = "banner-pending", bannerText = "Awaiting review";
+    if (rejected > 0) { bannerClass = "banner-rejected"; bannerText = `${rejected} item(s) rejected — action required`; }
+    else if (approved === total) { bannerClass = "banner-ready"; bannerText = "Everything approved — ready to finalize"; }
+    document.getElementById("banner").innerHTML = `<div class="banner ${bannerClass}">${bannerText} (${approved}/${total} approved)</div>`;
+
+    // Nothing for the final auditor to sign off on until the auditor has
+    // actually recorded a decision — an item the auditor hasn't reached yet
+    // just clutters this table.
+    const decided = board.filter((r) => r.approval_status !== "pending");
+    const waiting = board.length - decided.length;
+    document.getElementById("waiting-note").textContent = waiting
+      ? `${waiting} item(s) still awaiting the auditor's review — not shown here yet.`
+      : "";
+
+    document.getElementById("board-body").innerHTML =
+      decided
+        .map(
+          (row) => `<tr>
+            <td class="mono">${escapeHtml(row.pbc_id)}</td>
+            <td>
+              ${escapeHtml(row.description)}
+              ${row.flag ? `<div class="muted" style="color:var(--amber-text)">⚠ auditee override: ${escapeHtml(row.flag.concern || "")}</div>` : ""}
+            </td>
+            <td>
+              <span class="pill pill-${row.display_status_class}">${row.display_status}</span>
+              ${row.approval ? `<div class="muted">${escapeHtml(row.approval.reviewer)}</div>` : ""}
+            </td>
+            <td>${row.quality ? `<span class="pill pill-${row.quality.verdict}">${row.quality.verdict}</span>` : "—"}</td>
+            <td><a href="item.html?run=${encodeURIComponent(runId)}&pbc=${encodeURIComponent(row.pbc_id)}">Audit trail →</a></td>
+          </tr>`
+        )
+        .join("") ||
+      "<tr><td colspan='5' class='muted'>Nothing reviewed by the auditor yet.</td></tr>";
+  }
+  load();
+
+  document.getElementById("finalize-btn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("finalize-status");
+    const res = await fetch(`/api/runs/${runId}/finalize`, { method: "POST" });
+    const body = await res.json();
+    statusEl.textContent = body.ok
+      ? `Finalized at ${body.finalized_at}.`
+      : `Cannot finalize yet: ${body.detail}`;
+    load();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Customs exception list.
+#
+# An exception accepts one finding that is legitimate. Every field below is
+# required; an exception without a justification, an approver or an expiry
+# date is ignored and reported. Accepted findings stay visible in the report,
+# with their justification, so the audit trail is kept.
+#
+# When Customs checks a pull request, it reads this file from the base branch.
+# A contribution therefore cannot approve its own exception: a new exception
+# only takes effect after a code owner has reviewed and merged it.
+#
+# Example:
+#
+# [[exception]]
+# rule = "CUS-N2"
+# path = "docs/regulation/*.md"
+# contains = "bis.org"            # optional: only lines containing this text
+# justification = "Links to the Basel Committee principles the agent maps controls to."
+# approved_by = "SAAF maintainers"
+# expires = 2027-06-30

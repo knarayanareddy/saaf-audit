@@ -1,0 +1,15 @@
+{
+  "_comment": "What-if-scenario, over het basisprofiel heen te leggen met --override. Verhaal: de koppeling met IdentiteitsHub is uitgevallen en toegangsaanvragen lopen tijdelijk via bewerkbare Excel-lijsten zonder aansluiting (IPE wordt Weak). Daarnaast levert de ERP-leverancier de approval-log van journaalposten niet meer op (geen matrixregel, dus Not Assessed). Verwacht effect: RISK ECD-toegang springt van reductie 60% naar 15%, RISK journaalposten van 60% naar 0%.",
+
+  "F-2024-07": [
+    {"system_name": "Excel-lijsten (IAM-koppeling uitgevallen)", "itgc_dependency_types": ["Access"],
+     "ipe_details": {"report_name": "Access request list (Excel, no reconciliation)", "system_generated": true, "editable_after_export": true, "reconciliation_exists": false}},
+    {"system_name": "ZorgDossier ECD", "itgc_dependency_types": ["Access"],
+     "ipe_details": {"report_name": "Active ECD user list per team", "system_generated": true, "editable_after_export": true, "reconciliation_exists": true}}
+  ],
+  "F-2024-03": [
+    null,
+    {"system_name": "FinCore ERP", "itgc_dependency_types": ["Operations"],
+     "ipe_details": {"report_name": "Journal entry exception report (Excel export)", "system_generated": true, "editable_after_export": true, "reconciliation_exists": false}}
+  ]
+}

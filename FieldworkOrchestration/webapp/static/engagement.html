@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <p class="muted"><a href="index.html">← Engagements</a></p>
+  <h1>Engagement details</h1>
+  <p class="project-line" id="engagement-context"></p>
+
+  <div id="content">Loading…</div>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader();
+  const runId = getRunId();
+
+  function fieldLine(label, value) {
+    return `<div style="margin-bottom:10px"><div class="muted" style="font-size:12px">${escapeHtml(label)}</div><div>${escapeHtml(value || "—")}</div></div>`;
+  }
+
+  async function load() {
+    const el = document.getElementById("content");
+    if (!runId) {
+      el.innerHTML = "<p class='muted'>No engagement selected.</p>";
+      return;
+    }
+
+    let run;
+    try {
+      run = await api(`/api/runs/${runId}`);
+    } catch (err) {
+      el.innerHTML = `<p class='muted'>Could not load this engagement: ${escapeHtml(err.message)}</p>`;
+      return;
+    }
+
+    try {
+      renderContent(run);
+    } catch (err) {
+      el.innerHTML = `<p class='muted'>Could not render this page: ${escapeHtml(err.message)}. Try a hard refresh (the app was updated).</p>`;
+    }
+  }
+
+  function renderContent(run) {
+    const el = document.getElementById("content");
+    document.getElementById("engagement-context").textContent = engagementContextText(run);
+
+    const assigned = run.assigned || {};
+    const contact = run.auditee_contact || {};
+    const itemCount = (run.pbc_list && run.pbc_list.items && run.pbc_list.items.length) || 0;
+    const source = run.work_program
+      ? "UC8 work program (with risk/control traceability)"
+      : "Typed required-documents list";
+
+    el.innerHTML = `
+      <div class="card">
+        <h2 style="margin-top:0">Reference (read-only)</h2>
+        <div style="display:flex;gap:32px;flex-wrap:wrap">
+          ${fieldLine("Run ID", run.run_id)}
+          ${fieldLine("PBC items", String(itemCount))}
+          ${fieldLine("Created from", source)}
+        </div>
+        <p><a href="${runLink("dashboard")}">Open dashboard →</a> · <a href="${runLink("coverage")}">Traceability →</a></p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">Master data</h2>
+        <p class="muted" style="margin-top:0">
+          Corrects the engagement's own record — scope, period, who's assigned to each role,
+          and the auditee's contact details. Does not regenerate the PBC list.
+        </p>
+        <form id="edit-form">
+          <label>Audit scope</label>
+          <input type="text" name="audit_scope" required value="${escapeHtml(run.audit_scope || "")}">
+          <label>Audit period</label>
+          <input type="text" name="audit_period" required value="${escapeHtml(run.audit_period || "")}">
+          <label>Auditee name</label>
+          <input type="text" name="auditee_name" required value="${escapeHtml(contact.name || "")}">
+          <label>Auditee email</label>
+          <input type="email" name="auditee_email" required value="${escapeHtml(contact.email || "")}">
+          <label>Auditee organization</label>
+          <input type="text" name="auditee_org" required value="${escapeHtml(contact.organization || "")}">
+          <label>Auditor name</label>
+          <input type="text" name="auditor_name" value="${escapeHtml(assigned.auditor || "")}">
+          <label>Final auditor name</label>
+          <input type="text" name="senior_auditor_name" value="${escapeHtml(assigned.senior_auditor || "")}">
+          <button type="submit">Save changes</button>
+        </form>
+        <p id="save-status" class="muted"></p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">Voice assistant (ElevenLabs)</h2>
+        <p class="muted" style="margin-top:0">
+          One assistant for the whole app, configured server-side (see webapp/README.md) — this
+          only turns its widget on or off for this specific engagement.
+        </p>
+        <div class="switch-row">
+          <label class="switch">
+            <input type="checkbox" id="elevenlabs-toggle" ${run.elevenlabs_enabled ? "checked" : ""}>
+            <span class="slider"></span>
+          </label>
+          <span id="elevenlabs-toggle-label">${run.elevenlabs_enabled ? "Enabled" : "Disabled"}</span>
+        </div>
+        <p id="elevenlabs-status" class="muted"></p>
+      </div>
+    `;
+
+    const toggle = document.getElementById("elevenlabs-toggle");
+    const toggleLabel = document.getElementById("elevenlabs-toggle-label");
+    const elevenlabsStatus = document.getElementById("elevenlabs-status");
+
+    toggle.addEventListener("change", async () => {
+      toggleLabel.textContent = toggle.checked ? "Enabled" : "Disabled";
+      elevenlabsStatus.textContent = "Saving…";
+      try {
+        await apiPost(`/api/runs/${runId}/update`, { elevenlabs_enabled: toggle.checked });
+        elevenlabsStatus.textContent = "Saved.";
+      } catch (err) {
+        elevenlabsStatus.textContent = "Error: " + err.message;
+      }
+    });
+
+    document.getElementById("edit-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const statusEl = document.getElementById("save-status");
+      const form = new FormData(e.target);
+      const body = Object.fromEntries(form.entries());
+      statusEl.textContent = "Saving…";
+      try {
+        const updated = await apiPost(`/api/runs/${runId}/update`, body);
+        document.getElementById("engagement-context").textContent = engagementContextText(updated);
+        statusEl.textContent = "Saved.";
+      } catch (err) {
+        statusEl.textContent = "Error: " + err.message;
+      }
+    });
+  }
+  load();
+</script>
+</body>
+</html>

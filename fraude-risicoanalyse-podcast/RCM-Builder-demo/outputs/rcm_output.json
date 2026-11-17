@@ -1,0 +1,652 @@
+{
+  "rcm_version": "2.0.0",
+  "generated_at": "2026-04-21T14:14:25.661802+00:00",
+  "context": {
+    "organization_name": "",
+    "assessment_period": "",
+    "risk_appetite": {},
+    "processes": {}
+  },
+  "warnings": [],
+  "quality_checks": {
+    "structural_integrity": {
+      "passed": true,
+      "empty_sub_processes": []
+    },
+    "mapping_integrity": {
+      "passed": true,
+      "orphan_risk_ids": [],
+      "orphan_control_ids": []
+    },
+    "taxonomy_validation": {
+      "passed": true,
+      "issues": []
+    }
+  },
+  "risks": [
+    {
+      "risk_id": "RISK-0001",
+      "stage1": {
+        "process_id": "PRC-001",
+        "process_name": "Revenue Recognition",
+        "sub_process_id": "",
+        "sub_process_name": "",
+        "objective_id": "OBJ-0001",
+        "objective": "Ensure revenue is recognized accurately and in the correct period",
+        "cause": "Lack of controls over journal entry posting",
+        "event": "unauthorized or unsupported journal entries are recorded",
+        "impact": "financial statements are materially misstated",
+        "risk_statement": "As a result of Lack of controls over journal entry posting, there is a risk that unauthorized or unsupported journal entries are recorded, leading to financial statements are materially misstated.",
+        "risk_category": "Financial",
+        "source_use_cases": [
+          "UC-01"
+        ],
+        "risk_sources": [
+          "Consolidated Risk Sources"
+        ],
+        "source_references": [
+          "UC-01 risk 1"
+        ],
+        "gias_compliance": {
+          "standard_13_2": true,
+          "standard_13_6": true
+        }
+      },
+      "stage2": {
+        "inherent_impact": 5,
+        "inherent_likelihood": 4,
+        "inherent_risk_score": 20,
+        "inherent_risk_rating": "High",
+        "preliminary_residual_risk": 8.0,
+        "preliminary_residual_rating": "Low",
+        "design_gap": false,
+        "design_gap_type": "None",
+        "design_gap_description": "No design gap identified.",
+        "controls": [
+          {
+            "control_id": "CTRL-0001",
+            "description": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+            "who": "Financial Reporting Manager",
+            "control_owner": "Financial Reporting Manager",
+            "what": "Reviews supporting evidence, approver authority, and segregation-of-duties exceptions before transactions are finalized. The activity is tailored to the risk that unauthorized or unsupported journal entries are recorded.",
+            "when": "Before posting and during the monthly close cycle",
+            "frequency": "Monthly",
+            "where": "ERP close and journal workflow",
+            "how": "Uses workflow approvals and exception reports to confirm that risky financial adjustments are justified and authorized. It focuses on the context of Revenue Recognition.",
+            "why": "Mitigates the risk that financial reporting transactions are processed inaccurately or without authorization. Specifically addresses the risk that unauthorized or unsupported journal entries are recorded.",
+            "evidence": "Approved journal workflow, exception reports, and documented reviewer comments",
+            "evidence_type": "Workflow Approval",
+            "execution_type": "IT-Dependent",
+            "nature": "Preventive",
+            "significance": "Key",
+            "control_design_effectiveness": "Strong",
+            "it_dependent": true
+          },
+          {
+            "control_id": "CTRL-0002",
+            "description": "Independent analytics of unusual financial close activity for Ensure revenue is recognized accurately and in the correct period",
+            "who": "Controller",
+            "control_owner": "Controller",
+            "what": "Performs trend and exception analysis over unusual entries, timing differences, and post-close adjustments. The activity is tailored to the risk that unauthorized or unsupported journal entries are recorded.",
+            "when": "After each close cycle",
+            "frequency": "Monthly",
+            "where": "Financial reporting analytics workspace",
+            "how": "Analyzes system-generated reports and investigates anomalies against close support files. It focuses on the context of Revenue Recognition.",
+            "why": "Detects residual financial reporting anomalies that were not prevented by the approval workflow. Specifically addresses the risk that unauthorized or unsupported journal entries are recorded.",
+            "evidence": "Exception analysis workbook, investigation notes, and management sign-off",
+            "evidence_type": "Data Analysis",
+            "execution_type": "IT-Dependent",
+            "nature": "Detective",
+            "significance": "Key",
+            "control_design_effectiveness": "Moderate",
+            "it_dependent": true
+          }
+        ]
+      },
+      "stage3": {
+        "has_it_dependency": true,
+        "controls_it_assessment": [
+          {
+            "control_id": "CTRL-0001",
+            "system_name": "ERP General Ledger Module",
+            "report_name": "Journal Entry Exception Report",
+            "itgc_dependency_type": [
+              "Access",
+              "Change"
+            ],
+            "ipe_validation_level": "Strong",
+            "control_reliability": "Reliable",
+            "reliability_downgraded": false,
+            "downgrade_reason": "",
+            "additional_itgc_control_required": false,
+            "itgc_control_description": ""
+          },
+          {
+            "control_id": "CTRL-0002",
+            "system_name": "Identity Management System",
+            "report_name": "Active User Access Report",
+            "itgc_dependency_type": [
+              "Access",
+              "Operations"
+            ],
+            "ipe_validation_level": "Weak",
+            "control_reliability": "Unreliable",
+            "reliability_downgraded": true,
+            "downgrade_reason": "IPE validation level is 'Weak'; reliability downgraded.",
+            "additional_itgc_control_required": true,
+            "itgc_control_description": "Implement and evidence Access, Operations controls over Identity Management System and validate the IPE 'Active User Access Report'."
+          }
+        ],
+        "final_residual_risk": 8.0,
+        "final_residual_rating": "Low",
+        "residual_risk_change": 0.0,
+        "new_risk_flag": true,
+        "new_risk_description": "UC6 identified an IPE reliability risk over 'Active User Access Report' that may undermine reliance on the control.",
+        "generated_uc6_risk_ids": [
+          "RISK-0004"
+        ]
+      }
+    },
+    {
+      "risk_id": "RISK-0002",
+      "stage1": {
+        "process_id": "PRC-001",
+        "process_name": "Revenue Recognition",
+        "sub_process_id": "",
+        "sub_process_name": "",
+        "objective_id": "OBJ-0001",
+        "objective": "Ensure revenue is recognized accurately and in the correct period",
+        "cause": "Inadequate segregation of duties in the journal entry process",
+        "event": "unauthorized journal entries are posted without detection",
+        "impact": "revenue figures are overstated or understated in financial reports",
+        "risk_statement": "As a result of Inadequate segregation of duties in the journal entry process, there is a risk that unauthorized journal entries are posted without detection, leading to revenue figures are overstated or understated in financial reports.",
+        "risk_category": "Financial",
+        "source_use_cases": [
+          "UC-02"
+        ],
+        "risk_sources": [
+          "Consolidated Risk Sources"
+        ],
+        "source_references": [
+          "UC-02 risk 1"
+        ],
+        "gias_compliance": {
+          "standard_13_2": true,
+          "standard_13_6": true
+        }
+      },
+      "stage2": {
+        "inherent_impact": 4,
+        "inherent_likelihood": 4,
+        "inherent_risk_score": 16,
+        "inherent_risk_rating": "High",
+        "preliminary_residual_risk": 6.4,
+        "preliminary_residual_rating": "Low",
+        "design_gap": false,
+        "design_gap_type": "None",
+        "design_gap_description": "No design gap identified.",
+        "controls": [
+          {
+            "control_id": "CTRL-0003",
+            "description": "Supervisor approval of high-risk journal and close activities for Ensure revenue is recognized accurately and in the correct period",
+            "who": "Financial Reporting Manager",
+            "control_owner": "Financial Reporting Manager",
+            "what": "Reviews supporting evidence, approver authority, and segregation-of-duties exceptions before transactions are finalized. The activity is tailored to the risk that unauthorized journal entries are posted without detection.",
+            "when": "Before posting and during the monthly close cycle",
+            "frequency": "Monthly",
+            "where": "ERP close and journal workflow",
+            "how": "Uses workflow approvals and exception reports to confirm that risky financial adjustments are justified and authorized. It focuses on the context of Revenue Recognition.",
+            "why": "Mitigates the risk that financial reporting transactions are processed inaccurately or without authorization. Specifically addresses the risk that unauthorized journal entries are posted without detection.",
+            "evidence": "Approved journal workflow, exception reports, and documented reviewer comments",
+            "evidence_type": "Workflow Approval",
+            "execution_type": "IT-Dependent",
+            "nature": "Preventive",
+            "significance": "Key",
+            "control_design_effectiveness": "Strong",
+            "it_dependent": true
+          },
+          {
+            "control_id": "CTRL-0004",
+            "description": "Independent analytics of unusual financial close activity for Ensure revenue is recognized accurately and in the correct period",
+            "who": "Controller",
+            "control_owner": "Controller",
+            "what": "Performs trend and exception analysis over unusual entries, timing differences, and post-close adjustments. The activity is tailored to the risk that unauthorized journal entries are posted without detection.",
+            "when": "After each close cycle",
+            "frequency": "Monthly",
+            "where": "Financial reporting analytics workspace",
+            "how": "Analyzes system-generated reports and investigates anomalies against close support files. It focuses on the context of Revenue Recognition.",
+            "why": "Detects residual financial reporting anomalies that were not prevented by the approval workflow. Specifically addresses the risk that unauthorized journal entries are posted without detection.",
+            "evidence": "Exception analysis workbook, investigation notes, and management sign-off",
+            "evidence_type": "Data Analysis",
+            "execution_type": "IT-Dependent",
+            "nature": "Detective",
+            "significance": "Key",
+            "control_design_effectiveness": "Moderate",
+            "it_dependent": true
+          }
+        ]
+      },
+      "stage3": {
+        "has_it_dependency": true,
+        "controls_it_assessment": [
+          {
+            "control_id": "CTRL-0003",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Not Assessed",
+            "reliability_downgraded": false,
+            "downgrade_reason": "No IT dependency matrix entry found for this control.",
+            "additional_itgc_control_required": true,
+            "itgc_control_description": "Document the supporting system, validate IPE, and establish relevant ITGC coverage before relying on this control."
+          },
+          {
+            "control_id": "CTRL-0004",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Not Assessed",
+            "reliability_downgraded": false,
+            "downgrade_reason": "No IT dependency matrix entry found for this control.",
+            "additional_itgc_control_required": true,
+            "itgc_control_description": "Document the supporting system, validate IPE, and establish relevant ITGC coverage before relying on this control."
+          }
+        ],
+        "final_residual_risk": 16.0,
+        "final_residual_rating": "High",
+        "residual_risk_change": 9.6,
+        "new_risk_flag": true,
+        "new_risk_description": "UC6 identified an unassessed IT dependency: the underlying system or report supporting this control has not been validated for ITGC and IPE reliability.",
+        "generated_uc6_risk_ids": [
+          "RISK-0005"
+        ]
+      }
+    },
+    {
+      "risk_id": "RISK-0003",
+      "stage1": {
+        "process_id": "PRC-002",
+        "process_name": "User Access Management",
+        "sub_process_id": "",
+        "sub_process_name": "",
+        "objective_id": "OBJ-0002",
+        "objective": "Ensure system access is provisioned only to authorized personnel",
+        "cause": "Absence of a formal access review process",
+        "event": "terminated or transferred employees retain active system access",
+        "impact": "unauthorized transactions are processed leading to data integrity failures",
+        "risk_statement": "As a result of Absence of a formal access review process, there is a risk that terminated or transferred employees retain active system access, leading to unauthorized transactions are processed leading to data integrity failures.",
+        "risk_category": "Operational",
+        "source_use_cases": [
+          "UC-03"
+        ],
+        "risk_sources": [
+          "Consolidated Risk Sources"
+        ],
+        "source_references": [
+          "UC-03 risk 1"
+        ],
+        "gias_compliance": {
+          "standard_13_2": true,
+          "standard_13_6": true
+        }
+      },
+      "stage2": {
+        "inherent_impact": 3,
+        "inherent_likelihood": 3,
+        "inherent_risk_score": 9,
+        "inherent_risk_rating": "Low",
+        "preliminary_residual_risk": 3.6,
+        "preliminary_residual_rating": "Low",
+        "design_gap": false,
+        "design_gap_type": "None",
+        "design_gap_description": "No design gap identified.",
+        "controls": [
+          {
+            "control_id": "CTRL-0005",
+            "description": "Workflow approval and segregation-of-duties validation for access changes for Ensure system access is provisioned only to authorized personnel",
+            "who": "Access Administration Lead",
+            "control_owner": "Access Administration Lead",
+            "what": "Confirms requester approval, role appropriateness, and segregation-of-duties compliance before access is provisioned or modified. The activity is tailored to the risk that terminated or transferred employees retain active system access.",
+            "when": "Before each access change is fulfilled",
+            "frequency": "Real-time",
+            "where": "Identity and access management workflow",
+            "how": "Routes requests through the access workflow, blocks incompatible role combinations, and requires documented approval. It focuses on the context of User Access Management.",
+            "why": "Prevents unauthorized or excessive access from being granted. Specifically addresses the risk that terminated or transferred employees retain active system access.",
+            "evidence": "Approved access tickets, workflow history, and segregation-of-duties exception logs",
+            "evidence_type": "Workflow Approval",
+            "execution_type": "IT-Dependent",
+            "nature": "Preventive",
+            "significance": "Key",
+            "control_design_effectiveness": "Strong",
+            "it_dependent": true
+          },
+          {
+            "control_id": "CTRL-0006",
+            "description": "Periodic recertification of active and privileged access for Ensure system access is provisioned only to authorized personnel",
+            "who": "IT Security Manager",
+            "control_owner": "IT Security Manager",
+            "what": "Reviews active user populations, privileged accounts, and recent leavers to remove inappropriate access promptly. The activity is tailored to the risk that terminated or transferred employees retain active system access.",
+            "when": "Within ten business days of quarter-end",
+            "frequency": "Quarterly",
+            "where": "IAM reporting and HR termination roster",
+            "how": "Compares system-generated access listings to HR records and remediation tickets. It focuses on the context of User Access Management.",
+            "why": "Detects unauthorized or stale access that bypassed the provisioning workflow. Specifically addresses the risk that terminated or transferred employees retain active system access.",
+            "evidence": "Quarterly access review package, reviewer sign-off, and remediation tickets",
+            "evidence_type": "Data Analysis",
+            "execution_type": "IT-Dependent",
+            "nature": "Detective",
+            "significance": "Key",
+            "control_design_effectiveness": "Moderate",
+            "it_dependent": true
+          }
+        ]
+      },
+      "stage3": {
+        "has_it_dependency": true,
+        "controls_it_assessment": [
+          {
+            "control_id": "CTRL-0005",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Not Assessed",
+            "reliability_downgraded": false,
+            "downgrade_reason": "No IT dependency matrix entry found for this control.",
+            "additional_itgc_control_required": true,
+            "itgc_control_description": "Document the supporting system, validate IPE, and establish relevant ITGC coverage before relying on this control."
+          },
+          {
+            "control_id": "CTRL-0006",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Not Assessed",
+            "reliability_downgraded": false,
+            "downgrade_reason": "No IT dependency matrix entry found for this control.",
+            "additional_itgc_control_required": true,
+            "itgc_control_description": "Document the supporting system, validate IPE, and establish relevant ITGC coverage before relying on this control."
+          }
+        ],
+        "final_residual_risk": 9.0,
+        "final_residual_rating": "Low",
+        "residual_risk_change": 5.4,
+        "new_risk_flag": true,
+        "new_risk_description": "UC6 identified an unassessed IT dependency: the underlying system or report supporting this control has not been validated for ITGC and IPE reliability.",
+        "generated_uc6_risk_ids": [
+          "RISK-0006"
+        ]
+      }
+    },
+    {
+      "risk_id": "RISK-0004",
+      "stage1": {
+        "process_id": "PRC-001",
+        "process_name": "Revenue Recognition",
+        "sub_process_id": "",
+        "sub_process_name": "",
+        "objective_id": "OBJ-0001",
+        "objective": "Ensure revenue is recognized accurately and in the correct period",
+        "cause": "Weak or incomplete IT dependency assurance",
+        "event": "the control cannot be relied upon because system access, changes, operations, or IPE validation are insufficient",
+        "impact": "audit reliance is reduced and the underlying business risk remains insufficiently mitigated",
+        "risk_statement": "As a result of weak or incomplete IT dependency assurance, there is a risk that the control cannot be relied upon because system access, changes, operations, or IPE validation are insufficient, leading to audit reliance is reduced and the underlying business risk remains insufficiently mitigated.",
+        "risk_category": "IT",
+        "source_use_cases": [
+          "UC-01",
+          "UC6"
+        ],
+        "risk_sources": [
+          "Consolidated Risk Sources",
+          "UC6 IT Validation"
+        ],
+        "source_references": [
+          "UC-01 risk 1",
+          "Active User Access Report"
+        ],
+        "gias_compliance": {
+          "standard_13_2": true,
+          "standard_13_6": true
+        },
+        "derived_from_risk_id": "RISK-0001",
+        "uc6_generated": true
+      },
+      "stage2": {
+        "inherent_impact": 4,
+        "inherent_likelihood": 3,
+        "inherent_risk_score": 12,
+        "inherent_risk_rating": "Medium",
+        "preliminary_residual_risk": 7.8,
+        "preliminary_residual_rating": "Low",
+        "design_gap": false,
+        "design_gap_type": "None",
+        "design_gap_description": "No design gap identified.",
+        "controls": [
+          {
+            "control_id": "CTRL-0007",
+            "description": "ITGC and IPE validation review for UC6-derived risk",
+            "who": "IT Control Owner",
+            "control_owner": "IT Control Owner",
+            "what": "Reviews system access, change, operations, and report validation evidence to confirm the supporting IT environment is reliable.",
+            "when": "Before reliance is placed on the related control and after significant IT changes",
+            "frequency": "Monthly",
+            "where": "IT governance and control review workflow",
+            "how": "Uses ITGC evidence, report configuration, and reconciliation documentation to address the issue: UC6 identified an IPE reliability risk over 'Active User Access Report' that may undermine reliance on the control.",
+            "why": "Mitigates the risk that unreliable IT dependencies or unvalidated IPE undermine control reliance.",
+            "evidence": "ITGC review checklist, reconciliation evidence, and management sign-off",
+            "evidence_type": "Documentation-Based",
+            "execution_type": "Manual",
+            "nature": "Detective",
+            "significance": "Key",
+            "control_design_effectiveness": "Moderate",
+            "it_dependent": false
+          }
+        ]
+      },
+      "stage3": {
+        "has_it_dependency": false,
+        "controls_it_assessment": [
+          {
+            "control_id": "CTRL-0007",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Partially Reliable",
+            "reliability_downgraded": false,
+            "downgrade_reason": "",
+            "additional_itgc_control_required": false,
+            "itgc_control_description": ""
+          }
+        ],
+        "final_residual_risk": 7.8,
+        "final_residual_rating": "Low",
+        "residual_risk_change": 0.0,
+        "new_risk_flag": false,
+        "new_risk_description": "",
+        "generated_uc6_risk_ids": []
+      }
+    },
+    {
+      "risk_id": "RISK-0005",
+      "stage1": {
+        "process_id": "PRC-001",
+        "process_name": "Revenue Recognition",
+        "sub_process_id": "",
+        "sub_process_name": "",
+        "objective_id": "OBJ-0001",
+        "objective": "Ensure revenue is recognized accurately and in the correct period",
+        "cause": "Weak or incomplete IT dependency assurance",
+        "event": "the control cannot be relied upon because system access, changes, operations, or IPE validation are insufficient",
+        "impact": "audit reliance is reduced and the underlying business risk remains insufficiently mitigated",
+        "risk_statement": "As a result of weak or incomplete IT dependency assurance, there is a risk that the control cannot be relied upon because system access, changes, operations, or IPE validation are insufficient, leading to audit reliance is reduced and the underlying business risk remains insufficiently mitigated.",
+        "risk_category": "IT",
+        "source_use_cases": [
+          "UC-02",
+          "UC6"
+        ],
+        "risk_sources": [
+          "Consolidated Risk Sources",
+          "UC6 IT Validation"
+        ],
+        "source_references": [
+          "UC-02 risk 1",
+          "CTRL-0003"
+        ],
+        "gias_compliance": {
+          "standard_13_2": true,
+          "standard_13_6": true
+        },
+        "derived_from_risk_id": "RISK-0002",
+        "uc6_generated": true
+      },
+      "stage2": {
+        "inherent_impact": 4,
+        "inherent_likelihood": 3,
+        "inherent_risk_score": 12,
+        "inherent_risk_rating": "Medium",
+        "preliminary_residual_risk": 7.8,
+        "preliminary_residual_rating": "Low",
+        "design_gap": false,
+        "design_gap_type": "None",
+        "design_gap_description": "No design gap identified.",
+        "controls": [
+          {
+            "control_id": "CTRL-0008",
+            "description": "ITGC and IPE validation review for UC6-derived risk",
+            "who": "IT Control Owner",
+            "control_owner": "IT Control Owner",
+            "what": "Reviews system access, change, operations, and report validation evidence to confirm the supporting IT environment is reliable.",
+            "when": "Before reliance is placed on the related control and after significant IT changes",
+            "frequency": "Monthly",
+            "where": "IT governance and control review workflow",
+            "how": "Uses ITGC evidence, report configuration, and reconciliation documentation to address the issue: UC6 identified an unassessed IT dependency: the underlying system or report supporting this control has not been validated for ITGC and IPE reliability.",
+            "why": "Mitigates the risk that unreliable IT dependencies or unvalidated IPE undermine control reliance.",
+            "evidence": "ITGC review checklist, reconciliation evidence, and management sign-off",
+            "evidence_type": "Documentation-Based",
+            "execution_type": "Manual",
+            "nature": "Detective",
+            "significance": "Key",
+            "control_design_effectiveness": "Moderate",
+            "it_dependent": false
+          }
+        ]
+      },
+      "stage3": {
+        "has_it_dependency": false,
+        "controls_it_assessment": [
+          {
+            "control_id": "CTRL-0008",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Partially Reliable",
+            "reliability_downgraded": false,
+            "downgrade_reason": "",
+            "additional_itgc_control_required": false,
+            "itgc_control_description": ""
+          }
+        ],
+        "final_residual_risk": 7.8,
+        "final_residual_rating": "Low",
+        "residual_risk_change": 0.0,
+        "new_risk_flag": false,
+        "new_risk_description": "",
+        "generated_uc6_risk_ids": []
+      }
+    },
+    {
+      "risk_id": "RISK-0006",
+      "stage1": {
+        "process_id": "PRC-002",
+        "process_name": "User Access Management",
+        "sub_process_id": "",
+        "sub_process_name": "",
+        "objective_id": "OBJ-0002",
+        "objective": "Ensure system access is provisioned only to authorized personnel",
+        "cause": "Weak or incomplete IT dependency assurance",
+        "event": "the control cannot be relied upon because system access, changes, operations, or IPE validation are insufficient",
+        "impact": "audit reliance is reduced and the underlying business risk remains insufficiently mitigated",
+        "risk_statement": "As a result of weak or incomplete IT dependency assurance, there is a risk that the control cannot be relied upon because system access, changes, operations, or IPE validation are insufficient, leading to audit reliance is reduced and the underlying business risk remains insufficiently mitigated.",
+        "risk_category": "IT",
+        "source_use_cases": [
+          "UC-03",
+          "UC6"
+        ],
+        "risk_sources": [
+          "Consolidated Risk Sources",
+          "UC6 IT Validation"
+        ],
+        "source_references": [
+          "UC-03 risk 1",
+          "CTRL-0005"
+        ],
+        "gias_compliance": {
+          "standard_13_2": true,
+          "standard_13_6": true
+        },
+        "derived_from_risk_id": "RISK-0003",
+        "uc6_generated": true
+      },
+      "stage2": {
+        "inherent_impact": 4,
+        "inherent_likelihood": 3,
+        "inherent_risk_score": 12,
+        "inherent_risk_rating": "Medium",
+        "preliminary_residual_risk": 7.8,
+        "preliminary_residual_rating": "Low",
+        "design_gap": false,
+        "design_gap_type": "None",
+        "design_gap_description": "No design gap identified.",
+        "controls": [
+          {
+            "control_id": "CTRL-0009",
+            "description": "ITGC and IPE validation review for UC6-derived risk",
+            "who": "IT Control Owner",
+            "control_owner": "IT Control Owner",
+            "what": "Reviews system access, change, operations, and report validation evidence to confirm the supporting IT environment is reliable.",
+            "when": "Before reliance is placed on the related control and after significant IT changes",
+            "frequency": "Monthly",
+            "where": "IT governance and control review workflow",
+            "how": "Uses ITGC evidence, report configuration, and reconciliation documentation to address the issue: UC6 identified an unassessed IT dependency: the underlying system or report supporting this control has not been validated for ITGC and IPE reliability.",
+            "why": "Mitigates the risk that unreliable IT dependencies or unvalidated IPE undermine control reliance.",
+            "evidence": "ITGC review checklist, reconciliation evidence, and management sign-off",
+            "evidence_type": "Documentation-Based",
+            "execution_type": "Manual",
+            "nature": "Detective",
+            "significance": "Key",
+            "control_design_effectiveness": "Moderate",
+            "it_dependent": false
+          }
+        ]
+      },
+      "stage3": {
+        "has_it_dependency": false,
+        "controls_it_assessment": [
+          {
+            "control_id": "CTRL-0009",
+            "system_name": "",
+            "report_name": "",
+            "itgc_dependency_type": [],
+            "ipe_validation_level": "N/A",
+            "control_reliability": "Partially Reliable",
+            "reliability_downgraded": false,
+            "downgrade_reason": "",
+            "additional_itgc_control_required": false,
+            "itgc_control_description": ""
+          }
+        ],
+        "final_residual_risk": 7.8,
+        "final_residual_rating": "Low",
+        "residual_risk_change": 0.0,
+        "new_risk_flag": false,
+        "new_risk_description": "",
+        "generated_uc6_risk_ids": []
+      }
+    }
+  ]
+}

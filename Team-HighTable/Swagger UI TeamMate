@@ -1,0 +1,1358 @@
+Swagger UI
+Select a definition
+
+TeamMate Data Exchange v1
+TeamMate API Documentation
+ v1 
+[ Base URL: br1ght8.teammatehosting.com/TeamMate ]
+https://br1ght8.teammatehosting.com/TeamMate/v1/swagger
+Schemes
+
+https
+Authorize
+AssessmentEntities
+
+
+GET
+/api/v1/AssessmentEntities/{id}
+Get an Entity filtered by Id
+
+
+PATCH
+/api/v1/AssessmentEntities/{id}
+Edit fields of specific entity
+
+Assessments
+
+
+GET
+/api/v1/Assessments
+Get list of Assessments
+
+
+GET
+/api/v1/Assessments/{id}
+Get specific Assessment
+
+
+GET
+/api/v1/Assessments/{id}/Children
+Get entity children for specific assessment
+
+
+GET
+/api/v1/Assessments/{id}/Entities/{entityId}/Children
+Get Assessment Objects for the selected Entity
+
+AuditPlans
+
+
+GET
+/api/v1/AuditPlans
+Get list of Audit Plans
+
+
+GET
+/api/v1/AuditPlans/{id}
+Get a specific Audit Plan Properties (General, Schedule, Resources Management and Assignments)
+
+
+PATCH
+/api/v1/AuditPlans/{id}
+Update a specific audit plan, property
+
+
+GET
+/api/v1/AuditPlans/{id}/Projects
+Get List of Projects associated to an Audit plan
+
+
+GET
+/api/v1/AuditPlans/{id}/OtherActivities
+Get a specific audit plans listing of other activities
+
+
+POST
+/api/v1/AuditPlans/{id}/OtherActivities
+Add a specific other activity
+
+
+GET
+/api/v1/AuditPlans/{id}/OtherActivities/UsersSchedule
+Get users assigned to a specific other activity for an audit plan
+
+
+POST
+/api/v1/AuditPlans/{id}/OtherActivities/UsersSchedule
+Add a user to a specific other activity
+
+
+DELETE
+/api/v1/AuditPlans/{id}/OtherActivities/UsersSchedule
+Delete a user for other activity
+
+
+PATCH
+/api/v1/AuditPlans/{id}/OtherActivities/UsersSchedule
+Update other Activity for a specific user
+
+
+DELETE
+/api/v1/AuditPlans/{id}/OtherActivities/{otherActivityId}
+Delete a specific other activity
+
+
+PATCH
+/api/v1/AuditPlans/{id}/OtherActivities/{otherActivityId}
+Update other activities for a specific audit plan.
+
+AuditReports
+
+
+GET
+/api/v1/AuditReports
+Get list of Audit Reports
+
+
+POST
+/api/v1/AuditReports
+Add an Audit Report
+
+
+GET
+/api/v1/AuditReports/{id}
+Get an Audit Report filtered by Id
+
+
+DELETE
+/api/v1/AuditReports/{id}
+Delete an Audit Report
+
+
+PATCH
+/api/v1/AuditReports/{id}
+Update an Audit Report
+
+
+PATCH
+/api/v1/AuditReports/{id}/ClearCheckout
+Clear the check out of an Audit Report
+
+Controls
+
+
+GET
+/api/v1/Controls
+Get list of Controls
+
+
+POST
+/api/v1/Controls
+Add a Control
+
+
+GET
+/api/v1/Controls/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Control
+
+
+PATCH
+/api/v1/Controls/{id}/DimensionsAssignments
+Update Secondary Dimensions for Control
+
+
+GET
+/api/v1/Controls/{id}
+Get specific Control
+
+
+DELETE
+/api/v1/Controls/{id}
+Delete a Control
+
+
+PATCH
+/api/v1/Controls/{id}
+Update Control
+
+Global Dimensions
+
+
+GET
+/api/v1/GlobalDimensions
+Get list of Global dimensions
+
+
+POST
+/api/v1/GlobalDimensions
+Add new Dimension
+
+
+GET
+/api/v1/GlobalDimensions/{id}
+Get Global dimensions filtered by id
+
+
+DELETE
+/api/v1/GlobalDimensions/{id}
+Delete specific Dimension
+
+
+PATCH
+/api/v1/GlobalDimensions/{id}
+Update specific Dimension
+
+GlobalEntities
+
+
+GET
+/api/v1/GlobalEntities
+Get list of Entities
+
+
+POST
+/api/v1/GlobalEntities
+Add new entity to selected Dimension
+
+
+GET
+/api/v1/GlobalEntities/{id}/Attachments
+Get list of Global Entity Attachments
+
+
+POST
+/api/v1/GlobalEntities/{id}/Attachments
+Add Global Entity Attachment
+
+
+GET
+/api/v1/GlobalEntities/{id}/Attachments/{attachmentId}
+Get specific Global Entity Attachment
+
+
+DELETE
+/api/v1/GlobalEntities/{id}/Attachments/{attachmentId}
+Delete specific Global Entity Attachment
+
+
+PATCH
+/api/v1/GlobalEntities/{id}/Attachments/{attachmentId}
+Update Global Entity Attachment
+
+
+GET
+/api/v1/GlobalEntities/{id}
+Get an Entity filtered by Id
+
+
+DELETE
+/api/v1/GlobalEntities/{id}
+Delete specific entity
+
+
+PATCH
+/api/v1/GlobalEntities/{id}
+Edit specific entity details
+
+Groups
+
+
+GET
+/api/v1/Groups
+Get a listing of Groups
+
+Issues - Released
+
+
+GET
+/api/v1/Issues
+Get list of released Issues
+
+
+POST
+/api/v1/Issues
+Add new released Issue
+
+
+GET
+/api/v1/Issues/{id}/Children
+Get released Issue Children
+
+
+GET
+/api/v1/Issues/{id}
+Get Specific released Issue
+
+
+PATCH
+/api/v1/Issues/{id}
+Replace released Issue Individual Properties
+
+Issues - Unreleased
+
+
+GET
+/api/v1/IssuesUnrelease
+Get list of unreleased Issues
+
+
+POST
+/api/v1/IssuesUnrelease
+Add new unreleased Issue
+
+
+GET
+/api/v1/IssuesUnrelease/{id}/Children
+Get unreleased Issue Children
+
+
+GET
+/api/v1/IssuesUnrelease/{id}
+Get Specific unreleased Issue
+
+
+PATCH
+/api/v1/IssuesUnrelease/{id}
+Replace unreleased Issue Individual Properties
+
+Issues
+
+
+GET
+/api/v1/Issues/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Issue
+
+
+PATCH
+/api/v1/Issues/{id}/DimensionsAssignments
+Update Secondary Dimensions for Issue
+
+Objectives
+
+
+GET
+/api/v1/Objectives
+Get list of Objectives
+
+
+GET
+/api/v1/Objectives/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Objective
+
+
+PATCH
+/api/v1/Objectives/{id}/DimensionsAssignments
+Update Secondary Dimensions for Objective
+
+Procedures
+
+
+GET
+/api/v1/Procedures
+Get list of Procedures
+
+
+POST
+/api/v1/Procedures
+Add a Procedure
+
+
+GET
+/api/v1/Procedures/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Procedure
+
+
+PATCH
+/api/v1/Procedures/{id}/DimensionsAssignments
+Update Secondary Dimensions for Procedure
+
+
+GET
+/api/v1/Procedures/{id}
+Get specific Procedure
+
+
+DELETE
+/api/v1/Procedures/{id}
+Delete a procedure
+
+
+PATCH
+/api/v1/Procedures/{id}
+Update a Procedure
+
+ProjectEntities
+
+
+GET
+/api/v1/ProjectEntities/{id}
+Get an Entity filtered by Id
+
+Projects
+
+
+GET
+/api/v1/Projects
+Get list of Projects.
+
+
+POST
+/api/v1/Projects
+Create new Project
+
+
+GET
+/api/v1/Projects/{id}
+Get specific Project
+
+
+DELETE
+/api/v1/Projects/{id}
+Delete Project
+
+
+GET
+/api/v1/Projects/{id}/Children
+Get entity children for specific project
+
+
+GET
+/api/v1/Projects/{id}/AuditPlans
+Get list of Audit Plans associated to a specific Project
+
+
+GET
+/api/v1/Projects/{id}/Attachments
+Get list of Project Attachments
+
+
+POST
+/api/v1/Projects/{id}/Attachments
+Add new Project Attachment
+
+
+GET
+/api/v1/Projects/{id}/ProjectSchedule
+Get project Schedule
+
+
+PATCH
+/api/v1/Projects/{id}/ProjectSchedule
+Update Project Schedule
+
+
+GET
+/api/v1/Projects/{id}/PhaseSchedule/{phaseId}
+Get Specific Project Phase
+
+
+PATCH
+/api/v1/Projects/{id}/PhaseSchedule/{phaseId}
+Update Specific Project Phase
+
+
+GET
+/api/v1/Projects/{id}/Attachments/{attachmentId}
+Get specific Project Attachment
+
+
+DELETE
+/api/v1/Projects/{id}/Attachments/{attachmentId}
+Delete Project Attachment
+
+
+PATCH
+/api/v1/Projects/{id}/Attachments/{attachmentId}
+Update Project Attachment
+
+
+GET
+/api/v1/Projects/{id}/ProjectPhaseWorkflowStates
+Get all Project Phase Workflow States
+
+
+GET
+/api/v1/Projects/{id}/Entities/{entityId}/Children
+Get Objects associated with Primary Dimension Entity through Project Profile
+
+
+PATCH
+/api/v1/Projects/{id}/Entities/{entityId}/Children
+Update Objects associated with selected Entity
+
+
+GET
+/api/v1/Projects/{id}/Profile
+Get project profile
+
+
+PATCH
+/api/v1/Projects/{id}/Profile
+Update Project Profile
+
+
+GET
+/api/v1/Projects/{id}/MileStoneSchedule/{milestoneId}
+Get Specific Milestone Details
+
+
+GET
+/api/v1/Projects/{id}/Schedule
+Get a list of phases tied to a specific project
+
+
+PATCH
+/api/v1/Projects/{id}/Schedule
+Update schedule project and phase dates
+
+
+GET
+/api/v1/Projects/{id}/UsersSchedule
+Get a listing of users scheduled to a project phase
+
+
+POST
+/api/v1/Projects/{id}/UsersSchedule
+Schedule a resource to a specific project phase
+
+
+DELETE
+/api/v1/Projects/{id}/UsersSchedule
+Delete a user from the schedule
+
+
+PATCH
+/api/v1/Projects/{id}/UsersSchedule
+Update a users time on a project or phase.
+
+
+PATCH
+/api/v1/Projects/{id}/State
+Update Project State
+
+
+PATCH
+/api/v1/Projects/{id}/MilestoneSchedule/{milestoneId}
+Update Specific Milestone Details
+
+
+PATCH
+/api/v1/Projects/{id}/DimensionsAssignments
+Update Primary and Secondary Dimensions for Project Profile
+
+Recommendations
+
+
+GET
+/api/v1/Recommendations
+Get list of Recommendations.
+
+
+POST
+/api/v1/Recommendations
+Add a Recommendation to an Issue.
+
+
+GET
+/api/v1/Recommendations/{id}/Children
+Get Recommendation children.
+
+
+GET
+/api/v1/Recommendations/{id}
+Get specific Recommendation.
+
+
+DELETE
+/api/v1/Recommendations/{id}
+Delete a Recommendation
+
+
+PATCH
+/api/v1/Recommendations/{id}
+Replace Recommendation individual properties
+
+Risks
+
+
+GET
+/api/v1/Risks
+Get list of Risks
+
+
+POST
+/api/v1/Risks
+Add a Risk
+
+
+GET
+/api/v1/Risks/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Risk
+
+
+PATCH
+/api/v1/Risks/{id}/DimensionsAssignments
+Update Secondary Dimensions for Risk
+
+
+GET
+/api/v1/Risks/{id}
+Get specific Risk
+
+
+DELETE
+/api/v1/Risks/{id}
+Delete a Risk
+
+
+PATCH
+/api/v1/Risks/{id}
+Update Risk
+
+Setup
+
+
+GET
+/api/v1/Setup
+Get all Metadata Setup e.g. Categories, Roles, Project templates, ObjectType and Workflow States
+
+
+GET
+/api/v1/Setup/Project
+Get list of Project Selection type and allowable actions
+
+
+GET
+/api/v1/Setup/Schedule
+Get list of Phases and User attributes
+
+
+GET
+/api/v1/Setup/TeamStore
+Get a list of Object id's and allowable actions
+
+
+GET
+/api/v1/Setup/Resources/TimeCategories
+Get Time Categories Setup, eg: Admin, Holiday and Nonworking
+
+
+GET
+/api/v1/Setup/Dimensions/EntityProperties
+Get all Entity properties dropdown values
+
+StrategicRisks
+
+
+GET
+/api/v1/StrategicRisks
+Get list of Strategic Risks
+
+
+POST
+/api/v1/StrategicRisks
+Add a Strategic Risk
+
+
+GET
+/api/v1/StrategicRisks/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Strategic Risk
+
+
+PATCH
+/api/v1/StrategicRisks/{id}/DimensionsAssignments
+Update Secondary Dimensions for Strategic Risk
+
+
+GET
+/api/v1/StrategicRisks/{id}
+Get specific Strategic Risk
+
+
+DELETE
+/api/v1/StrategicRisks/{id}
+Delete a Strategic Risk
+
+
+PATCH
+/api/v1/StrategicRisks/{id}
+Update Strategic Risk
+
+SwaggerConfig
+
+
+GET
+/api/v1/Config/Versions
+Get the list of versions allowed by features
+TeamStore
+
+
+GET
+/api/v1/TeamStore/Search
+Search for a specific TeamStore Object
+
+TeamStore - Cabinets
+
+
+GET
+/api/v1/TeamStore/Cabinets
+Get the list of TeamStore cabinets
+
+
+POST
+/api/v1/TeamStore/Cabinets
+Add a TeamStore Cabinet
+
+
+GET
+/api/v1/TeamStore/Cabinets/{id}
+Get list of Folders associated to a TeamStore Cabinet
+
+
+DELETE
+/api/v1/TeamStore/Cabinets/{id}
+Delete a specific TeamStore Cabinet
+
+
+PATCH
+/api/v1/TeamStore/Cabinets/{id}
+Update a specific TeamStore Cabinet
+
+TeamStore - Control
+
+
+GET
+/api/v1/TeamStore/Controls/{id}
+Get a specific TeamStore Control
+
+
+DELETE
+/api/v1/TeamStore/Controls/{id}
+Delete a specific TeamStore Control
+
+
+PATCH
+/api/v1/TeamStore/Controls/{id}
+Update a specific TeamStore Control
+
+
+POST
+/api/v1/TeamStore/Controls
+Add a TeamStore Control to a Folder
+
+TeamStore - Folders
+
+
+GET
+/api/v1/TeamStore/Folders/{id}
+Get a specific TeamStore Folder
+
+
+DELETE
+/api/v1/TeamStore/Folders/{id}
+Delete a specific TeamStore Folder
+
+
+PATCH
+/api/v1/TeamStore/Folders/{id}
+Update a specific TeamStore Folder
+
+
+POST
+/api/v1/TeamStore/Folders
+Add a TeamStore Folder to a Cabinet/Folder
+
+TeamStore - Issue
+
+
+GET
+/api/v1/TeamStore/Issues/{id}/Children
+Get TeamStore Issue Children
+
+
+GET
+/api/v1/TeamStore/Issues/{id}
+Get a specific TeamStore Issue
+
+
+DELETE
+/api/v1/TeamStore/Issues/{id}
+Delete a specific TeamStore Issue
+
+
+PATCH
+/api/v1/TeamStore/Issues/{id}
+Update a specific TeamStore Issue
+
+
+POST
+/api/v1/TeamStore/Issues
+Add a TeamStore Issue to a Folder
+
+TeamStore - Objective
+
+
+GET
+/api/v1/TeamStore/Objectives/{id}
+Get a specific TeamStore Objective
+
+
+DELETE
+/api/v1/TeamStore/Objectives/{id}
+Delete a specific TeamStore Objective
+
+
+PATCH
+/api/v1/TeamStore/Objectives/{id}
+Update a specific TeamStore Objective
+
+
+POST
+/api/v1/TeamStore/Objectives
+Add a Teamstore Objective to a Folder
+
+TeamStore - Procedure
+
+
+GET
+/api/v1/TeamStore/Procedures/{id}
+Get a specific Teamstore Procedure
+
+
+DELETE
+/api/v1/TeamStore/Procedures/{id}
+Delete a specific TeamStore Procedure
+
+
+PATCH
+/api/v1/TeamStore/Procedures/{id}
+Update a specific TeamStore Procedure
+
+
+POST
+/api/v1/TeamStore/Procedures
+Add a TeamStore Procedure to a Folder
+
+TeamStore - Recommendation
+
+
+GET
+/api/v1/TeamStore/Recommendations/{id}
+Get a specific TeamStore Recommendation
+
+
+DELETE
+/api/v1/TeamStore/Recommendations/{id}
+Delete a specific TeamStore Recommendation
+
+
+PATCH
+/api/v1/TeamStore/Recommendations/{id}
+Update a specific TeamStore Recommendation
+
+
+POST
+/api/v1/TeamStore/Recommendations
+Add a TeamStore Recommendation to a TeamStore Issue
+
+TeamStore - Risk
+
+
+GET
+/api/v1/TeamStore/Risks/{id}
+Get a specific TeamStore Risk
+
+
+DELETE
+/api/v1/TeamStore/Risks/{id}
+Delete a specific TeamStore Risk
+
+
+PATCH
+/api/v1/TeamStore/Risks/{id}
+Update a specific TeamStore Risk
+
+
+POST
+/api/v1/TeamStore/Risks
+Add a Teamstore Risk to a Folder
+
+TeamStore - Strategic Risk
+
+
+GET
+/api/v1/TeamStore/StrategicRisks/{id}
+Get a specific TeamStore Strategic Risk
+
+
+DELETE
+/api/v1/TeamStore/StrategicRisks/{id}
+Delete a specific TeamStore Strategic Risk
+
+
+PATCH
+/api/v1/TeamStore/StrategicRisks/{id}
+Update a specific TeamStore Strategic Risk
+
+
+POST
+/api/v1/TeamStore/StrategicRisks
+Add a TeamStore Strategic Risk
+
+TeamStore - Workpaper
+
+
+GET
+/api/v1/TeamStore/Workpapers/{id}
+Get a specific TeamStore Workpaper
+
+
+DELETE
+/api/v1/TeamStore/Workpapers/{id}
+Delete a specific TeamStore Workpaper
+
+
+PATCH
+/api/v1/TeamStore/Workpapers/{id}
+Update a specific Teamstore Workpaper
+
+
+POST
+/api/v1/TeamStore/Workpapers
+Add a TeamStore Workpaper to a Folder
+
+Users
+
+
+GET
+/api/v1/Users
+Get list of Users
+
+
+GET
+/api/v1/Users/{id}
+Get a list of attributes for a specific user.
+
+Workpapers
+
+
+GET
+/api/v1/Workpapers
+Get list of Workpapers
+
+
+POST
+/api/v1/Workpapers
+Add a workpaper
+
+
+GET
+/api/v1/Workpapers/{id}
+Get a Workpaper filtered by Id
+
+
+DELETE
+/api/v1/Workpapers/{id}
+Delete a workpaper
+
+
+PATCH
+/api/v1/Workpapers/{id}
+Update a workpaper using Patch
+
+
+GET
+/api/v1/Workpapers/{id}/DimensionsAssignments
+Get Primary and Secondary Dimensions for Workpaper
+
+
+PATCH
+/api/v1/Workpapers/{id}/DimensionsAssignments
+Update Secondary Dimensions for Workpaper
+
+
+POST
+/api/v1/Workpapers/{id}/EndCollaboration
+End collaboration of a Workpaper
+
+
+PATCH
+/api/v1/Workpapers/{id}/ClearCheckout
+Clear the check out of a Workpaper
+
+
+Models
+ApiErrorResponse
+Assessment
+AssessmentEntityObjectsResponse
+AssessmentEntityRequest
+AssessmentPartial
+AssessmentRequest
+AssessmentsChildrenRequest
+AssessmentsRequest
+AssessmentsResponse
+AssessmentState
+AssessmentStateSetup
+Assignment
+AttachmentPartial
+AttachmentsRequest
+AuditPlan
+AuditPlanDeleteOtherActivityResourceRequest
+AuditPlanOtherActivities
+AuditPlanOtherActivitiesRequest
+AuditPlanOtherActivity
+AuditPlanOtherActivityResources
+AuditPlanOtherActivityResourcesRequest
+AuditPlanOtherActivityResourcesScheduleRequest
+AuditPlanOtherActivityUpdateRequest
+AuditPlanPartial
+AuditPlanProject
+AuditPlanProjectsDto
+AuditPlanRequest
+AuditPlanSchedulingLevel
+AuditPlansRequest
+AuditPlansResponse
+AuditPlanState
+AuditPlanUpdate
+AuditPlanUser
+AuditPlanUserInsert
+AuditPlanUserScheduleUpdate
+AuditReport
+AuditReportInsert
+AuditReportModel
+AuditReportResponse
+AuditReportsRequest
+AuditReportUpdate
+BaseScheduleUpdate
+Cabinet
+CabinetAssignment
+CabinetInsert
+CabinetPartial
+CabinetRequest
+CabinetSecurityType
+CabinetsRequest
+CabinetsResponse
+CabinetUpdate
+CabinetWithFolders
+Category
+CategorySetup
+ChildrenRequest
+ChildrenResponse
+ChildrenTemplateResponse
+Context
+ContextEntity
+ContextEntityUpdate
+ContextualObject
+ContextWithoutTitle
+Control
+ControlDimensionRequest
+ControlInsert
+ControlPartial
+ControlRequest
+ControlsRequest
+ControlsResponse
+ControlTemplate
+ControlTemplateInsert
+ControlTemplateRequest
+ControlTemplateUpdate
+ControlUpdate
+Dimension
+DimensionAssignments
+DimensionEntitiesUpdate
+DimensionEntity
+DimensionEntityObjectPartial
+DimensionEntityObjectsRequest
+DimensionEntityUpdate
+DimensionInsertDto
+Document
+DocumentUpsert
+EntityInsert
+EntityObject
+EventMonitoring
+EventMonitoringRequest
+EventMonitoringResponse
+FeatureActionResults
+FolderInsert
+FolderUpdate
+GlobalDimension
+GlobalDimensionRequest
+GlobalDimensionResponse
+GlobalDimensionUpdate
+GlobalEntitiesRequest
+GlobalEntitiesResponse
+GlobalEntity
+GlobalEntityAttachment
+GlobalEntityAttachmentInsert
+GlobalEntityAttachments
+GlobalEntityAttachmentUpdate
+GlobalEntityPartial
+GlobalEntityPropertiesResponse
+GlobalEntityRequest
+GlobalEntityUpdate
+Group
+GroupsRequest
+GroupsResponse
+ISecurityContext
+Issue
+IssueDimensionRequest
+IssueInsert
+IssuePartial
+IssueRequest
+IssuesRequest
+IssuesResponse
+IssuesUnReleasedRequest
+IssueTemplate
+IssueTemplateInsert
+IssueTemplateRequest
+IssueTemplateUpdate
+IssueUpdate
+JsonPatchDocument_AuditPlanUpdate
+JsonPatchDocument_AuditPlanUserScheduleUpdate
+JsonPatchDocument_AuditReportUpdate
+JsonPatchDocument_BaseScheduleUpdate
+JsonPatchDocument_CabinetUpdate
+JsonPatchDocument_ContextEntityUpdate
+JsonPatchDocument_ControlTemplateUpdate
+JsonPatchDocument_ControlUpdate
+JsonPatchDocument_DimensionEntitiesUpdate
+JsonPatchDocument_FolderUpdate
+JsonPatchDocument_GlobalDimensionUpdate
+JsonPatchDocument_GlobalEntityAttachmentUpdate
+JsonPatchDocument_GlobalEntityUpdate
+JsonPatchDocument_IssueTemplateUpdate
+JsonPatchDocument_IssueUpdate
+JsonPatchDocument_MilestoneSpecificScheduleUpdate
+JsonPatchDocument_ObjectiveTemplateUpdate
+JsonPatchDocument_OtherActivityUpdate
+JsonPatchDocument_PhaseSpecificScheduleUpdate
+JsonPatchDocument_ProcedureTemplateUpdate
+JsonPatchDocument_ProcedureUpdate
+JsonPatchDocument_ProjectAttachmentUpdate
+JsonPatchDocument_ProjectDimensionAssignmentsUpdate
+JsonPatchDocument_ProjectEntityObjectsUpdate
+JsonPatchDocument_ProjectProfileUpdate
+JsonPatchDocument_ProjectSpecificScheduleUpdate
+JsonPatchDocument_ProjectStateUpdate
+JsonPatchDocument_ProjectUserResourceUpdate
+JsonPatchDocument_RecommendationTemplateUpdate
+JsonPatchDocument_RecommendationUpdate
+JsonPatchDocument_RiskTemplateUpdate
+JsonPatchDocument_RiskUpdate
+JsonPatchDocument_StrategicRiskTemplateUpdate
+JsonPatchDocument_StrategicRiskUpdate
+JsonPatchDocument_UnreleaseIssueUpdate
+JsonPatchDocument_WorkpaperTemplateUpdate
+JsonPatchDocument_WorkpaperUpdate
+LibraryFolder
+LibraryFolderExtended
+LibraryFolderRequest
+Link
+MilestonePartialSchedule
+MilestoneSpecificScheduleUpdate
+ObjectiveDimensionRequest
+ObjectivePartial
+ObjectivesRequest
+ObjectivesResponse
+ObjectiveTemplate
+ObjectiveTemplateInsert
+ObjectiveTemplateRequest
+ObjectiveTemplateUpdate
+ObjectType
+Operation_AuditPlanUpdate
+Operation_AuditPlanUserScheduleUpdate
+Operation_AuditReportUpdate
+Operation_BaseScheduleUpdate
+Operation_CabinetUpdate
+Operation_ContextEntityUpdate
+Operation_ControlTemplateUpdate
+Operation_ControlUpdate
+Operation_DimensionEntitiesUpdate
+Operation_FolderUpdate
+Operation_GlobalDimensionUpdate
+Operation_GlobalEntityAttachmentUpdate
+Operation_GlobalEntityUpdate
+Operation_IssueTemplateUpdate
+Operation_IssueUpdate
+Operation_MilestoneSpecificScheduleUpdate
+Operation_ObjectiveTemplateUpdate
+Operation_OtherActivityUpdate
+Operation_PhaseSpecificScheduleUpdate
+Operation_ProcedureTemplateUpdate
+Operation_ProcedureUpdate
+Operation_ProjectAttachmentUpdate
+Operation_ProjectDimensionAssignmentsUpdate
+Operation_ProjectEntityObjectsUpdate
+Operation_ProjectProfileUpdate
+Operation_ProjectSpecificScheduleUpdate
+Operation_ProjectStateUpdate
+Operation_ProjectUserResourceUpdate
+Operation_RecommendationTemplateUpdate
+Operation_RecommendationUpdate
+Operation_RiskTemplateUpdate
+Operation_RiskUpdate
+Operation_StrategicRiskTemplateUpdate
+Operation_StrategicRiskUpdate
+Operation_UnreleaseIssueUpdate
+Operation_WorkpaperTemplateUpdate
+Operation_WorkpaperUpdate
+OtherActivity
+OtherActivityInsert
+OtherActivityResource
+OtherActivityResourceInsert
+OtherActivityResourceUpdate
+OtherActivityUpdate
+PagingRequest
+Parent
+ParentWithoutTitle
+ParentWithTypeID
+PartialUsersResponse
+PhaseSpecificSchedule
+PhaseSpecificScheduleUpdate
+PhaseWorkflowStates
+Procedure
+ProcedureDimensionRequest
+ProcedureInsert
+ProcedurePartial
+ProcedureRequest
+ProceduresRequest
+ProceduresResponse
+ProcedureTemplate
+ProcedureTemplateInsert
+ProcedureTemplateRequest
+ProcedureTemplateUpdate
+ProcedureUpdate
+Project
+ProjectAssessment
+ProjectAssociatedAuditPlans
+ProjectAttachment
+ProjectAttachmentInsert
+ProjectAttachments
+ProjectAttachmentUpdate
+ProjectAuditPlan
+ProjectAuditPlans
+ProjectDeleteUserScheduleRequest
+ProjectDimensionAssignmentsUpdate
+ProjectEntity
+ProjectEntityCustomAction
+ProjectEntityObject
+ProjectEntityObjectsResponse
+ProjectEntityObjectsUpdate
+ProjectEntityRequest
+ProjectInsert
+ProjectInsertRequest
+ProjectMilestoneRequest
+ProjectMilestoneSchedule
+ProjectPartial
+ProjectPhasePartialSchedule
+ProjectPhaseSchedule
+ProjectPhaseSetup
+ProjectProfile
+ProjectProfileRequest
+ProjectProfileUpdate
+ProjectRequest
+ProjectResource
+ProjectResourceInsert
+ProjectResources
+ProjectResourceUpdate
+ProjectResponse
+ProjectSchedule
+ProjectScheduleRequest
+ProjectScoreDto
+ProjectScoreVariable
+ProjectScoreVariableBaseDto
+ProjectSetupResponse
+ProjectSpecificSchedule
+ProjectSpecificScheduleUpdate
+ProjectsRequest
+ProjectsResponse
+ProjectState
+ProjectStateDetail
+ProjectStateSetup
+ProjectStateUpdate
+ProjectTemplate
+ProjectUserInsert
+ProjectUserResourceUpdate
+ProjectUserScheduleRequest
+ProjectUserScheduleUpdateRequest
+Recommendation
+RecommendationInsert
+RecommendationPartial
+RecommendationRequest
+RecommendationsRequest
+RecommendationsResponse
+RecommendationStatusUpdate
+RecommendationStatusUpdateInsert
+RecommendationTemplate
+RecommendationTemplateInsert
+RecommendationTemplateRequest
+RecommendationTemplateUpdate
+RecommendationUpdate
+ResponseMetadata
+Risk
+RiskDimensionRequest
+RiskInsert
+RiskPartial
+RiskRequest
+RisksRequest
+RisksResponse
+RiskTemplate
+RiskTemplateInsert
+RiskTemplateRequest
+RiskTemplateUpdate
+RiskUpdate
+Role
+RoleSetup
+ScheduleSetupRequest
+ScheduleSetupResponse
+ScimErrorResponse
+ScoreVariable
+ScoreVariableTemplate
+ScoreVariableTemplateAllowedValue
+SetupRequest
+SetupResponse
+StrategicRisk
+StrategicRiskDimensionRequest
+StrategicRiskInsert
+StrategicRiskPartial
+StrategicRiskRequest
+StrategicRisksRequest
+StrategicRisksResponse
+StrategicRiskTemplate
+StrategicRiskTemplateInsert
+StrategicRiskTemplateRequest
+StrategicRiskTemplateUpdate
+StrategicRiskUpdate
+TeamStoreCabinetSecurity
+TeamStoreObject
+TeamStoreObjectLink
+TeamStoreObjectTypeRequest
+TeamStoreObjectTypesResponse
+TeamStoreSearchRequest
+TeamStoreSearchResponse
+TeamStoreSearchResult
+TimeCategoriesResponse
+TimeCategoryChildDTO
+TimeCategoryParentDTO
+UnreleasedIssueInsert
+UnreleaseIssueUpdate
+User
+UserCategorySetup
+UserPartial
+UserRequest
+UsersRequest
+WorkflowState
+WorkflowStateFilter
+WorkflowStateSetup
+WorkpaperBase
+WorkpaperDimensionRequest
+WorkpaperEndCollaborationResponse
+WorkpaperInsert
+WorkpaperPartial
+WorkpapersRequest
+WorkpapersResponse
+WorkpaperTemplate
+WorkpaperTemplateInsert
+WorkpaperTemplateRequest
+WorkpaperTemplateUpdate
+WorkpaperUpdate
+Online validator badge

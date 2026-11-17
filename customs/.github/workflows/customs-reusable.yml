@@ -1,0 +1,46 @@
+# Customs as a reusable workflow for other SAAF repositories.
+#
+# The checker is fetched from a tagged release of this repository, not from
+# the pull request being checked, so a contribution cannot weaken the check
+# that inspects it. Replace SAAF-Project/customs with the published location.
+
+name: Customs (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      customs-ref:
+        description: Customs release to use
+        type: string
+        default: v1
+
+permissions:
+  contents: read
+
+jobs:
+  customs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the contribution
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check out Customs from a trusted release
+        uses: actions/checkout@v4
+        with:
+          repository: SAAF-Project/customs
+          ref: ${{ inputs.customs-ref }}
+          path: .customs-tool
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inspect the contribution
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: python .customs-tool/customs/customs.py --changed-since "origin/$BASE_REF"

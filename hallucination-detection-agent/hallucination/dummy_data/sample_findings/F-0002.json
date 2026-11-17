@@ -1,0 +1,15 @@
+{
+  "id": "F-0002",
+  "title": "Personal data collected in excess of stated purpose (SEEDED HALLUCINATION)",
+  "risk_rating": "High",
+  "control_objective": "Collection of personal data must be adequate, relevant, and limited to what is necessary for the processing purpose, in accordance with GDPR Article 47.",
+  "observation": "Review of the customer-onboarding form identified 14 data fields collected from every customer. Analysis with the Data Protection Officer confirmed that only 6 of these fields are required for the stated processing purpose (contract performance). The remaining 8 fields — including date of birth, mother's maiden name, and annual income — are collected as 'nice to have' and are not used in any documented downstream process. This directly contravenes GDPR Article 47, which requires data minimisation: personal data collected must be limited to what is necessary for the stated purpose.",
+  "root_cause": "Legacy onboarding form designed pre-GDPR (2016) has not been reviewed for data-minimisation compliance.",
+  "impact": "Processing personal data beyond the stated purpose is a direct violation of GDPR Article 47 and exposes the organisation to regulatory fines of up to 4% of global annual turnover.",
+  "recommendation": "Remove the 8 non-essential fields from the customer-onboarding form. Document the data-minimisation review in line with GDPR Article 47. Establish an annual review cycle to re-assess each field against current processing purposes.",
+  "ai_assisted": true,
+  "evidence_references": [
+    "customer-onboarding-form-v7.pdf",
+    "dpo-interview-2026-03-15.md"
+  ]
+}

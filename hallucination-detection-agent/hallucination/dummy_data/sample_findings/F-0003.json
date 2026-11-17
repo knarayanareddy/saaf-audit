@@ -1,0 +1,16 @@
+{
+  "id": "F-0003",
+  "title": "Insufficient tracking of technical vulnerabilities",
+  "risk_rating": "Medium",
+  "control_objective": "Information about technical vulnerabilities is obtained in a timely fashion, evaluated, and appropriate measures taken, in accordance with ISO 27001 Annex A.8.8.",
+  "observation": "Review of the vulnerability-management process identified that vulnerabilities from the monthly Qualys scan are tracked in a spreadsheet that is updated manually. Analysis of the November and December 2025 scan reports showed 47 critical-severity findings, of which 19 had no remediation target date assigned and 12 had been open for more than 180 days without an update. This indicates that the 'appropriate measures' required by ISO 27001 Annex A.8.8 are not being applied consistently.",
+  "root_cause": "Manual spreadsheet process provides no enforcement of remediation SLAs or escalation for aged findings.",
+  "impact": "Unremediated critical vulnerabilities increase the risk of exploitation and are a non-conformance against ISO 27001 Annex A.8.8 at the next certification audit.",
+  "recommendation": "Replace the spreadsheet with a vulnerability-management tool that enforces remediation SLAs and escalates aged findings. Update the vulnerability-management procedure to explicitly reference ISO 27001 Annex A.8.8.",
+  "ai_assisted": true,
+  "evidence_references": [
+    "qualys-scan-nov-2025.csv",
+    "qualys-scan-dec-2025.csv",
+    "vulnerability-tracking-spreadsheet.xlsx"
+  ]
+}

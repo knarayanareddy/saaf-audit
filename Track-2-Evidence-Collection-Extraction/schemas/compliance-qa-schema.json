@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saafproject.com/schemas/compliance-qa-schema.json",
+  "title": "Compliance Q&A Verdict",
+  "description": "Structured verdict produced by the Compliance Q&A portal: one auditor question against one policy document.",
+  "type": "object",
+  "required": ["question", "status", "confidence", "confidence_reasoning", "information_needed", "evidence", "ai_reasoning"],
+  "properties": {
+    "question": {
+      "type": "string",
+      "description": "The compliance question asked by the auditor"
+    },
+    "document": {
+      "type": "string",
+      "description": "Filename or identifier of the source document"
+    },
+    "status": {
+      "type": "string",
+      "description": "Verdict on the question",
+      "enum": ["Voldaan", "Niet voldaan", "Niet van toepassing", "Geen antwoord"]
+    },
+    "confidence": {
+      "type": "integer",
+      "description": "Confidence score 0-100. <40 should prefer 'Geen antwoord'.",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "confidence_reasoning": {
+      "type": "string",
+      "description": "Short paragraph explaining WHY the confidence is this high/low."
+    },
+    "information_needed": {
+      "type": "array",
+      "description": "2-5 concrete artefacts or facts that would raise the confidence if supplied. Empty when confidence is 95+.",
+      "items": {"type": "string"}
+    },
+    "auditor_additional_info": {
+      "type": ["string", "null"],
+      "description": "Extra context the auditor supplied that was re-evaluated into this verdict."
+    },
+    "reevaluated": {
+      "type": "boolean",
+      "description": "True if this verdict was computed after the auditor supplied additional_info."
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Verbatim quotes from the document that support the verdict",
+      "items": {
+        "type": "object",
+        "required": ["exact_quote", "page"],
+        "properties": {
+          "exact_quote": {
+            "type": "string",
+            "description": "Verbatim substring of the source document"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "1-indexed page; 0 = auditor-provided context block"
+          },
+          "section": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "ai_reasoning": {
+      "type": "string",
+      "description": "One-paragraph explanation of how the evidence supports the status"
+    },
+    "auditor_judgement": {
+      "type": ["string", "null"],
+      "description": "Free-text judgement added by the auditor on top of the AI verdict"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "model": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    }
+  }
+}

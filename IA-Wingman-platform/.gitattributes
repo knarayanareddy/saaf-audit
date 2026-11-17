@@ -1,0 +1,47 @@
+# Normalize all text files to LF in the repository and on checkout.
+# This stops the "LF will be replaced by CRLF" warnings on Windows and keeps
+# line endings consistent across contributors and OSes.
+* text=auto eol=lf
+
+# Source & config — explicitly text (LF).
+*.js    text eol=lf
+*.jsx   text eol=lf
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.json  text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.md    text eol=lf
+*.py    text eol=lf
+*.sh    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.toml  text eol=lf
+*.cfg   text eol=lf
+*.env   text eol=lf
+
+# Windows-only scripts keep CRLF.
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binary files — never touch line endings, never diff as text.
+*.xlsx  binary
+*.xls   binary
+*.docx  binary
+*.doc   binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.svg   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.db    binary
+*.sqlite binary
+*.sqlite3 binary

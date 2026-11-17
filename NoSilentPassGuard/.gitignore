@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# reports written by a run are not source
+report.json
+*.tmp-*
+*.ppt*

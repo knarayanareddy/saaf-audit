@@ -1,0 +1,1 @@
+Don't miss this free collection of Claude skills that you can import directly into Claude in order to teach Claude how to perform specific tasks. Variety of skills like document processing, coding, data and analysis, business and marketing, communications and writing, creative and media. This is a free GitHub repo so go to github.com and search awesome Claude skills.

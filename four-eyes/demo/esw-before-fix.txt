@@ -1,0 +1,249 @@
+FFFFFFFFFFFFF                                                            [100%]
+================================== FAILURES ===================================
+____________ test_skipping_every_step_does_not_release_the_summary ____________
+
+    def test_skipping_every_step_does_not_release_the_summary():
+        _, _, result = _drive(FakeLLM(), SKIP_ALL, _gate())
+        assert not result.get("released")
+>       assert _waiting_for_final_approval(result), "summary released without a person approving it"
+E       AssertionError: summary released without a person approving it
+E       assert False
+E        +  where False = _waiting_for_final_approval({'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...})
+
+tests\test_four_eyes_signoff.py:76: AssertionError
+_____________ test_a_steered_model_cannot_turn_no_into_a_release ______________
+
+    def test_a_steered_model_cannot_turn_no_into_a_release():
+        _, _, result = _drive(ConfirmsEverythingLLM(), SAYS_NO, _gate())
+        assert not result.get("released")
+>       assert _waiting_for_final_approval(result), "summary released although the manager said no"
+E       AssertionError: summary released although the manager said no
+E       assert False
+E        +  where False = _waiting_for_final_approval({'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': 'No, that is wrong.', 'relationships': 'No, that is wrong.', ...})
+
+tests\test_four_eyes_signoff.py:82: AssertionError
+________ test_yes_or_approve_all_at_the_final_step_is_not_an_approval _________
+
+    def test_yes_or_approve_all_at_the_final_step_is_not_an_approval():
+        app, config, result = _drive(FakeLLM(), SKIP_ALL, _gate())
+>       assert _waiting_for_final_approval(result)
+E       AssertionError: assert False
+E        +  where False = _waiting_for_final_approval({'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...})
+
+tests\test_four_eyes_signoff.py:87: AssertionError
+_____________ test_typing_the_phrase_for_this_summary_releases_it _____________
+
+    def test_typing_the_phrase_for_this_summary_releases_it():
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:96: ImportError
+______________ TestEswFourEyesKit.test_a_valid_approval_releases ______________
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_a_valid_approval_releases>
+
+    def test_a_valid_approval_releases(self):
+        # Positive control: the gate must not simply block everything.
+>       approval = self._approve()
+                   ^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\four_eyes\testkit.py:85: in _approve
+    content = self.artefact(state if state is not None else self.state)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_a_valid_approval_releases>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+__________ TestEswFourEyesKit.test_an_approval_cannot_be_used_twice ___________
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_an_approval_cannot_be_used_twice>
+
+    def test_an_approval_cannot_be_used_twice(self):
+>       approval = self._approve()
+                   ^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\four_eyes\testkit.py:85: in _approve
+    content = self.artefact(state if state is not None else self.state)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_an_approval_cannot_be_used_twice>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+___ TestEswFourEyesKit.test_an_approval_signed_with_another_key_is_refused ____
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_an_approval_signed_with_another_key_is_refused>
+
+    def test_an_approval_signed_with_another_key_is_refused(self):
+>       content = self.artefact(self.state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_an_approval_signed_with_another_key_is_refused>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+_ TestEswFourEyesKit.test_an_approval_written_by_a_model_or_document_is_refused _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_an_approval_written_by_a_model_or_document_is_refused>
+
+    def test_an_approval_written_by_a_model_or_document_is_refused(self):
+>       content = self.artefact(self.state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_an_approval_written_by_a_model_or_document_is_refused>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+______ TestEswFourEyesKit.test_content_changed_after_approval_is_refused ______
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_content_changed_after_approval_is_refused>
+
+    def test_content_changed_after_approval_is_refused(self):
+>       approval = self._approve()
+                   ^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\four_eyes\testkit.py:85: in _approve
+    content = self.artefact(state if state is not None else self.state)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_content_changed_after_approval_is_refused>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+_______ TestEswFourEyesKit.test_nothing_is_released_without_an_approval _______
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_nothing_is_released_without_an_approval>
+
+    def test_nothing_is_released_without_an_approval(self):
+        with self.assertRaises(ApprovalMissing):
+>           self.release(self.gate, self.state, None)
+
+scripts\four_eyes\testkit.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def release(self, gate, state, approval):
+>       from graph import release_final
+E       ImportError: cannot import name 'release_final' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:128: ImportError
+_____ TestEswFourEyesKit.test_replies_that_are_not_approvals_are_refused ______
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_replies_that_are_not_approvals_are_refused>
+
+    def test_replies_that_are_not_approvals_are_refused(self):
+>       content = self.artefact(self.state)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_replies_that_are_not_approvals_are_refused>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+________ TestEswFourEyesKit.test_the_approver_is_the_logged_in_person _________
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_the_approver_is_the_logged_in_person>
+
+    def test_the_approver_is_the_logged_in_person(self):
+>       approval = self._approve()
+                   ^^^^^^^^^^^^^^^
+
+scripts\four_eyes\testkit.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\four_eyes\testkit.py:85: in _approve
+    content = self.artefact(state if state is not None else self.state)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_the_approver_is_the_logged_in_person>
+state = {'material': [{'type': 'text', 'text': 'Synthetic audit material.'}], 'request': '', 'root_cause': None, 'relationships': None, ...}
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+____ TestEswFourEyesKit.test_without_a_logged_in_person_nobody_can_approve ____
+
+self = <test_four_eyes_signoff.TestEswFourEyesKit testMethod=test_without_a_logged_in_person_nobody_can_approve>
+
+    def test_without_a_logged_in_person_nobody_can_approve(self):
+        self.logged_in = ""
+        with self.assertRaises(ApprovalRejected):
+>           self._approve()
+
+scripts\four_eyes\testkit.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\four_eyes\testkit.py:85: in _approve
+    content = self.artefact(state if state is not None else self.state)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def artefact(self, state):
+>       from graph import deliverable
+E       ImportError: cannot import name 'deliverable' from 'graph' (Executive-Summary-Writer\scripts\graph.py)
+
+tests\test_four_eyes_signoff.py:120: ImportError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\langsmith\_internal\_beta_decorator.py:92: 13 warnings
+  Executive-Summary-Writer\.venv\Lib\site-packages\langsmith\_internal\_beta_decorator.py:92: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+    if asyncio.iscoroutinefunction(func):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_four_eyes_signoff.py::test_skipping_every_step_does_not_release_the_summary
+FAILED tests/test_four_eyes_signoff.py::test_a_steered_model_cannot_turn_no_into_a_release
+FAILED tests/test_four_eyes_signoff.py::test_yes_or_approve_all_at_the_final_step_is_not_an_approval
+FAILED tests/test_four_eyes_signoff.py::test_typing_the_phrase_for_this_summary_releases_it
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_a_valid_approval_releases
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_an_approval_cannot_be_used_twice
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_an_approval_signed_with_another_key_is_refused
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_an_approval_written_by_a_model_or_document_is_refused
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_content_changed_after_approval_is_refused
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_nothing_is_released_without_an_approval
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_replies_that_are_not_approvals_are_refused
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_the_approver_is_the_logged_in_person
+FAILED tests/test_four_eyes_signoff.py::TestEswFourEyesKit::test_without_a_logged_in_person_nobody_can_approve
+13 failed, 13 warnings in 8.63s
+

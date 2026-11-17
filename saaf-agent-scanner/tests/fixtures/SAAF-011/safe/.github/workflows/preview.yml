@@ -1,0 +1,21 @@
+name: PR preview
+on:
+  pull_request:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Announce
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          echo "Building PR: $PR_TITLE"
+          echo "Branch $BRANCH"
+      - uses: someorg/deploy-preview-action@0123456789abcdef0123456789abcdef01234567 # v1.4.0

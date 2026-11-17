@@ -1,0 +1,10 @@
+# No third-party dependencies.
+#
+# The pipeline runs on the Python standard library only (urllib for the
+# ElevenLabs API, json, hashlib, base64, wave-free MP3 frame handling).
+# This file exists so the repo carries an explicit dependency manifest.
+#
+# Python 3.10 or newer.
+#
+# Optional, only for loudness mastering (see README):
+#   ffmpeg  — not a Python package; install via your OS package manager.

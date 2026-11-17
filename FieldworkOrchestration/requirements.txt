@@ -1,0 +1,17 @@
+anthropic
+python-dotenv
+
+# pbc_document_analysis — file text extraction
+pypdf
+python-docx
+openpyxl
+
+# document_evidence_extraction — digital PDF text + scanned-page rendering
+pdfplumber
+pdf2image  # also needs the poppler system binaries: brew install poppler / apt install poppler-utils
+
+# webapp — demo UI over the orchestrator (see webapp/README.md)
+fastapi
+uvicorn[standard]
+python-multipart  # file uploads
+httpx  # server-side calls to the ElevenLabs API (signed conversation URLs) — the ElevenLabs API key must never reach the browser

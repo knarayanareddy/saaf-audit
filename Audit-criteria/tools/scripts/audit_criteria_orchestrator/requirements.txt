@@ -1,0 +1,2 @@
+# Only needed for live runs. --simulate is pure standard library.
+anthropic>=0.70

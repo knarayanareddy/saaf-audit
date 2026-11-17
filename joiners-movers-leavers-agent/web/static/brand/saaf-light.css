@@ -1,0 +1,51 @@
+/* SAAF Light tokens, copied from the TAG x SAAF Design System (tokens/theme-saaf-light.css).
+   Fonts are bundled locally (Geist, SIL OFL 1.1, see fonts/OFL.txt) so the page works offline. */
+@font-face{font-family:'Geist';src:url('fonts/geist-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('fonts/geist-mono-latin-wght-normal.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+:root{
+--light-font:'Geist',system-ui,sans-serif;--light-mono:'Geist Mono',ui-monospace,monospace;/* @kind font */
+
+--light-ink:#11111d;--light-text-2:#4a4a58;--light-text-3:#767684;--light-line:rgba(17,17,29,.1);--light-paper:#f6f5f1;--light-tint:#eeeeff;--light-dark:#1c1c22;
+--light-btn:#2b2c65;--light-btn-hover:#3e4090;
+--light-px-0:#f6f5f1;--light-px-1:#eeeeff;--light-px-2:#dedfff;--light-px-3:#c4c5ff;--light-px-4:#a0a2ff;
+--light-s0:8px;--light-s1:12px;--light-s2:16px;--light-s3:24px;--light-s4:32px;--light-s5:clamp(40px,3.6vw,56px);/* @kind spacing */
+--light-s6:clamp(56px,5.4vw,80px);/* @kind spacing */
+--light-s7:clamp(72px,8vw,120px);/* @kind spacing */
+--light-s8:clamp(112px,12vw,192px);/* @kind spacing */
+
+--light-pad:clamp(20px,4.4vw,72px);--light-radius:clamp(14px,1.4vw,22px);--light-tile-radius:clamp(8px,1vw,14px);
+--light-d1:clamp(36px,4.4vw,72px);/* @kind font */
+--light-d2:clamp(28px,2.9vw,46px);/* @kind font */
+--light-d3:clamp(22px,1.8vw,28px);/* @kind font */
+--light-lede:clamp(17px,1.35vw,20px);/* @kind font */
+
+/* Semantic roles: use these in components. They flip under [data-theme=dark]. */
+--sl-bg:#ffffff;--sl-ink:#11111d;--sl-text-2:#4a4a58;--sl-text-3:#767684;--sl-line:rgba(17,17,29,.1);--sl-line-strong:rgba(17,17,29,.2);
+--sl-paper:#f6f5f1;--sl-tint:#eeeeff;--sl-raised:#ffffff;
+--sl-action:#2b2c65;--sl-action-hover:#3e4090;--sl-action-text:#ffffff;
+--sl-accent:#7174ff;--sl-accent-soft:#c2c3ff;--sl-cite:#6b4dff;--sl-focus:#7174ff;
+--sl-panel-dark:#1c1c22;--sl-panel-indigo:#2b2c65;
+/* Pixel ramp (light ground) */
+--sl-px-0:#f6f5f1;--sl-px-1:#eeeefd;--sl-px-2:#e0e0ff;--sl-px-3:#cfd0ff;--sl-px-4:#b6b8ff;
+/* TAG training levels 0–4: five blocks, light to deep */
+--sl-level-0:#c2c3ff;--sl-level-1:#a0a2ff;--sl-level-2:#7174ff;--sl-level-3:#4a4dac;--sl-level-4:#2b2c65;
+/* Schedule kinds */
+--sl-event-hackathon:#2b2c65;--sl-event-next:#7174ff;--sl-event-training:#4a4dac;--sl-event-past:#a6a7f2;
+/* Radii */
+--sl-r-px:3px;--sl-r-sm:8px;--sl-r-md:12px;--sl-r-lg:18px;--sl-r-pill:999px;
+/* Motion: calm. Reveals 1.1s, state 0.25–0.35s, never bouncy except the switch knob. */
+--sl-ease:cubic-bezier(.2,.7,.2,1);/* @kind other */
+--sl-dur-state:.28s;/* @kind other */
+--sl-dur-reveal:1.1s;/* @kind other */
+--sl-dur-ambient:2.6s;/* @kind other */
+
+}
+[data-theme=dark]{
+--sl-bg:#131430;--sl-ink:#ecebff;--sl-text-2:#b9b9d6;--sl-text-3:#8c8cae;--sl-line:rgba(236,235,255,.12);--sl-line-strong:rgba(236,235,255,.24);
+--sl-paper:#1d1e45;--sl-tint:#25275a;--sl-raised:#22234f;
+--sl-action:#7174ff;--sl-action-hover:#8f91ff;--sl-action-text:#11111d;
+--sl-accent:#a5a7ff;--sl-accent-soft:#4a4dac;--sl-cite:#c2c3ff;
+--sl-px-0:#17183c;--sl-px-1:#1e2049;--sl-px-2:#272a5c;--sl-px-3:#323572;--sl-px-4:#3f428c;
+--sl-level-0:#323572;--sl-level-1:#4a4dac;--sl-level-2:#7174ff;--sl-level-3:#a5a7ff;--sl-level-4:#c2c3ff;
+--sl-event-hackathon:#c2c3ff;--sl-event-next:#7174ff;--sl-event-training:#a5a7ff;--sl-event-past:#3f428c;
+}

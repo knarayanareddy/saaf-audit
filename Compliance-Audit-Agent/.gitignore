@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Local working copy of the SAAF layout — merged into the repo, never committed
+saaf-ver/*
+
+# Local developer notes
+call_graph.md
+
+# Pipeline source code — kept local, not published, except the entry point and the run configuration
+scripts/*.py
+!scripts/orchestration.py
+!scripts/claude_config.py
+!scripts/build_prompt.py
+
+# Local data & generated outputs — never commit real audit evidence
+data/*
+!data/plain_docs/
+data/plain_docs/*
+!data/plain_docs/.gitkeep
+*.docx
+results/
+output/
+prog_res/*
+# Pipeline output files, wherever a run wrote them
+*-output-raw_*.txt
+*-input_*.txt
+*-output_*.json
+merged-results_*.json
+output_*.json
+audit-report_*.md
+detailed_validation_*.txt
+example progress/
+raw_validation_report_*.json
+
+# Test caches
+.pytest_cache/

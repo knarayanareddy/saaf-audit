@@ -1,0 +1,19 @@
+username,display_name,email,department,role,last_login,account_status,created_date
+jdoe,Jan de Boer,j.deboer@syntheticcorp.nl,Finance,User,2026-05-10,Active,2022-03-15
+avanderberg,Alice van den Berg,a.vanderberg@syntheticcorp.nl,IT,Admin,2026-05-18,Active,2021-06-01
+bjansen,Bob Jansen,b.jansen@syntheticcorp.nl,Finance,User,2026-05-15,Active,2023-01-10
+cdevries,Claire de Vries,c.devries@syntheticcorp.nl,IT,User,2026-05-17,Active,2022-09-20
+dmulder,Dirk Mulder,d.mulder@syntheticcorp.nl,HR,User,2025-11-02,Active,2020-04-12
+evisser,Eva Visser,e.visser@syntheticcorp.nl,Finance,User,2026-05-16,Active,2023-07-01
+fhendriks,Frank Hendriks,f.hendriks@syntheticcorp.nl,IT,Superuser,2026-05-12,Active,2019-11-30
+gbakker,Gerrit Bakker,g.bakker@syntheticcorp.nl,Operations,User,2025-08-20,Active,2021-02-14
+hsmit,Hanna Smit,h.smit@syntheticcorp.nl,Legal,User,2026-05-14,Active,2024-01-15
+iwillemsen,Ingrid Willemsen,i.willemsen@syntheticcorp.nl,Finance,User,2026-05-11,Active,2022-05-20
+jpostma,Jeroen Postma,j.postma@syntheticcorp.nl,IT,User,2026-05-18,Active,2023-03-01
+kvandijk,Karel van Dijk,k.vandijk@syntheticcorp.nl,Marketing,User,2025-01-15,Active,2020-08-10
+lbrouwer,Lisa Brouwer,l.brouwer@syntheticcorp.nl,HR,User,2026-05-17,Active,2024-06-01
+mdevos,Maarten de Vos,m.devos@syntheticcorp.nl,Finance,User,2026-04-28,Active,2021-10-05
+nkoning,Niels Koning,n.koning@syntheticcorp.nl,Operations,User,2024-12-01,Active,2019-05-22
+svc_batch01,Batch Service Account,,IT,Admin,2026-03-01,Active,2020-01-01
+admin_test,Test Admin Account,,IT,Admin,Never,Active,2025-06-15
+pvanhouten,Pieter van Houten,p.vanhouten@syntheticcorp.nl,Sales,User,2026-05-16,Active,2023-11-01

@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Jan Bakker",
+    "skills": ["Senior Auditor", "IT Audit"],
+    "available_hours": 40
+  },
+  {
+    "name": "Sara Li",
+    "skills": ["Data Analyst", "Python", "SQL"],
+    "available_hours": 24
+  },
+  {
+    "name": "Mehmet Yilmaz",
+    "skills": ["Junior Auditor"],
+    "available_hours": 32
+  },
+  {
+    "name": "Priya Nair",
+    "skills": ["Senior Auditor", "Financial Audit"],
+    "available_hours": 16
+  },
+  {
+    "name": "Lars Jensen",
+    "skills": ["Senior Auditor", "IT Audit"],
+    "available_hours": 20
+  }
+]

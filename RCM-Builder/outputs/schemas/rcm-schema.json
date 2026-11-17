@@ -1,0 +1,305 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RCM Output",
+  "description": "Validated UC7 Risk and Control Matrix schema",
+  "type": "object",
+  "required": ["rcm_version", "generated_at", "risks"],
+  "properties": {
+    "rcm_version": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "context": {
+      "type": "object",
+      "properties": {
+        "organization_name": { "type": "string" },
+        "assessment_period": { "type": "string" },
+        "risk_appetite": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "processes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "process_name": { "type": "string" },
+              "description": { "type": "string" },
+              "sub_processes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "sub_process_id": { "type": "string" },
+                    "sub_process_name": { "type": "string" },
+                    "business_objectives": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "objective_id": { "type": "string" },
+                          "objective_description": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "quality_checks": {
+      "type": "object",
+      "properties": {
+        "structural_integrity": {
+          "type": "object",
+          "properties": {
+            "passed": { "type": "boolean" },
+            "empty_sub_processes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "process_id": { "type": "string" },
+                  "process_name": { "type": "string" },
+                  "sub_process_id": { "type": "string" },
+                  "sub_process_name": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "mapping_integrity": {
+          "type": "object",
+          "properties": {
+            "passed": { "type": "boolean" },
+            "orphan_risk_ids": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "orphan_control_ids": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "taxonomy_validation": {
+          "type": "object",
+          "properties": {
+            "passed": { "type": "boolean" },
+            "issues": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "stage1", "stage2", "stage3"],
+        "properties": {
+          "risk_id": { "type": "string", "pattern": "^RISK-[0-9]{4}$" },
+          "stage1": {
+            "type": "object",
+            "required": [
+              "process_id",
+              "process_name",
+              "objective_id",
+              "objective",
+              "cause",
+              "event",
+              "impact",
+              "risk_statement",
+              "risk_category",
+              "source_use_cases",
+              "risk_sources",
+              "source_references"
+            ],
+            "properties": {
+              "process_id": { "type": "string" },
+              "process_name": { "type": "string" },
+              "sub_process_id": { "type": "string" },
+              "sub_process_name": { "type": "string" },
+              "objective_id": { "type": "string" },
+              "objective": { "type": "string" },
+              "cause": { "type": "string" },
+              "event": { "type": "string" },
+              "impact": { "type": "string" },
+              "risk_statement": { "type": "string" },
+              "risk_category": {
+                "type": "string",
+                "enum": ["Operational", "IT", "Compliance", "Fraud", "Financial", "Strategic"]
+              },
+              "source_use_cases": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string" }
+              },
+              "risk_sources": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string" }
+              },
+              "source_references": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string" }
+              },
+              "gias_compliance": {
+                "type": "object",
+                "properties": {
+                  "standard_13_2": { "type": "boolean" },
+                  "standard_13_6": { "type": "boolean" }
+                }
+              },
+              "derived_from_risk_id": { "type": "string" },
+              "uc6_generated": { "type": "boolean" }
+            }
+          },
+          "stage2": {
+            "type": "object",
+            "required": [
+              "inherent_impact",
+              "inherent_likelihood",
+              "inherent_risk_score",
+              "inherent_risk_rating",
+              "preliminary_residual_risk",
+              "preliminary_residual_rating",
+              "design_gap",
+              "design_gap_type",
+              "design_gap_description",
+              "controls"
+            ],
+            "properties": {
+              "inherent_impact": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "inherent_likelihood": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "inherent_risk_score": { "type": "integer", "minimum": 1, "maximum": 25 },
+              "inherent_risk_rating": { "type": "string", "enum": ["Low", "Medium", "High"] },
+              "preliminary_residual_risk": { "type": "number" },
+              "preliminary_residual_rating": { "type": "string", "enum": ["Low", "Medium", "High"] },
+              "design_gap": { "type": "boolean" },
+              "design_gap_type": { "type": "string", "enum": ["None", "Missing", "Weak", "Unmapped", "Redundant"] },
+              "design_gap_description": { "type": "string" },
+              "controls": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "control_id",
+                    "description",
+                    "who",
+                    "control_owner",
+                    "what",
+                    "when",
+                    "frequency",
+                    "where",
+                    "how",
+                    "why",
+                    "evidence",
+                    "evidence_type",
+                    "execution_type",
+                    "nature",
+                    "significance",
+                    "control_design_effectiveness",
+                    "it_dependent"
+                  ],
+                  "properties": {
+                    "control_id": { "type": "string", "pattern": "^CTRL-[0-9]{4}$" },
+                    "description": { "type": "string" },
+                    "who": { "type": "string" },
+                    "control_owner": { "type": "string" },
+                    "what": { "type": "string" },
+                    "when": { "type": "string" },
+                    "frequency": {
+                      "type": "string",
+                      "enum": ["Real-time", "Daily", "Weekly", "Monthly", "Quarterly", "Annually", "Per request", "Ad-hoc"]
+                    },
+                    "where": { "type": "string" },
+                    "how": { "type": "string" },
+                    "why": { "type": "string" },
+                    "evidence": { "type": "string" },
+                    "evidence_type": {
+                      "type": "string",
+                      "enum": ["System Generated", "Workflow Approval", "Documentation-Based", "Data Analysis", "Observation", "Inquiry"]
+                    },
+                    "execution_type": { "type": "string", "enum": ["Manual", "IT-Dependent", "Automated"] },
+                    "nature": { "type": "string", "enum": ["Preventive", "Detective"] },
+                    "significance": { "type": "string", "enum": ["Key", "Non-Key"] },
+                    "control_design_effectiveness": { "type": "string", "enum": ["Strong", "Moderate", "Weak"] },
+                    "it_dependent": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          },
+          "stage3": {
+            "type": "object",
+            "required": [
+              "has_it_dependency",
+              "controls_it_assessment",
+              "final_residual_risk",
+              "final_residual_rating",
+              "residual_risk_change",
+              "new_risk_flag",
+              "new_risk_description"
+            ],
+            "properties": {
+              "has_it_dependency": { "type": "boolean" },
+              "controls_it_assessment": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "control_id",
+                    "system_name",
+                    "report_name",
+                    "itgc_dependency_type",
+                    "ipe_validation_level",
+                    "control_reliability",
+                    "reliability_downgraded",
+                    "downgrade_reason",
+                    "additional_itgc_control_required",
+                    "itgc_control_description"
+                  ],
+                  "properties": {
+                    "control_id": { "type": "string" },
+                    "system_name": { "type": "string" },
+                    "report_name": { "type": "string" },
+                    "itgc_dependency_type": {
+                      "type": "array",
+                      "items": { "type": "string", "enum": ["Access", "Change", "Operations"] }
+                    },
+                    "ipe_validation_level": { "type": "string", "enum": ["Strong", "Moderate", "Weak", "None", "N/A"] },
+                    "control_reliability": { "type": "string", "enum": ["Reliable", "Partially Reliable", "Unreliable", "Not Assessed"] },
+                    "reliability_downgraded": { "type": "boolean" },
+                    "downgrade_reason": { "type": "string" },
+                    "additional_itgc_control_required": { "type": "boolean" },
+                    "itgc_control_description": { "type": "string" }
+                  }
+                }
+              },
+              "final_residual_risk": { "type": "number" },
+              "final_residual_rating": { "type": "string", "enum": ["Low", "Medium", "High"] },
+              "residual_risk_change": { "type": "number" },
+              "new_risk_flag": { "type": "boolean" },
+              "new_risk_description": { "type": "string" },
+              "generated_uc6_risk_ids": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

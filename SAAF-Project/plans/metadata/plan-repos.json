@@ -1,0 +1,39 @@
+{
+  "_comment": "Plan -> agent repository links used by the progress visual. 'assignments' per plan: null = confirmed no repo; 'Repo' or 'owner/Repo' = the repo; or an object {primary, duplicates[], note}. Without an assignment the plan's 'Repository' row is used, then the most-linked SAAF-Project repo in the plan text (low confidence, needs review). 'primary' is the canonical repo: pick the latest one that carries an AUDIT-CRITERIA.md. 'main_repo_code' lists code that lives inside the SAAF-Project main repo (paths relative to the repo root; the generator checks they exist, and also detects existing paths mentioned in plans). 'no_repo_needed' lists strategy or reference plans that are not expected to have a repo.",
+  "ignore_repos": ["SAAF-Project", "saaf-portal", "website", "TipsAndTricks"],
+  "main_repo_ignore_prefixes": ["tools/scripts/test_data", "tools/apis/example_"],
+  "assignments": {
+    "table-9-execution-plan": null,
+    "rene-volwerk-compliance-harnas-configurator": "volwerk/compliance-harnas-configurator",
+    "inge-garretsen-audit-work-program-agent": {
+      "primary": "Audit-Work-Program-Agent-UC-8-",
+      "duplicates": [],
+      "note": "Dedicated repo with AUDIT-CRITERIA.md; an earlier copy of the script still lives in the main repo."
+    },
+    "themontechristo-threewaysecurity": {
+      "primary": "three-way-match-audit",
+      "duplicates": ["threewaysecurity"],
+      "note": "three-way-match-audit is the latest repo and carries the AUDIT-CRITERIA.md; threewaysecurity is the older repo linked in the plan."
+    },
+    "ellert-van-der-vecht-llm-owasp": {
+      "primary": "OWASP-top-10-LLM-assessment",
+      "duplicates": ["llm_owasp"],
+      "note": "OWASP-top-10-LLM-assessment now carries the AUDIT-CRITERIA.md and contains the llm-owasp pipeline; llm_owasp and the copy in the main repo are earlier homes of the same pipeline."
+    }
+  },
+  "main_repo_code": {
+    "ellert-van-der-vecht-llm-owasp": {"paths": ["tools/scripts/llm-owasp"], "note": "OWASP pipeline built in the main repo (PRs #98, #101)."},
+    "owasp-ai-testing-agent": {"paths": ["tools/scripts/owasp-agent-reviewer", "tools/scripts/llm-owasp"], "note": "OWASP reviewer and pipeline in the main repo (PR #113); matched by topic, please confirm."},
+    "inge-garretsen-audit-work-program-agent": {"paths": ["tools/scripts/work_program_generator.py"], "note": "Original script from PR #107."},
+    "frank-lubbers-ai-finding-escalation-azure-devops": {"paths": ["tools/scripts/frank-lubbers-ai-finding-escalation-azure-devops.py"], "note": "Built in the main repo (PR #103)."},
+    "llm-hallucination-detection-agent": {"paths": ["tools/scripts/hallucination_check.py"], "note": "Hallucination check built in the main repo (PR #89)."},
+    "table-9-execution-plan": {"paths": ["tools/scripts/track-5"], "note": "Track 5 hallucination detector (PR #95)."},
+    "saaf-strapi-synthetic-data": {"paths": ["tools/strapi", "tools/scripts/generate_synthetic_data.py", "tools/scripts/seed_strapi.py", "tools/scripts/verify_strapi_seed.py"], "note": "Synthetic-data sandbox built in the main repo (PR #102); shared tooling, may legitimately stay here."},
+    "example-synthetic-access-review": {"paths": ["tools/scripts/access_review_app.py"], "note": "IAM access review Streamlit app (PR #111); matched by topic, please confirm."}
+  },
+  "no_repo_needed": {
+    "audit-automation-overview": "Strategy overview, not an agent",
+    "audit-workflow-automation-levels": "Automation maturity strategy, not an agent",
+    "audit-skills-transformation-curriculum": "Talent curriculum, not an agent"
+  }
+}

@@ -1,0 +1,31 @@
+---
+# SAAF living map manifest (schema from SAAF-Project/saaf-living-map).
+# Four Eyes is a guard, not an agent, but it declares its own mandate.
+name: Four Eyes
+repo: SAAF-Project/four-eyes
+island: governance
+maturity: building
+category: Governance & Guardrails
+language: Python
+depends_on: []
+tags: [guard, human checkpoint, sign-off, four-eyes principle, audit trail]
+open_slots: 2
+description: Signed, content-bound human approval that every SAAF agent must pass before it releases a final deliverable, with a reusable bypass test kit.
+
+mandate:
+  purpose: Release an agent's final deliverable only after a logged-in person approved exactly that content, and keep a verifiable record of it.
+  allowed_tools: [sign_approval, check_approval, append_log]
+  forbidden_actions:
+    - action: take_approver_from_input
+      rationale: The approver comes from the app's login, never from a request, a document or the model.
+    - action: release_without_valid_approval
+      rationale: Missing, forged, changed, expired or reused approvals block the release.
+    - action: expose_signing_key
+      rationale: The key stays on the server and never reaches a prompt, a log or the browser.
+    - action: network_access
+      rationale: Runs inside the agent, offline.
+  trusted_inputs: [authenticated_session_user, four_eyes_key]
+  max_runtime_minutes: 1
+  human_approval_required_for: [releasing any final deliverable]
+  evidence_policy: every approval, block and release is a signed, chained log line
+  sharing: standard_is_shared_mandate_is_private

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEMO — Track 2 Fieldwork</title>
+<link rel="stylesheet" href="/static/common.css">
+<style>
+  .funnel { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 20px; }
+  .stat { flex: 1; min-width: 130px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .stat .n { font-size: 26px; font-weight: 700; }
+  .stat .label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .stat.not-delivered .n { color: var(--gray-text); }
+  .stat.awaiting .n { color: var(--amber-text); }
+  .stat.approved .n { color: var(--green-text); }
+  .stat.rejected .n { color: var(--red-text); }
+  .progress-bar { display: flex; height: 22px; border-radius: 999px; overflow: hidden; background: var(--gray-bg); margin-bottom: 6px; }
+  .progress-bar span { height: 100%; }
+  .seg-not-delivered { background: var(--gray-text); opacity: .4; }
+  .seg-awaiting { background: var(--amber-text); }
+  .seg-approved { background: var(--green-text); }
+  .seg-rejected { background: var(--red-text); }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); margin-bottom: 24px; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+</style>
+</head>
+<body>
+<div id="demo-header"></div>
+<main>
+  <h1 id="run-title">Dashboard</h1>
+  <p class="project-line" id="run-sub"></p>
+
+  <div id="banner"></div>
+
+  <div class="funnel" id="funnel"></div>
+
+  <div class="progress-bar" id="progress-bar"></div>
+  <div class="legend">
+    <span><i class="seg-not-delivered"></i> Not yet delivered</span>
+    <span><i class="seg-awaiting"></i> Awaiting auditor review</span>
+    <span><i class="seg-approved"></i> Approved</span>
+    <span><i class="seg-rejected"></i> Rejected</span>
+  </div>
+
+  <p>
+    <a href="#" id="dashboard-link">Full audit-trail detail →</a> ·
+    <a href="#" id="coverage-link">Risk → control traceability →</a> ·
+    <a href="#" id="engagement-link">Engagement details →</a>
+  </p>
+</main>
+<script src="/static/common.js"></script>
+<script src="/static/voice.js"></script>
+<script>
+  renderHeader("dashboard");
+  const runId = getRunId();
+
+  async function load() {
+    if (!runId) {
+      document.getElementById("run-title").textContent = "Dashboard — no engagement selected";
+      return;
+    }
+    const run = await api(`/api/runs/${runId}`);
+    document.getElementById("run-title").textContent = "Dashboard";
+    document.getElementById("run-sub").textContent = `${engagementContextText(run)} · ${runId}`;
+    document.getElementById("dashboard-link").href = `/api/runs/${runId}/dashboard`;
+    document.getElementById("coverage-link").href = runLink("coverage");
+    document.getElementById("engagement-link").href = runLink("engagement");
+
+    const board = await api(`/api/runs/${runId}/board`);
+    const finalized = await api(`/api/runs/${runId}/finalized`);
+
+    const total = board.length;
+    const notDelivered = board.filter((r) => r.validation_status === "pending" || r.validation_status === "overdue").length;
+    // "Awaiting" = delivered (any AI verdict — validated, insufficient, or
+    // still received because the automatic check hasn't landed yet) but no
+    // human decision recorded. Deliberately not just "validated" — an
+    // insufficient AI verdict still needs the auditor's attention, not less
+    // of it.
+    const awaiting = board.filter((r) => r.validation_status !== "pending" && r.validation_status !== "overdue" && r.approval_status === "pending").length;
+    const approved = board.filter((r) => r.approval_status === "approved").length;
+    const rejected = board.filter((r) => r.approval_status === "rejected").length;
+
+    document.getElementById("funnel").innerHTML = `
+      <div class="stat"><div class="n">${total}</div><div class="label">Total PBC items</div></div>
+      <div class="stat not-delivered"><div class="n">${notDelivered}</div><div class="label">Not yet delivered</div></div>
+      <div class="stat awaiting"><div class="n">${awaiting}</div><div class="label">Awaiting auditor review</div></div>
+      <div class="stat approved"><div class="n">${approved}</div><div class="label">Approved</div></div>
+      <div class="stat rejected"><div class="n">${rejected}</div><div class="label">Rejected</div></div>
+    `;
+
+    const pct = (n) => (total ? (100 * n) / total : 0);
+    document.getElementById("progress-bar").innerHTML = `
+      <span class="seg-not-delivered" style="width:${pct(notDelivered)}%"></span>
+      <span class="seg-awaiting" style="width:${pct(awaiting)}%"></span>
+      <span class="seg-approved" style="width:${pct(approved)}%"></span>
+      <span class="seg-rejected" style="width:${pct(rejected)}%"></span>
+    `;
+
+    let bannerClass = "banner-pending", bannerText = "In progress";
+    if (finalized.finalized) { bannerClass = "banner-final"; bannerText = `✓ Finalized at ${finalized.finalized_at}`; }
+    else if (rejected > 0) { bannerClass = "banner-rejected"; bannerText = `${rejected} item(s) rejected — needs auditor attention`; }
+    else if (notDelivered > 0) { bannerClass = "banner-pending"; bannerText = `Waiting on the auditee — ${notDelivered} item(s) not yet delivered`; }
+    else if (awaiting > 0) { bannerClass = "banner-pending"; bannerText = `Waiting on the auditor — ${awaiting} item(s) to review`; }
+    else if (approved === total && total > 0) { bannerClass = "banner-ready"; bannerText = "Everything approved — ready for final sign-off"; }
+    document.getElementById("banner").innerHTML = `<div class="banner ${bannerClass}">${bannerText}</div>`;
+  }
+  load();
+</script>
+</body>
+</html>

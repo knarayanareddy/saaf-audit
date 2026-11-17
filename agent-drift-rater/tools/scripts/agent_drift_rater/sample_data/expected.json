@@ -1,0 +1,32 @@
+{
+  "comment": "Golden expectations for the fixture org. Checked by selftest (deterministic, --no-llm).",
+  "non_rated": {
+    "empty-repo": "empty",
+    "handbook-docs": "docs"
+  },
+  "units": {
+    "refund-concierge": {
+      "action_capable": true,
+      "residual": "High",
+      "red_flags_raised": ["RF1", "RF2", "RF3", "RF5", "RF6"]
+    },
+    "policy-summarizer": {
+      "action_capable": false,
+      "residual_in": ["Low", "Informational"],
+      "red_flags_not_raised": ["RF1", "RF2"]
+    },
+    "vendor-gate": {
+      "action_capable": false,
+      "residual_in": ["Low", "Informational"]
+    },
+    "audit-monorepo__agent_a": {
+      "action_capable": false,
+      "residual_in": ["Low", "Informational"]
+    },
+    "audit-monorepo__agent_b": {
+      "action_capable": false,
+      "residual_in": ["Low", "Informational"]
+    }
+  },
+  "monorepo_units_expected": ["audit-monorepo__agent_a", "audit-monorepo__agent_b"]
+}

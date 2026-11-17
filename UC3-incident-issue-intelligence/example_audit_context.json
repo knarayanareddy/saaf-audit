@@ -1,0 +1,209 @@
+{
+  "audit_topic": "Baggage Handling H&S Compliance Audit 2026",
+  "process_map": [
+    {
+      "process_id": "P-01",
+      "name": "Workforce Planning & Shift Management",
+      "activities": [
+        "Forecast baggage volumes and staffing needs",
+        "Allocate staff to shifts and implement rest breaks and task rotation policies",
+        "Adjust resourcing (e.g., hire additional staff) to prevent overwork"
+      ],
+      "objective": "Ensure staffing levels and work schedules prevent excessive physical strain and meet safety requirements",
+      "source_quote": "Baggage handlers can reduce physical strain by ensuring varied tasks or hiring more staff."
+    },
+    {
+      "process_id": "P-02",
+      "name": "Baggage Loading & Unloading Operations",
+      "activities": [
+        "Retrieve and sort baggage in the airport baggage halls",
+        "Load and unload luggage into aircraft cargo holds on the tarmac",
+        "Transfer baggage carts between terminal facilities and aircraft"
+      ],
+      "objective": "Handle passenger baggage efficiently while minimizing manual lifting risks and ensuring worker safety",
+      "source_quote": "Issues have been noted during the loading and unloading of passenger baggage in airport basements and at aircraft on the aprons."
+    },
+    {
+      "process_id": "P-03",
+      "name": "Use of Mechanical Aids & Equipment",
+      "activities": [
+        "Deploy lifting aids (hoists, conveyors, etc.) at baggage handling stations",
+        "Train employees in proper usage of mechanical aids for heavy items",
+        "Monitor and encourage consistent use of mechanised tools to reduce manual lifting"
+      ],
+      "objective": "Minimise manual lifting by leveraging mechanical assistance, thereby reducing workers' physical strain and injury risk",
+      "source_quote": "The Labour Inspectorate was not satisfied with how lifting aids were being used by baggage handlers."
+    },
+    {
+      "process_id": "P-04",
+      "name": "Health & Safety Training and Awareness",
+      "activities": [
+        "Conduct regular training on safe lifting techniques and ergonomics",
+        "Provide safety briefings and refreshers highlighting proper use of aids and task rotation",
+        "Communicate regulatory requirements and company safety procedures to all employees"
+      ],
+      "objective": "Ensure all employees are aware of safe work practices and the importance of using aids and varying tasks to prevent injuries",
+      "source_quote": "New measures were imposed to increase awareness and urgency among handlers in tackling excessive workload."
+    },
+    {
+      "process_id": "P-05",
+      "name": "Incident Reporting & Investigation",
+      "activities": [
+        "Report any work-related injuries or overexertion incidents through the internal system",
+        "Investigate each incident to identify root causes (e.g., workload issues, equipment failure)",
+        "Implement corrective actions and share lessons learned to prevent recurrence"
+      ],
+      "objective": "Identify and address any cases of worker overexertion or injury promptly, to improve conditions and ensure compliance with safety obligations",
+      "source_quote": "Progress has been made, but the healthy working environment still does not meet the required standards."
+    },
+    {
+      "process_id": "P-06",
+      "name": "Performance Monitoring & H&S Metrics",
+      "activities": [
+        "Track key H&S metrics (injury rates, average weight lifted per shift, aid utilisation rate)",
+        "Conduct regular ergonomic risk assessments and workplace observations",
+        "Review compliance data (task rotation, break adherence) and report trends to management"
+      ],
+      "objective": "Continuously monitor physical workload and safety performance, allowing for timely interventions and demonstration of compliance improvements",
+      "source_quote": "The Labour Inspectorate warned that further fines may follow if working conditions do not improve sufficiently."
+    },
+    {
+      "process_id": "P-07",
+      "name": "Regulatory Compliance & Enforcement Response",
+      "activities": [
+        "Keep abreast of labour safety regulations and Inspectorate requirements",
+        "Coordinate responses to any Inspectorate notices or fines (prepare objections, remediate issues by deadlines)",
+        "Document all compliance actions and communications with regulators"
+      ],
+      "objective": "Proactively comply with occupational H&S regulations and respond effectively to enforcement actions to avoid penalties",
+      "source_quote": "Four baggage firms were fined over €1 million for persistently poor conditions; they can object to the decisions, but penalties accrue until issues are resolved."
+    },
+    {
+      "process_id": "P-08",
+      "name": "Mechanisation & Improvement Programme",
+      "activities": [
+        "Develop a roadmap to automate or mechanise baggage handling processes over the coming years",
+        "Allocate budget and resources to mechanisation projects (e.g., robotic loaders, improved conveyors)",
+        "Review progress on mechanisation milestones and adjust plans to meet regulatory expectations"
+      ],
+      "objective": "Eliminate manual heavy lifting long-term by transitioning to automated systems, in line with regulatory demands for safer working conditions",
+      "source_quote": "The Inspectorate mandated that baggage handling be fully automated or mechanised in the coming years, and handlers (with Schiphol) must plan accordingly."
+    },
+    {
+      "process_id": "P-09",
+      "name": "Management Oversight & Governance",
+      "activities": [
+        "Hold regular management reviews of safety performance and compliance status",
+        "Assign clear accountability for H&S targets and mechanisation initiatives at executive level",
+        "Ensure sufficient resources and priority are given to safety improvements and compliance actions"
+      ],
+      "objective": "Maintain leadership focus and accountability on safety and compliance, ensuring continuous improvement and adherence to requirements",
+      "source_quote": "The enforcement programme has been ongoing for years with multiple requirements, reflecting the need for sustained management attention to achieve compliance."
+    },
+    {
+      "process_id": "P-10",
+      "name": "Stakeholder & External Coordination",
+      "activities": [
+        "Collaborate with Schiphol Airport on joint safety initiatives and infrastructure (e.g., baggage system upgrades)",
+        "Engage with other baggage handling companies and airlines to share best practices and align mechanisation efforts",
+        "Consult with employee representatives/unions to address workload concerns and improve working conditions"
+      ],
+      "objective": "Adopt a coordinated approach with external stakeholders to ensure industry-wide improvements in physical workload and meet collective safety responsibilities",
+      "source_quote": "Airlines, baggage handlers, and the airport share a collective responsibility for a safe workplace, and discussions are ongoing among all parties to lighten the workload."
+    }
+  ],
+  "native_rcr": [
+    {
+      "type": "control",
+      "description": "Management must approve any shift schedules that risk overburdening staff (e.g., excessive overtime or consecutive heavy-lifting tasks) to ensure workload is kept at safe levels.",
+      "process_id": "P-01",
+      "source_quote": "Having employees perform more varied tasks or hiring additional staff helps reduce physical strain on workers."
+    },
+    {
+      "type": "control",
+      "description": "Enforce mandatory task rotation for baggage handlers, alternating heavy lifting duties with lighter tasks to prevent any individual from sustaining repetitive strain over a shift.",
+      "process_id": "P-02",
+      "source_quote": "Baggage handling companies were instructed to rotate heavy lifting jobs among employees as an interim measure."
+    },
+    {
+      "type": "control",
+      "description": "Require use of mechanical lifting aids for any baggage over a defined weight threshold, and mandate supervisors to verify that lifts and hoists are utilised for heavy items.",
+      "process_id": "P-03",
+      "source_quote": "Ensuring that lifting aids are used correctly can significantly reduce physical taxation on baggage handlers."
+    },
+    {
+      "type": "control",
+      "description": "Perform regular maintenance checks on all lifting equipment and conveyors; any malfunctioning aid must be repaired promptly to guarantee continuous availability of mechanical assistance.",
+      "process_id": "P-03",
+      "source_quote": "Lifting aids should be available and functional at all workstations as part of the effort toward full mechanisation."
+    },
+    {
+      "type": "control",
+      "description": "Mandate annual (and onboarding) safe-lifting and ergonomics training for all employees, with completion tracked, to reinforce awareness of proper techniques and regulatory requirements.",
+      "process_id": "P-04",
+      "source_quote": "Measures were taken to boost awareness and urgency among baggage handlers about addressing excessive physical workload."
+    },
+    {
+      "type": "control",
+      "description": "Implement a strict incident reporting protocol: every injury or overexertion incident must be logged and investigated, with root causes identified and corrective actions implemented.",
+      "process_id": "P-05",
+      "source_quote": "Despite some improvements, the workplace still hasn’t met the required healthy standards, indicating the need to learn from each incident."
+    },
+    {
+      "type": "control",
+      "description": "Use a safety KPI dashboard (e.g., injury frequency, average load lifted per hour, aid utilisation rate) reviewed monthly by management; define thresholds that trigger immediate review and action if exceeded.",
+      "process_id": "P-06",
+      "source_quote": "The Inspectorate will continue to check that required measures are sustained, implying the need for ongoing tracking of safety performance."
+    },
+    {
+      "type": "control",
+      "description": "Maintain a compliance tracker for all Labour Inspectorate directives and deadlines; assign responsibility for each action item and regularly update status to ensure timely closure of obligations.",
+      "process_id": "P-07",
+      "source_quote": "A penalty (dwangsom) is incurred for each period an obligation isn’t met, underscoring the importance of meeting compliance deadlines."
+    },
+    {
+      "type": "control",
+      "description": "Establish a formal procedure to respond to Inspectorate notices: form a task force immediately to address findings and, if needed, file an objection within the allowed timeframe.",
+      "process_id": "P-07",
+      "source_quote": "Companies have the right to file an objection against the Inspectorate’s decision, which must be exercised within a set period."
+    },
+    {
+      "type": "control",
+      "description": "Set up a senior-level steering committee to oversee the mechanisation programme, with quarterly progress reviews to ensure the automation roadmap stays on track and meets agreed milestones.",
+      "process_id": "P-08",
+      "source_quote": "Baggage handlers, together with Schiphol, are drawing up a plan of approach to fulfil the mechanisation requirement in coming years."
+    }
+  ],
+  "completeness_gaps": [
+    {
+      "gap_id": "G-01",
+      "description": "Mechanisation roadmap not fully defined or on track (the long-term automation plan may be lacking detail, approval, or sufficient resources).",
+      "related_process_ids": ["P-08", "P-10"],
+      "risk": "Without a clear, funded mechanisation plan, the company might fail to meet the Inspectorate’s mandate for full automation, resulting in continued worker strain and future enforcement penalties."
+    },
+    {
+      "gap_id": "G-02",
+      "description": "Inconsistent application of interim safety measures (e.g., some teams or shifts not reliably using lifting aids or rotating tasks as required).",
+      "related_process_ids": ["P-02", "P-03"],
+      "risk": "If policies like aid usage and task rotation are not enforced uniformly, pockets of excessive physical load will persist, leading to higher injury incidence and non-compliance in those areas."
+    },
+    {
+      "gap_id": "G-03",
+      "description": "Insufficient monitoring tools for workload and compliance (no robust system to measure if physical load is within safe limits or if staff rotations and breaks are happening as planned).",
+      "related_process_ids": ["P-06"],
+      "risk": "Lack of data could allow dangerous workload patterns to go unnoticed until a serious incident or external inspection occurs, undermining the company’s ability to proactively manage safety."
+    },
+    {
+      "gap_id": "G-04",
+      "description": "Safety culture gaps on the floor (operational pressure sometimes outweighs safety protocols; employees may skip using aids or taking breaks to meet flight schedules).",
+      "related_process_ids": ["P-02", "P-09"],
+      "risk": "A weak safety culture can negate even well-designed controls; if staff feel pressure to bypass safety measures, injury rates remain high and regulators will view the compliance as superficial."
+    },
+    {
+      "gap_id": "G-05",
+      "description": "Dependence on external parties for improvements (relying on Schiphol’s infrastructure changes or technology vendors for mechanisation can delay implementation of safety solutions).",
+      "related_process_ids": ["P-08", "P-10"],
+      "risk": "Delayed external support (e.g., airport-provided equipment or coordination) can slow the company’s progress towards compliance, leaving workers exposed to high physical loads and the company liable to prolonged enforcement actions outside its direct control."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# Dependencies for transcribe_audio.py and diarize_from_segments.py
+# Install: pip install -r tools/scripts/requirements-audio.txt
+#
+# Note: pyannote.audio requires huggingface_hub<0.30 because it still calls
+# Pipeline.from_pretrained(..., use_auth_token=...) which was removed in newer
+# huggingface_hub releases.
+
+openai-whisper
+pyannote.audio>=3.1
+huggingface_hub<0.30
+torch
+torchaudio

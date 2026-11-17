@@ -1,0 +1,35 @@
+# Exact pins, including transitive dependencies, for reproducible installs.
+# Policy: avoid releases younger than 14 days; bump deliberately, never as a side effect.
+# Install with: pip install --only-binary :all: -r requirements.txt
+
+# Runtime
+anthropic==1.6.0
+pydantic==2.13.5
+pypdf==6.19.0
+python-docx==1.2.0
+openpyxl==3.1.5
+
+# Test
+pytest==9.1.1
+pytest-mock==3.15.1
+
+# Transitive
+annotated-types==0.8.0
+anyio==4.15.1
+docstring-parser==0.18.0
+et-xmlfile==2.0.0
+h11==0.16.0
+httpcore2==2.13.0
+httpx2==2.13.0
+idna==3.20
+iniconfig==2.3.0
+jiter==0.17.0
+lxml==6.1.3
+packaging==26.3
+pluggy==1.6.0
+pydantic-core==2.46.5
+pygments==2.21.0
+sniffio==1.3.1
+truststore==0.10.4
+typing-extensions==4.16.0
+typing-inspection==0.4.4

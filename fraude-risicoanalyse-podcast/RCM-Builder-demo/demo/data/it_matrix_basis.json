@@ -1,0 +1,463 @@
+{
+  "_comment": "Gegenereerd door demo/make_it_matrix.py. Niet met de hand bewerken: pas het profiel aan en genereer opnieuw, anders lopen control-ID's uit de pas.",
+  "_generated_from": {
+    "rcm": "demo\\outputs\\_pass1.json",
+    "profile": "demo\\data\\it_profile_basis.json",
+    "override": ""
+  },
+  "it_dependency_matrix": [
+    {
+      "control_id": "CTRL-0001",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Access",
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Journal entry approval workflow log",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0002",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Journal entry exception report (Excel export)",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0003",
+      "system_name": "IdentiteitsHub IAM",
+      "itgc_dependency_types": [
+        "Access",
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Access request and approval workflow",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0004",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "Active ECD user list per team",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0005",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Access",
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Vendor master data change log",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0006",
+      "system_name": "Bankportaal",
+      "itgc_dependency_types": [
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "Payment batch vs approved payment run",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0008",
+      "system_name": "LoonLink payroll (SaaS)",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Payroll input vs roster totals report",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0009",
+      "system_name": "ChangeFlow servicedesk",
+      "itgc_dependency_types": [
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Change tickets (manually maintained)",
+        "system_generated": false,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0010",
+      "system_name": "ChangeFlow servicedesk",
+      "itgc_dependency_types": [
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Emergency change register (manually maintained)",
+        "system_generated": false,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0011",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Access",
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Month-end close checklist and sign-off",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0012",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Unreconciled balances report",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0013",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Change",
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Declaration validation report (care plan match)",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0014",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Access",
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Mandate table and invoice approval workflow",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0016",
+      "system_name": "ChangeFlow servicedesk",
+      "itgc_dependency_types": [
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Release approval record (manually maintained)",
+        "system_generated": false,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0018",
+      "system_name": "DataGuard DLP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Export and removable media log",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0019",
+      "system_name": "DataGuard DLP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "DLP exception overview (Excel export)",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0020",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Declaration batch submission log (Excel export)",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0021",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Revenue cut-off report",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0022",
+      "system_name": "ChangeFlow servicedesk",
+      "itgc_dependency_types": [
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Change tickets (manually maintained)",
+        "system_generated": false,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0023",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Change",
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Interface configuration audit log",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0024",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Access",
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Journal entry approval workflow log",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0025",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Top-side entry report (Excel export)",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0026",
+      "system_name": "LoonLink payroll (SaaS)",
+      "itgc_dependency_types": [
+        "Access",
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Employee master data change report",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0027",
+      "system_name": "Bankportaal",
+      "itgc_dependency_types": [
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "Salary payment file vs payroll register",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0028",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Access",
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Care registration approval workflow",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0029",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Registered vs planned care analysis",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0031",
+      "system_name": "FinCore ERP",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Three-way match exception report (Excel export)",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0032",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Change"
+      ],
+      "ipe_details": {
+        "report_name": "Declaration code validation rules",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0033",
+      "system_name": "ZorgDossier ECD",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Rejected declarations overview",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0034",
+      "system_name": "LoonLink payroll (SaaS)",
+      "itgc_dependency_types": [
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "WNT remuneration monitoring report",
+        "system_generated": true,
+        "editable_after_export": true,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0036",
+      "system_name": "PrivacyPortaal",
+      "itgc_dependency_types": [
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "Processing register (manually maintained)",
+        "system_generated": false,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0037",
+      "system_name": "PrivacyPortaal",
+      "itgc_dependency_types": [
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "Consent overview (manually maintained)",
+        "system_generated": false,
+        "editable_after_export": true,
+        "reconciliation_exists": false
+      }
+    },
+    {
+      "control_id": "CTRL-0038",
+      "system_name": "LogWacht SIEM",
+      "itgc_dependency_types": [
+        "Operations",
+        "Access"
+      ],
+      "ipe_details": {
+        "report_name": "ECD access log alerts",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    },
+    {
+      "control_id": "CTRL-0039",
+      "system_name": "LogWacht SIEM",
+      "itgc_dependency_types": [
+        "Operations"
+      ],
+      "ipe_details": {
+        "report_name": "Monthly access log review report",
+        "system_generated": true,
+        "editable_after_export": false,
+        "reconciliation_exists": true
+      }
+    }
+  ]
+}
